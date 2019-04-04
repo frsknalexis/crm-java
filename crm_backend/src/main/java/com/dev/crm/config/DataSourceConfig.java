@@ -4,6 +4,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,16 +28,16 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class DataSourceConfig {
 
 	@Autowired
-	private Environment environment;
+	private Environment enviroment;
 	
 	@Bean
 	public DataSource dataSource() {
 		
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setUrl(environment.getProperty("spring.datasource.url"));
-		dataSource.setUsername(environment.getProperty("spring.datasource.username"));
-		dataSource.setPassword(environment.getProperty("spring.datasource.password"));
-		dataSource.setDriverClassName(environment.getProperty("spring.datasource.driver-class-name"));
+		dataSource.setDriverClassName(enviroment.getProperty("spring.datasource.driver-class-name"));
+		dataSource.setUrl(enviroment.getProperty("spring.datasource.url"));
+		dataSource.setUsername(enviroment.getProperty("spring.datasource.username"));
+		dataSource.setPassword(enviroment.getProperty("spring.datasource.password"));
 		dataSource.setConnectionProperties(additionalProperties());
 		return dataSource;
 	}
@@ -55,9 +56,9 @@ public class DataSourceConfig {
 	@Bean(name="hibernateTransactionManager")
 	public HibernateTransactionManager hibernateTransactionManager() {
 		
-		HibernateTransactionManager hibernateTransactionManager = new HibernateTransactionManager();
-		hibernateTransactionManager.setSessionFactory(sessionFactory().getObject());
-		return hibernateTransactionManager;
+		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+		transactionManager.setSessionFactory(sessionFactory().getObject());
+		return transactionManager;
 	}
 	
 	@Primary
@@ -85,6 +86,7 @@ public class DataSourceConfig {
 	
 	@Bean
 	public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
+		
 		return new PersistenceExceptionTranslationPostProcessor();
 	}
 	
@@ -92,11 +94,14 @@ public class DataSourceConfig {
 	public Properties additionalProperties() {
 		
 		Properties properties = new Properties();
-		properties.put("hibernate.dialect", environment.getProperty("spring.jpa.properties.hibernate.dialect"));
-		properties.put("hibernate.show_sql", environment.getProperty("spring.jpa.show-sql"));
-		properties.put("hibernate.ddl-auto", environment.getProperty("spring.jpa.hibernate.ddl-auto"));
-		properties.put("hibernate.implicit_naming_strategy", environment.getProperty("spring.jpa.hibernate.naming.implicit-strategy"));
-		properties.put("hibernate.physical_naming_strategy", environment.getProperty("spring.jpa.hibernate.naming.physical-strategy"));
+		properties.put("hibernate.dialect", enviroment.getProperty("spring.jpa.properties.hibernate.dialect"));
+		properties.put("hibernate.show_sql", enviroment.getProperty("spring.jpa.show-sql"));
+		properties.put("hibernate.ddl-auto", enviroment.getProperty("spring.jpa.hibernate.ddl-auto"));
 		return properties;
+	}
+	
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
 	}
 }

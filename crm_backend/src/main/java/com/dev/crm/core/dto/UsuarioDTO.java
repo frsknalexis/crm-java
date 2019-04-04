@@ -1,42 +1,24 @@
-package com.dev.crm.core.model.entity;
+package com.dev.crm.core.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import com.dev.crm.core.model.base.AuditingEntity;
-import com.dev.crm.core.model.base.BaseEntity;
-
-@Entity
-@Table(name="tbl_ci_usuarios", schema="public")
-public class Usuario extends AuditingEntity implements Serializable, BaseEntity {
+public class UsuarioDTO extends AuditingDTO implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1744572322797598042L;
+	private static final long serialVersionUID = 3592699098651945888L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="codigo_usuario", unique=true, nullable=false)
 	private BigDecimal usuarioId;
 	
-	@Column(name="nombre_usuario", nullable=false, length=30)
 	private String nombreUsuario;
 	
-	@Column(name="password_usuario", nullable=false, length=100)
 	private String passwordUsuario;
 	
-	@Column(name="documento_usuario", nullable=false, length=8)
 	private String documentoUsuario;
 
-	public Usuario() {
+	public UsuarioDTO() {
 		
 	}
 

@@ -9,8 +9,7 @@ public class IpUtil {
 		
 	}
 	
-	@SuppressWarnings("unused")
-	private static String getCurrentIPAddress() {
+	public static String getCurrentIPAddress() {
 		
 		try {
 			InetAddress address = InetAddress.getLocalHost();
@@ -22,8 +21,7 @@ public class IpUtil {
 		return null;
 	}
 	
-	@SuppressWarnings("unused")
-	private static String getCurrentUserMachine() {
+	public static String getCurrentUserMachine() {
 		
 		try {
 			InetAddress address = InetAddress.getLocalHost();
@@ -34,9 +32,8 @@ public class IpUtil {
 		}
 		return null;
 	}
-	
-	@SuppressWarnings("unused")
-	private static String getCurrentUserSystem() {
+
+	public static String getCurrentUserSystem() {
 		
 		String currentUserSystem = System.getProperty("user.name");
 		return currentUserSystem;
