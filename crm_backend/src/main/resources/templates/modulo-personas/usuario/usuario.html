@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="fixed" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" class="fixed sidebar-light" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/headinc :: head"></head>
 <body>
 	<section class="body">
@@ -11,92 +11,102 @@
 				<aside th:replace="fragments/sidebar :: sidebar"></aside>
 				<!-- end: sidebar -->
 				<section role="main" class="content-body">
-					<header class="page-header">
-						<h2>Dashboard</h2>
-						<div class="right-wrapper pull-right">
-							<ol class="breadcrumbs">
-								<li>
-									<a href="index.html">
-										<i class="fa fa-home"></i>
-									</a>
-								</li>
-								<li><span>Dashboard</span></li>
-							</ol>
-						</div>
-					</header>
+					<div>
+					<div class="page-header">
+						<h2>
+							<a th:href="@{/dashboard}">
+								<i class="fa fa-home"></i>
+							</a>
+						</h2>
+						<ol class="breadcrumbs">
+							<li class="active">
+								<span>Usuarios</span>
+							</li>
+						</ol>
+					</div>
 					<!-- start: page -->
 					<div class="row">
+						<div class="col-md-6 col-lg-6">
+							<button type="button" data-toggle="modal" id="btnAgregarUsuario" class="mb-xs btn-md btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Usuario</button>
+						</div>
 						<div class="col-md-12 col-lg-12">
-							<section class="panel panel-featured panel-featured-primary">
+							<section class="panel panel-featured panel-featured-primary panel-primary">
 								<header class="panel-heading">
-									<h2 class="panel-title">Usuarios</h2>
-									<p class="panel-subtitle"><button type="button" class="mb-xs mt-xs mr-xs btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Usuario</button></p>
+									<h2 class="panel-title">Listado de Usuarios</h2>
 								</header>
 								<div class="panel-body">
-									<table class="table table-bordered table-striped mb-none" id="datatable-default">
-									<thead>
+									<table class="table table-hover table-striped mb-none" id="datatable-default" width="100%">
+									<thead class="text-center">
 										<tr>
-											<th>Rendering engine</th>
-											<th>Browser</th>
-											<th>Platform(s)</th>
-											<th class="hidden-phone">Engine version</th>
-											<th class="hidden-phone">CSS grade</th>
+											<th class="center">#</th>
+											<th class="center">Usuario</th>
+											<th class="center">Password</th>
+											<th class="center">Documento</th>
+											<th class="center">Estado</th>
+											<th class="center">Acciones</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr class="gradeX">
-											<td>Trident</td>
-											<td>Internet
-												Explorer 4.0
-											</td>
-											<td>Win 95+</td>
-											<td class="center hidden-phone">4</td>
-											<td class="center hidden-phone">X</td>
-										</tr>
-										<tr class="gradeC">
-											<td>Trident</td>
-											<td>Internet
-												Explorer 5.0
-											</td>
-											<td>Win 95+</td>
-											<td class="center hidden-phone">5</td>
-											<td class="center hidden-phone">C</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Trident</td>
-											<td>Internet
-												Explorer 5.5
-											</td>
-											<td>Win 95+</td>
-											<td class="center hidden-phone">5.5</td>
-											<td class="center hidden-phone">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Trident</td>
-											<td>Internet
-												Explorer 6
-											</td>
-											<td>Win 98+</td>
-											<td class="center hidden-phone">6</td>
-											<td class="center hidden-phone">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Trident</td>
-											<td>Internet Explorer 7</td>
-											<td>Win XP SP2+</td>
-											<td class="center hidden-phone">7</td>
-											<td class="center hidden-phone">A</td>
-										</tr>
-									</tbody>
 								</table>
 								</div>
 							</section>
 						</div>
 					</div>
 					<!-- end: page -->
+					</div>
+					<div class="modal fade" id="modalAgregarUsuario" role="dialog">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<form role="form" method="post">
+									<div class="modal-header" style="background:#0088cc; color:white">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title">Nuevo Usuario</h4>
+									</div>
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-md-12 form-group">
+												<div class="col-md-12">
+													<input type="hidden" class="form-control" id="usuarioId">
+												</div>
+											</div>
+											<div class="col-md-12 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-key"></i>
+													</span>
+													<input type="text" class="form-control" id="nombreUsuario" placeholder="Nombre Usuario">
+												</div>
+											</div>
+											<div class="col-md-12 form-group">
+											 	<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-lock"></i>
+													</span>
+													<input type="text" class="form-control" id="passwordUsuario" placeholder="Password Usuario">
+												</div>
+											</div>
+											<div class="col-md-12 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-credit-card"></i>
+													</span>
+													<input type="text" class="form-control" id="documentoUsuario" placeholder="Numero Documento">
+												</div>
+											</div>											
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" id="cancelarAccion" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+										<button type="submit" id="guardarUsuario" class="btn btn-primary">Guardar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>				
 				</section>
 			</div>
 		</section>
+		
 		<th:block th:replace="fragments/script :: script"></th:block>
+		<script type="text/javascript" th:src="@{/assets/javascripts/app/usuario.js}"></script>
 </body>
 </html>
