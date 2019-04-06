@@ -14,7 +14,7 @@ import com.dev.crm.core.model.base.AuditingEntity;
 import com.dev.crm.core.model.base.BaseEntity;
 
 @Entity
-@Table(name="tbl_ci_usuarios", schema="public")
+@Table(name="tb_ci_usuario", schema="public")
 public class Usuario extends AuditingEntity implements Serializable, BaseEntity {
 
 	/**
@@ -30,7 +30,7 @@ public class Usuario extends AuditingEntity implements Serializable, BaseEntity 
 	@Column(name="nombre_usuario", nullable=false, length=30)
 	private String nombreUsuario;
 	
-	@Column(name="password_usuario", nullable=false, length=100)
+	@Column(name="contra_usuario", nullable=false, length=100)
 	private String passwordUsuario;
 	
 	@Column(name="documento_usuario", nullable=false, length=8)

@@ -109,7 +109,7 @@ $(document).on('ready', function() {
 	setTimeout(function(){
 		cargarEstado();
 		ocultarBotones();
-	}, 300)
+	}, 1000)
 			
 	$('#btnAgregarUsuario').on('click', function() {
 		

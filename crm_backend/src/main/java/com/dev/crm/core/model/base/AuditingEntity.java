@@ -42,13 +42,13 @@ public class AuditingEntity implements Serializable, BaseEntity {
 	@Column(name="fecha_desactivacion")
 	private Date fechaDesactivacion;
 	
-	@Column(name="ipusuario")
+	@Column(name="ipmaquina")
 	private String ipUsuario;
 	
-	@Column(name="usuariomaquina")
+	@Column(name="usuario_maquina")
 	private String usuarioMaquina;
 	
-	@Column(name="usuariosistema")
+	@Column(name="usuario_sistema")
 	private String usuarioSistema;
 	
 	public AuditingEntity() {

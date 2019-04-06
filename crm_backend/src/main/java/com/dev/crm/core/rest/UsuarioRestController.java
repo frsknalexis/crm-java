@@ -1,4 +1,4 @@
-package com.dev.crm.core.facade.rest;
+package com.dev.crm.core.rest;
 
 import java.math.BigDecimal;
 import java.util.List;
