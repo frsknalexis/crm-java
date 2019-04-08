@@ -1,63 +1,37 @@
-package com.dev.crm.core.model.entity;
+package com.dev.crm.core.dto;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import com.dev.crm.core.model.base.AuditingEntity;
-import com.dev.crm.core.model.base.BaseEntity;
-
-@Entity
-@Table(name="tb_ci_persona", schema="public")
-public class Persona extends AuditingEntity implements Serializable, BaseEntity {
+public class PersonaDTO extends AuditingDTO implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 8228410291800045232L;
+	private static final long serialVersionUID = -5810637233602282364L;
 
-	@Id
-	@Column(name="documento_persona", length=11, nullable=false, unique=true)
 	private String documentoPersona;
 	
-	@Column(name="nombre_persona", length=100, nullable=false)
 	private String nombrePersona;
 	
-	@Column(name="apellidop_persona", length=20, nullable=false)
 	private String apellidoPaternoPersona;
 	
-	@Column(name="apellidom_persona", length=20, nullable=false)
 	private String apellidoMaternoPersona;
 	
-	@Column(name="direcciónr_persona", length=255)
 	private String direccionReniecPersona;
 	
-	@Column(name="direccióna_persona", length=255)
 	private String direccionActualPersona;
 	
-	@Column(name="referencia_persona", length=255)
 	private String referenciaPersona;
 	
-	@Column(name="telefonou_persona", length=9)
 	private String telefonoUnoPersona;
 	
-	@Column(name="telefonod_persona", length=9)
 	private String telefonoDosPersona;
 	
-	@Column(name="telefonot_persona", length=9)
 	private String telefonoTresPersona;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="codigo_ubigeo", nullable=false)
-	private Ubigeo ubigeo;
+	private UbigeoDTO ubigeo;
 
-	public Persona() {
+	public PersonaDTO() {
 		
 	}
 
@@ -141,11 +115,11 @@ public class Persona extends AuditingEntity implements Serializable, BaseEntity 
 		this.telefonoTresPersona = telefonoTresPersona;
 	}
 
-	public Ubigeo getUbigeo() {
+	public UbigeoDTO getUbigeo() {
 		return ubigeo;
 	}
 
-	public void setUbigeo(Ubigeo ubigeo) {
+	public void setUbigeo(UbigeoDTO ubigeo) {
 		this.ubigeo = ubigeo;
 	}
 }

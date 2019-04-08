@@ -1,10 +1,15 @@
 package com.dev.crm.core.model.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,9 +27,12 @@ public class Ubigeo implements Serializable {
 	
 	@Column(name="nombre_ubigeo", length=50, nullable=false)
 	private String nombreUbigeo;
+	
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="ubigeo")
+	private List<Persona> personas;
 
 	public Ubigeo() {
-		
+		personas = new ArrayList<Persona>();
 	}
 
 	public String getCodigoUbigeo() {
@@ -41,5 +49,13 @@ public class Ubigeo implements Serializable {
 
 	public void setNombreUbigeo(String nombreUbigeo) {
 		this.nombreUbigeo = nombreUbigeo;
+	}
+
+	public List<Persona> getPersonas() {
+		return personas;
+	}
+
+	public void setPersonas(List<Persona> personas) {
+		this.personas = personas;
 	}
 }

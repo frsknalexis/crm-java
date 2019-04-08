@@ -4,6 +4,7 @@ public class Constantes {
 
 	public static final String DASHBOARD_VIEW = "dashboard";
 	public static final String USUARIO_VIEW = "modulo-personas/usuario/usuario";
+	public static final String PERSONA_VIEW = "modulo-personas/persona/persona";
 	
 	public static final boolean HABILITADO = true;
 	public static final boolean INHABILITADO = false;

@@ -4,7 +4,6 @@
 
 $(document).on('ready', function() {
 	
-	
 	limpiarFormulario();
 	
 	var table = $('#datatable-default').DataTable({
@@ -43,15 +42,16 @@ $(document).on('ready', function() {
 		    			{ "data": "passwordUsuario" },
 		    			{ "data": "documentoUsuario" },
 		    			{ "defaultContent": '<span class="label label-success estadoUsuario">Activo</span>'},
-		    			{ "defaultContent": '<div class="btn-group"><button type="button" data-toggle="modal" class="btn btn-info btn-sm btnEditarUsuario" idUsuario><i class="fa fa-pencil" title="Editar"></i></button><button type="button" class="btn btn-danger btnDeshabilitarUsuario btn-sm" idUsuario><i class="fa fa-times" title="Deshabilitar"></i></button><button type="button" class="btn btn-success btn-sm btnHabilitarUsuario" idUsuario><i class="fa fa-check" title="Habilitar"></i></button></div>' }
+		    			{ "defaultContent": '<div class="btn-group"><button type="button" data-toggle="modal" class="btn btn-info btn-sm btnEditarUsuario" idUsuario><i class="fa fa-pencil" title="Editar"></i></button><button type="button" class="btn btn-danger btnDeshabilitarUsuario btn-sm" idUsuario><i class="fa fa-times" title="Deshabilitar"></i></button><button type="button" class="btn btn-success btn-sm btnHabilitarUsuario" idUsuario style="display:none;"><i class="fa fa-check" title="Habilitar"></i></button></div>' }
 		    		]});
 	 
 	
 	 $('#datatable-default tbody').on('click', 'button', function() {
 		 var data = table.row( $(this).parents('tr') ).data();
+		  
 		 $(this).attr('idUsuario', data.usuarioId);
 	 });
-	 
+	 	 
 	function cargarEstado(){
 		
 		var estadoUsuario = $('.estadoUsuario');
@@ -75,21 +75,26 @@ $(document).on('ready', function() {
 		for(var i=0; i < btnHabilitarUsuario.length; i++) {
 			var data = table.row($(btnHabilitarUsuario[i]).parents("tr")).data();
 			if(data.habilitado == true) {
-				$(btnHabilitarUsuario[i]).hide();
+				//$(btnHabilitarUsuario[i]).hide();
+				$(btnHabilitarUsuario[i]).attr('style', 'display:none');
 			}
 			else if(data.habilitado == false){
-				$(btnHabilitarUsuario[i]).show();
+				//$(btnHabilitarUsuario[i]).show();
+				$(btnHabilitarUsuario[i]).attr('style', 'display:block');
 			}
 		}
 		
 		var btnDeshabilitarUsuario = $('.btnDeshabilitarUsuario');
 		for(var i=0; i < btnDeshabilitarUsuario.length; i++){
 			var data = table.row($(btnDeshabilitarUsuario[i]).parents("tr")).data();
+			
 			if(data.habilitado == true) {
-				$(btnDeshabilitarUsuario[i]).show();
+				//$(btnDeshabilitarUsuario[i]).show();
+				$(btnDeshabilitarUsuario[i]).attr('style', 'display:block');
 			}
 			else if(data.habilitado == false) {
-				$(btnDeshabilitarUsuario[i]).hide();
+				//$(btnDeshabilitarUsuario[i]).hide();
+				$(btnDeshabilitarUsuario[i]).attr('style', 'display:none');
 			}
 		}
 		
@@ -97,25 +102,26 @@ $(document).on('ready', function() {
 		for(var i=0; i <  btnEditarUsuario.length; i++) {
 			var data = table.row($(btnEditarUsuario[i]).parents("tr")).data();
 			if(data.habilitado == true) {
-				$(btnEditarUsuario[i]).show();
+				//$(btnEditarUsuario[i]).show();
+				$(btnEditarUsuario[i]).attr('style', 'display:block');
 			}
 			else if(data.habilitado == false) {
-				$(btnEditarUsuario[i]).hide();
+				//$(btnEditarUsuario[i]).hide();
+				$(btnEditarUsuario[i]).attr('style', 'display:none');
 			}
 		}
 	}
-
-	
-	setTimeout(function(){
-		cargarEstado();
-		ocultarBotones();
-	}, 1000)
 			
 	$('#btnAgregarUsuario').on('click', function() {
 		
 		$('#modalAgregarUsuario').modal('show');
 		$('#modalAgregarUsuario .modal-title').html('Nuevo Usuario');
 	});
+	
+	setTimeout(function(){
+		cargarEstado();
+		ocultarBotones();
+	}, 3000);
 	
 	$('#guardarUsuario').click(function(e) {
 		

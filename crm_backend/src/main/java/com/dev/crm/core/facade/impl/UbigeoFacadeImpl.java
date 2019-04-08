@@ -52,10 +52,9 @@ public class UbigeoFacadeImpl implements UbigeoFacade {
 			
 			if(!(GenericUtil.isEmpty(termino))) {
 				List<Ubigeo> ubigeos = ubigeoService.findByNombreUbigeo(termino);
-				for(Ubigeo u : ubigeos) {
-					UbigeoDTO ubigeoDTO = modelMapper.map(u, UbigeoDTO.class);
-					ubigeosDTO.add(ubigeoDTO);
-				}
+				ubigeos.stream().forEach(u -> {
+					ubigeosDTO.add(modelMapper.map(u, UbigeoDTO.class));
+				});
 				return ubigeosDTO;
 			}
 		}

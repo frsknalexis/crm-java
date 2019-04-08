@@ -1,7 +1,6 @@
 package com.dev.crm.core.dto;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class AuditingDTO implements Serializable {
@@ -13,9 +12,9 @@ public class AuditingDTO implements Serializable {
 	
 	private Boolean habilitado;
 	
-	private BigDecimal creadoPor;
+	private String creadoPor;
 	
-	private BigDecimal modificadoPor;
+	private String modificadoPor;
 	
 	private Date fechaRegistro;
 	
@@ -37,19 +36,19 @@ public class AuditingDTO implements Serializable {
 		this.habilitado = habilitado;
 	}
 
-	public BigDecimal getCreadoPor() {
+	public String getCreadoPor() {
 		return creadoPor;
 	}
 
-	public void setCreadoPor(BigDecimal creadoPor) {
+	public void setCreadoPor(String creadoPor) {
 		this.creadoPor = creadoPor;
 	}
 
-	public BigDecimal getModificadoPor() {
+	public String getModificadoPor() {
 		return modificadoPor;
 	}
 
-	public void setModificadoPor(BigDecimal modificadoPor) {
+	public void setModificadoPor(String modificadoPor) {
 		this.modificadoPor = modificadoPor;
 	}
 

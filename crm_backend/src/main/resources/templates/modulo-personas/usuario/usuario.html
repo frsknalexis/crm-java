@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="fixed sidebar-light" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" class="fixed" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/headinc :: head"></head>
 <body>
 	<section class="body">
@@ -53,13 +53,13 @@
 					</div>
 					<!-- end: page -->
 					</div>
-					<div class="modal fade" id="modalAgregarUsuario" role="dialog">
-						<div class="modal-dialog">
+					<div class="modal fade" tabindex="-1" id="modalAgregarUsuario" role="dialog" aria-labelledby="myModalLabelUsuario" aria-hidden="true">
+						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<form role="form" method="post">
 									<div class="modal-header" style="background:#0088cc; color:white">
 										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-										<h4 class="modal-title">Nuevo Usuario</h4>
+										<h4 class="modal-title" id="myModalLabelUsuario">Nuevo Usuario</h4>
 									</div>
 									<div class="modal-body">
 										<div class="row">
@@ -73,7 +73,7 @@
 													<span class="input-group-addon">
 														<i class="fa fa-key"></i>
 													</span>
-													<input type="text" class="form-control" id="nombreUsuario" placeholder="Nombre Usuario">
+													<input type="text" class="form-control input-sm" id="nombreUsuario" placeholder="Nombre Usuario">
 												</div>
 											</div>
 											<div class="col-md-12 form-group">
@@ -81,7 +81,7 @@
 													<span class="input-group-addon">
 														<i class="fa fa-lock"></i>
 													</span>
-													<input type="text" class="form-control" id="passwordUsuario" placeholder="Password Usuario">
+													<input type="text" class="form-control input-sm" id="passwordUsuario" placeholder="Password Usuario">
 												</div>
 											</div>
 											<div class="col-md-12 form-group">
@@ -89,7 +89,7 @@
 													<span class="input-group-addon">
 														<i class="fa fa-credit-card"></i>
 													</span>
-													<input type="text" class="form-control" id="documentoUsuario" placeholder="Numero Documento">
+													<input type="text" class="form-control input-sm" id="documentoUsuario" placeholder="Numero Documento">
 												</div>
 											</div>											
 										</div>

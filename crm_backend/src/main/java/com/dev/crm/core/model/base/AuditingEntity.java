@@ -1,7 +1,6 @@
 package com.dev.crm.core.model.base;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -21,10 +20,10 @@ public class AuditingEntity implements Serializable, BaseEntity {
 	private Boolean habilitado;
 	
 	@Column(name="creado_por")
-	private BigDecimal creadoPor;
+	private String creadoPor;
 	
 	@Column(name="modificado_por")
-	private BigDecimal modificadoPor;
+	private String modificadoPor;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="fecha_registro")
@@ -66,22 +65,22 @@ public class AuditingEntity implements Serializable, BaseEntity {
 	}
 	
 	@Override
-	public BigDecimal getCreadoPor() {
+	public String getCreadoPor() {
 		return creadoPor;
 	}
 	
 	@Override
-	public void setCreadoPor(BigDecimal creadoPor) {
+	public void setCreadoPor(String creadoPor) {
 		this.creadoPor = creadoPor;
 	}
 	
 	@Override
-	public BigDecimal getModificadoPor() {
+	public String getModificadoPor() {
 		return modificadoPor;
 	}
 	
 	@Override
-	public void setModificadoPor(BigDecimal modificadoPor) {
+	public void setModificadoPor(String modificadoPor) {
 		this.modificadoPor = modificadoPor;
 	}
 

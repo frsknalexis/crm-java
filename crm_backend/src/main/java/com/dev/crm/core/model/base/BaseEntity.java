@@ -1,6 +1,5 @@
 package com.dev.crm.core.model.base;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public interface BaseEntity {
@@ -9,13 +8,13 @@ public interface BaseEntity {
 	
 	public void setHabilitado(Boolean habilitado);
 	
-	public BigDecimal getCreadoPor();
+	public String getCreadoPor();
 	
-	public void setCreadoPor(BigDecimal creadoPor);
+	public void setCreadoPor(String creadoPor);
 	
-	public BigDecimal getModificadoPor();
+	public String getModificadoPor();
 	
-	public void setModificadoPor(BigDecimal modificadoPor);
+	public void setModificadoPor(String modificadoPor);
 	
 	public Date getFechaRegistro();
 	

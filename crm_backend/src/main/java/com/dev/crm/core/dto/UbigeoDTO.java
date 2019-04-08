@@ -1,6 +1,10 @@
 package com.dev.crm.core.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UbigeoDTO implements Serializable {
 
@@ -12,9 +16,12 @@ public class UbigeoDTO implements Serializable {
 	private String codigoUbigeo;
 	
 	private String nombreUbigeo;
+	
+	@JsonIgnore
+	private List<PersonaDTO> personas;
 
 	public UbigeoDTO() {
-		
+		personas = new ArrayList<PersonaDTO>();
 	}
 
 	public String getCodigoUbigeo() {
@@ -31,5 +38,13 @@ public class UbigeoDTO implements Serializable {
 
 	public void setNombreUbigeo(String nombreUbigeo) {
 		this.nombreUbigeo = nombreUbigeo;
+	}
+
+	public List<PersonaDTO> getPersonas() {
+		return personas;
+	}
+
+	public void setPersonas(List<PersonaDTO> personas) {
+		this.personas = personas;
 	}
 }
