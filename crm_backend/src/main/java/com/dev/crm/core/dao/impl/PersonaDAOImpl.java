@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -142,5 +143,23 @@ public class PersonaDAOImpl extends BaseDAOHibernateImpl implements PersonaDAO {
 			return false;
 		}
 		return true;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Persona> spListarPersonasNoClienteByCreadoPor(String creadoPor) {
+		
+		List<Persona> personas = new ArrayList<Persona>();
+		
+		try {
+			
+			StoredProcedureQuery query = em.createNamedStoredProcedureQuery("listaPersonasNoClientes");
+			query.setParameter("COD_USU", creadoPor);
+			personas = query.getResultList();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return personas;
 	}
 }

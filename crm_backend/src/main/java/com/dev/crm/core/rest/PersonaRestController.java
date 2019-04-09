@@ -84,6 +84,25 @@ public class PersonaRestController {
 		}
 	}
 	
+	@GetMapping("/personas/listaPersonasNoClientes")
+	public ResponseEntity<List<PersonaDTO>> spListarPersonasNoClienteByCreadoPor() {
+		
+		try {
+			
+			String creadoPor = "vendedor";
+			List<PersonaDTO> personasDTO = personaFacade.spListarPersonasNoClienteByCreadoPor(creadoPor);
+			if(GenericUtil.isNotEmpty(personasDTO)) {
+				return new ResponseEntity<List<PersonaDTO>>(personasDTO, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<PersonaDTO>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<PersonaDTO>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	@GetMapping("/persona/{documentoPersona}")
 	public ResponseEntity<PersonaDTO> getByDocumentoPersona(@PathVariable(value="documentoPersona") String documentoPersona) {
 		

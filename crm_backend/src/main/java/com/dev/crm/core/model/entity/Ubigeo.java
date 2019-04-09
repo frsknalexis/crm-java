@@ -28,7 +28,7 @@ public class Ubigeo implements Serializable {
 	@Column(name="nombre_ubigeo", length=50, nullable=false)
 	private String nombreUbigeo;
 	
-	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="ubigeo")
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="ubigeo")
 	private List<Persona> personas;
 
 	public Ubigeo() {

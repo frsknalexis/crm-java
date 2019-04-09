@@ -13,6 +13,8 @@ public interface PersonaFacade {
 	
 	List<PersonaDTO> findPersonasByCreadoPor(String creadoPor);
 	
+	List<PersonaDTO> spListarPersonasNoClienteByCreadoPor(String creadoPor);
+	
 	PersonaDTO getByDocumentoPersona(String documentoPersona);
 	
 	ResponseBaseOperation save(PersonaDTO personaDTO);

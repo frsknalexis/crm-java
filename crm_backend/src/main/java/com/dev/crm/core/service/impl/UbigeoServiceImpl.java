@@ -32,7 +32,7 @@ public class UbigeoServiceImpl implements UbigeoService {
 		try {
 			
 			ubigeos = ubigeoDAO.findAll(Ubigeo.class);
-			if(!(GenericUtil.isCollectionEmpty(ubigeos))) {
+			if(GenericUtil.isNotNull(ubigeos)) {
 				return ubigeos;
 			}
 		}
@@ -52,7 +52,7 @@ public class UbigeoServiceImpl implements UbigeoService {
 			if(!(GenericUtil.isEmpty(termino))) {
 				ubigeos = ubigeoJpaRepository.findByNombreUbigeo(termino);
 			}
-			if(!(GenericUtil.isCollectionEmpty(ubigeos))) {
+			if(GenericUtil.isNotNull(ubigeos)) {
 				return ubigeos;
 			}
 			else {

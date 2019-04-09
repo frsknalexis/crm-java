@@ -12,6 +12,8 @@ public interface PersonaService {
 	
 	List<Persona> findPersonasByCreadoPor(String creadoPor);
 	
+	List<Persona> spListarPersonasNoClienteByCreadoPor(String creadoPor);
+	
 	Persona getByDocumentoPersona(String documentoPersona);
 	
 	void disabledPersona(String documentoPersona);

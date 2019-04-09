@@ -32,7 +32,7 @@ public class PersonaServiceImpl implements PersonaService {
 		try {
 			
 			personas = personaDAO.findAll(Persona.class);
-			if(!(GenericUtil.isEmpty(personas))) {
+			if(GenericUtil.isNotNull(personas)) {
 				return personas;
 			}
 		}
@@ -50,7 +50,7 @@ public class PersonaServiceImpl implements PersonaService {
 		try {
 			
 			personas = personaDAO.getActiveList(Persona.class);
-			if(!(GenericUtil.isEmpty(personas))) {
+			if(GenericUtil.isNotNull(personas)) {
 				return personas;
 			}
 		}
@@ -68,7 +68,7 @@ public class PersonaServiceImpl implements PersonaService {
 		try {
 			
 			personas = personaDAO.findPersonasByCreadoPor(creadoPor);
-			if(!(GenericUtil.isEmpty(personas))) {
+			if(GenericUtil.isNotNull(personas)) {
 				return personas;
 			}
 		}
@@ -177,13 +177,45 @@ public class PersonaServiceImpl implements PersonaService {
 			p.setIpUsuario(IpUtil.getCurrentIPAddress());
 			p.setUsuarioMaquina(IpUtil.getCurrentUserMachine());
 			p.setUsuarioSistema(IpUtil.getCurrentUserSystem());
+					
 			if(personaDAO.isPersonaPresent(p.getDocumentoPersona())) {
-				p.setFechaModificacion(DateUtil.getCurrentDate());
-				personaDAO.update(p);
+				Persona persona = personaDAO.getByDocumentoPersona(p.getDocumentoPersona());
+				persona.setUbigeo(p.getUbigeo());
+				persona.setNombrePersona(p.getNombrePersona());
+				persona.setApellidoPaternoPersona(p.getApellidoPaternoPersona());
+				persona.setApellidoMaternoPersona(p.getApellidoMaternoPersona());
+				persona.setDireccionReniecPersona(p.getDireccionReniecPersona());
+				persona.setDireccionActualPersona(p.getDireccionActualPersona());
+				persona.setReferenciaPersona(p.getReferenciaPersona());
+				persona.setTelefonoUnoPersona(p.getTelefonoUnoPersona());
+				persona.setTelefonoDosPersona(p.getTelefonoDosPersona());
+				persona.setTelefonoTresPersona(p.getTelefonoTresPersona());
+				
+				persona.setFechaModificacion(DateUtil.getCurrentDate());
+				persona.setModificadoPor("vendedor");
+				personaDAO.update(persona);
 			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public List<Persona> spListarPersonasNoClienteByCreadoPor(String creadoPor) {
+		
+		List<Persona> personas = new ArrayList<Persona>();
+		
+		try {
+			
+			personas = personaDAO.spListarPersonasNoClienteByCreadoPor(creadoPor);
+			if(GenericUtil.isNotNull(personas)) {
+				return personas;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

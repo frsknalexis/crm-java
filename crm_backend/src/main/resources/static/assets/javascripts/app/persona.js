@@ -4,6 +4,8 @@
 
 $(document).on('ready', function() {
 	
+	var flag;
+	
 	setTimeout(function() {
 		mostrarForm(false);
 	}, 200);
@@ -11,7 +13,7 @@ $(document).on('ready', function() {
 	$.ajax({
 		
 		type: 'GET',
-		url: 'http://localhost:8080/api/v1/persona/personas/listByCreadoPor',
+		url: 'http://localhost:8080/api/v1/persona/personas/listaPersonasNoClientes',
 		dataType: 'json',
 		success: function(response){
 			console.log(response);
@@ -53,8 +55,19 @@ $(document).on('ready', function() {
 			{"data": "documentoPersona"},
 			{"data": "nombrePersona"},
 			{"data": "apellidoPaternoPersona"},
-			{"data": "apellidoMaternoPersona"}
+			{"data": "apellidoMaternoPersona"},
+			{"data": "direccionActualPersona"},
+			{"data": "referenciaPersona"},
+			{"data": "telefonoUnoPersona"},
+			{"defaultContent": '<button type="button" class="btn btn-success btn-sm btnEditarPersona" idDocumento><i class="fa fa-plus"></i> Añadir a Cliente</button>'},
+			{"defaultContent": '<div class="btn-group"><button type="button" class="btn btn-info btn-sm btnEditarPersona" idDocumento><i class="fa fa-pencil" title="Editar"></i></button></div>'}
 		]		
+	});
+	
+	$('#tablaPersonas tbody').on('click', 'button', function() {
+		
+		var data = tabla.row($(this).parents('tr')).data();
+		$(this).attr('idDocumento', data.documentoPersona);
 	});
 	
 	function limpiar() {
@@ -96,6 +109,8 @@ $(document).on('ready', function() {
 	$('#btnAgregarPersona').on('click', function() {
 		
 		mostrarForm(true);
+		$('#documentoPersona').attr('disabled', false);
+		flag = false;
 	});
 	
 	$('#cancelarAccion').on('click', function() {
@@ -128,9 +143,49 @@ $(document).on('ready', function() {
 					telefonoTresPersona: $('#telefonoTresPersona').val()
 			};
 			
-			var flag = true;
-			
-			if(flag) {
+			if(flag == true) {
+				
+				console.log(flag);
+				
+				$.ajax({
+					
+					type: 'PUT',
+					url: 'http://localhost:8080/api/v1/persona/update',
+					headers: {
+						"Content-Type": "application/json",
+						"Accept": "application/json"
+					},
+					data: JSON.stringify(formData),
+					dataType: 'json',
+					success: function(response) {
+						
+						console.log(response);
+						
+						swal({
+							type: "success",
+							title: "Persona Actualizado con exito",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar",
+							closeOnConfirm: false
+						}).then((result) => {
+
+							if(result.value) {
+								$(location).attr('href', '/persona/view');
+							}
+						});
+					},
+					error: function() {
+						
+						swal({
+			                type: 'error',
+			                title: 'Ooops',
+			                text: 'Error al Actualizar Persona !'
+			            });
+					}
+				});
+			}
+					
+			if(flag == false) {
 				
 				$.ajax({
 					
@@ -150,7 +205,7 @@ $(document).on('ready', function() {
 							
 							swal({
 								type: "success",
-								title: "Usuario: " + response.data.nombrePersona + " Registrado con exito",
+								title: "Persona: " + response.data.nombrePersona + " Registrado con exito",
 								showConfirmButton: true,
 								confirmButtonText: "Cerrar",
 								closeOnConfirm: false
@@ -168,6 +223,8 @@ $(document).on('ready', function() {
 				                title: 'Ooops',
 				                text: 'Ocurrio un Error al Registrar a la Persona: '+ response.data.nombrePersona +', verifique su Numero Documento !'
 				            });
+							
+							limpiar();
 						}
 					},
 					error: function() {
@@ -412,6 +469,44 @@ $(document).on('ready', function() {
 			}
 		}
 	});
+	
+	/**
+	 *
+	 * Editar Persona
+	 * 
+	 */
+	$('#tablaPersonas tbody').on('click', 'button.btnEditarPersona', function() {
+		
+		var documentoPersona = $(this).attr('idDocumento');
+		console.log('documentoPersona: ' + documentoPersona);
+		
+		mostrarForm(true);
+		$('#documentoPersona').attr('disabled', true);
+		flag = true;
+		
+		$.ajax({
+			
+			type: 'GET',
+			url: 'http://localhost:8080/api/v1/persona/persona/' + documentoPersona,
+			dataType: 'json',
+			success: function(response) {
+				console.log(response);
+				$('#documentoPersona').val(response.documentoPersona);
+				$('#codigoUbigeo').val(response.ubigeo.codigoUbigeo);
+				$('#nombreUbigeo').val(response.ubigeo.nombreUbigeo);
+				$('#nombrePersona').val(response.nombrePersona);
+				$('#apellidoPaternoPersona').val(response.apellidoPaternoPersona);
+				$('#apellidoMaternoPersona').val(response.apellidoMaternoPersona);
+				$('#direccionReniecPersona').val(response.direccionReniecPersona);
+				$('#direccionActualPersona').val(response.direccionActualPersona);
+				$('#referenciaPersona').val(response.referenciaPersona);
+				$('#telefonoUnoPersona').val(response.telefonoUnoPersona);
+				$('#telefonoDosPersona').val(response.telefonoDosPersona);
+				$('#telefonoTresPersona').val(response.telefonoTresPersona);
+			}
+		});
+	});
+	
 	/**
 	 * 
 	 * Autocomplete para el Ubigeo

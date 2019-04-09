@@ -8,6 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 
 import com.dev.crm.core.model.base.AuditingEntity;
@@ -15,6 +18,9 @@ import com.dev.crm.core.model.base.BaseEntity;
 
 @Entity
 @Table(name="tb_ci_persona", schema="public")
+@NamedStoredProcedureQuery(name="listaPersonasNoClientes", procedureName="sp_lista_persona_no_cliente", parameters= {
+		@StoredProcedureParameter(mode=ParameterMode.IN, name="COD_USU", type=String.class)
+})
 public class Persona extends AuditingEntity implements Serializable, BaseEntity {
 
 	/**
