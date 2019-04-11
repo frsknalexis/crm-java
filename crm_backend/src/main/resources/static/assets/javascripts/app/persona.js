@@ -6,9 +6,14 @@ $(document).on('ready', function() {
 	
 	var flag;
 	
+	var accion;
+	
 	setTimeout(function() {
 		mostrarForm(false);
+		mostrarFormCliente(false);
 	}, 200);
+	
+	cargarComboSexo();
 	
 	$.ajax({
 		
@@ -17,9 +22,12 @@ $(document).on('ready', function() {
 		dataType: 'json',
 		success: function(response){
 			console.log(response);
+			
+			if(response == null) {
+			}
 		}
 	});
-	
+		
 	var tabla = $('#tablaPersonas').DataTable({
 		
 		"language": {
@@ -48,7 +56,7 @@ $(document).on('ready', function() {
 		},
 		"bProcessing": true,
 		"ajax": {
-			"url": "http://localhost:8080/api/v1/persona/personas/listByCreadoPor",
+			"url": "http://localhost:8080/api/v1/persona/personas/listaPersonasNoClientes",
 			"dataSrc": ""
 		},
 		"columns": [
@@ -59,7 +67,7 @@ $(document).on('ready', function() {
 			{"data": "direccionActualPersona"},
 			{"data": "referenciaPersona"},
 			{"data": "telefonoUnoPersona"},
-			{"defaultContent": '<button type="button" class="btn btn-success btn-sm btnEditarPersona" idDocumento><i class="fa fa-plus"></i> Añadir a Cliente</button>'},
+			{"defaultContent": '<button type="button" class="btn btn-success btn-sm btnAgregarPersonaCliente" idDocumento><i class="fa fa-plus"></i> Añadir Cliente</button>'},
 			{"defaultContent": '<div class="btn-group"><button type="button" class="btn btn-info btn-sm btnEditarPersona" idDocumento><i class="fa fa-pencil" title="Editar"></i></button></div>'}
 		]		
 	});
@@ -86,6 +94,16 @@ $(document).on('ready', function() {
 		$('#telefonoTresPersona').val('');
 	}
 	
+	function limpiarClientes() {
+		
+		$('#consecutivoCliente').val('');
+		$('#codigoCliente').val('');
+		$('#nombreComercialCliente').val('');
+		$('#correoCliente').val('');
+		$('#facebookCliente').val('');
+		$('#codigoSexo').val('');
+	}
+	
 	function mostrarForm(flag) {
 		
 		limpiar();
@@ -101,9 +119,28 @@ $(document).on('ready', function() {
 		}
 	}
 	
+	function mostrarFormCliente(flag) {
+		
+		limpiarClientes();
+		if(flag) {
+			
+			$('#listadoPersonaRegistro').hide();
+			$('#formularioRegistroClientes').show();
+		}
+		else {
+			$('#listadoPersonaRegistro').show();
+			$('#formularioRegistroClientes').hide();
+		}
+	}
+	
 	function cancelarForm() {
 		limpiar();
 		mostrarForm(false);
+	}
+	
+	function cancelarFormCliente() {
+		limpiarClientes();
+		mostrarFormCliente(false);
 	}
 	
 	$('#btnAgregarPersona').on('click', function() {
@@ -216,7 +253,7 @@ $(document).on('ready', function() {
 								}
 							});
 						}
-						else if(response.status == 'ERROR') {
+						else if(response.status == 'ERROR') { 
 							
 							swal({
 				                type: 'error',
@@ -348,7 +385,7 @@ $(document).on('ready', function() {
 		    	return false;
 			}
 			
-			if(!($('#documentoPersona').val().match(/^[0-9]{8,11}$/))) {
+			if(!($('#documentoPersona').val().match(/^[0-9]{7,11}$/))) {
 				
 				swal({
 	                type: 'error',
@@ -453,20 +490,49 @@ $(document).on('ready', function() {
 			    	$('#telefonoUnoPersona').focus();
 			    	return false;
 				}
-				
-				else if(!($('#telefonoDosPersona').val().match(/^[0-9]{7,9}$/))) {
-					
-					swal({
-		                type: 'error',
-		                title: 'Ooops',
-		                text: 'El campo Telefono o Celular Dos no permite caracteres especiales, ni letras'
-		            });
-			    	
-					$('#telefonoDosPersona').val('');
-			    	$('#telefonoDosPersona').focus();
-			    	return false;
-				}
 			}
+		}
+	});
+	
+	/**
+	 * 
+	 * Evento change para el input Telefono 2
+	 * 
+	 * */
+	$('#telefonoDosPersona').on('change', function() {
+		
+		if(!($('#telefonoDosPersona').val().match(/^[0-9]{7,9}$/))) {
+			
+			swal({
+                type: 'error',
+                title: 'Ooops',
+                text: 'El campo Telefono o Celular Dos no permite caracteres especiales, ni letras'
+            });
+	    	
+			$('#telefonoDosPersona').val('');
+	    	$('#telefonoDosPersona').focus();
+	    	return false;
+		}
+	});
+	
+	/**
+	 * 
+	 * Evento change para el input Telefono 3
+	 * 
+	 * */
+	$('#telefonoTresPersona').on('change', function() {
+		
+		if(!($('#telefonoTresPersona').val().match(/^[0-9]{7,9}$/))) {
+			
+			swal({
+                type: 'error',
+                title: 'Ooops',
+                text: 'El campo Telefono o Celular Tres no permite caracteres especiales, ni letras'
+            });
+	    	
+			$('#telefonoTresPersona').val('');
+	    	$('#telefonoTresPersona').focus();
+	    	return false;
 		}
 	});
 	
@@ -506,6 +572,267 @@ $(document).on('ready', function() {
 			}
 		});
 	});
+	
+	function cargarComboSexo() {
+		
+		var $codigoSexo = $('#codigoSexo');
+		
+		$.ajax({
+			
+			type: 'GET',
+			url: 'http://localhost:8080/api/v1/sexo/sexos',
+			dataType: 'json',
+			success: function(response) {
+				console.log(response);
+				$codigoSexo.html('');
+				$codigoSexo.append('<option value="">Seleccione una opcion</option>');
+				for(var i = 0; i < response.length; i++) {
+					$codigoSexo.append('<option value="' + response[i].codigoSexo +'">' + response[i].descripcionSexo + '</option>');
+				}
+			}
+		});
+	}
+	
+	$('#tablaPersonas tbody').on('click', 'button.btnAgregarPersonaCliente', function() {
+		
+		var documentoPersona = $(this).attr('idDocumento');
+		console.log("documentoPersona: " + documentoPersona);
+		mostrarFormCliente(true);
+		accion = false;
+		$('#documentoPersonaCliente').attr('disabled', true);
+		$('#documentoPersonaCliente').val(documentoPersona);
+		$('#inputConsecutivoCliente').hide();
+		$('#inputCodigoCliente').hide();
+	});
+	
+	$('#cancelarAccionCliente').on('click', function() {
+		
+		cancelarFormCliente();
+	});
+	
+	$('#guardarCliente').on('click', function(e) {
+		
+		e.preventDefault();
+		
+		if($('#correoCliente').val().match(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/)
+			&& $('#facebookCliente').val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\,.-\s]+$/)
+			&& $('#codigoSexo').val().trim() != "") {
+				
+			var formData = {	
+					documentoPersonaCliente: $('#documentoPersonaCliente').val(),
+					nombreComercialCliente: $('#nombreComercialCliente').val(),
+					correoCliente: $('#correoCliente').val(),
+					facebookCliente: $('#facebookCliente').val(),
+					sexo: {
+						codigoSexo: $('#codigoSexo').val()
+					}
+			};
+			
+			if(accion == false) {
+				console.log(formData);
+				
+				$.ajax({
+					
+					type:'POST',
+					url: 'http://localhost:8080/api/v1/cliente/save',
+					headers: {
+						"Content-Type": "application/json",
+						"Accept": "application/json"
+					},
+					data: JSON.stringify(formData),
+					dataType: 'json',
+					success: function(response) {
+						console.log(response);
+						
+						if(response.status == 'CREATED') {
+							
+							swal({
+								type: "success",
+								title: "Cliente Registrado con exito",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar",
+								closeOnConfirm: false
+							}).then((result) => {
+
+								if(result.value) {
+									$(location).attr('href', '/persona/view');
+								}
+							});
+						}
+					},
+					error: function() {
+						
+						swal({
+			                type: 'error',
+			                title: 'Ooops',
+			                text: 'Error al Registrar Cliente !'
+			            });
+					}
+				});
+			}
+		}
+		
+		if($('#correoCliente').val() == "" && $('#facebookCliente').val() == "" && $('#codigoSexo').val().trim() == "") {
+			
+			swal({
+                type: 'error',
+                title: 'Ooops',
+                text: 'Debe llenar todos los Campos !'
+            });
+		
+			return false;
+		}
+		
+		else{
+			
+			if($('#correoCliente').val() == "" || $('#correoCliente').val() == 0) {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'El campo Correo Electronico no puede estar vacio, ingrese un valor valido'
+	            });
+		    	
+		    	$('#correoCliente').focus();
+		    	return false;
+			}
+			else if($('#facebookCliente').val() == "" || $('#facebookCliente').val() == 0) {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'El campo Facebook Cliente no puede estar vacio, ingrese un valor valido'
+	            });
+		    	
+		    	$('#facebookCliente').focus();
+		    	return false;
+			}
+			else if($('#codigoSexo').val().trim() == "") {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'Debe seleccionar un Sexo'
+	            });
+				
+		    	return false;
+			}
+						
+			else if(!($('#correoCliente').val().match(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/))) {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'El campo Correo Electronico no tiene un formato de Correo valido'
+	            });
+				
+				$('#correoCliente').val('');
+				$('#correoCliente').focus();
+		    	return false;
+			}
+			
+			else if(!($('#facebookCliente').val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\,.-\s]+$/))) {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'Ingrese un valor valido para el Facebook Cliente'
+	            });
+				
+				$('#facebookCliente').val('');
+				$('#facebookCliente').focus();
+		    	return false;
+			}
+		}
+	});
+	
+	$('#nombreComercialCliente').on('change', function() {
+		
+		if(!($('#nombreComercialCliente').val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\,.-\s]+$/))) {
+			
+			swal({
+                type: 'error',
+                title: 'Ooops',
+                text: 'El campo Nombre Comercial Cliente no permite caracteres especiales'
+            });
+			
+			$('#nombreComercialCliente').val('');
+			$('#nombreComercialCliente').focus();
+	    	return false;
+		}
+		
+	});
+	
+	$.ajax({
+		
+		type: 'GET',
+		url: 'http://localhost:8080/api/v1/cliente/clientes/listarClienteVendedor',
+		dataType: 'json',
+		success: function(response){
+			console.log(response);
+		}
+	});
+	
+	var tablaClientes = $('#tablaClientes').DataTable({
+		"language": {
+			"sProcessing":     "Procesando...",
+			"sLengthMenu":     "Mostrar _MENU_ registros",
+			"sZeroRecords":    "No se encontraron resultados",
+			"sEmptyTable":     "Ningún dato disponible en esta tabla",
+			"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+			"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+			"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+			"sInfoPostFix":    "",
+			"sSearch":         "Buscar:",
+			"sUrl":            "",
+			"sInfoThousands":  ",",
+			"sLoadingRecords": "Cargando...",
+			"oPaginate": {
+				"sFirst":    "Primero",
+				"sLast":     "Último",
+				"sNext":     "Siguiente",
+				"sPrevious": "Anterior"
+			},
+			"oAria": {
+				"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+			}
+		},
+		"bProcessing": true,
+		"ajax": {
+			"url": "http://localhost:8080/api/v1/cliente/clientes/listarClienteVendedor",
+			"dataSrc": ""
+		},
+		"columns": [
+			{"data": "documentoPersonaCliente"},
+			{"data": "consecutivoCliente"},
+			{"data": "codigoCliente"},
+			{"data": "nombreComercialCliente"},
+			{"data": "correoCliente"},
+			{"data": "facebookCliente"},
+			{"defaultContent": '<span class="label label-success estadoCliente">Activo</span>'},
+			{"defaultContent": '<div class="btn-group"><button type="button" class="btn btn-info btn-sm btnVerCliente" idDocumentoCliente><i class="fa fa-eye" title="Ver"></i></button><button type="button" class="btn btn-primary btn-sm btnEditarCliente" idDocumentoCliente><i class="fa fa-pencil" title="Editar"></i></button><button type="button" class="btn btn-danger btnDeshabilitarCliente btn-sm" idDocumentoCliente><i class="fa fa-times" title="Deshabilitar"></i></button><button type="button" class="btn btn-success btn-sm btnHabilitarCliente" idDocumentoCliente style="display:none;"><i class="fa fa-check" title="Habilitar"></i></button></div>'}
+		]
+	});
+	
+	$('#tablaClientes tbody').on('click', 'button', function() {
+		
+		var data = tablaClientes.row( $(this).parents('tr')).data();
+		$(this).attr('idDocumentoCliente', data.documentoPersonaCliente);
+	});
+	
+	
+	/**
+	 * 
+	 *Ver detalles del Cliente
+	 * 
+	 */
+	$('#tablaClientes tbody').on('click', 'button.btnVerCliente', function(){
+		
+		var documentoPersonaCliente = $(this).attr('idDocumentoCliente');
+		console.log("documentoPersonaCliente: " + documentoPersonaCliente);
+	});
+	
 	
 	/**
 	 * 

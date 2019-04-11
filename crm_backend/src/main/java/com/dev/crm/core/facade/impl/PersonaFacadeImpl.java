@@ -91,7 +91,7 @@ public class PersonaFacadeImpl implements PersonaFacade {
 		
 		try {
 			
-			List<Persona> personas = personaService.findPersonasByCreadoPor(creadoPor);
+			List<Persona> personas = personaService.spListarPersonasNoClienteByCreadoPor(creadoPor);
 			personas.stream().forEach(p -> {
 				personasDTO.add(modelMapper.map(p, PersonaDTO.class));
 			});

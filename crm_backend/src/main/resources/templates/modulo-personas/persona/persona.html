@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="fixed" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" class="fixed sidebar-left-collapsed" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/headinc :: head"></head>
 <body>
 	<section class="body">
@@ -27,35 +27,72 @@
 						<!-- start: page -->
 						<div class="row" id="listadoPersonaRegistro">
 							<div class="col-md-6 col-lg-6">
-								<button type="button" id="btnAgregarPersona" class="mb-xs btn-md btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Persona-Cliente</button>
+								<button type="button" id="btnAgregarPersona" class="mb-xs btn-md btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Personas</button>
 							</div>
 							<div class="col-md-12 col-lg-12">
-							<section class="panel panel-featured panel-featured-primary panel-primary">
-								<header class="panel-heading">
-									<h2 class="panel-title">Listado de Personas</h2>
-								</header>
-								<div class="panel-body">
-									<table class="table table-hover table-striped mb-none" id="tablaPersonas" width="100%">
-									<thead class="text-center">
-										<tr>
-											<th>DNI-RUC</th>
-											<th>Nombre</th>
-											<th>Apellido Paterno</th>
-											<th>Apellido Materno</th>
-											<th>Direccion Actual</th>
-											<th>Referencia</th>
-											<th>Telefono</th>
-											<th>Asignar Cliente</th>
-											<th style="width:10px">Acciones</th>
-										</tr>
-									</thead>
-								</table>
+								<div class="tabs tabs-primary">
+									<ul class="nav nav-tabs">
+										<li class="active">
+											<a href="#popular1" data-toggle="tab"><i class="fa fa-users"></i> Personas</a>
+										</li>
+										<li>
+											<a href="#recent1" data-toggle="tab"><i class="fa fa-users"></i>Clientes</a>
+										</li>
+									</ul>
+									<div class="tab-content">
+										<div id="popular1" class="tab-pane active">
+											<section class="panel panel-featured panel-featured-primary panel-primary">
+												<header class="panel-heading">
+													<h2 class="panel-title">Listado de Personas</h2>
+												</header>
+												<div class="panel-body">
+													<table class="table table-hover table-striped mb-none" id="tablaPersonas" width="100%">
+														<thead class="text-center">
+															<tr>
+																<th>DNI-RUC</th>
+																<th>Nombre</th>
+																<th>Apellido Paterno</th>
+																<th>Apellido Materno</th>
+																<th>Direccion Actual</th>
+																<th>Referencia</th>
+																<th>Telefono</th>
+																<th>Clientes</th>
+																<th style="width:10px">Acciones</th>
+															</tr>
+														</thead>
+													</table>
+												</div>
+											</section>
+										</div>
+										<div id="recent1" class="tab-pane">
+											<section class="panel panel-featured panel-featured-primary panel-primary">
+												<header class="panel-heading">
+													<h2 class="panel-title">Listado de Clientes</h2>
+												</header>
+												<div class="panel-body">
+													<table class="table table-hover table-striped mb-none" id="tablaClientes" width="100%">
+														<thead class="text-center">
+															<tr>
+																<th>DNI-RUC</th>
+																<th>Consecutivo Cliente</th>
+																<th>Codigo Cliente</th>
+																<th>Nombre Comercial</th>
+																<th>Correo Electronico</th>
+																<th>Facebook Cliente</th>
+																<th>Activo</th>
+																<th>Acciones</th>
+															</tr>
+														</thead>
+													</table>
+												</div>
+											</section>
+										</div>
+									</div>
 								</div>
-							</section>
-						</div>
+							</div>
 						</div>
 						<div class="row" id="formularioPersonaRegistro">
-							<div class="col-md-6 col-lg-6 col-xl-6 col-sm-6">
+							<div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
 								<section class="panel panel-featured-left panel-featured-primary">
 									<header class="panel-heading">
 									<h2 class="panel-title">Formulario Personas</h2>
@@ -63,7 +100,7 @@
 									<div class="panel-body">
 										<form role="form" method="post">
 											<div class="row">
-												<div class="col-md-12 form-group">
+												<div class="col-md-6 form-group">
 													<div class="input-group mb-md">
 														<span class="input-group-addon">
 															<i class="fa fa-credit-card"></i>
@@ -71,7 +108,7 @@
 														<input type="text" class="form-control input-sm" id="documentoPersona" placeholder="Numero Documento">
 													</div>
 												</div>
-												<div class="col-md-12 form-group">
+												<div class="col-md-6 form-group">
 													<div class="input-group mb-md">
 														<span class="input-group-addon">
 															<i class="fa fa-bookmark"></i>
@@ -80,7 +117,7 @@
 														<input type="text" class="form-control input-sm" id="nombreUbigeo" placeholder="Ubigeo">
 													</div>
 												</div>
-												<div class="col-md-12 form-group">
+												<div class="col-md-4 form-group">
 													<div class="input-group mb-md">
 														<span class="input-group-addon">
 															<i class="fa fa-user"></i>
@@ -88,7 +125,7 @@
 														<input type="text" class="form-control input-sm" id="nombrePersona" placeholder="Nombre">
 													</div>
 												</div>
-												<div class="col-md-6 form-group">
+												<div class="col-md-4 form-group">
 													<div class="input-group mb-md">
 														<span class="input-group-addon">
 															<i class="fa fa-user"></i>
@@ -96,7 +133,7 @@
 														<input type="text" class="form-control input-sm" id="apellidoPaternoPersona" placeholder="Apellido Paterno">
 													</div>
 												</div>
-												<div class="col-md-6 form-group">
+												<div class="col-md-4 form-group">
 													<div class="input-group mb-md">
 														<span class="input-group-addon">
 															<i class="fa fa-user"></i>
@@ -104,7 +141,7 @@
 														<input type="text" class="form-control input-sm" id="apellidoMaternoPersona" placeholder="Apellido Materno">
 													</div>
 												</div>
-												<div class="col-md-12 form-group">
+												<div class="col-md-4 form-group">
 													<div class="input-group mb-md">
 														<span class="input-group-addon">
 															<i class="fa fa-home"></i>
@@ -112,7 +149,7 @@
 														<input type="text" class="form-control input-sm" id="direccionReniecPersona" placeholder="Direccion RENIEC">
 													</div>
 												</div>
-												<div class="col-md-12 form-group">
+												<div class="col-md-4 form-group">
 													<div class="input-group mb-md">
 														<span class="input-group-addon">
 															<i class="fa fa-home"></i>
@@ -120,7 +157,7 @@
 														<input type="text" class="form-control input-sm" id="direccionActualPersona" placeholder="Direccion Actual">
 													</div>
 												</div>
-												<div class="col-md-12 form-group">
+												<div class="col-md-4 form-group">
 													<div class="input-group mb-md">
 														<span class="input-group-addon">
 															<i class="fa fa-home"></i>
@@ -128,7 +165,7 @@
 														<input type="text" class="form-control input-sm" id="referenciaPersona" placeholder="Referencia Direccion">
 													</div>
 												</div>
-												<div class="col-md-6 form-group">
+												<div class="col-md-4 form-group">
 											 		<div class="input-group mb-md">
 														<span class="input-group-addon">
 															<i class="fa fa-phone"></i>
@@ -136,7 +173,7 @@
 														<input type="text" class="form-control input-sm" id="telefonoUnoPersona" placeholder="Telefono 1">
 													</div>
 												</div>
-												<div class="col-md-6 form-group">
+												<div class="col-md-4 form-group">
 											 		<div class="input-group mb-md">
 														<span class="input-group-addon">
 															<i class="fa fa-phone"></i>
@@ -144,7 +181,7 @@
 														<input type="text" class="form-control input-sm" id="telefonoDosPersona" placeholder="Telefono 2">
 													</div>
 												</div>
-												<div class="col-md-6 form-group">
+												<div class="col-md-4 form-group">
 											 		<div class="input-group mb-md">
 														<span class="input-group-addon">
 															<i class="fa fa-phone"></i>
@@ -161,13 +198,77 @@
 									</div>
 								</section>
 							</div>
-							<div class="col-md-6 col-lg-6 col-xl-6 col-sm-6">
+						</div>
+						<div class="row" id="formularioRegistroClientes">
+							<div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
 								<section class="panel panel-featured-right panel-featured-primary">
 									<header class="panel-heading">
-									<h2 class="panel-title">Formulario Clientes</h2>
+										<h2 class="panel-title">Formulario Clientes</h2>
 									</header>
 									<div class="panel-body">
-											
+										<form role="form" method="post">
+											<div class="col-md-4 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-credit-card"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="documentoPersonaCliente">
+												</div>
+											</div>
+											<div class="col-md-4 form-group" id="inputConsecutivoCliente">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-tags"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="consecutivoCliente" placeholder="Consecutivo Cliente">
+												</div>
+											</div>
+											<div class="col-md-4 form-group" id="inputCodigoCliente">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-barcode"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="codigoCliente" placeholder="Codigo Cliente">
+												</div>
+											</div>
+											<div class="col-md-4 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-bookmark"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="nombreComercialCliente" placeholder="Nombre Comercial">
+												</div>
+											</div>
+											<div class="col-md-4 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														@
+													</span>
+													<input type="text" class="form-control input-sm" id="correoCliente" placeholder="Correo Electronico">
+												</div>
+											</div>
+											<div class="col-md-4 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-facebook-square"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="facebookCliente" placeholder="Facebook Cliente">
+												</div>
+											</div>
+											<div class="col-md-4 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-male"></i>
+													</span>
+													<select data-plugin-selectTwo class="form-control populate" id="codigoSexo">
+													</select>
+												</div>
+											</div>
+											<div class="col-md-12 form-group">
+												<button type="submit" id="guardarCliente" class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Guardar Cliente</button>
+												<button type="button" id="cancelarAccionCliente" class="btn btn-sm btn-danger"><i class="fa fa-arrow-circle-left"></i> Cancelar</button>
+											</div>
+										</form>	
 									</div>
 								</section>
 							</div>

@@ -1,6 +1,7 @@
 package com.dev.crm.core.model.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedStoredProcedureQueries;
 import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureParameter;
@@ -17,8 +19,20 @@ import javax.persistence.Table;
 @Entity
 @Table(name="tb_ci_cliente", schema="public")
 @IdClass(value=ClientePK.class)
-@NamedStoredProcedureQuery(name="insertarCliente", procedureName="sp_inserccion_cliente", parameters= {
-		@StoredProcedureParameter(mode=ParameterMode.IN, name="COD_DOC", type=String.class)
+@NamedStoredProcedureQueries({
+	
+	@NamedStoredProcedureQuery(name="listarClientesVendedor", procedureName="sp_listar_cliente_vendedor",
+			resultClasses = {Cliente.class}, parameters= {
+			@StoredProcedureParameter(mode=ParameterMode.IN, name="COD_USU", type=String.class)
+	}),
+	@NamedStoredProcedureQuery(name="insertarCliente", procedureName="sp_inserccion_cliente", resultClasses= {Cliente.class}, parameters= {
+			@StoredProcedureParameter(mode=ParameterMode.IN, name="COD_DOC", type=String.class),
+			@StoredProcedureParameter(mode=ParameterMode.IN, name="NOM_COM", type=String.class),
+			@StoredProcedureParameter(mode=ParameterMode.IN, name="ACT_CLI", type=Boolean.class),
+			@StoredProcedureParameter(mode=ParameterMode.IN, name="COR_CLI", type=String.class),
+			@StoredProcedureParameter(mode=ParameterMode.IN, name="FAX_CLI", type=String.class),
+			@StoredProcedureParameter(mode=ParameterMode.IN, name="COD_SEX", type=BigDecimal.class)
+	})
 })
 public class Cliente implements Serializable {
 
@@ -28,11 +42,11 @@ public class Cliente implements Serializable {
 	private static final long serialVersionUID = -6161632597950975614L;
 	
 	@Id
-	@Column(name="cons_cliente", nullable=false)
+	@Column(name="cons_cliente")
 	private Integer consecutivoCliente;
 	
 	@Id
-	@Column(name="documento_personac", length=11, nullable=false)
+	@Column(name="documento_personac", length=11)
 	private String documentoPersonaCliente;
 	
 	@Column(name="codigo_cliente", length=6)

@@ -18,8 +18,9 @@ import com.dev.crm.core.model.base.BaseEntity;
 
 @Entity
 @Table(name="tb_ci_persona", schema="public")
-@NamedStoredProcedureQuery(name="listaPersonasNoClientes", procedureName="sp_lista_persona_no_cliente", parameters= {
-		@StoredProcedureParameter(mode=ParameterMode.IN, name="COD_USU", type=String.class)
+@NamedStoredProcedureQuery(name="listaPersonasNoClientes", procedureName="sp_lista_persona_no_cliente", resultClasses=Persona.class,
+        parameters= {
+        		@StoredProcedureParameter(mode=ParameterMode.IN, name="COD_USU", type=String.class)
 })
 public class Persona extends AuditingEntity implements Serializable, BaseEntity {
 

@@ -121,7 +121,7 @@ $(document).on('ready', function() {
 	setTimeout(function(){
 		cargarEstado();
 		ocultarBotones();
-	}, 3300);
+	}, 4500);
 	
 	$('#guardarUsuario').click(function(e) {
 		
