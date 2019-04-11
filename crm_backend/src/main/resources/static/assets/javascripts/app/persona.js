@@ -67,7 +67,7 @@ $(document).on('ready', function() {
 			{"data": "direccionActualPersona"},
 			{"data": "referenciaPersona"},
 			{"data": "telefonoUnoPersona"},
-			{"defaultContent": '<button type="button" class="btn btn-success btn-sm btnAgregarPersonaCliente" idDocumento><i class="fa fa-plus"></i> Añadir Cliente</button>'},
+			{"defaultContent": '<button type="button" class="btn btn-success btn-xs btnAgregarPersonaCliente" idDocumento><i class="fa fa-users"></i> Añadir a Clientes</button>'},
 			{"defaultContent": '<div class="btn-group"><button type="button" class="btn btn-info btn-sm btnEditarPersona" idDocumento><i class="fa fa-pencil" title="Editar"></i></button></div>'}
 		]		
 	});
@@ -96,6 +96,8 @@ $(document).on('ready', function() {
 	
 	function limpiarClientes() {
 		
+		$('#clienteNombrePersona').val('');
+		$('#clienteApellidosPersona').val('');
 		$('#consecutivoCliente').val('');
 		$('#codigoCliente').val('');
 		$('#nombreComercialCliente').val('');
@@ -601,8 +603,25 @@ $(document).on('ready', function() {
 		accion = false;
 		$('#documentoPersonaCliente').attr('disabled', true);
 		$('#documentoPersonaCliente').val(documentoPersona);
+		$('#clienteNombrePersona').attr('disabled', true);
+		$('#clienteApellidosPersona').attr('disabled', true);
 		$('#inputConsecutivoCliente').hide();
 		$('#inputCodigoCliente').hide();
+		
+		$.ajax({
+			
+			type: 'GET',
+			url: 'http://localhost:8080/api/v1/persona/persona/' + documentoPersona,
+			dataType: 'json',
+			success: function(response) {
+				console.log(response);
+				$('#clienteNombrePersona').val(response.nombrePersona);
+				$('#clienteApellidosPersona').val(response.apellidoPaternoPersona + ' ' + response.apellidoMaternoPersona);
+			}
+		});
+		
+		
+		
 	});
 	
 	$('#cancelarAccionCliente').on('click', function() {
@@ -811,7 +830,7 @@ $(document).on('ready', function() {
 			{"data": "correoCliente"},
 			{"data": "facebookCliente"},
 			{"defaultContent": '<span class="label label-success estadoCliente">Activo</span>'},
-			{"defaultContent": '<div class="btn-group"><button type="button" class="btn btn-info btn-sm btnVerCliente" idDocumentoCliente><i class="fa fa-eye" title="Ver"></i></button><button type="button" class="btn btn-primary btn-sm btnEditarCliente" idDocumentoCliente><i class="fa fa-pencil" title="Editar"></i></button><button type="button" class="btn btn-danger btnDeshabilitarCliente btn-sm" idDocumentoCliente><i class="fa fa-times" title="Deshabilitar"></i></button><button type="button" class="btn btn-success btn-sm btnHabilitarCliente" idDocumentoCliente style="display:none;"><i class="fa fa-check" title="Habilitar"></i></button></div>'}
+			{"defaultContent": '<div class="btn-group"><button type="button" data-toggle="modal" class="btn btn-info btn-sm btnVerCliente" idDocumentoCliente><i class="fa fa-eye" title="Ver"></i></button><button type="button" class="btn btn-primary btn-sm btnEditarCliente" idDocumentoCliente><i class="fa fa-pencil" title="Editar"></i></button><button type="button" class="btn btn-danger btnDeshabilitarCliente btn-sm" idDocumentoCliente><i class="fa fa-times" title="Deshabilitar"></i></button><button type="button" class="btn btn-success btn-sm btnHabilitarCliente" idDocumentoCliente style="display:none;"><i class="fa fa-check" title="Habilitar"></i></button></div>'}
 		]
 	});
 	
@@ -831,6 +850,22 @@ $(document).on('ready', function() {
 		
 		var documentoPersonaCliente = $(this).attr('idDocumentoCliente');
 		console.log("documentoPersonaCliente: " + documentoPersonaCliente);
+		$('#modalDetalleCliente').modal('show');
+		
+		$.ajax({
+			
+			type: 'GET',
+			url: 'http://localhost:8080/api/v1/persona/persona/' + documentoPersonaCliente,
+			dataType: 'json',
+			success: function(response) {
+				console.log(response);
+				$('#myModalLabelCliente').html('Cliente : ' + response.nombrePersona + ' ' + response.apellidoPaternoPersona + ' ' + response.apellidoMaternoPersona);
+				$('#detalleClienteDocumento').val(response.documentoPersona);
+				$('#detalleClienteNombre').val(response.nombrePersona + ' ' + response.apellidoPaternoPersona + ' ' + response.apellidoMaternoPersona);
+				$('#detalleClienteDireccionActual').val(response.direccionActualPersona);
+				$('#detalleClienteTelefonoUno').val(response.telefonoUnoPersona);
+			}
+		});
 	});
 	
 	
