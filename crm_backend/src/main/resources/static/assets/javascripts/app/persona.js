@@ -13,6 +13,11 @@ $(document).on('ready', function() {
 		mostrarFormCliente(false);
 	}, 200);
 	
+	setTimeout(function() {
+		cargarEstadoCliente();
+		ocultarBotones();
+	}, 6500);
+	
 	cargarComboSexo();
 	
 	$.ajax({
@@ -28,7 +33,7 @@ $(document).on('ready', function() {
 		}
 	});
 		
-	var tabla = $('#tablaPersonas').DataTable({
+	var tabla = $('#tablaPersonas').dataTable({
 		
 		"language": {
 			"sProcessing":     "Procesando...",
@@ -53,7 +58,7 @@ $(document).on('ready', function() {
 				"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
 				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 			}
-		},
+		}, 
 		"bProcessing": true,
 		"ajax": {
 			"url": "http://localhost:8080/api/v1/persona/personas/listaPersonasNoClientes",
@@ -70,7 +75,7 @@ $(document).on('ready', function() {
 			{"defaultContent": '<button type="button" class="btn btn-success btn-xs btnAgregarPersonaCliente" idDocumento><i class="fa fa-users"></i> Añadir a Clientes</button>'},
 			{"defaultContent": '<div class="btn-group"><button type="button" class="btn btn-info btn-sm btnEditarPersona" idDocumento><i class="fa fa-pencil" title="Editar"></i></button></div>'}
 		]		
-	});
+	}).DataTable();
 	
 	$('#tablaPersonas tbody').on('click', 'button', function() {
 		
@@ -96,6 +101,7 @@ $(document).on('ready', function() {
 	
 	function limpiarClientes() {
 		
+		$('#documentoPersonaCliente').val('');
 		$('#clienteNombrePersona').val('');
 		$('#clienteApellidosPersona').val('');
 		$('#consecutivoCliente').val('');
@@ -589,7 +595,7 @@ $(document).on('ready', function() {
 				$codigoSexo.html('');
 				$codigoSexo.append('<option value="">Seleccione una opcion</option>');
 				for(var i = 0; i < response.length; i++) {
-					$codigoSexo.append('<option value="' + response[i].codigoSexo +'">' + response[i].descripcionSexo + '</option>');
+					$codigoSexo.append('<option id="optionComboSexo" value="' + response[i].codigoSexo +'">' + response[i].descripcionSexo + '</option>');
 				}
 			}
 		});
@@ -639,6 +645,8 @@ $(document).on('ready', function() {
 				
 			var formData = {	
 					documentoPersonaCliente: $('#documentoPersonaCliente').val(),
+					consecutivoCliente: $('#consecutivoCliente').val(),
+					codigoCliente: $('#codigoCliente').val(),
 					nombreComercialCliente: $('#nombreComercialCliente').val(),
 					correoCliente: $('#correoCliente').val(),
 					facebookCliente: $('#facebookCliente').val(),
@@ -647,7 +655,47 @@ $(document).on('ready', function() {
 					}
 			};
 			
-			if(accion == false) {
+			if(accion == true) {
+				
+				$.ajax({
+					
+					type: 'PUT',
+					url: 'http://localhost:8080/api/v1/cliente/update',
+					headers: {
+						"Content-Type": "application/json",
+						"Accept": "application/json"
+					},
+					data: JSON.stringify(formData),
+					dataType: 'json',
+					success: function(response) {
+						
+						console.log(response);
+						
+						swal({
+							type: "success",
+							title: "Cliente Actualizado con exito",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar",
+							closeOnConfirm: false
+						}).then((result) => {
+
+							if(result.value) {
+								$(location).attr('href', '/persona/view');
+							}
+						});
+					},
+					error: function() {
+						
+						swal({
+			                type: 'error',
+			                title: 'Ooops',
+			                text: 'Error al Actualizar Cliente !'
+			            });
+					}
+				});
+			}
+			
+			else if(accion == false) {
 				console.log(formData);
 				
 				$.ajax({
@@ -840,6 +888,68 @@ $(document).on('ready', function() {
 		$(this).attr('idDocumentoCliente', data.documentoPersonaCliente);
 	});
 	
+	function cargarEstadoCliente() {
+		
+		var estadoCliente = $('.estadoCliente');
+		for(var i=0; i < estadoCliente.length; i++) {
+			var data = tablaClientes.row( $(estadoCliente[i]).parents("tr")).data();
+			if(data.estado == true) {
+				$(estadoCliente[i]).attr("class", "label label-success");
+				$(estadoCliente[i]).html('Activo');
+			}
+			else if(data.estado == false) {
+				$(estadoCliente[i]).attr("class", "label label-danger");
+				$(estadoCliente[i]).html('Inactivo');
+			}
+		}
+	}
+	
+	function ocultarBotones() {
+		
+		var btnVerCliente = $('.btnVerCliente');
+		for(var i=0; i < btnVerCliente.length; i++) {
+			var data = tablaClientes.row( $(btnVerCliente[i]).parents("tr")).data();
+			if(data.estado == true) {
+				$(btnVerCliente[i]).attr("style", "display:block");
+			}
+			else if(data.estado == false) {
+				$(btnVerCliente[i]).attr("style", "display:none");
+			}
+		}
+		
+		var btnEditarCliente = $('.btnEditarCliente');
+		for(var i=0; i < btnEditarCliente.length; i++) {
+			var data = tablaClientes.row( $(btnEditarCliente[i]).parents("tr")).data();
+			if(data.estado == true) {
+				$(btnEditarCliente[i]).attr("style", "display:block");
+			}
+			else if(data.estado == false) {
+				$(btnEditarCliente[i]).attr("style", "display:none");
+			}
+		}
+		
+		var btnDeshabilitarCliente = $('.btnDeshabilitarCliente');
+		for(var i=0; i < btnDeshabilitarCliente.length; i++) {
+			var data = tablaClientes.row( $(btnDeshabilitarCliente[i]).parents("tr")).data();
+			if(data.estado == true) {
+				$(btnDeshabilitarCliente[i]).attr("style", "display:block");
+			}
+			else if(data.estado == false) {
+				$(btnDeshabilitarCliente[i]).attr("style", "display:none");
+			}
+		}
+		
+		var btnHabilitarCliente = $('.btnHabilitarCliente');
+		for(var i=0; i < btnHabilitarCliente.length; i++) {
+			var data = tablaClientes.row( $(btnHabilitarCliente[i]).parents("tr")).data();
+			if(data.estado == true) {
+				$(btnHabilitarCliente[i]).attr("style", "display:none");
+			}
+			else if(data.estado == false) {
+				$(btnHabilitarCliente[i]).attr("style", "display:block");
+			}
+		}
+	}
 	
 	/**
 	 * 
@@ -866,8 +976,179 @@ $(document).on('ready', function() {
 				$('#detalleClienteTelefonoUno').val(response.telefonoUnoPersona);
 			}
 		});
+		
+		$.ajax({
+			
+			type: 'GET',
+			url: 'http://localhost:8080/api/v1/cliente/cliente/' + documentoPersonaCliente,
+			dataType: 'json',
+			success: function(response) {
+				console.log(response);
+				$('#detalleCodigoCliente').val(response.codigoCliente);
+				$('#detalleClienteNombreComercial').val(response.nombreComercialCliente);
+				$('#detalleClienteCorreoElectronico').val(response.correoCliente);
+				$('#detalleClienteFacebook').val(response.facebookCliente);
+			}
+		});
 	});
 	
+	/**
+	 * 
+	 * Editar Cliente 
+	 * 
+	 */
+	$('#tablaClientes tbody').on('click', 'button.btnEditarCliente', function() {
+		
+		var documentoPersonaCliente = $(this).attr('idDocumentoCliente');
+		console.log("documentoPersonaCliente: " + documentoPersonaCliente);
+		
+		mostrarFormCliente(true);
+		accion = true;
+		$('#documentoPersonaCliente').attr('disabled', true);
+		$('#documentoPersonaCliente').val(documentoPersonaCliente);
+		$('#clienteNombrePersona').attr('disabled', true);
+		$('#clienteApellidosPersona').attr('disabled', true);
+		$('#inputConsecutivoCliente').show();
+		$('#inputCodigoCliente').show();
+		$('#consecutivoCliente').attr('disabled', true);
+		$('#codigoCliente').attr('disabled', true);
+		
+		
+		$.ajax({
+			
+			type: 'GET',
+			url: 'http://localhost:8080/api/v1/persona/persona/' + documentoPersonaCliente,
+			dataType: 'json',
+			success: function(response) {
+				console.log(response);
+				$('#clienteNombrePersona').val(response.nombrePersona);
+				$('#clienteApellidosPersona').val(response.apellidoPaternoPersona + ' ' + response.apellidoMaternoPersona);
+			}
+		});
+		
+		$.ajax({
+			
+			type: 'GET',
+			url: 'http://localhost:8080/api/v1/cliente/cliente/' + documentoPersonaCliente,
+			dataType: 'json',
+			success: function(response) {
+				console.log(response);
+				$('#consecutivoCliente').val(response.consecutivoCliente);
+				$('#codigoCliente').val(response.codigoCliente);
+				$('#nombreComercialCliente').val(response.nombreComercialCliente);
+				$('#correoCliente').val(response.correoCliente);
+				$('#facebookCliente').val(response.facebookCliente);
+				$("#codigoSexo option[value="+ response.sexo.codigoSexo +"]").attr("selected",true);
+			}
+		});
+	});
+	
+	/**
+	 * 
+	 * Evento para deshabilitar Cliente
+	 * 
+	 */
+	$('#tablaClientes tbody').on('click', 'button.btnDeshabilitarCliente', function() {
+		
+		var documentoPersonaCliente = $(this).attr('idDocumentoCliente');
+		console.log("documentoPersonaCliente: " + documentoPersonaCliente);
+		
+		swal({
+	        title: '¿Esta Seguro de deshabilitar a este Cliente ?',
+	        text: '¡Si no lo esta puede Cancelar la accion!',
+	        type: 'warning',
+	        showCancelButton: true,
+	        confirmButtonColor: '#3085d6',
+	        cancelButtonColor: '#d33',
+	        cancelButtonText: 'Cancelar',
+	        confirmButtonText: '¡Si!'
+	    }).then((result) => {
+	        if(result.value){
+	           
+	        	 $.ajax({
+	                 url: 'http://localhost:8080/api/v1/cliente/cliente/disabled/' + documentoPersonaCliente,
+	                 type: 'GET',
+	                 success: function(response){
+	                	 
+	                	 console.log(response);
+	                     swal({
+	                         type: "success",
+	                         title: "El Cliente ha sido deshabilitado correctamente",
+	                         showConfirmButton: true,
+	                         confirmButtonText: "Cerrar",
+	                         closeOnConfirm: false
+	                     }).then((result) => {
+	                         if(result.value) {
+	                             $(location).attr("href", "/persona/view");
+	                         }
+	                     })
+	                 }
+	             });
+	        }
+	        else {
+	            swal({
+	                type: "error",
+	                title: "Cancelado", 
+	                text: "Usted ha cancelado la acción de deshabilitar"
+	            });
+	        }
+	    });
+		
+	});
+	
+	/**
+	 *
+	 * Evento para habilitar el Cliente
+	 * 
+	 */
+	$('#tablaClientes tbody').on('click', 'button.btnHabilitarCliente', function() {
+		
+		var documentoPersonaCliente = $(this).attr('idDocumentoCliente');
+		console.log("documentoPersonaCliente: " + documentoPersonaCliente);
+		
+		swal({
+	        title: '¿Esta Seguro de habilitar a este Cliente ?',
+	        text: '¡Si no lo esta puede Cancelar la accion!',
+	        type: 'warning',
+	        showCancelButton: true,
+	        confirmButtonColor: '#3085d6',
+	        cancelButtonColor: '#d33',
+	        cancelButtonText: 'Cancelar',
+	        confirmButtonText: '¡Si!'
+	    }).then((result) => {
+	        if(result.value){
+	           
+	        	$.ajax({
+	        		
+	        		url: 'http://localhost:8080/api/v1/cliente/cliente/enabled/' + documentoPersonaCliente,
+	        		type: 'GET',
+	        		success: function(response){
+	        			
+	        			console.log(response);
+	        			
+	        			swal({
+	        				type: "success",
+	                        title: "El Cliente ha sido habilitado correctamente",
+	                        showConfirmButton: true,
+	                        confirmButtonText: "Cerrar",
+	                        closeOnConfirm: false
+	                       }).then((result) => {
+	                         if(result.value) {
+	                            $(location).attr("href", "/persona/view");
+	                        }
+	                     })
+	                 }
+	        	});
+	        }
+	        else {
+	            swal({
+	                type: "error",
+	                title: "Cancelado", 
+	                text: "Usted ha cancelado la acción de habilitar"
+	            });
+	        }
+	    });
+	});
 	
 	/**
 	 * 

@@ -17,6 +17,8 @@ public interface ClienteFacade {
 	
 	ResponseBaseOperation spInsertarCliente(ClienteDTO clienteDTO);
 	
+	ResponseBaseOperation updateCliente(ClienteDTO clienteDTO);
+	
 	ResponseBaseOperation disabledCliente(String documentoPersonaCliente);
 	
 	ResponseBaseOperation enabledCliente(String documentoPersonaCliente);

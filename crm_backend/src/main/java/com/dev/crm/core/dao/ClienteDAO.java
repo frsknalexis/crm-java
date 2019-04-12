@@ -16,7 +16,7 @@ public interface ClienteDAO extends BaseDAOHibernate {
 	boolean isClientePresent(String documentoPersonaCliente);
 	
 	void spInsertarCliente(Cliente cliente);
-	
+		
 	void disabledCliente(Cliente cliente);
 	
 	void enabledCliente(Cliente cliente);

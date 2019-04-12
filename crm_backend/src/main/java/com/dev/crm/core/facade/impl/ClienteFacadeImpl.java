@@ -86,7 +86,22 @@ public class ClienteFacadeImpl implements ClienteFacade {
 	
 	@Override
 	public ClienteDTO getByDocumentoPersonaCliente(String documentoPersonaCliente) {
-		// TODO Auto-generated method stub
+		
+		ClienteDTO clienteDTO = null;
+		
+		try {
+			
+			if(!(GenericUtil.isEmpty(documentoPersonaCliente)) && (documentoPersonaCliente.length() > 0)) {
+				Cliente cliente = clienteService.getByDocumentoPersonaCliente(documentoPersonaCliente);
+				if(GenericUtil.isNotNull(cliente)) {
+					clienteDTO = modelMapper.map(cliente, ClienteDTO.class);
+				}
+			}
+			return clienteDTO;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -106,16 +121,74 @@ public class ClienteFacadeImpl implements ClienteFacade {
 		}
 		return null;
 	}
+	
+	@Override
+	public ResponseBaseOperation updateCliente(ClienteDTO clienteDTO) {
+		
+		try {
+			
+			Cliente cliente = modelMapper.map(clienteDTO, Cliente.class);
+			if(GenericUtil.isNotNull(cliente)) {
+				
+				if(clienteService.isClientePresent(clienteDTO.getDocumentoPersonaCliente())) {
+					clienteService.updateCliente(cliente);
+					return new ResponseBaseOperation(Constantes.UPDATED_STATUS, Constantes.MESSAGE_UPDATED, clienteDTO);
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@Override
 	public ResponseBaseOperation disabledCliente(String documentoPersonaCliente) {
-		// TODO Auto-generated method stub
+		
+		try {
+			
+			ClienteDTO clienteDTO = null;
+			if(GenericUtil.isNotNull(documentoPersonaCliente)) {
+				clienteDTO = getByDocumentoPersonaCliente(documentoPersonaCliente);
+			}
+			if(GenericUtil.isNotNull(clienteDTO)) {
+				if(clienteDTO.getEstado().equals(Constantes.HABILITADO)) {
+					clienteService.disabledCliente(documentoPersonaCliente);
+					return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.MESSAGE_SUCCESS_DISABLED, clienteDTO);
+				}
+			}
+			else {
+				return null;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public ResponseBaseOperation enabledCliente(String documentoPersonaCliente) {
-		// TODO Auto-generated method stub
+		
+		try {
+			
+			ClienteDTO clienteDTO = null;
+			if(GenericUtil.isNotNull(documentoPersonaCliente)) {
+				clienteDTO = getByDocumentoPersonaCliente(documentoPersonaCliente);
+			}
+			if(GenericUtil.isNotNull(clienteDTO)) {
+				if(clienteDTO.getEstado().equals(Constantes.INHABILITADO)) {
+					clienteService.enabledCliente(documentoPersonaCliente);
+					return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.MESSAGE_SUCCESS_ENABLED, clienteDTO);
+				}
+			}
+			else {
+				return null;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 }

@@ -107,7 +107,6 @@ public class ClienteServiceImpl implements ClienteService {
 			Cliente cliente = null;
 			if(GenericUtil.isNotNull(documentoPersonaCliente)) {
 				cliente = clienteDAO.getByDocumentoPersonaCliente(documentoPersonaCliente);
-				cliente.setEstado(Constantes.INHABILITADO);
 			}
 			clienteDAO.disabledCliente(cliente);
 		}
@@ -120,11 +119,10 @@ public class ClienteServiceImpl implements ClienteService {
 	public void enabledCliente(String documentoPersonaCliente) {
 		
 		try {
-			
+		
 			Cliente cliente = null;
 			if(GenericUtil.isNotNull(documentoPersonaCliente)) {
 				cliente = clienteDAO.getByDocumentoPersonaCliente(documentoPersonaCliente);
-				cliente.setEstado(Constantes.HABILITADO);
 			}
 			clienteDAO.enabledCliente(cliente);
 		}
@@ -153,5 +151,28 @@ public class ClienteServiceImpl implements ClienteService {
 			return clienteDAO.isClientePresent(documentoPersonaCliente);
 		}
 		return false;
+	}
+
+	@Override
+	public void updateCliente(Cliente c) {
+		
+		try {
+			
+			c.setEstado(Constantes.HABILITADO);
+			
+			if(clienteDAO.isClientePresent(c.getDocumentoPersonaCliente())) {
+				Cliente cliente = clienteDAO.getByDocumentoPersonaCliente(c.getDocumentoPersonaCliente());
+				cliente.setCodigoCliente(c.getCodigoCliente());
+				cliente.setConsecutivoCliente(c.getConsecutivoCliente());
+				cliente.setNombreComercialCliente(c.getNombreComercialCliente());
+				cliente.setCorreoCliente(c.getCorreoCliente());
+				cliente.setFacebookCliente(c.getFacebookCliente());
+				cliente.setSexo(c.getSexo());
+				clienteDAO.update(cliente);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

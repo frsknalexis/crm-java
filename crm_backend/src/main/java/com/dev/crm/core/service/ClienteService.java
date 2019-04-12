@@ -20,5 +20,7 @@ public interface ClienteService {
 	
 	void spInsertarCliente(Cliente cliente);
 	
+	void updateCliente(Cliente cliente);
+	
 	boolean isClientePresent(String documentoPersonaCliente);
 }

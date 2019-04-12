@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.NoResultException;
-import javax.persistence.Query;
+import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -83,7 +83,7 @@ public class ClienteDAOImpl extends BaseDAOHibernateImpl implements ClienteDAO {
 		if(GenericUtil.isNull(cliente)) {
 			return false;
 		}
-		return false;
+		return true;
 	}
 
 	@Override
@@ -110,14 +110,10 @@ public class ClienteDAOImpl extends BaseDAOHibernateImpl implements ClienteDAO {
 		
 		try {
 			
-			StringBuilder builder = new StringBuilder();
-			builder.append(" UPDATE Cliente c SET ");
-			builder.append(" c.estado = :estado ");
-			builder.append(" WHERE c.documentoPersonaCliente = :documentoPersonaCliente");
-			Query query = sessionFactory.getCurrentSession().createQuery(builder.toString());
-			query.setParameter("estado", c.getEstado());
-			query.setParameter("documentoPersonaCliente", c.getDocumentoPersonaCliente());
-			query.executeUpdate();
+			StoredProcedureQuery storeProcedure = em.createStoredProcedureQuery(Constantes.SP_ACTIVAR_DESACTIVAR_CLIENTE, Cliente.class);
+			storeProcedure.registerStoredProcedureParameter("DOC_COD", String.class, ParameterMode.IN);
+			storeProcedure.setParameter("DOC_COD", c.getDocumentoPersonaCliente());
+			storeProcedure.execute();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -126,17 +122,13 @@ public class ClienteDAOImpl extends BaseDAOHibernateImpl implements ClienteDAO {
 
 	@Override
 	public void enabledCliente(Cliente c) {
-		
+	
 		try {
 			
-			StringBuilder builder = new StringBuilder();
-			builder.append(" UPDATE Cliente c SET ");
-			builder.append(" c.estado = :estado ");
-			builder.append(" WHERE c.documentoPersonaCliente = :documentoPersonaCliente");
-			Query query = sessionFactory.getCurrentSession().createQuery(builder.toString());
-			query.setParameter("estado", c.getEstado());
-			query.setParameter("documentoPersonaCliente", c.getDocumentoPersonaCliente());
-			query.executeUpdate();
+			StoredProcedureQuery storeProcedure = em.createStoredProcedureQuery(Constantes.SP_ACTIVAR_DESACTIVAR_CLIENTE, Cliente.class);
+			storeProcedure.registerStoredProcedureParameter("DOC_COD", String.class, ParameterMode.IN);
+			storeProcedure.setParameter("DOC_COD", c.getDocumentoPersonaCliente());
+			storeProcedure.execute();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
