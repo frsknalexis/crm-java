@@ -102,6 +102,25 @@ public class PersonaFacadeImpl implements PersonaFacade {
 		}
 		return null;
 	}
+	
+	@Override
+	public List<PersonaDTO> spListaPersonaNoEmpleado(String creadoPor) {
+		
+		List<PersonaDTO> personasDTO = new ArrayList<PersonaDTO>();
+		
+		try {
+			
+			List<Persona> personas = personaService.spListaPersonaNoEmpleado(creadoPor);
+			personas.stream().forEach(p -> {
+				personasDTO.add(modelMapper.map(p, PersonaDTO.class));
+			});
+			return personasDTO;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@Override
 	public PersonaDTO getByDocumentoPersona(String documentoPersona) {

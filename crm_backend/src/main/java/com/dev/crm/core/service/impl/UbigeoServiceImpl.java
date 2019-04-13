@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.crm.core.dao.UbigeoDAO;
 import com.dev.crm.core.model.entity.Ubigeo;
@@ -14,6 +15,7 @@ import com.dev.crm.core.service.UbigeoService;
 import com.dev.crm.core.util.GenericUtil;
 
 @Service("ubigeoService")
+@Transactional("hibernateTransactionManager")
 public class UbigeoServiceImpl implements UbigeoService {
 
 	@Autowired

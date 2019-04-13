@@ -15,6 +15,8 @@ public interface PersonaFacade {
 	
 	List<PersonaDTO> spListarPersonasNoClienteByCreadoPor(String creadoPor);
 	
+	List<PersonaDTO> spListaPersonaNoEmpleado(String creadoPor);
+	
 	PersonaDTO getByDocumentoPersona(String documentoPersona);
 	
 	ResponseBaseOperation save(PersonaDTO personaDTO);

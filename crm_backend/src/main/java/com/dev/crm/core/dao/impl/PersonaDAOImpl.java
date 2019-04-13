@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.NoResultException;
+import javax.persistence.ParameterMode;
 import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import com.dev.crm.core.base.dao.impl.BaseDAOHibernateImpl;
 import com.dev.crm.core.dao.PersonaDAO;
 import com.dev.crm.core.model.entity.Persona;
+import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.GenericUtil;
 
 @Repository("personaDAO")
@@ -156,6 +158,26 @@ public class PersonaDAOImpl extends BaseDAOHibernateImpl implements PersonaDAO {
 			StoredProcedureQuery query = em.createNamedStoredProcedureQuery("listaPersonasNoClientes");
 			query.setParameter("COD_USU", creadoPor);
 			personas = query.getResultList();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return personas;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Persona> spListaPersonaNoEmpleado(String creadoPor) {
+		
+		List<Persona> personas = new ArrayList<Persona>();
+		
+		try {
+			
+			StoredProcedureQuery storeProcedure = em.createStoredProcedureQuery(Constantes.SP_LISTA_PERSONA_NO_EMPLEADO, Persona.class);
+			storeProcedure.registerStoredProcedureParameter("COD_USU", String.class, ParameterMode.IN);
+			storeProcedure.setParameter("COD_USU", creadoPor);
+			storeProcedure.execute();
+			personas = storeProcedure.getResultList();
 		}
 		catch(Exception e) {
 			e.printStackTrace();

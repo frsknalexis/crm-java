@@ -1,10 +1,15 @@
 package com.dev.crm.core.model.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,9 +27,12 @@ public class Cargo implements Serializable {
 	
 	@Column(name="descripcion_cargo", length=50)
 	private String descripcionCargo;
+	
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="cargo")
+	private List<Empleado> empleados;
 
 	public Cargo() {
-		
+		empleados = new ArrayList<Empleado>();
 	}
 
 	public String getCodigoCargo() {
@@ -41,5 +49,13 @@ public class Cargo implements Serializable {
 
 	public void setDescripcionCargo(String descripcionCargo) {
 		this.descripcionCargo = descripcionCargo;
+	}
+
+	public List<Empleado> getEmpleados() {
+		return empleados;
+	}
+
+	public void setEmpleados(List<Empleado> empleados) {
+		this.empleados = empleados;
 	}
 }

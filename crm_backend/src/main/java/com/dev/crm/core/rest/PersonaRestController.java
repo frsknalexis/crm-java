@@ -103,6 +103,25 @@ public class PersonaRestController {
 		}
 	}
 	
+	@GetMapping("/personas/listaPersonasNoEmpleados")
+	public ResponseEntity<List<PersonaDTO>> spListaPersonaNoEmpleado() {
+		
+		try {
+			
+			String creadoPor = "vendedor";
+			List<PersonaDTO> personasDTO = personaFacade.spListaPersonaNoEmpleado(creadoPor);
+			if(GenericUtil.isNotEmpty(personasDTO)) {
+				return new ResponseEntity<List<PersonaDTO>>(personasDTO, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<PersonaDTO>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<PersonaDTO>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	@GetMapping("/persona/{documentoPersona}")
 	public ResponseEntity<PersonaDTO> getByDocumentoPersona(@PathVariable(value="documentoPersona") String documentoPersona) {
 		

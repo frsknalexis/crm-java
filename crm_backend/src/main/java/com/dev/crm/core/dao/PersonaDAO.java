@@ -11,6 +11,8 @@ public interface PersonaDAO extends BaseDAOHibernate {
 	
 	List<Persona> spListarPersonasNoClienteByCreadoPor(String creadoPor);
 	
+	List<Persona> spListaPersonaNoEmpleado(String creadoPor);
+	
 	Persona getByDocumentoPersona(String documentoPersona);
 	
 	boolean isPersonaPresent(String documentoPersona);

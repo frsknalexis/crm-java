@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es" class="fixed sidebar-left-collapsed" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/headinc :: head"></head>
+<body>
+	<section class="body">
+		<!-- start: header -->
+		<header th:replace="fragments/header :: header"></header>
+		<!-- end: header -->
+		<div class="inner-wrapper">
+		<!-- start: sidebar -->
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+		<!-- end: sidebar -->
+			<section role="main" class="content-body">
+				<div>
+					<div class="page-header">
+						<h2>
+							<a th:href="@{/dashboard}">
+								<i class="fa fa-home"></i>
+							</a>
+						</h2>
+						<ol class="breadcrumbs">
+							<li class="active">
+								<span>Persona - Empleados</span>
+							</li>
+						</ol>
+					</div>
+					<!-- start: page -->
+					<div class="row" id="listadoPersonasEmpleadosRegistro">
+						<div class="col-md-12 col-lg-12">
+							<div class="tabs tabs-primary">
+								<ul class="nav nav-tabs">
+									<li class="active">
+										<a href="#personas" data-toggle="tab"><i class="fa fa-users"></i> Personas</a>
+									</li>
+									<li>
+										<a href="#empleados" data-toggle="tab"><i class="fa fa-users"></i> Empleados</a>
+									</li>
+								</ul>
+								<div class="tab-content">
+									<div id="personas" class="tab-pane active">
+										<section class="panel panel-featured panel-featured-primary panel-primary">
+											<header class="panel-heading">
+												<h2 class="panel-title">Listado de Personas</h2>
+											</header>
+											<div class="panel-body">
+												<table class="table table-hover table-striped table-condensed mb-none" id="tablaPersonasEmpleados" width="100%">
+													<thead class="text-center">
+														<tr>
+															<th style="width:100px">DNI-RUC</th>
+															<th style="width:100px">Nombre</th>
+															<th style="width:150px">Apellido Paterno</th>
+															<th style="width:150px">Apellido Materno</th>
+															<th style="width:170px">Direccion Actual</th>
+															<th style="width:170px">Referencia</th>
+															<th style="width:50px;">Telefono</th>
+															<th style="width:140px">Empleados</th>
+														</tr>
+													</thead>
+												</table>
+											</div>
+										</section>
+									</div>
+									<div id="empleados" class="tab-pane">
+										<p>Recent</p>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- end: page -->
+				</div>
+			</section>
+		</div>
+	</section>
+	<th:block th:replace="fragments/script :: script"></th:block>
+	<script type="text/javascript" th:src="@{/assets/javascripts/app/empleado.js}"></script>
+</body>
+</html>

@@ -218,4 +218,22 @@ public class PersonaServiceImpl implements PersonaService {
 		}
 		return null;
 	}
+
+	@Override
+	public List<Persona> spListaPersonaNoEmpleado(String creadoPor) {
+		
+		List<Persona> personas = new ArrayList<Persona>();
+		
+		try {
+			
+			personas = personaDAO.spListaPersonaNoEmpleado(creadoPor);
+			if(GenericUtil.isNotNull(personas)) {
+				return personas;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
