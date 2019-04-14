@@ -112,6 +112,10 @@ public class ClienteFacadeImpl implements ClienteFacade {
 			
 			Cliente cliente = modelMapper.map(clienteDTO, Cliente.class);
 			if(GenericUtil.isNotNull(cliente)) {
+				
+				if(clienteService.isClientePresent(clienteDTO.getDocumentoPersonaCliente())) {
+					return new ResponseBaseOperation(Constantes.ERROR_STATUS, Constantes.MESSAGE_ERROR, clienteDTO);
+				}
 				clienteService.spInsertarCliente(cliente);
 				return new ResponseBaseOperation(Constantes.CREATED_STATUS, Constantes.MESSAGE_CREATED, clienteDTO);
 			}

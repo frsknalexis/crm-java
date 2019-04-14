@@ -726,6 +726,16 @@ $(document).on('ready', function() {
 								}
 							});
 						}
+						else if(response.status == 'ERROR') {
+							
+							swal({
+				                type: 'error',
+				                title: 'Ooops',
+				                text: 'Ocurrio un Error al Registrar al Cliente, verifique si ya existe !'
+				            });
+							
+							limpiarClientes();
+						}
 					},
 					error: function() {
 						

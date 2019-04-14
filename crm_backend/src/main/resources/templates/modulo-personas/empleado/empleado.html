@@ -61,12 +61,86 @@
 										</section>
 									</div>
 									<div id="empleados" class="tab-pane">
-										<p>Recent</p>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
+										<section class="panel panel-featured panel-featured-primary panel-primary">
+											<header class="panel-heading">
+												<h2 class="panel-title">Listado de Clientes</h2>
+											</header>
+											<div class="panel-body">
+												<table class="table table-hover table-striped table-condensed mb-none" id="tablaEmpleados" width="100%">
+													<thead class="text-center">
+														<tr>
+															<th>DNI-RUC</th>
+															<th>Consecutivo Cliente</th>
+															<th>Codigo Cliente</th>
+															<th>Nombre Comercial</th>
+															<th>Correo Electronico</th>
+															<th>Facebook Cliente</th>
+															<th>Activo</th>
+															<th>Acciones</th>
+														</tr>
+													</thead>
+												</table>
+											</div>
+										</section>
 									</div>
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="row" id="formularioEmpleadosRegistro">
+						<div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
+							<section class="panel panel-featured-right panel-featured-primary">
+								<header class="panel-heading">
+									<h2 class="panel-title">Formulario Empleados</h2>
+								</header>
+									<div class="panel-body">
+										<form role="form" method="post">
+											<div class="col-md-12 form-group">
+												<div class="input-group mb-md">
+													<input type="hidden" class="form-control input-sm" id="codigoEmpleado">
+												</div>
+											</div>
+											<div class="col-md-4 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-credit-card"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="documentoPersonaEmpleado">
+												</div>
+											</div>
+											<div class="col-md-4 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-user"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="empleadoNombrePersona">
+												</div>
+											</div>
+											<div class="col-md-4 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-user"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="empleadoApellidosPersona">
+												</div>
+											</div>
+											<div class="col-md-4 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-suitcase"></i>
+													</span>
+													<select  class="form-control populate" id="codigoCargo">
+													</select>
+												</div>
+											</div>
+											<div class="col-md-12 form-group">
+												<button type="submit" id="guardarEmpleado" class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Guardar Empleado</button>
+												<button type="button" id="cancelarAccionEmpleado" class="btn btn-sm btn-danger"><i class="fa fa-arrow-circle-left"></i> Cancelar</button>
+											</div>
+										</form>	
+									</div>
+								</section>
+							</div>
 					</div>
 					<!-- end: page -->
 				</div>

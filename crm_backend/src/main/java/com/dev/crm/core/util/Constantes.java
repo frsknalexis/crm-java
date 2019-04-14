@@ -9,6 +9,9 @@ public class Constantes {
 	
 	public static final String SP_ACTIVAR_DESACTIVAR_CLIENTE = "sp_activar_desactivar";
 	public static final String SP_LISTA_PERSONA_NO_EMPLEADO = "sp_lista_persona_no_empleado";
+	public static final String  SP_INSERCION_EMPLEADO = "sp_insercion_empleado";
+	public static final String SP_ACTUALIZAR_EMPLEADO = "sp_actualizar_empleado";
+	public static final String SP_ACT_DES_EMPLEADO = "sp_act_des_empleado";
 	
 	public static final boolean HABILITADO = true;
 	public static final boolean INHABILITADO = false;
