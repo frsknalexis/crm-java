@@ -166,7 +166,7 @@ $(document).on('ready', function() {
 	$('#guardarPersona').on('click', function(e) {
 		e.preventDefault();
 		
-		if($('#documentoPersona').val().match(/^[0-9]{8,11}$/) && $('#nombreUbigeo').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
+		if($('#documentoPersona').val().match(/^[0-9]{7,11}$/) && $('#nombreUbigeo').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
 			&& $('#nombrePersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/) && $('#apellidoPaternoPersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
 			&& $('#apellidoMaternoPersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/) && $('#direccionActualPersona').val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\#.-\s]+$/)
 			&& $('#referenciaPersona').val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\#.-\s]+$/) && $('#telefonoUnoPersona').val().match(/^[0-9]{7,9}$/)) {
@@ -963,6 +963,24 @@ $(document).on('ready', function() {
 	
 	/**
 	 * 
+	 *Funcion para limpiar modal 
+	 * 
+	 */
+	function limpiarModalCliente() {
+		
+		$('#myModalLabelCliente').html('');
+		$('#detalleClienteDocumento').val('');
+		$('#detalleClienteNombre').val('');
+		$('#detalleClienteDireccionActual').val('');
+		$('#detalleClienteTelefonoUno').val('');
+		$('#detalleCodigoCliente').val('');
+		$('#detalleClienteNombreComercial').val('');
+		$('#detalleClienteCorreoElectronico').val('');
+		$('#detalleClienteFacebook').val('');
+	}
+	
+	/**
+	 * 
 	 *Ver detalles del Cliente
 	 * 
 	 */
@@ -971,7 +989,7 @@ $(document).on('ready', function() {
 		var documentoPersonaCliente = $(this).attr('idDocumentoCliente');
 		console.log("documentoPersonaCliente: " + documentoPersonaCliente);
 		$('#modalDetalleCliente').modal('show');
-		
+		limpiarModalCliente();
 		$.ajax({
 			
 			type: 'GET',

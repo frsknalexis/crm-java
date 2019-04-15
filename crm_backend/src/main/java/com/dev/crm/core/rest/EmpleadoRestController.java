@@ -65,6 +65,25 @@ public class EmpleadoRestController {
 		}
 	}
 	
+	@GetMapping("/empleados/listarPersonaEmpleado")
+	public ResponseEntity<List<EmpleadoDTO>> spListarPersonaEmpleado() {
+		
+		try {
+			
+			String creadoPor = "vendedor";
+			List<EmpleadoDTO> empleadosDTO = empleadoFacade.spListarPersonaEmpleado(creadoPor);
+			if(GenericUtil.isNotEmpty(empleadosDTO)) {
+				return new ResponseEntity<List<EmpleadoDTO>>(empleadosDTO, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<EmpleadoDTO>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<EmpleadoDTO>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	@GetMapping("/empleado/{documentoPersonaEmpleado}")
 	public ResponseEntity<EmpleadoDTO> getByDocumentoPersonaEmpleado(@PathVariable(value="documentoPersonaEmpleado") String documentoPersonaEmpleado) {
 		

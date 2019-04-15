@@ -151,4 +151,22 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public List<Empleado> spListarPersonaEmpleado(String creadoPor) {
+		
+		List<Empleado> empleados = new ArrayList<Empleado>();
+		
+		try {
+			
+			empleados = empleadoDAO.spListarPersonaEmpleado(creadoPor);
+			if(GenericUtil.isNotNull(empleados)) {
+				return empleados;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

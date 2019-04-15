@@ -10,6 +10,8 @@ public interface EmpleadoService {
 
 	List<Empleado> getActiveListEmpleados();
 	
+	List<Empleado> spListarPersonaEmpleado(String creadoPor);
+	
 	void spInsercionEmpleado(Empleado empleado);
 	
 	void spActualizarEmpleado(Empleado empleado);

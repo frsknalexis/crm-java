@@ -7,6 +7,8 @@ import com.dev.crm.core.model.entity.Empleado;
 
 public interface EmpleadoDAO extends BaseDAOHibernate {
 
+	List<Empleado> spListarPersonaEmpleado(String creadoPor);
+	
 	List<Empleado> getActiveListEmpleados();
 	
 	void spInsercionEmpleado(Empleado empleado);

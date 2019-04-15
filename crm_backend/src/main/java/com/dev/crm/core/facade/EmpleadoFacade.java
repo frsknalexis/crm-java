@@ -11,6 +11,8 @@ public interface EmpleadoFacade {
 
 	List<EmpleadoDTO> getActiveListEmpleados();
 	
+	List<EmpleadoDTO> spListarPersonaEmpleado(String creadoPor);
+	
 	EmpleadoDTO getByDocumentoPersonaEmpleado(String documentoPersonaEmpleado);
 	
 	ResponseBaseOperation spInsercionEmpleado(EmpleadoDTO empleadoDTO);

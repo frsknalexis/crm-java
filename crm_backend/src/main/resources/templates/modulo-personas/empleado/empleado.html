@@ -26,6 +26,9 @@
 					</div>
 					<!-- start: page -->
 					<div class="row" id="listadoPersonasEmpleadosRegistro">
+						<div class="col-md-6 col-lg-6">
+							<button type="button" id="btnAgregarPersonaEmpleado" class="mb-xs btn-md btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Persona - Empleado</button>
+						</div>
 						<div class="col-md-12 col-lg-12">
 							<div class="tabs tabs-primary">
 								<ul class="nav nav-tabs">
@@ -51,9 +54,10 @@
 															<th style="width:150px">Apellido Paterno</th>
 															<th style="width:150px">Apellido Materno</th>
 															<th style="width:170px">Direccion Actual</th>
-															<th style="width:170px">Referencia</th>
+															<th style="width:150px">Referencia</th>
 															<th style="width:50px;">Telefono</th>
-															<th style="width:140px">Empleados</th>
+															<th style="width:160px">Empleados</th>
+															<th style="width:10px">Acciones</th>
 														</tr>
 													</thead>
 												</table>
@@ -63,18 +67,15 @@
 									<div id="empleados" class="tab-pane">
 										<section class="panel panel-featured panel-featured-primary panel-primary">
 											<header class="panel-heading">
-												<h2 class="panel-title">Listado de Clientes</h2>
+												<h2 class="panel-title">Listado de Empleados</h2>
 											</header>
 											<div class="panel-body">
 												<table class="table table-hover table-striped table-condensed mb-none" id="tablaEmpleados" width="100%">
 													<thead class="text-center">
 														<tr>
+															<th>Codigo Empleado</th>
 															<th>DNI-RUC</th>
-															<th>Consecutivo Cliente</th>
-															<th>Codigo Cliente</th>
-															<th>Nombre Comercial</th>
-															<th>Correo Electronico</th>
-															<th>Facebook Cliente</th>
+															<th>Cargo</th>
 															<th>Activo</th>
 															<th>Acciones</th>
 														</tr>
@@ -85,6 +86,113 @@
 									</div>
 								</div>
 							</div>
+						</div>
+					</div>
+					<div class="row" id="formularioPersonaEmpleadosRegistro">
+						<div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
+							<section class="panel panel-featured-left panel-featured-primary">
+								<header class="panel-heading">
+									<h2 class="panel-title">Formulario Personas</h2>
+								</header>
+								<div class="panel-body">
+									<form role="form" method="post">
+										<div class="row">
+											<div class="col-md-6 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-credit-card"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="documentoPersona" placeholder="Numero Documento">
+												</div>
+											</div>
+											<div class="col-md-6 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-bookmark"></i>
+													</span>
+													<select class="form-control populate" id="codigoUbigeo"></select>
+												</div>
+											</div>
+											<div class="col-md-4 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-user"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="nombrePersona" placeholder="Nombre">
+												</div>
+											</div>
+											<div class="col-md-4 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-user"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="apellidoPaternoPersona" placeholder="Apellido Paterno">
+												</div>
+											</div>
+											<div class="col-md-4 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-user"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="apellidoMaternoPersona" placeholder="Apellido Materno">
+												</div>
+											</div>
+											<div class="col-md-4 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-home"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="direccionReniecPersona" placeholder="Direccion RENIEC">
+												</div>
+											</div>
+											<div class="col-md-4 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-home"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="direccionActualPersona" placeholder="Direccion Actual">
+												</div>
+											</div>
+											<div class="col-md-4 form-group">
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-home"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="referenciaPersona" placeholder="Referencia Direccion">
+												</div>
+											</div>
+											<div class="col-md-4 form-group">
+											 	<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-phone"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="telefonoUnoPersona" placeholder="Telefono 1">
+												</div>
+											</div>
+											<div class="col-md-4 form-group">
+											 	<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-phone"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="telefonoDosPersona" placeholder="Telefono 2">
+												</div>
+											</div>
+											<div class="col-md-4 form-group">
+											 	<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-phone"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="telefonoTresPersona" placeholder="Telefono 3">
+												</div>
+											</div>
+											<div class="col-md-12 form-group">
+												<button type="submit" id="guardarPersona" class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Guardar</button>
+												<button type="button" id="cancelarAccion" class="btn btn-sm btn-danger"><i class="fa fa-arrow-circle-left"></i> Cancelar</button>
+											</div>											
+										</div>
+									</form>
+								</div>
+							</section>
 						</div>
 					</div>
 					<div class="row" id="formularioEmpleadosRegistro">
@@ -143,6 +251,79 @@
 							</div>
 					</div>
 					<!-- end: page -->
+					<div class="modal fade" id="modalDetalleEmpleado" tabindex="-1" role="dialog" aria-labelledby="myModalLabelEmpleado" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabelEmpleado"></h4>
+									</div>
+									<div class="modal-body">
+										<form role="form">
+											<div class="row">
+												<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+													<label for="detalleEmpleadoDocumento">DNI</label>
+													<div class="input-group mb-md">
+														<span class="input-group-addon">
+															<i class="fa fa-credit-card"></i>
+														</span>
+														<input type="text" class="form-control input-sm" id="detalleEmpleadoDocumento" readonly="readonly">
+													</div>
+												</div>
+												<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+													<label for="detalleEmpleadoNombre">Nombre y Apellido</label>
+													<div class="input-group mb-md">
+														<span class="input-group-addon">
+															<i class="fa fa-user"></i>
+														</span>
+														<input type="text" class="form-control input-sm" id="detalleEmpleadoNombre" readonly="readonly">
+													</div>
+												</div>
+												<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+													<label for="detalleEmpleadoDireccionActual">Direccion Actual</label>
+													<div class="input-group mb-md">
+														<span class="input-group-addon">
+															<i class="fa fa-home"></i>
+														</span>
+														<input type="text" class="form-control input-sm" id="detalleEmpleadoDireccionActual" readonly="readonly">
+													</div>
+												</div>
+												<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+													<label for="detalleEmpleadoTelefonoUno">Telefono Uno</label>
+													<div class="input-group mb-md">
+														<span class="input-group-addon">
+															<i class="fa fa-phone"></i>
+														</span>
+														<input type="text" class="form-control input-sm" id="detalleEmpleadoTelefonoUno" readonly="readonly">
+													</div>
+												</div>
+												<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+													<label for="detalleCodigoCliente">Codigo Empleado</label>
+													<div class="input-group mb-md">
+														<span class="input-group-addon">
+															<i class="fa fa-tags"></i>
+														</span>
+														<input type="text" class="form-control input-sm" id="detalleCodigoEmpleado" readonly="readonly">
+													</div>
+												</div>
+												<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+													<label for="detalleClienteNombreComercial">Cargo</label>
+													<div class="input-group mb-md">
+														<span class="input-group-addon">
+															<i class="fa fa-suitcase"></i>
+														</span>
+														<input type="text" class="form-control input-sm" id="detalleCargoEmpleado" readonly="readonly">
+													</div>
+												</div>
+											</div>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+									</div>
+								</div>
+							</div>
+						</div>
 				</div>
 			</section>
 		</div>

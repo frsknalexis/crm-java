@@ -164,4 +164,24 @@ public class EmpleadoDAOImpl extends BaseDAOHibernateImpl implements EmpleadoDAO
 			ex.printStackTrace();
 		}
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Empleado> spListarPersonaEmpleado(String creadoPor) {
+		
+		List<Empleado> empleados = new ArrayList<Empleado>();
+		
+		try {
+			
+			StoredProcedureQuery storeProcedure = em.createStoredProcedureQuery(Constantes.SP_LISTAR_PERSONA_EMPLEADO, Empleado.class);
+			storeProcedure.registerStoredProcedureParameter("COD_USU", String.class, ParameterMode.IN);
+			storeProcedure.setParameter("COD_USU", creadoPor);
+			storeProcedure.execute();
+			empleados = storeProcedure.getResultList();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return empleados;
+	}
 }

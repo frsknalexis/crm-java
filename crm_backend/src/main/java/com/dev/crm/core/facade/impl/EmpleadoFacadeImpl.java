@@ -84,6 +84,25 @@ public class EmpleadoFacadeImpl implements EmpleadoFacade {
 		}
 		return null;
 	}
+	
+	@Override
+	public List<EmpleadoDTO> spListarPersonaEmpleado(String creadoPor) {
+		
+		List<EmpleadoDTO> empleadosDTO = new ArrayList<EmpleadoDTO>();
+		
+		try {
+			
+			List<Empleado> empleados = empleadoService.spListarPersonaEmpleado(creadoPor);
+			empleados.stream().forEach(e -> {
+				empleadosDTO.add(modelMapper.map(e, EmpleadoDTO.class));
+			});
+			return empleadosDTO;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@Override
 	public EmpleadoDTO getByDocumentoPersonaEmpleado(String documentoPersonaEmpleado) {
