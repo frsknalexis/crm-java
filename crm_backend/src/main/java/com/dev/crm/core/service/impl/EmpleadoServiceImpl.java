@@ -169,4 +169,18 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 		}
 		return null;
 	}
+
+	@Override
+	public Long totalRegistrosEmpleado() {
+		
+		try {
+			
+			Long totalRegistrosEmpleado = empleadoDAO.totalRegistrosEmpleado();
+			return totalRegistrosEmpleado;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

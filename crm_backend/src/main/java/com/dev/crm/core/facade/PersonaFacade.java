@@ -26,4 +26,6 @@ public interface PersonaFacade {
 	ResponseBaseOperation disabledPersona(String documentoPersona);
 	
 	ResponseBaseOperation enabledPersona(String documentoPersona);
+	
+	ResponseBaseOperation totalRegistrosPersona();
 }

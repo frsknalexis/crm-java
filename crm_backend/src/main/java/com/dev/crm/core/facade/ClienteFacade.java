@@ -22,4 +22,6 @@ public interface ClienteFacade {
 	ResponseBaseOperation disabledCliente(String documentoPersonaCliente);
 	
 	ResponseBaseOperation enabledCliente(String documentoPersonaCliente);
+	
+	ResponseBaseOperation totalRegistrosCliente();
 }

@@ -130,4 +130,20 @@ public class UsuarioDAOImpl extends BaseDAOHibernateImpl implements UsuarioDAO  
 		}
 		return true;
 	}
+
+	@Override
+	public Long obtenerTotalRegistrosUsuario() {
+		
+		try {
+			
+			StringBuilder builder = new StringBuilder();
+			builder.append("SELECT COUNT(u) FROM Usuario u");
+			Query query = em.createQuery(builder.toString());
+			return (Long) query.getSingleResult();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

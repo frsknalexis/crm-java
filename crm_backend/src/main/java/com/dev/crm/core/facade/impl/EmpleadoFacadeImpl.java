@@ -193,4 +193,23 @@ public class EmpleadoFacadeImpl implements EmpleadoFacade {
 		}
 		return null;
 	}
+
+	@Override
+	public ResponseBaseOperation totalRegistrosEmpleado() {
+		
+		try {
+			
+			Long totalRegistrosEmpleado = empleadoService.totalRegistrosEmpleado();
+			if(totalRegistrosEmpleado == 0) {
+				return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.MESSAGE_TOTAL_REGISTROS + ": " + totalRegistrosEmpleado, totalRegistrosEmpleado);
+			}
+			else if(totalRegistrosEmpleado > 0) {
+				return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.MESSAGE_TOTAL_REGISTROS + ": " + totalRegistrosEmpleado, totalRegistrosEmpleado);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

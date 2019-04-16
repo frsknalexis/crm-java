@@ -171,4 +171,17 @@ public class ClienteRestController {
 		}
 		return null;
 	}
+	
+	@GetMapping("/totalRegistros")
+	public ResponseEntity<ResponseBaseOperation> totalRegistrosCliente() {
+		
+		try {
+			
+			ResponseBaseOperation response = clienteFacade.totalRegistrosCliente();
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
 }

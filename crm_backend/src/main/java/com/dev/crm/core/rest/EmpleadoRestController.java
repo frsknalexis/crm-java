@@ -171,4 +171,17 @@ public class EmpleadoRestController {
 		}
 		return null;
 	}
+	
+	@GetMapping("/totalRegistros")
+	public ResponseEntity<ResponseBaseOperation> totalRegistrosEmpleado() {
+		
+		try {
+			
+			ResponseBaseOperation response = empleadoFacade.totalRegistrosEmpleado();
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
 }

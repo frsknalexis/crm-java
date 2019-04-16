@@ -22,4 +22,6 @@ public interface EmpleadoFacade {
 	ResponseBaseOperation disabledEmpleado(String documentoPersonaEmpleado);
 	
 	ResponseBaseOperation enabledEmpleado(String documentoPersonaEmpleado);
+	
+	ResponseBaseOperation totalRegistrosEmpleado();
 }

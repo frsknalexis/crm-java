@@ -23,4 +23,6 @@ public interface UsuarioFacade {
 	ResponseBaseOperation disabled(BigDecimal usuarioId);
 	
 	ResponseBaseOperation enabled(BigDecimal usuarioId);
+	
+	ResponseBaseOperation obtenerTotalRegistrosUsuario();
 }

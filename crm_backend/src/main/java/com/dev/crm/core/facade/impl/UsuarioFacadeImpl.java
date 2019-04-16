@@ -210,4 +210,22 @@ public class UsuarioFacadeImpl implements UsuarioFacade {
 		}
 		return null;
 	}
+
+	@Override
+	public ResponseBaseOperation obtenerTotalRegistrosUsuario() {
+		try {
+			
+			Long totalRegistrosUsuario = usuarioService.obtenerTotalRegistrosUsuario();
+			if(totalRegistrosUsuario == 0) {
+				return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.MESSAGE_TOTAL_REGISTROS + ' ' + totalRegistrosUsuario, totalRegistrosUsuario);
+			}
+			else if(totalRegistrosUsuario > 0) {
+				return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.MESSAGE_TOTAL_REGISTROS + ' ' + totalRegistrosUsuario, totalRegistrosUsuario);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

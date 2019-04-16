@@ -24,4 +24,6 @@ public interface UsuarioService {
 	void saveOrUpdate(Usuario usuario);
 	
 	boolean isUserPresent(String documentoUsuario);
+	
+	Long obtenerTotalRegistrosUsuario();
 }

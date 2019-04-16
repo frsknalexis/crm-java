@@ -184,4 +184,20 @@ public class PersonaDAOImpl extends BaseDAOHibernateImpl implements PersonaDAO {
 		}
 		return personas;
 	}
+
+	@Override
+	public Long totalRegistrosPersona() {
+		
+		try {
+			
+			StringBuilder builder = new StringBuilder();
+			builder.append("SELECT COUNT(p) FROM Persona p");
+			Query query = em.createQuery(builder.toString());
+			return (Long) query.getSingleResult();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

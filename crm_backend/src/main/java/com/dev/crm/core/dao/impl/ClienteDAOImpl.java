@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 import javax.persistence.ParameterMode;
+import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -19,6 +20,7 @@ import com.dev.crm.core.dao.ClienteDAO;
 import com.dev.crm.core.model.entity.Cliente;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.GenericUtil;
+import com.dev.crm.core.util.StringUtil;
 
 @Repository("clienteDAO")
 public class ClienteDAOImpl extends BaseDAOHibernateImpl implements ClienteDAO {
@@ -155,5 +157,27 @@ public class ClienteDAOImpl extends BaseDAOHibernateImpl implements ClienteDAO {
 			e.printStackTrace();
 		}
 		return clientes;
+	}
+
+	@Override
+	public Long totalRegistrosCliente() {
+		
+		try {
+			
+			StringBuilder builder = new StringBuilder();
+			builder.append("SELECT COUNT(c) FROM Cliente c");
+			Query query = em.createQuery(builder.toString());
+			
+			try {
+				return (Long) query.getSingleResult();
+			}
+			catch(NoResultException e) {
+				return StringUtil.parseLongNull("0");
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

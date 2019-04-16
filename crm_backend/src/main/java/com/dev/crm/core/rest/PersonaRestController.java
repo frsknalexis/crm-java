@@ -209,4 +209,17 @@ public class PersonaRestController {
 		}
 		return null;
 	}
+	
+	@GetMapping("/totalRegistros")
+	public ResponseEntity<ResponseBaseOperation> totalRegistrosPersona() {
+		
+		try {
+			
+			ResponseBaseOperation response = personaFacade.totalRegistrosPersona();
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
 }

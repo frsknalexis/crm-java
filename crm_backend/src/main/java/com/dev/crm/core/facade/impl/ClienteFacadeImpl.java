@@ -195,4 +195,23 @@ public class ClienteFacadeImpl implements ClienteFacade {
 		}
 		return null;
 	}
+
+	@Override
+	public ResponseBaseOperation totalRegistrosCliente() {
+		
+		try {
+			
+			Long totalRegistrosCliente = clienteService.totalRegistrosCliente();
+			if(totalRegistrosCliente == 0) {
+				return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.MESSAGE_TOTAL_REGISTROS + ' ' + totalRegistrosCliente, totalRegistrosCliente);
+			}
+			else if(totalRegistrosCliente > 0) {
+				return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.MESSAGE_TOTAL_REGISTROS + ' ' + totalRegistrosCliente, totalRegistrosCliente);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

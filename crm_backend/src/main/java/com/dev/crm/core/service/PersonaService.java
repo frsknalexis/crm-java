@@ -27,4 +27,6 @@ public interface PersonaService {
 	void update(Persona persona);
 	
 	boolean isPersonaPresent(String documentoPersona);
+	
+	Long obtenerTotalRegistrosPersona();
 }

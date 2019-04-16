@@ -175,4 +175,18 @@ public class ClienteServiceImpl implements ClienteService {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public Long totalRegistrosCliente() {
+		
+		try {
+			
+			Long totalRegistrosCliente = clienteDAO.totalRegistrosCliente();
+			return totalRegistrosCliente;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

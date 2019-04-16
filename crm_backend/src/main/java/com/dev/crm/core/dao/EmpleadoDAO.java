@@ -22,4 +22,6 @@ public interface EmpleadoDAO extends BaseDAOHibernate {
 	void disabledEmpleado(Empleado empleado);
 	
 	void enabledEmpleado(Empleado empleado);
+	
+	Long totalRegistrosEmpleado();
 }

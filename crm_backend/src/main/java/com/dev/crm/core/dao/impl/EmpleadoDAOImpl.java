@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 import javax.persistence.ParameterMode;
+import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -20,6 +21,7 @@ import com.dev.crm.core.dao.EmpleadoDAO;
 import com.dev.crm.core.model.entity.Empleado;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.GenericUtil;
+import com.dev.crm.core.util.StringUtil;
 
 @Repository("empleadoDAO")
 public class EmpleadoDAOImpl extends BaseDAOHibernateImpl implements EmpleadoDAO {
@@ -183,5 +185,28 @@ public class EmpleadoDAOImpl extends BaseDAOHibernateImpl implements EmpleadoDAO
 			e.printStackTrace();
 		}
 		return empleados;
+	}
+
+	@Override
+	public Long totalRegistrosEmpleado() {
+		
+		try {
+			
+			StringBuilder builder = new StringBuilder();
+			builder.append("SELECT COUNT(e) FROM Empleado e");
+			Query query = em.createQuery(builder.toString());
+			
+			try {
+				
+				return (Long) query.getSingleResult();
+			}
+			catch(Exception e) {
+				return StringUtil.parseLongNull("0");
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

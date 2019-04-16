@@ -21,4 +21,5 @@ public interface ClienteDAO extends BaseDAOHibernate {
 	
 	void enabledCliente(Cliente cliente);
 	
+	Long totalRegistrosCliente();
 }

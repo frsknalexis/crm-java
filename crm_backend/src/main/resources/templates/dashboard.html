@@ -34,19 +34,18 @@
 											<div class="widget-summary">
 												<div class="widget-summary-col widget-summary-col-icon">
 													<div class="summary-icon bg-primary">
-														<i class="fa fa-life-ring"></i>
+														<i class="fa fa-users"></i>
 													</div>
 												</div>
 												<div class="widget-summary-col">
 													<div class="summary">
-														<h4 class="title">Support Questions</h4>
+														<h4 class="title">Total Usuarios</h4>
 														<div class="info">
-															<strong class="amount">1281</strong>
-															<span class="text-primary">(14 unread)</span>
+															<strong class="amount" id="totalRegistrosUsuarios"></strong>
 														</div>
 													</div>
 													<div class="summary-footer">
-														<a class="text-muted text-uppercase">(view all)</a>
+														<a class="text-muted text-uppercase" th:href="@{/usuario/view}">(VER TODOS)</a>
 													</div>
 												</div>
 											</div>
@@ -59,24 +58,72 @@
 											<div class="widget-summary">
 												<div class="widget-summary-col widget-summary-col-icon">
 													<div class="summary-icon bg-secondary">
-														<i class="fa fa-usd"></i>
+														<i class="fa fa-users"></i>
 													</div>
 												</div>
 												<div class="widget-summary-col">
 													<div class="summary">
-														<h4 class="title">Total Profit</h4>
+														<h4 class="title">Total Personas</h4>
 														<div class="info">
-															<strong class="amount">$ 14,890.30</strong>
+															<strong class="amount" id="totalRegistrosPersonas"></strong>
 														</div>
 													</div>
 													<div class="summary-footer">
-														<a class="text-muted text-uppercase">(withdraw)</a>
+														<a class="text-muted text-uppercase" th:href="@{/persona/view}">(VER TODOS)</a>
 													</div>
 												</div>
 											</div>
 										</div>
 									</section>
 								</div>
+								<div class="col-md-12 col-lg-6 col-xl-6">
+									<section class="panel panel-featured-left panel-featured-tertiary">
+										<div class="panel-body">
+											<div class="widget-summary">
+												<div class="widget-summary-col widget-summary-col-icon">
+													<div class="summary-icon bg-tertiary">
+														<i class="fa fa-suitcase"></i>
+													</div>
+												</div>
+												<div class="widget-summary-col">
+													<div class="summary">
+														<h4 class="title">Total Empleados</h4>
+														<div class="info">
+															<strong class="amount" id="totalRegistroEmpleados"></strong>
+														</div>
+													</div>
+													<div class="summary-footer">
+														<a class="text-muted text-uppercase" th:href="@{/empleado/view}">(VER TODOS)</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+								</div>
+								<div class="col-md-12 col-lg-6 col-xl-6">
+									<section class="panel panel-featured-left panel-featured-quartenary">
+										<div class="panel-body">
+											<div class="widget-summary">
+												<div class="widget-summary-col widget-summary-col-icon">
+													<div class="summary-icon bg-quartenary">
+														<i class="fa fa-tags"></i>
+													</div>
+												</div>
+												<div class="widget-summary-col">
+													<div class="summary">
+														<h4 class="title">Total Clientes</h4>
+														<div class="info">
+															<strong class="amount" id="totalRegistrosCliente"></strong>
+														</div>
+													</div>
+													<div class="summary-footer">
+														<a class="text-muted text-uppercase" th:href="@{/persona/view}">(VER TODOS)</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+								</div>		
 							</div>
 						</div>
 					</div>
@@ -85,5 +132,6 @@
 			</div>
 		</section>
 		<th:block th:replace="fragments/script :: script"></th:block>
+		<script type="text/javascript" th:src="@{/assets/javascripts/app/dashboard.js}"></script>
 	</body>
 </html>

@@ -23,4 +23,6 @@ public interface ClienteService {
 	void updateCliente(Cliente cliente);
 	
 	boolean isClientePresent(String documentoPersonaCliente);
+	
+	Long totalRegistrosCliente();
 }

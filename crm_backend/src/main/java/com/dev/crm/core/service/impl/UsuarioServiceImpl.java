@@ -195,4 +195,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 		return false;
 	}
+
+	@Override
+	public Long obtenerTotalRegistrosUsuario() {
+		
+		try {
+			
+			Long totalRegistrosUsuario = usuarioDAO.obtenerTotalRegistrosUsuario();
+			return totalRegistrosUsuario;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

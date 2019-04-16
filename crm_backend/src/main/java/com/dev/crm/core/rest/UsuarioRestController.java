@@ -179,4 +179,17 @@ public class UsuarioRestController {
 		}
 		return null;
 	}
+	
+	@GetMapping("/totalRegistros")
+	public ResponseEntity<ResponseBaseOperation> obtenerTotalRegistrosUsuario() {
+		
+		try {
+			
+			ResponseBaseOperation response = usuarioFacade.obtenerTotalRegistrosUsuario();
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
 }

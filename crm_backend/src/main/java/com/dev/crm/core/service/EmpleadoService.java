@@ -24,4 +24,6 @@ public interface EmpleadoService {
 	
 	void enabledEmpleado(String documentoPersonaEmpleado);
 	
+	Long totalRegistrosEmpleado();
+	
 }
