@@ -2,7 +2,10 @@ package com.dev.crm.core.model.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -39,9 +43,16 @@ public class Empleado implements Serializable {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="codi_cargo", nullable=false)
 	private Cargo cargo;
+	
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="empleado")
+	private List<EmpleadoInterno> empleadosInternos;
+	
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="empleado")
+	private List<EmpleadoExterno> empleadosExternos;
 
 	public Empleado() {
-		
+		empleadosInternos = new ArrayList<EmpleadoInterno>();
+		empleadosExternos = new ArrayList<EmpleadoExterno>();
 	}
 
 	public BigDecimal getCodigoEmpleado() {
@@ -74,5 +85,21 @@ public class Empleado implements Serializable {
 
 	public void setCargo(Cargo cargo) {
 		this.cargo = cargo;
+	}
+
+	public List<EmpleadoInterno> getEmpleadosInternos() {
+		return empleadosInternos;
+	}
+
+	public void setEmpleadosInternos(List<EmpleadoInterno> empleadosInternos) {
+		this.empleadosInternos = empleadosInternos;
+	}
+
+	public List<EmpleadoExterno> getEmpleadosExternos() {
+		return empleadosExternos;
+	}
+
+	public void setEmpleadosExternos(List<EmpleadoExterno> empleadosExternos) {
+		this.empleadosExternos = empleadosExternos;
 	}
 }
