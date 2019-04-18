@@ -13,6 +13,7 @@ public class Constantes {
 	public static final String SP_ACTUALIZAR_EMPLEADO = "sp_actualizar_empleado";
 	public static final String SP_ACT_DES_EMPLEADO = "sp_act_des_empleado";
 	public static final String  SP_LISTAR_PERSONA_EMPLEADO= "sp_listar_persona_empleado";
+	public static final String SP_LISTAR_EMPLEADOS_INT_EXT = "sp_listar_empleados_int_ext";
 	
 	public static final boolean HABILITADO = true;
 	public static final boolean INHABILITADO = false;

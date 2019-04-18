@@ -12,6 +12,8 @@ public interface EmpleadoService {
 	
 	List<Empleado> spListarPersonaEmpleado(String creadoPor);
 	
+	List<Empleado> spListarEmpleadosIntExt();
+	
 	void spInsercionEmpleado(Empleado empleado);
 	
 	void spActualizarEmpleado(Empleado empleado);

@@ -1,12 +1,16 @@
 package com.dev.crm.core.rest;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +24,7 @@ import com.dev.crm.core.dto.PersonaDTO;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.PersonaFacade;
 import com.dev.crm.core.util.GenericUtil;
+import com.dev.crm.core.view.pdf.PdfGenerator;
 
 @RestController
 @RequestMapping("/api/v1/persona")
@@ -220,6 +225,27 @@ public class PersonaRestController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping(value="/pdfReport", produces=MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<InputStreamResource> personasReportToPDF() {
+		
+		try {
+			
+			List<PersonaDTO> personasDTO = personaFacade.findAll();
+			ByteArrayInputStream bis = PdfGenerator.personasToPDF(personasDTO);
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-Disposition", "inline; filename=personasReport.pdf");
+			
+			return ResponseEntity.ok()
+					.headers(headers)
+					.contentType(MediaType.APPLICATION_PDF)
+					.body(new InputStreamResource(bis));
+		}
+		catch(Exception e) {
+			return new ResponseEntity<InputStreamResource>(HttpStatus.BAD_REQUEST);
 		}
 	}
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.crm.core.dto.EmpleadoDTO;
+import com.dev.crm.core.dto.EmpleadoResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.EmpleadoFacade;
 import com.dev.crm.core.util.GenericUtil;
@@ -62,6 +63,24 @@ public class EmpleadoRestController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<List<EmpleadoDTO>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/empleados/listarEmpleadosIntExt")
+	public ResponseEntity<List<EmpleadoResultViewModel>> spListarEmpleadosIntExt() {
+		
+		try {
+			
+			List<EmpleadoResultViewModel> empleadosResultView = empleadoFacade.spListarEmpleadosIntExt();
+			if(GenericUtil.isNotEmpty(empleadosResultView)) {
+				return new ResponseEntity<List<EmpleadoResultViewModel>>(empleadosResultView, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<EmpleadoResultViewModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<EmpleadoResultViewModel>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	

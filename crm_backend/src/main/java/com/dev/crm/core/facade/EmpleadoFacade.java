@@ -3,6 +3,7 @@ package com.dev.crm.core.facade;
 import java.util.List;
 
 import com.dev.crm.core.dto.EmpleadoDTO;
+import com.dev.crm.core.dto.EmpleadoResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 
 public interface EmpleadoFacade {
@@ -12,6 +13,8 @@ public interface EmpleadoFacade {
 	List<EmpleadoDTO> getActiveListEmpleados();
 	
 	List<EmpleadoDTO> spListarPersonaEmpleado(String creadoPor);
+	
+	List<EmpleadoResultViewModel> spListarEmpleadosIntExt();
 	
 	EmpleadoDTO getByDocumentoPersonaEmpleado(String documentoPersonaEmpleado);
 	

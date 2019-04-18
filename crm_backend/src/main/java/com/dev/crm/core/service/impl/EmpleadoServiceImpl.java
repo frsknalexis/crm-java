@@ -183,4 +183,22 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 		}
 		return null;
 	}
+
+	@Override
+	public List<Empleado> spListarEmpleadosIntExt() {
+		
+		List<Empleado> empleados = new ArrayList<Empleado>();
+		
+		try {
+			
+			empleados = empleadoDAO.spListarEmpleadosIntExt();
+			if(GenericUtil.isNotNull(empleados)) {
+				return empleados;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

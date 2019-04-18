@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.dev.crm.core.dto.EmpleadoDTO;
+import com.dev.crm.core.dto.EmpleadoResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.EmpleadoFacade;
 import com.dev.crm.core.model.entity.Empleado;
@@ -137,6 +138,25 @@ public class EmpleadoFacadeImpl implements EmpleadoFacade {
 				empleadosDTO.add(modelMapper.map(e, EmpleadoDTO.class));
 			});
 			return empleadosDTO;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<EmpleadoResultViewModel> spListarEmpleadosIntExt() {
+		
+		List<EmpleadoResultViewModel> empleadosResultView = new ArrayList<EmpleadoResultViewModel>(); 
+		
+		try {
+			
+			List<Empleado> empleados = empleadoService.spListarEmpleadosIntExt();
+			empleados.stream().forEach(e -> {
+				empleadosResultView.add(modelMapper.map(e, EmpleadoResultViewModel.class));
+			});
+			return empleadosResultView;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
