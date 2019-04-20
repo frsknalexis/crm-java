@@ -11,8 +11,6 @@ public interface EmpleadoDAO extends BaseDAOHibernate {
 	
 	List<Empleado> getActiveListEmpleados();
 	
-	List<Empleado> spListarEmpleadosIntExt();
-	
 	void spInsercionEmpleado(Empleado empleado);
 	
 	void spActualizarEmpleado(Empleado empleado);

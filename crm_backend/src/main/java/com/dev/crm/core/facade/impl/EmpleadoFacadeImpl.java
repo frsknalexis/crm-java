@@ -148,15 +148,17 @@ public class EmpleadoFacadeImpl implements EmpleadoFacade {
 	@Override
 	public List<EmpleadoResultViewModel> spListarEmpleadosIntExt() {
 		
-		List<EmpleadoResultViewModel> empleadosResultView = new ArrayList<EmpleadoResultViewModel>(); 
+		List<EmpleadoResultViewModel> empleados = new ArrayList<EmpleadoResultViewModel>();
 		
 		try {
 			
-			List<Empleado> empleados = empleadoService.spListarEmpleadosIntExt();
-			empleados.stream().forEach(e -> {
-				empleadosResultView.add(modelMapper.map(e, EmpleadoResultViewModel.class));
-			});
-			return empleadosResultView;
+			empleados = empleadoService.spListarEmpleadosIntExt();
+			if(!GenericUtil.isCollectionEmpty(empleados)) {
+				return empleados;
+			}
+			else {
+				return null;
+			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();

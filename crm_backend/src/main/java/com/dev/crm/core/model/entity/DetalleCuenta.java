@@ -1,0 +1,122 @@
+package com.dev.crm.core.model.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+@Table(name = "tb_ci_detcun", schema = "public")
+@IdClass(value=DetalleCuentaPK.class)
+public class DetalleCuenta implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -446064555740745195L;
+	
+	@Id
+	@Column(name="documento_personac", nullable=false, length=11)
+	private String documentoPersonaCliente;
+	
+	@Id
+	@Column(name="codi_detcun", nullable=false)
+	private Integer codigoDetalleCuenta;
+
+	@Id
+	@Column(name="codi_cuenta", nullable=false)
+	private String codigoCuenta;
+	
+	@Id
+	@Column(name="codi_anio", nullable=false)
+	private String codigoAnio;
+	
+	@Id
+	@Column(name="cons_cliente", nullable=false)
+	private Integer consecutivoCliente;
+	
+	@Column(name="observacion_detcue")
+	private String observacionDetalleCuenta;
+	
+	@Column(name="fechacan_detcue")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fechaCancelacionDetalleCuenta;
+	
+	@Column(name="fechapro_detcue")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fechaProgramacionDetalleCuenta;
+
+	public DetalleCuenta() {
+		
+	}
+
+	public String getDocumentoPersonaCliente() {
+		return documentoPersonaCliente;
+	}
+
+	public void setDocumentoPersonaCliente(String documentoPersonaCliente) {
+		this.documentoPersonaCliente = documentoPersonaCliente;
+	}
+
+	public Integer getCodigoDetalleCuenta() {
+		return codigoDetalleCuenta;
+	}
+
+	public void setCodigoDetalleCuenta(Integer codigoDetalleCuenta) {
+		this.codigoDetalleCuenta = codigoDetalleCuenta;
+	}
+
+	public String getCodigoCuenta() {
+		return codigoCuenta;
+	}
+
+	public void setCodigoCuenta(String codigoCuenta) {
+		this.codigoCuenta = codigoCuenta;
+	}
+
+	public String getCodigoAnio() {
+		return codigoAnio;
+	}
+
+	public void setCodigoAnio(String codigoAnio) {
+		this.codigoAnio = codigoAnio;
+	}
+
+	public Integer getConsecutivoCliente() {
+		return consecutivoCliente;
+	}
+
+	public void setConsecutivoCliente(Integer consecutivoCliente) {
+		this.consecutivoCliente = consecutivoCliente;
+	}
+
+	public String getObservacionDetalleCuenta() {
+		return observacionDetalleCuenta;
+	}
+
+	public void setObservacionDetalleCuenta(String observacionDetalleCuenta) {
+		this.observacionDetalleCuenta = observacionDetalleCuenta;
+	}
+
+	public Date getFechaCancelacionDetalleCuenta() {
+		return fechaCancelacionDetalleCuenta;
+	}
+
+	public void setFechaCancelacionDetalleCuenta(Date fechaCancelacionDetalleCuenta) {
+		this.fechaCancelacionDetalleCuenta = fechaCancelacionDetalleCuenta;
+	}
+
+	public Date getFechaProgramacionDetalleCuenta() {
+		return fechaProgramacionDetalleCuenta;
+	}
+
+	public void setFechaProgramacionDetalleCuenta(Date fechaProgramacionDetalleCuenta) {
+		this.fechaProgramacionDetalleCuenta = fechaProgramacionDetalleCuenta;
+	}
+}

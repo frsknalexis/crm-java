@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.crm.core.dao.EmpleadoDAO;
+import com.dev.crm.core.dto.EmpleadoResultViewModel;
 import com.dev.crm.core.model.entity.Empleado;
+import com.dev.crm.core.repository.jdbc.EmpleadoJdbcRepository;
 import com.dev.crm.core.service.EmpleadoService;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.GenericUtil;
@@ -21,6 +23,10 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 	@Autowired
 	@Qualifier("empleadoDAO")
 	private EmpleadoDAO empleadoDAO;
+	
+	@Autowired
+	@Qualifier("empleadoJdbcRepository")
+	private EmpleadoJdbcRepository empleadoJdbcRepository;
 	
 	@Override
 	public void spInsercionEmpleado(Empleado e) {
@@ -185,15 +191,18 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 	}
 
 	@Override
-	public List<Empleado> spListarEmpleadosIntExt() {
+	public List<EmpleadoResultViewModel> spListarEmpleadosIntExt() {
 		
-		List<Empleado> empleados = new ArrayList<Empleado>();
+		List<EmpleadoResultViewModel> empleados = new ArrayList<EmpleadoResultViewModel>();
 		
 		try {
 			
-			empleados = empleadoDAO.spListarEmpleadosIntExt();
+			empleados = empleadoJdbcRepository.spListarEmpleadosIntExt();
 			if(GenericUtil.isNotNull(empleados)) {
 				return empleados;
+			}
+			else {
+				return null;
 			}
 		}
 		catch(Exception e) {

@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.crm.core.dao.ClienteDAO;
+import com.dev.crm.core.dto.ClienteFiltroRequest;
+import com.dev.crm.core.dto.ClienteResultViewModel;
 import com.dev.crm.core.model.entity.Cliente;
+import com.dev.crm.core.repository.jdbc.ClienteJdbcRepository;
 import com.dev.crm.core.service.ClienteService;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.GenericUtil;
@@ -21,6 +24,10 @@ public class ClienteServiceImpl implements ClienteService {
 	@Autowired
 	@Qualifier("clienteDAO")
 	private ClienteDAO clienteDAO;
+	
+	@Autowired
+	@Qualifier("clienteJdbcRepository")
+	private ClienteJdbcRepository clienteJdbcRepository;
 	
 	@Override
 	public List<Cliente> findAll() {
@@ -183,6 +190,29 @@ public class ClienteServiceImpl implements ClienteService {
 			
 			Long totalRegistrosCliente = clienteDAO.totalRegistrosCliente();
 			return totalRegistrosCliente;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public ClienteResultViewModel spBuscarPersonaClienteVendedor(ClienteFiltroRequest filtro) {
+		
+		ClienteResultViewModel cliente = null;
+		
+		try {
+			
+			if(GenericUtil.isNotNull(filtro)) {
+				cliente = clienteJdbcRepository.spBuscarPersonaClienteVendedor(filtro);
+			}
+			if(GenericUtil.isNotNull(cliente)) {
+				return cliente;
+			}
+			else {
+				return null;
+			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();

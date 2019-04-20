@@ -3,6 +3,8 @@ package com.dev.crm.core.facade;
 import java.util.List;
 
 import com.dev.crm.core.dto.ClienteDTO;
+import com.dev.crm.core.dto.ClienteFiltroRequest;
+import com.dev.crm.core.dto.ClienteResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 
 public interface ClienteFacade {
@@ -24,4 +26,6 @@ public interface ClienteFacade {
 	ResponseBaseOperation enabledCliente(String documentoPersonaCliente);
 	
 	ResponseBaseOperation totalRegistrosCliente();
+	
+	ClienteResultViewModel spBuscarPersonaClienteVendedor(ClienteFiltroRequest filtro);
 }

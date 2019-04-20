@@ -24,6 +24,7 @@ import com.dev.crm.core.dto.PersonaDTO;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.PersonaFacade;
 import com.dev.crm.core.util.GenericUtil;
+import com.dev.crm.core.view.excel.ExcelGenerator;
 import com.dev.crm.core.view.pdf.PdfGenerator;
 
 @RestController
@@ -246,6 +247,26 @@ public class PersonaRestController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<InputStreamResource>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping(value="/excelReport")
+	public ResponseEntity<InputStreamResource> personasReportToExcel() {
+		
+		try {
+			
+			List<PersonaDTO> personasDTO = personaFacade.findAll();
+			ByteArrayInputStream bis = ExcelGenerator.personasToExcel(personasDTO);
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-Disposition", "attachment; filename=personas.xlsx");
+			
+			return ResponseEntity.ok()
+					.headers(headers)
+					.body(new InputStreamResource(bis));
+		}
+		catch(Exception e) {
+			return  new ResponseEntity<InputStreamResource>(HttpStatus.BAD_REQUEST);
 		}
 	}
 }

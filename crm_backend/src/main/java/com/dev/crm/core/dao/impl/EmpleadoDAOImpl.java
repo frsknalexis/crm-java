@@ -209,22 +209,4 @@ public class EmpleadoDAOImpl extends BaseDAOHibernateImpl implements EmpleadoDAO
 		}
 		return null;
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Empleado> spListarEmpleadosIntExt() {
-		
-		List<Empleado> empleados = new ArrayList<Empleado>();
-		
-		try {
-			
-			StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery(Constantes.SP_LISTAR_EMPLEADOS_INT_EXT, Empleado.class);
-			storedProcedure.execute();
-			empleados = storedProcedure.getResultList();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		return empleados;
-	}
 }

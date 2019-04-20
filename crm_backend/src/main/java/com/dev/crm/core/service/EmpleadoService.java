@@ -2,6 +2,7 @@ package com.dev.crm.core.service;
 
 import java.util.List;
 
+import com.dev.crm.core.dto.EmpleadoResultViewModel;
 import com.dev.crm.core.model.entity.Empleado;
 
 public interface EmpleadoService {
@@ -12,7 +13,7 @@ public interface EmpleadoService {
 	
 	List<Empleado> spListarPersonaEmpleado(String creadoPor);
 	
-	List<Empleado> spListarEmpleadosIntExt();
+	List<EmpleadoResultViewModel> spListarEmpleadosIntExt();
 	
 	void spInsercionEmpleado(Empleado empleado);
 	

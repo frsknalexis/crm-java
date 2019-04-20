@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.crm.core.dto.ClienteDTO;
+import com.dev.crm.core.dto.ClienteFiltroRequest;
+import com.dev.crm.core.dto.ClienteResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.ClienteFacade;
 import com.dev.crm.core.util.GenericUtil;
@@ -183,5 +185,27 @@ public class ClienteRestController {
 		catch(Exception e) {
 			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	@PostMapping("/searchCliente")
+	public ResponseEntity<ClienteResultViewModel> spBuscarPersonaClienteVendedor(@Valid @RequestBody ClienteFiltroRequest filtro) {
+		
+		try {
+			
+			if(GenericUtil.isNotNull(filtro)) {
+				filtro.setCreadoPor("vendedor");
+				ClienteResultViewModel cliente = clienteFacade.spBuscarPersonaClienteVendedor(filtro);
+				if(GenericUtil.isNotNull(cliente)) {
+					return new ResponseEntity<ClienteResultViewModel>(cliente, HttpStatus.OK);
+				}
+				else {
+					return new ResponseEntity<ClienteResultViewModel>(HttpStatus.NO_CONTENT);
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

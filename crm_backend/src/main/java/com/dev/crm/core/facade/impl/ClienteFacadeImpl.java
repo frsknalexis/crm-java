@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.dev.crm.core.dto.ClienteDTO;
+import com.dev.crm.core.dto.ClienteFiltroRequest;
+import com.dev.crm.core.dto.ClienteResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.ClienteFacade;
 import com.dev.crm.core.model.entity.Cliente;
@@ -207,6 +209,29 @@ public class ClienteFacadeImpl implements ClienteFacade {
 			}
 			else if(totalRegistrosCliente > 0) {
 				return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.MESSAGE_TOTAL_REGISTROS + ' ' + totalRegistrosCliente, totalRegistrosCliente);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public ClienteResultViewModel spBuscarPersonaClienteVendedor(ClienteFiltroRequest filtro) {
+		
+		ClienteResultViewModel clienteRVM = null;
+		
+		try {
+			
+			if(GenericUtil.isNotNull(filtro)) {
+				clienteRVM = clienteService.spBuscarPersonaClienteVendedor(filtro);
+			}
+			if(GenericUtil.isNotNull(clienteRVM)) {
+				return clienteRVM;
+			}
+			else {
+				return null;
 			}
 		}
 		catch(Exception e) {
