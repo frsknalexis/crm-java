@@ -10,6 +10,8 @@ public class DetalleCuentaPK implements Serializable {
 	 */
 	private static final long serialVersionUID = -4017859423711793502L;
 
+	private String tipoServicio;
+	
 	private String documentoPersonaCliente;
 	
 	private Integer codigoDetalleCuenta;
@@ -24,14 +26,23 @@ public class DetalleCuentaPK implements Serializable {
 		
 	}
 
-	public DetalleCuentaPK(String documentoPersonaCliente, Integer codigoDetalleCuenta, String codigoCuenta,
+	public DetalleCuentaPK(String tipoServicio, String documentoPersonaCliente, Integer codigoDetalleCuenta, String codigoCuenta,
 			String codigoAnio, Integer consecutivoCliente) {
 		super();
+		this.tipoServicio = tipoServicio;
 		this.documentoPersonaCliente = documentoPersonaCliente;
 		this.codigoDetalleCuenta = codigoDetalleCuenta;
 		this.codigoCuenta = codigoCuenta;
 		this.codigoAnio = codigoAnio;
 		this.consecutivoCliente = consecutivoCliente;
+	}
+	
+	public String getTipoServicio() {
+		return tipoServicio;
+	}
+
+	public void setTipoServicio(String tipoServicio) {
+		this.tipoServicio = tipoServicio;
 	}
 
 	public String getDocumentoPersonaCliente() {
@@ -87,6 +98,9 @@ public class DetalleCuentaPK implements Serializable {
 			return false;
 		}
 		final DetalleCuentaPK other = (DetalleCuentaPK) obj;
+		if(!Objects.equals(this.tipoServicio, other.tipoServicio)) {
+			return false;
+		}
 		if(!Objects.equals(this.documentoPersonaCliente, other.documentoPersonaCliente)) {
 			return false;
 		}
@@ -109,6 +123,7 @@ public class DetalleCuentaPK implements Serializable {
 	public int hashCode() {
 		
 		int hash = 7;
+		hash = 59 * hash + Objects.hashCode(this.tipoServicio);
 		hash = 59 * hash + Objects.hashCode(this.documentoPersonaCliente);
 		hash = 59 * hash + Objects.hashCode(this.codigoDetalleCuenta);
 		hash = 59 * hash + Objects.hashCode(this.codigoCuenta);

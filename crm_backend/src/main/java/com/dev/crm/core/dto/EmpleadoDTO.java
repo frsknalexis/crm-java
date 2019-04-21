@@ -2,6 +2,9 @@ package com.dev.crm.core.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class EmpleadoDTO implements Serializable {
 
@@ -17,6 +20,12 @@ public class EmpleadoDTO implements Serializable {
 	private Boolean estado;
 	
 	private CargoDTO cargo;
+	
+	@JsonIgnore
+	private List<EmpleadoInternoDTO> empleadosInternos;
+	
+	@JsonIgnore
+	private List<EmpleadoExternoDTO> empleadosExternos;
 
 	public EmpleadoDTO() {
 		
@@ -52,5 +61,21 @@ public class EmpleadoDTO implements Serializable {
 
 	public void setCargo(CargoDTO cargo) {
 		this.cargo = cargo;
+	}
+
+	public List<EmpleadoInternoDTO> getEmpleadosInternos() {
+		return empleadosInternos;
+	}
+
+	public void setEmpleadosInternos(List<EmpleadoInternoDTO> empleadosInternos) {
+		this.empleadosInternos = empleadosInternos;
+	}
+
+	public List<EmpleadoExternoDTO> getEmpleadosExternos() {
+		return empleadosExternos;
+	}
+
+	public void setEmpleadosExternos(List<EmpleadoExternoDTO> empleadosExternos) {
+		this.empleadosExternos = empleadosExternos;
 	}
 }
