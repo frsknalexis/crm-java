@@ -47,4 +47,55 @@ public class DetalleCuentaDAOImpl extends BaseDAOHibernateImpl implements Detall
 		}
 	}
 
+	@Override
+	public void spReprogramarInstalacionCable() {
+		
+		try {
+			
+			StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery(Constantes.SP_REPROGRAMAR_INSTALACION_CABLE);
+			storedProcedure.execute();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void spReprogramarInstalacionInternet() {
+		
+		try {
+			
+			StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery(Constantes.SP_REPROGRAMAR_INSTALACION_INTERNET);
+			storedProcedure.execute();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void spRevalidandoFechaCable() {
+		
+		try {
+			
+			StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery(Constantes.SP_REVALIDANDO_FECHA_CABLE);
+			storedProcedure.execute();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void spRevalidandoFechaInternet() {
+		
+		try {
+			
+			StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery(Constantes.SP_REVALIDANDO_FECHA_INTERNET);
+			storedProcedure.execute();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}	
 }

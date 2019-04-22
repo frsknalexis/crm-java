@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import com.dev.crm.core.dto.ClienteFiltroRequest;
 import com.dev.crm.core.dto.ClienteResultViewModel;
 import com.dev.crm.core.util.Constantes;
+import com.dev.crm.core.util.GenericUtil;
 
 @Repository("clienteJdbcRepository")
 public class ClienteCustomRepository implements ClienteJdbcRepository {
@@ -49,14 +50,21 @@ public class ClienteCustomRepository implements ClienteJdbcRepository {
 			inParams.put("CREADOP", filtro.getCreadoPor());
 			
 			Map<String, Object> result = simpleJdbcCall.execute(inParams);
-			ClienteResultViewModel cliente = new ClienteResultViewModel();
-			cliente.setCliente((String) result.get("VCLIENTE"));
-			cliente.setDocumentoPersona((String) result.get("VDOCUMENTO"));
-			cliente.setDireccionPersona((String) result.get("VDIRECCION"));
-			cliente.setReferenciaPersona((String) result.get("VREFERENCIA"));
-			cliente.setAnio((Integer.valueOf((String) result.get("VANIO"))));
-			return cliente;
 			
+			if(GenericUtil.isNotNull(result.get("VDOCUMENTO")) && GenericUtil.isNotNull(result.get("VCLIENTE"))
+				&& GenericUtil.isNotNull(result.get("VDIRECCION")) && GenericUtil.isNotNull(result.get("VANIO"))) {
+				ClienteResultViewModel cliente = new ClienteResultViewModel();
+				cliente.setCliente((String) result.get("VCLIENTE"));
+				cliente.setDocumentoPersona((String) result.get("VDOCUMENTO"));
+				cliente.setDireccionPersona((String) result.get("VDIRECCION"));
+				cliente.setReferenciaPersona((String) result.get("VREFERENCIA"));
+				cliente.setAnio((Integer.valueOf((String) result.get("VANIO"))));
+				return cliente;
+			}
+			else if(GenericUtil.isNull(result.get("VDOCUMENTO")) && GenericUtil.isNull(result.get("VCLIENTE"))
+					&& GenericUtil.isNull(result.get("VDIRECCION")) && GenericUtil.isNull(result.get("VANIO"))) {
+				return null;
+			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();

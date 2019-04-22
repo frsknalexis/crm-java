@@ -40,4 +40,52 @@ public class DetalleCuentaServiceImpl implements DetalleCuentaService {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void spReprogramarInstalacionCable() {
+		
+		try {
+			
+			detalleCuentaDAO.spReprogramarInstalacionCable();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void spReprogramarInstalacionInternet() {
+		
+		try {
+			
+			detalleCuentaDAO.spReprogramarInstalacionInternet();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void spRevalidandoFechaCable() {
+		
+		try {
+			
+			detalleCuentaDAO.spRevalidandoFechaCable();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void spRevalidandoFechaInternet() {
+		
+		try {
+			
+			detalleCuentaDAO.spRevalidandoFechaInternet();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

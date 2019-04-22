@@ -14,4 +14,9 @@ public class DetalleCuentaController {
 	public String detalleCuentaViewController() {
 		return Constantes.DETALLE_CUENTA_VIEW;
 	}
+	
+	@GetMapping("/reprogramacion/view")
+	public String reprogramacionViewController() {
+		return Constantes.REPROGRAMACION_VIEW;
+	}
 }

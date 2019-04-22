@@ -56,4 +56,32 @@ public class DetalleCuentaFacadeImpl implements DetalleCuentaFacade {
 		}
 		return null;
 	}
+
+	@Override
+	public ResponseBaseOperation spReprogramarInstalacionCable() {
+		
+		try {
+			
+			detalleCuentaService.spReprogramarInstalacionCable();
+			return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, "REPROGRAMACION DE INSTALACION DE CABLE CON EXITO", null);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public ResponseBaseOperation spReprogramarInstalacionInternet() {
+		
+		try {
+			
+			detalleCuentaService.spReprogramarInstalacionInternet();
+			return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, "REPROGRAMACION DE INSTALACION DE INTERNET CON EXITO", null);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

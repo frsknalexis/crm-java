@@ -8,4 +8,8 @@ public interface DetalleCuentaFacade {
 	ResponseBaseOperation spInsercionCuentaInternet(DetalleCuentaDTO detalleCuentaDTO);
 	
 	ResponseBaseOperation spInsercionCuentaCable(DetalleCuentaDTO detalleCuentaDTO);
+	
+	ResponseBaseOperation spReprogramarInstalacionCable();
+	
+	ResponseBaseOperation spReprogramarInstalacionInternet();
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +44,32 @@ public class DetalleCuentaRestController {
 			
 			ResponseBaseOperation response = detalleCuentaFacade.spInsercionCuentaCable(detalleCuentaDTO);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/reprogramacionInstalacionCable")
+	public ResponseEntity<ResponseBaseOperation> spReprogramarInstalacionCable() {
+		
+		try {
+			
+			ResponseBaseOperation response = detalleCuentaFacade.spReprogramarInstalacionCable();
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/reprogramacionInstalacionInternet")
+	public ResponseEntity<ResponseBaseOperation> spReprogramarInstalacionInternet() {
+		
+		try {
+			
+			ResponseBaseOperation response = detalleCuentaFacade.spReprogramarInstalacionInternet();
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);

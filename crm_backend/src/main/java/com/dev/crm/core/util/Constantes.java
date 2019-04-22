@@ -7,6 +7,7 @@ public class Constantes {
 	public static final String PERSONA_VIEW = "modulo-personas/persona/persona";
 	public static final String EMPLEADO_VIEW = "modulo-personas/empleado/empleado";
 	public static final String DETALLE_CUENTA_VIEW = "modulo-servicios/detallecuenta/detallecuenta";
+	public static final String REPROGRAMACION_VIEW = "modulo-servicios/detallecuenta/reprogramacion";
 	
 	public static final String SP_ACTIVAR_DESACTIVAR_CLIENTE = "sp_activar_desactivar";
 	public static final String SP_LISTA_PERSONA_NO_EMPLEADO = "sp_lista_persona_no_empleado";
@@ -18,6 +19,10 @@ public class Constantes {
 	public static final String SP_BUSCAR_PERSONA_CLIENTE_VENDEDOR = "sp_buscar_persona_cliente_vendedor";
 	public static final String SP_INSERCION_CUENTA_INTERNET = "sp_insercion_cuenta_internet";
 	public static final String SP_INSERCION_CUENTA_CABLE ="sp_insercion_cuenta_cable";
+	public static final String SP_REPROGRAMAR_INSTALACION_CABLE = "sp_reprogramar_insta_cable";
+	public static final String SP_REPROGRAMAR_INSTALACION_INTERNET = "sp_reprogramar_insta_internet";
+	public static final String SP_REVALIDANDO_FECHA_CABLE = "sp_revalidando_fecha_cable";
+	public static final String SP_REVALIDANDO_FECHA_INTERNET = "sp_revalidando_fecha_internet";
 	
 	public static final boolean HABILITADO = true;
 	public static final boolean INHABILITADO = false;
