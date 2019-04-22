@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dev.crm.core.dao.DetalleCuentaDAO;
 import com.dev.crm.core.model.entity.DetalleCuenta;
 import com.dev.crm.core.service.DetalleCuentaService;
+import com.dev.crm.core.util.GenericUtil;
 
 @Service("detalleCuentaService")
 @Transactional("hibernateTransactionManager")
@@ -18,27 +19,35 @@ public class DetalleCuentaServiceImpl implements DetalleCuentaService {
 	private DetalleCuentaDAO detalleCuentaDAO;
 	
 	@Override
-	public void spInsercionCuentaInternet(DetalleCuenta dC) {
+	public String spInsercionCuentaInternet(DetalleCuenta dC) {
 		
 		try {
 			
-			detalleCuentaDAO.spInsercionCuentaInternet(dC);
+			if(GenericUtil.isNotNull(dC)) {
+				String result = detalleCuentaDAO.spInsercionCuentaInternet(dC);
+				return result;
+			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Override
-	public void spInsercionCuentaCable(DetalleCuenta dC) {
+	public String spInsercionCuentaCable(DetalleCuenta dC) {
 		
 		try {
 			
-			detalleCuentaDAO.spInsercionCuentaCable(dC);
+			if(GenericUtil.isNotNull(dC)) {
+				String result = detalleCuentaDAO.spInsercionCuentaCable(dC);
+				return result;
+			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Override

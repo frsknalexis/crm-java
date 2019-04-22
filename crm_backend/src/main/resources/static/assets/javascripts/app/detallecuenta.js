@@ -73,7 +73,8 @@ $(document).on('ready', function() {
 		$('#cancelarAccion').on('click', function() {
 			
 			limpiarForm();
-			disabledInputs(false);
+			disabledInputs(true);
+			disabledButtonGenerarCuenta(true);
 		});
 	}
 	
@@ -209,7 +210,7 @@ $(document).on('ready', function() {
 						
 						console.log(response);
 						
-						if(response.status =="CREATED") {
+						if(response.status == "CREATED" && response.message == "HECHO") {
 							
 							swal({
 								type: "success",
@@ -223,6 +224,14 @@ $(document).on('ready', function() {
 									$(location).attr('href', '/detalleCuenta/generarCuenta/view');
 								}
 							});
+						}
+						else if(response.status == "ERROR" && response.message == "SERVICIO OPERANDO") {
+							
+							swal({
+				                type: 'error',
+				                title: 'Ooops',
+				                text: 'Ya se Genero la Cuenta de Internet para el Cliente, verifique el estado del Servicio !'
+				            });
 						}
 					},
 					error: function() {
@@ -271,7 +280,7 @@ $(document).on('ready', function() {
 						
 						console.log(response);
 						
-						if(response.status =="CREATED") {
+						if(response.status =="CREATED" && response.message == "HECHO") {
 							
 							swal({
 								type: "success",
@@ -285,6 +294,14 @@ $(document).on('ready', function() {
 									$(location).attr('href', '/detalleCuenta/generarCuenta/view');
 								}
 							});
+						}
+						else if(response.status == "ERROR" && response.message == "SERVICIO OPERANDO") {
+							
+							swal({
+				                type: 'error',
+				                title: 'Ooops',
+				                text: 'Ya se Genero la Cuenta de Cable para el Cliente, verifique el estado del Servicio !'
+				            });
 						}
 					},
 					error: function() {
@@ -319,6 +336,8 @@ $(document).on('ready', function() {
 			}
 			else if($tipoServicio.val() == "IC") {
 				
+				limpiarForm();
+				disabledInputs(true);
 				disabledButtonGenerarCuenta(false);
 				cancelarAccion();
 				verificarCliente();
@@ -326,6 +345,9 @@ $(document).on('ready', function() {
 				console.log('Internet Color');
 			}
 			else if($tipoServicio.val() == 'CC') {
+				
+				limpiarForm();
+				disabledInputs(true);
 				disabledButtonGenerarCuenta(false);
 				cancelarAccion();
 				verificarCliente();

@@ -5,9 +5,9 @@ import com.dev.crm.core.model.entity.DetalleCuenta;
 
 public interface DetalleCuentaDAO extends BaseDAOHibernate {
 
-	void spInsercionCuentaInternet(DetalleCuenta detalleCuenta);
+	String spInsercionCuentaInternet(DetalleCuenta detalleCuenta);
 	
-	void spInsercionCuentaCable(DetalleCuenta detalleCuenta);
+	String spInsercionCuentaCable(DetalleCuenta detalleCuenta);
 	
 	void spReprogramarInstalacionCable();
 	

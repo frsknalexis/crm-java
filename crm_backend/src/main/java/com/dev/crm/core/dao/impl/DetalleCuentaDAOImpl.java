@@ -14,37 +14,45 @@ import com.dev.crm.core.util.Constantes;
 public class DetalleCuentaDAOImpl extends BaseDAOHibernateImpl implements DetalleCuentaDAO {
 
 	@Override
-	public void spInsercionCuentaInternet(DetalleCuenta dC) {
+	public String spInsercionCuentaInternet(DetalleCuenta dC) {
 		
 		try {
 			
-			StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery(Constantes.SP_INSERCION_CUENTA_INTERNET, DetalleCuenta.class);
+			StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery(Constantes.SP_INSERCION_CUENTA_INTERNET);
 			storedProcedure.registerStoredProcedureParameter("COD_DOC", String.class, ParameterMode.IN);
 			storedProcedure.registerStoredProcedureParameter("OBS", String.class, ParameterMode.IN);
+			storedProcedure.registerStoredProcedureParameter("MENSAJE", String.class, ParameterMode.OUT);
 			storedProcedure.setParameter("COD_DOC", dC.getDocumentoPersonaCliente());
 			storedProcedure.setParameter("OBS", dC.getObservacionDetalleCuenta());
 			storedProcedure.execute();
+			String result = (String) storedProcedure.getOutputParameterValue("MENSAJE");
+			return result;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Override
-	public void spInsercionCuentaCable(DetalleCuenta dC) {
+	public String spInsercionCuentaCable(DetalleCuenta dC) {
 		
 		try {
 			
-			StoredProcedureQuery storeProcedure = em.createStoredProcedureQuery(Constantes.SP_INSERCION_CUENTA_CABLE, DetalleCuenta.class);
+			StoredProcedureQuery storeProcedure = em.createStoredProcedureQuery(Constantes.SP_INSERCION_CUENTA_CABLE);
 			storeProcedure.registerStoredProcedureParameter("COD_DOC", String.class, ParameterMode.IN);
 			storeProcedure.registerStoredProcedureParameter("OBS", String.class, ParameterMode.IN);
+			storeProcedure.registerStoredProcedureParameter("MENSAJE", String.class, ParameterMode.OUT);
 			storeProcedure.setParameter("COD_DOC", dC.getDocumentoPersonaCliente());
 			storeProcedure.setParameter("OBS", dC.getObservacionDetalleCuenta());
 			storeProcedure.execute();
+			String result = (String) storeProcedure.getOutputParameterValue("MENSAJE");
+			return result;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Override

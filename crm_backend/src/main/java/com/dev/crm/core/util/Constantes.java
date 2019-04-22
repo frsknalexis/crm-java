@@ -39,4 +39,6 @@ public class Constantes {
 	public static final String MESSAGE_SUCCESS_DISABLED = "Se Deshabilito Correctamente este Registro";
 	public static final String MESSAGE_SUCCESS_ENABLED = "Se Habilito Correctamente este Registro";
 	public static final String MESSAGE_TOTAL_REGISTROS = "Total Registros";
+	public static final String ESTADO = "SERVICIO OPERANDO";
+	public static final String HECHO = "HECHO";
 }

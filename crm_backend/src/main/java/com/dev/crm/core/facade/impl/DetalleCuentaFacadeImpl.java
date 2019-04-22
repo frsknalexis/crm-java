@@ -30,8 +30,13 @@ public class DetalleCuentaFacadeImpl implements DetalleCuentaFacade {
 			
 			DetalleCuenta detalleCuenta = modelMapper.map(detalleCuentaDTO, DetalleCuenta.class);
 			if(GenericUtil.isNotNull(detalleCuenta)) {
-				detalleCuentaService.spInsercionCuentaInternet(detalleCuenta);
-				return new ResponseBaseOperation(Constantes.CREATED_STATUS, "SE GENERO LA CUENTA DE INTERNET PARA EL CLIENTE CON EXITO", detalleCuentaDTO);
+				String result = detalleCuentaService.spInsercionCuentaInternet(detalleCuenta);
+				if(result.equals(Constantes.HECHO)) {
+					return new ResponseBaseOperation(Constantes.CREATED_STATUS, result, detalleCuentaDTO);
+				}
+				else if(result.equals(Constantes.ESTADO)) {
+					return new ResponseBaseOperation(Constantes.ERROR_STATUS, result, detalleCuentaDTO);
+				}
 			}
 		}
 		catch(Exception e) {
@@ -47,8 +52,13 @@ public class DetalleCuentaFacadeImpl implements DetalleCuentaFacade {
 			
 			DetalleCuenta detalleCuenta = modelMapper.map(detalleCuentaDTO, DetalleCuenta.class);
 			if(GenericUtil.isNotNull(detalleCuenta)) {
-				detalleCuentaService.spInsercionCuentaCable(detalleCuenta);
-				return new ResponseBaseOperation(Constantes.CREATED_STATUS, "SE GENERO LA CUENTA DE CABLE PARA EL CLIENTE CON EXITO", detalleCuentaDTO);
+				String result = detalleCuentaService.spInsercionCuentaCable(detalleCuenta);
+				if(result.equals(Constantes.HECHO)) {
+					return new ResponseBaseOperation(Constantes.CREATED_STATUS, result, detalleCuentaDTO);
+				}
+				else if(result.equals(Constantes.ESTADO)) {
+					return new ResponseBaseOperation(Constantes.ERROR_STATUS, result, detalleCuentaDTO);
+				}
 			}
 		}
 		catch(Exception e) {
