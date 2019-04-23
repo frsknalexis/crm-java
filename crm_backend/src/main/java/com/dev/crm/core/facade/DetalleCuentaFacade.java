@@ -9,7 +9,15 @@ public interface DetalleCuentaFacade {
 	
 	ResponseBaseOperation spInsercionCuentaCable(DetalleCuentaDTO detalleCuentaDTO);
 	
+	ResponseBaseOperation spContadorPendientesCable();
+	
+	ResponseBaseOperation spContadorPendientesInternet();
+	
 	ResponseBaseOperation spReprogramarInstalacionCable();
 	
 	ResponseBaseOperation spReprogramarInstalacionInternet();
+	
+	ResponseBaseOperation spRevalidandoFechaCable();
+	
+	ResponseBaseOperation spRevalidandoFechaInternet();
 }

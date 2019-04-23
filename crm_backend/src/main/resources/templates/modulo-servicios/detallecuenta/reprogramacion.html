@@ -60,33 +60,23 @@
 								<div class="panel-body">
 									<div class="content">
 										<div class="row">
-											
-										</div>
-									</div>
-										<div class="row">
-											<div class="col-md-6 col-sm-6 form-group">
-												<label for="detalleCuentaDireccion">Direccion</label>
-												<div class="input-group mb-md">
-													<span class="input-group-addon">
-														<i class="fa fa-home"></i>
-													</span>
-													<input type="text" class="form-control input-sm" id="detalleCuentaDireccion" placeholder="Direccion">
-												</div>
+											<div class="col-md-12 form-group">
+												<button type="button" id="reprogramacionDelDia" class="btn btn-sm btn-success btn-block"><i class="fa fa-calendar"></i> Reprogramar Instalaciones del dia</button>
 											</div>
-											<div class="col-md-6 col-sm-6 form-group">
-												<label for="detalleCuentaReferenciaDireccion">Referencia</label>
+											<div class="col-md-12 col-sm-12 form-group">
+												<label for="detalleCuentaReferenciaDireccion">Contador</label>
 												<div class="input-group mb-md">
 													<span class="input-group-addon">
-														<i class="fa fa-home"></i>
+														<i class="fa fa-tag"></i>
 													</span>
-													<input type="text" class="form-control input-sm" id="detalleCuentaReferenciaDireccion" placeholder="Referencia">
+													<input type="text" class="form-control input-sm" id="contador" placeholder="Contador">
 												</div>
 											</div>
 											<div class="col-md-12 form-group">
-												<button type="submit" id="generarCuenta" class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Generar Cuenta</button>
-												<button type="button" id="cancelarAccion" class="btn btn-sm btn-danger"><i class="fa fa-arrow-circle-left"></i> Cancelar</button>
+												<button type="button" id="reprogramacionPendientes" class="btn btn-sm btn-warning btn-block"><i class="fa fa-calendar"></i> Reprogramar Instalaciones Pendientes</button>
 											</div>
 										</div>
+									</div>								
 								</div>
 							</section>
 						</div>		
@@ -97,5 +87,6 @@
 		</div>
 	</section>
 	<th:block th:replace="fragments/script :: script"></th:block>
+	<script type="text/javascript" th:src="@{/assets/javascripts/app/reprogramacion.js}"></script>
 </body>
 </html>

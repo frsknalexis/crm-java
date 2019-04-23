@@ -9,11 +9,15 @@ public interface DetalleCuentaDAO extends BaseDAOHibernate {
 	
 	String spInsercionCuentaCable(DetalleCuenta detalleCuenta);
 	
-	void spReprogramarInstalacionCable();
+	Integer spContadorPendientesCable();
 	
-	void spReprogramarInstalacionInternet();
+	Integer spContadorPendientesInternet();
 	
-	void spRevalidandoFechaCable();
+	String spReprogramarInstalacionCable();
 	
-	void spRevalidandoFechaInternet();
+	String spReprogramarInstalacionInternet();
+	
+	String spRevalidandoFechaCable();
+	
+	String spRevalidandoFechaInternet();
 }

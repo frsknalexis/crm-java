@@ -54,56 +54,106 @@ public class DetalleCuentaDAOImpl extends BaseDAOHibernateImpl implements Detall
 		}
 		return null;
 	}
+	
+	@Override
+	public Integer spContadorPendientesCable() {
+		
+		try {
+			
+			StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery(Constantes.SP_CONTADOR_PENDIENTES_CABLE);
+			storedProcedure.registerStoredProcedureParameter("EXISTE", Integer.class, ParameterMode.OUT);
+			storedProcedure.execute();
+			Integer result = (Integer) storedProcedure.getOutputParameterValue("EXISTE");
+			return result;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@Override
-	public void spReprogramarInstalacionCable() {
+	public Integer spContadorPendientesInternet() {
+		
+		try {
+			
+			StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery(Constantes.SP_CONTADOR_PENDIENTES_INTERNET);
+			storedProcedure.registerStoredProcedureParameter("EXISTE", Integer.class, ParameterMode.OUT);
+			storedProcedure.execute();
+			Integer result = (Integer) storedProcedure.getOutputParameterValue("EXISTE");
+			return result;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}	
+
+	@Override
+	public String spReprogramarInstalacionCable() {
 		
 		try {
 			
 			StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery(Constantes.SP_REPROGRAMAR_INSTALACION_CABLE);
+			storedProcedure.registerStoredProcedureParameter("MENSAJE", String.class, ParameterMode.OUT);
 			storedProcedure.execute();
+			String result = (String) storedProcedure.getOutputParameterValue("MENSAJE");
+			return result;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Override
-	public void spReprogramarInstalacionInternet() {
+	public String spReprogramarInstalacionInternet() {
 		
 		try {
 			
 			StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery(Constantes.SP_REPROGRAMAR_INSTALACION_INTERNET);
+			storedProcedure.registerStoredProcedureParameter("MENSAJE", String.class, ParameterMode.OUT);
 			storedProcedure.execute();
+			String result = (String) storedProcedure.getOutputParameterValue("MENSAJE");
+			return result;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Override
-	public void spRevalidandoFechaCable() {
+	public String spRevalidandoFechaCable() {
 		
 		try {
 			
 			StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery(Constantes.SP_REVALIDANDO_FECHA_CABLE);
+			storedProcedure.registerStoredProcedureParameter("EXISTE", String.class, ParameterMode.OUT);
 			storedProcedure.execute();
+			String result = (String) storedProcedure.getOutputParameterValue("EXISTE");
+			return result;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Override
-	public void spRevalidandoFechaInternet() {
+	public String spRevalidandoFechaInternet() {
 		
 		try {
 			
 			StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery(Constantes.SP_REVALIDANDO_FECHA_INTERNET);
+			storedProcedure.registerStoredProcedureParameter("EXISTE", String.class, ParameterMode.OUT);
 			storedProcedure.execute();
+			String result = (String) storedProcedure.getOutputParameterValue("EXISTE");
+			return result;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-	}	
+		return null;
+	}
 }

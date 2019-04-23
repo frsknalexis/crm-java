@@ -9,6 +9,7 @@ import com.dev.crm.core.dao.DetalleCuentaDAO;
 import com.dev.crm.core.model.entity.DetalleCuenta;
 import com.dev.crm.core.service.DetalleCuentaService;
 import com.dev.crm.core.util.GenericUtil;
+import com.dev.crm.core.util.StringUtil;
 
 @Service("detalleCuentaService")
 @Transactional("hibernateTransactionManager")
@@ -25,7 +26,12 @@ public class DetalleCuentaServiceImpl implements DetalleCuentaService {
 			
 			if(GenericUtil.isNotNull(dC)) {
 				String result = detalleCuentaDAO.spInsercionCuentaInternet(dC);
-				return result;
+				if(StringUtil.hasText(result)) {
+					return result;
+				}
+				else {
+					return null;
+				}
 			}
 		}
 		catch(Exception e) {
@@ -41,6 +47,55 @@ public class DetalleCuentaServiceImpl implements DetalleCuentaService {
 			
 			if(GenericUtil.isNotNull(dC)) {
 				String result = detalleCuentaDAO.spInsercionCuentaCable(dC);
+				if(StringUtil.hasText(result)) {
+					return result;
+				}
+				else {
+					return null;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public Integer spContadorPendientesCable() {
+		
+		try {
+			
+			Integer result = detalleCuentaDAO.spContadorPendientesCable();
+			return result;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public Integer spContadorPendientesInternet() {
+		
+		try {
+			
+			Integer result = detalleCuentaDAO.spContadorPendientesInternet();
+			return result;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public String spReprogramarInstalacionCable() {
+		
+		try {
+			
+			String result = detalleCuentaDAO.spReprogramarInstalacionCable();
+			if(StringUtil.hasText(result)) {
 				return result;
 			}
 		}
@@ -51,50 +106,50 @@ public class DetalleCuentaServiceImpl implements DetalleCuentaService {
 	}
 
 	@Override
-	public void spReprogramarInstalacionCable() {
+	public String spReprogramarInstalacionInternet() {
 		
 		try {
 			
-			detalleCuentaDAO.spReprogramarInstalacionCable();
+			String result = detalleCuentaDAO.spReprogramarInstalacionInternet();
+			if(StringUtil.hasText(result)) {
+				return result;
+			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Override
-	public void spReprogramarInstalacionInternet() {
+	public String spRevalidandoFechaCable() {
 		
 		try {
 			
-			detalleCuentaDAO.spReprogramarInstalacionInternet();
+			String result = detalleCuentaDAO.spRevalidandoFechaCable();
+			if(StringUtil.hasText(result)) {
+				return result;
+			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Override
-	public void spRevalidandoFechaCable() {
+	public String spRevalidandoFechaInternet() {
 		
 		try {
 			
-			detalleCuentaDAO.spRevalidandoFechaCable();
+			String result = detalleCuentaDAO.spRevalidandoFechaInternet();
+			if(StringUtil.hasText(result)) {
+				return result;
+			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public void spRevalidandoFechaInternet() {
-		
-		try {
-			
-			detalleCuentaDAO.spRevalidandoFechaInternet();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+		return null;
 	}
 }

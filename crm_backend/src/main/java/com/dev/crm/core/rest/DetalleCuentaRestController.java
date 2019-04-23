@@ -50,6 +50,32 @@ public class DetalleCuentaRestController {
 		}
 	}
 	
+	@GetMapping("/contadorPendientesCable")
+	public ResponseEntity<ResponseBaseOperation> spContadorPendientesCable() {
+		
+		try {
+			
+			ResponseBaseOperation response = detalleCuentaFacade.spContadorPendientesCable();
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/contadorPendientesInternet")
+	public ResponseEntity<ResponseBaseOperation> spContadorPendientesInternet() {
+		
+		try {
+			
+			ResponseBaseOperation response = detalleCuentaFacade.spContadorPendientesInternet();
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	@GetMapping("/reprogramacionInstalacionCable")
 	public ResponseEntity<ResponseBaseOperation> spReprogramarInstalacionCable() {
 		
@@ -69,6 +95,32 @@ public class DetalleCuentaRestController {
 		try {
 			
 			ResponseBaseOperation response = detalleCuentaFacade.spReprogramarInstalacionInternet();
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/revalidandoInstalacionCable")
+	public ResponseEntity<ResponseBaseOperation> spRevalidandoFechaCable() {
+		
+		try {
+			
+			ResponseBaseOperation response = detalleCuentaFacade.spRevalidandoFechaCable();
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/revalidandoInstalacionInternet")
+	public ResponseEntity<ResponseBaseOperation> spRevalidandoFechaInternet() {
+		
+		try {
+			
+			ResponseBaseOperation response = detalleCuentaFacade.spRevalidandoFechaInternet();
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
 		}
 		catch(Exception e) {

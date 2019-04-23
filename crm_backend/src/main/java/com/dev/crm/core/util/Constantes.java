@@ -23,6 +23,8 @@ public class Constantes {
 	public static final String SP_REPROGRAMAR_INSTALACION_INTERNET = "sp_reprogramar_insta_internet";
 	public static final String SP_REVALIDANDO_FECHA_CABLE = "sp_revalidando_fecha_cable";
 	public static final String SP_REVALIDANDO_FECHA_INTERNET = "sp_revalidando_fecha_internet";
+	public static final String SP_CONTADOR_PENDIENTES_CABLE = "sp_contador_pendientes_cable";
+	public static final String SP_CONTADOR_PENDIENTES_INTERNET = "sp_contador_pendientes_internet";
 	
 	public static final boolean HABILITADO = true;
 	public static final boolean INHABILITADO = false;
@@ -41,4 +43,5 @@ public class Constantes {
 	public static final String MESSAGE_TOTAL_REGISTROS = "Total Registros";
 	public static final String ESTADO = "SERVICIO OPERANDO";
 	public static final String HECHO = "HECHO";
+	public static final String UPS = "UPS";
 }
