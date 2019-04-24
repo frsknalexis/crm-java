@@ -160,6 +160,7 @@ public class DetalleCuentaFacadeImpl implements DetalleCuentaFacade {
 			
 			String result = detalleCuentaService.spRevalidandoFechaInternet();
 			if(StringUtil.eq(result, Constantes.HECHO)) {
+				
 				return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, "SE REPROGRAMARON LAS INSTALACIONES DE INTERNET PENDIENTES CON EXITO", result);
 			}
 			else if(StringUtil.eq(result, Constantes.UPS)) {

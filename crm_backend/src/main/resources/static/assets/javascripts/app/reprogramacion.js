@@ -265,7 +265,7 @@ $(document).on('ready', function() {
 						
 						swal({
 							type: "success",
-							title: "Se Reprogramaron las Instalaciones de Cable Pendientes con Exito",
+							title: "Se Reprogramaron las Instalaciones de Internet Pendientes con Exito",
 							showConfirmButton: true,
 							confirmButtonText: "Cerrar",
 							closeOnConfirm: false

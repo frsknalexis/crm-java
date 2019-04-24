@@ -102,9 +102,27 @@ public class StringUtil {
 	
 	public static BigDecimal parseBigDecimalNull(String str) {
 		
+		if(str == null) {
+			return null;
+		}
+		
 		try {
 			
 			return new BigDecimal(str);
+		}
+		catch(NumberFormatException e) {
+			return null;
+		}
+	}
+	
+	public static Double parseDoubleNull(String str) {
+		
+		if(str == null) {
+			return null;
+		}
+		try {
+			
+			return Double.valueOf(str);
 		}
 		catch(NumberFormatException e) {
 			return null;
