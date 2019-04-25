@@ -2,12 +2,17 @@ package com.dev.crm.core.model.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,8 +32,11 @@ public class Comprobante implements Serializable {
 	@Column(name="descripcion_comprobante", nullable=false)
 	private String descripcionComprobante;
 	
-	public Comprobante() {
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="comprobante")
+	private List<Pago> pagos;
 	
+	public Comprobante() {
+		pagos = new ArrayList<Pago>();
 	}
 
 	public BigDecimal getCodigoComprobante() {
@@ -45,5 +53,13 @@ public class Comprobante implements Serializable {
 
 	public void setDescripcionComprobante(String descripcionComprobante) {
 		this.descripcionComprobante = descripcionComprobante;
+	}
+
+	public List<Pago> getPagos() {
+		return pagos;
+	}
+
+	public void setPagos(List<Pago> pagos) {
+		this.pagos = pagos;
 	}
 }

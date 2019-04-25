@@ -2,7 +2,10 @@ package com.dev.crm.core.model.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedStoredProcedureQueries;
 import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
@@ -67,9 +71,20 @@ public class Cliente implements Serializable {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="codigo_sexo", nullable=false)
 	private Sexo sexo;
+	
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="cliente")
+	private List<CableServicio> cablesServicios;
+	
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="cliente")
+	private List<Pago> pagos;
+	
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="cliente")
+	private List<InternetServicio> internetServicios;
 
 	public Cliente() {
-		
+		cablesServicios = new ArrayList<CableServicio>();
+		pagos = new ArrayList<Pago>();
+		internetServicios = new ArrayList<InternetServicio>();
 	}
 
 	public Integer getConsecutivoCliente() {
@@ -134,5 +149,29 @@ public class Cliente implements Serializable {
 
 	public void setSexo(Sexo sexo) {
 		this.sexo = sexo;
+	}
+
+	public List<CableServicio> getCablesServicios() {
+		return cablesServicios;
+	}
+
+	public void setCablesServicios(List<CableServicio> cablesServicios) {
+		this.cablesServicios = cablesServicios;
+	}
+
+	public List<Pago> getPagos() {
+		return pagos;
+	}
+
+	public void setPagos(List<Pago> pagos) {
+		this.pagos = pagos;
+	}
+
+	public List<InternetServicio> getInternetServicios() {
+		return internetServicios;
+	}
+
+	public void setInternetServicios(List<InternetServicio> internetServicios) {
+		this.internetServicios = internetServicios;
 	}
 }

@@ -45,7 +45,25 @@ public class CableServicio implements Serializable {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="codi_tipo_Serv", nullable=false)
 	private Servicio servicio;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	private Cliente cliente;
+	
+	@Column(name="codi_cuenta")
+	private String codigoCuenta;
+	
+	@Column(name="codi_anio")
+	private String codigoAnio;
+	
+	@Column(name="codi_detcun")
+	private Integer codigoDetalleCuenta;
 
+	@Column(name="cons_cliente")
+	private Integer consecutivoCliente;
+	
+	@Column(name="descuento")
+	private Double descuento;
+	
 	public CableServicio() {
 		
 	}
@@ -96,5 +114,53 @@ public class CableServicio implements Serializable {
 
 	public void setServicio(Servicio servicio) {
 		this.servicio = servicio;
+	}
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public String getCodigoCuenta() {
+		return codigoCuenta;
+	}
+
+	public void setCodigoCuenta(String codigoCuenta) {
+		this.codigoCuenta = codigoCuenta;
+	}
+
+	public String getCodigoAnio() {
+		return codigoAnio;
+	}
+
+	public void setCodigoAnio(String codigoAnio) {
+		this.codigoAnio = codigoAnio;
+	}
+
+	public Integer getCodigoDetalleCuenta() {
+		return codigoDetalleCuenta;
+	}
+
+	public void setCodigoDetalleCuenta(Integer codigoDetalleCuenta) {
+		this.codigoDetalleCuenta = codigoDetalleCuenta;
+	}
+
+	public Integer getConsecutivoCliente() {
+		return consecutivoCliente;
+	}
+
+	public void setConsecutivoCliente(Integer consecutivoCliente) {
+		this.consecutivoCliente = consecutivoCliente;
+	}
+
+	public Double getDescuento() {
+		return descuento;
+	}
+
+	public void setDescuento(Double descuento) {
+		this.descuento = descuento;
 	}
 }

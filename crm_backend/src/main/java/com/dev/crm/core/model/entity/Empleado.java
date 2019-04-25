@@ -29,13 +29,13 @@ public class Empleado implements Serializable {
 	private static final long serialVersionUID = -5930630574068721114L;
 
 	@Id
+	@Column(name="documento_personae", nullable=false, length=11)
+	private String documentoPersonaEmpleado;
+	
+	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="codigo_empleado", nullable=false, unique=true)
 	private BigDecimal codigoEmpleado;
-	
-	@Id
-	@Column(name="documento_personae", nullable=false, length=11)
-	private String documentoPersonaEmpleado;
 	
 	@Column(name="activo_empleado")
 	private Boolean estado;

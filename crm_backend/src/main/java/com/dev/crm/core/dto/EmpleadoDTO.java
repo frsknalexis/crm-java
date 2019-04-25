@@ -13,9 +13,9 @@ public class EmpleadoDTO implements Serializable {
 	 */
 	private static final long serialVersionUID = 5495361453284416691L;
 
-	private BigDecimal codigoEmpleado;
-	
 	private String documentoPersonaEmpleado;
+	
+	private BigDecimal codigoEmpleado;
 	
 	private Boolean estado;
 	
