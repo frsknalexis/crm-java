@@ -1,7 +1,9 @@
 package com.dev.crm.core.repository.jdbc;
 
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -14,7 +16,9 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
 import com.dev.crm.core.dto.ClienteFiltroRequest;
+import com.dev.crm.core.dto.ClientePagoResultViewModel;
 import com.dev.crm.core.dto.ClienteResultViewModel;
+import com.dev.crm.core.mapper.ClientePagoResultViewModelMapper;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.GenericUtil;
 
@@ -65,6 +69,28 @@ public class ClienteCustomRepository implements ClienteJdbcRepository {
 					&& GenericUtil.isNull(result.get("VDIRECCION")) && GenericUtil.isNull(result.get("VANIO"))) {
 				return null;
 			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ClientePagoResultViewModel> spListarClientePago(String usuario) {
+		
+		List<ClientePagoResultViewModel> clientePagoResultViewModel = new ArrayList<ClientePagoResultViewModel>();
+		
+		try {
+			
+			simpleJdbcCall.withProcedureName(Constantes.SP_LISTAR_CLIENTE_VENDEDOR)
+							.returningResultSet("clientesPago", new ClientePagoResultViewModelMapper());
+			simpleJdbcCall.withoutProcedureColumnMetaDataAccess();
+			simpleJdbcCall.useInParameterNames("COD_USU");
+			simpleJdbcCall.declareParameters(new SqlOutParameter("COD_USU", Types.VARCHAR));
+			
+			
+			
 		}
 		catch(Exception e) {
 			e.printStackTrace();

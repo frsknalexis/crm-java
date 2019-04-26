@@ -25,6 +25,8 @@ public class Constantes {
 	public static final String SP_REVALIDANDO_FECHA_INTERNET = "sp_revalidando_fecha_internet";
 	public static final String SP_CONTADOR_PENDIENTES_CABLE = "sp_contador_pendientes_cable";
 	public static final String SP_CONTADOR_PENDIENTES_INTERNET = "sp_contador_pendientes_internet";
+	public static final String SP_PAGO_SERVICIO = "sp_pago_servicio";
+	public static final String SP_LISTAR_CLIENTE_VENDEDOR = "sp_listar_cliente_vendedor";
 	
 	public static final boolean HABILITADO = true;
 	public static final boolean INHABILITADO = false;
