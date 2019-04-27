@@ -23,7 +23,11 @@ public class PagoDAOImpl extends BaseDAOHibernateImpl implements PagoDAO {
 			storedProcedure.registerStoredProcedureParameter("CODDOC", String.class, ParameterMode.IN);
 			storedProcedure.registerStoredProcedureParameter("DNI_RUC", String.class, ParameterMode.IN);
 			storedProcedure.registerStoredProcedureParameter("PAGO", Double.class, ParameterMode.IN);
+			storedProcedure.registerStoredProcedureParameter("COD_CAJ", String.class, ParameterMode.IN);
 			storedProcedure.registerStoredProcedureParameter("MENSAJE", String.class, ParameterMode.OUT);
+			storedProcedure.setParameter("CDOCOMP", p.getComprobante().getCodigoComprobante());
+			storedProcedure.setParameter("CODDOC", p.getDocumentoPersonaPago());
+			storedProcedure.setParameter("DNI_RUC", p.getCliente().getDocumentoPersonaCliente());
 			storedProcedure.execute();
 			String result = (String) storedProcedure.getOutputParameterValue("MENSAJE");
 			return result;

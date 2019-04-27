@@ -8,6 +8,7 @@ public class Constantes {
 	public static final String EMPLEADO_VIEW = "modulo-personas/empleado/empleado";
 	public static final String DETALLE_CUENTA_VIEW = "modulo-servicios/detallecuenta/detallecuenta";
 	public static final String REPROGRAMACION_VIEW = "modulo-servicios/detallecuenta/reprogramacion";
+	public static final String PAGOS_VIEW = "modulo-pagos/pagos/pago";
 	
 	public static final String SP_ACTIVAR_DESACTIVAR_CLIENTE = "sp_activar_desactivar";
 	public static final String SP_LISTA_PERSONA_NO_EMPLEADO = "sp_lista_persona_no_empleado";

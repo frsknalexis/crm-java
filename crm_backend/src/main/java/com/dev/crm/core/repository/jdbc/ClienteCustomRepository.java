@@ -76,10 +76,11 @@ public class ClienteCustomRepository implements ClienteJdbcRepository {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<ClientePagoResultViewModel> spListarClientePago(String usuario) {
 		
-		List<ClientePagoResultViewModel> clientePagoResultViewModel = new ArrayList<ClientePagoResultViewModel>();
+		List<ClientePagoResultViewModel> clientePagos = new ArrayList<ClientePagoResultViewModel>();
 		
 		try {
 			
@@ -87,9 +88,14 @@ public class ClienteCustomRepository implements ClienteJdbcRepository {
 							.returningResultSet("clientesPago", new ClientePagoResultViewModelMapper());
 			simpleJdbcCall.withoutProcedureColumnMetaDataAccess();
 			simpleJdbcCall.useInParameterNames("COD_USU");
-			simpleJdbcCall.declareParameters(new SqlOutParameter("COD_USU", Types.VARCHAR));
+			simpleJdbcCall.declareParameters(new SqlParameter("COD_USU", Types.VARCHAR));
 			
+			Map<String, Object> inParams = new HashMap<String, Object>();
+			inParams.put("COD_USU", usuario);
 			
+			Map<String, Object> result = simpleJdbcCall.execute(inParams);
+			clientePagos = (List<ClientePagoResultViewModel>) result.get("clientesPago");
+			return clientePagos;
 			
 		}
 		catch(Exception e) {

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.dev.crm.core.dto.ClienteDTO;
 import com.dev.crm.core.dto.ClienteFiltroRequest;
+import com.dev.crm.core.dto.ClientePagoResultViewModel;
 import com.dev.crm.core.dto.ClienteResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.ClienteFacade;
@@ -17,6 +18,7 @@ import com.dev.crm.core.model.entity.Cliente;
 import com.dev.crm.core.service.ClienteService;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.GenericUtil;
+import com.dev.crm.core.util.StringUtil;
 
 @Component("clienteFacade")
 public class ClienteFacadeImpl implements ClienteFacade {
@@ -229,6 +231,29 @@ public class ClienteFacadeImpl implements ClienteFacade {
 			}
 			if(GenericUtil.isNotNull(clienteRVM)) {
 				return clienteRVM;
+			}
+			else {
+				return null;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ClientePagoResultViewModel> spListarClientePago(String usuario) {
+		
+		List<ClientePagoResultViewModel> clientesPago = new ArrayList<ClientePagoResultViewModel>();
+		
+		try {
+			
+			if(StringUtil.hasText(usuario)) {
+				clientesPago = clienteService.spListarClientePago(usuario);
+			}
+			if(GenericUtil.isNotNull(clientesPago)) {
+				return clientesPago;
 			}
 			else {
 				return null;

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.crm.core.dto.ClienteDTO;
 import com.dev.crm.core.dto.ClienteFiltroRequest;
+import com.dev.crm.core.dto.ClientePagoResultViewModel;
 import com.dev.crm.core.dto.ClienteResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.ClienteFacade;
@@ -207,5 +208,24 @@ public class ClienteRestController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@GetMapping("/clientes/clientesPago")
+	public ResponseEntity<List<ClientePagoResultViewModel>> spListarClientePago() {
+		
+		try {
+			
+			String usuario = "cajero";
+			List<ClientePagoResultViewModel> clientesPago = clienteFacade.spListarClientePago(usuario);
+			if(GenericUtil.isNotEmpty(clientesPago)) {
+				return new ResponseEntity<List<ClientePagoResultViewModel>>(clientesPago, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<ClientePagoResultViewModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<ClientePagoResultViewModel>>(HttpStatus.BAD_REQUEST);
+		}
 	}
 }

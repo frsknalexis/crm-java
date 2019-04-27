@@ -10,12 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.crm.core.dao.ClienteDAO;
 import com.dev.crm.core.dto.ClienteFiltroRequest;
+import com.dev.crm.core.dto.ClientePagoResultViewModel;
 import com.dev.crm.core.dto.ClienteResultViewModel;
 import com.dev.crm.core.model.entity.Cliente;
 import com.dev.crm.core.repository.jdbc.ClienteJdbcRepository;
 import com.dev.crm.core.service.ClienteService;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.GenericUtil;
+import com.dev.crm.core.util.StringUtil;
 
 @Service("clienteService")
 @Transactional("hibernateTransactionManager")
@@ -209,6 +211,29 @@ public class ClienteServiceImpl implements ClienteService {
 			}
 			if(GenericUtil.isNotNull(cliente)) {
 				return cliente;
+			}
+			else {
+				return null;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ClientePagoResultViewModel> spListarClientePago(String usuario) {
+		
+		List<ClientePagoResultViewModel> clientesPago = new ArrayList<ClientePagoResultViewModel>();
+		
+		try {
+			
+			if(StringUtil.hasText(usuario)) {
+				 clientesPago = clienteJdbcRepository.spListarClientePago(usuario);
+			}
+			if(GenericUtil.isNotNull(clientesPago)) {
+				return clientesPago;
 			}
 			else {
 				return null;
