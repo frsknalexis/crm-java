@@ -18,7 +18,6 @@ import com.dev.crm.core.model.entity.Cliente;
 import com.dev.crm.core.service.ClienteService;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.GenericUtil;
-import com.dev.crm.core.util.StringUtil;
 
 @Component("clienteFacade")
 public class ClienteFacadeImpl implements ClienteFacade {
@@ -243,17 +242,17 @@ public class ClienteFacadeImpl implements ClienteFacade {
 	}
 
 	@Override
-	public List<ClientePagoResultViewModel> spListarClientePago(String usuario) {
+	public ClientePagoResultViewModel spBuscarClientePago(String documentoPersona) {
 		
-		List<ClientePagoResultViewModel> clientesPago = new ArrayList<ClientePagoResultViewModel>();
+		ClientePagoResultViewModel clientePago = null;
 		
 		try {
 			
-			if(StringUtil.hasText(usuario)) {
-				clientesPago = clienteService.spListarClientePago(usuario);
+			if(GenericUtil.isNotEmpty(documentoPersona)) {
+				clientePago = clienteService.spBuscarClientePago(documentoPersona);
 			}
-			if(GenericUtil.isNotNull(clientesPago)) {
-				return clientesPago;
+			if(GenericUtil.isNotNull(clientePago)) {
+				return clientePago;
 			}
 			else {
 				return null;

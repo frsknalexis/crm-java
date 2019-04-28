@@ -30,6 +30,6 @@ public interface ClienteService {
 	Long totalRegistrosCliente();
 	
 	ClienteResultViewModel spBuscarPersonaClienteVendedor(ClienteFiltroRequest filtro);
-	
-	List<ClientePagoResultViewModel> spListarClientePago(String usuario);
+		
+	ClientePagoResultViewModel spBuscarClientePago(String documentoPersona);
 }

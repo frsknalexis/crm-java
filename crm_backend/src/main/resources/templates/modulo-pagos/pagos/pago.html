@@ -25,7 +25,7 @@
 						</ol>
 					</div>
 					<!-- start: page -->
-					<div class="row">
+					<div class="row" id="mostrarListadoClientesPago">
 						<div class="col-md-12 col-lg-12">
 							<section class="panel panel-featured-left panel-featured-primary">
 								<header class="panel-heading">
@@ -55,66 +55,111 @@
 							</section>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row" id="mostrarFormGenerarPago">
 						<div class="col-md-12 col-lg-12">
 							<section class="panel panel-featured-left panel-featured-primary">
 								<header class="panel-heading">
-									<h2 class="panel-title">Generar Pago</h2>
+									<h2 class="panel-title">Realizar Pago</h2>
 								</header>
 								<div class="panel-body">
 									<form role="form" method="post">
 										<div class="row">
-											<div class="col-md-6 col-sm-6 form-group">
-												<label for="documentoPersonaCliente">DNI/RUC</label>
-												<div class="input-group mb-md">
-													<span class="input-group-addon">
-														<i class="fa fa-credit-card"></i>
-													</span>
-													<input type="text" class="form-control input-sm" id="documentoPersonaCliente" placeholder="Numero Documento">
-												</div>
+											<div class="col-md-8 col-lg-8">
+												<section class="panel panel-featured panel-featured-primary">
+													<header class="panel-heading">
+														<h2 class="panel-title">Datos Cliente</h2>
+													</header>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="documentoPersonaClientePago">DNI/RUC</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-credit-card"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="documentoPersonaClientePago" placeholder="Numero Documento">
+																</div>
+															</div>
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="clientePago">Cliente</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-user"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="clientePago" placeholder="Cliente">
+																</div>
+															</div>
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="nombreComercialPago">Nombre Comercial</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-bookmark"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="nombreComercialPago" placeholder="Nombre Comercial">
+																</div>
+															</div>
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="direccionClientePago">Direccion</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-home"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="direccionClientePago" placeholder="Direccion">
+																</div>
+															</div>
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="clienteReferenciaDireccionPago">Referencia</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-home"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="clienteReferenciaDireccionPago" placeholder="Referencia">
+																</div>
+															</div>
+														</div>
+													</div>
+												</section>
 											</div>
-											<div class="col-md-6 col-sm-6 form-group">
-												<label for="detalleCuentaCliente">Cliente</label>
-												<div class="input-group mb-md">
-													<span class="input-group-addon">
-														<i class="fa fa-user"></i>
-													</span>
-													<input type="text" class="form-control input-sm" id="detalleCuentaCliente" placeholder="Cliente">
-												</div>
-											</div>
-											<div class="col-md-6 col-sm-6 form-group">
-												<label for="detalleCuentaDireccion">Direccion</label>
-												<div class="input-group mb-md">
-													<span class="input-group-addon">
-														<i class="fa fa-home"></i>
-													</span>
-													<input type="text" class="form-control input-sm" id="detalleCuentaDireccion" placeholder="Direccion">
-												</div>
-											</div>
-											<div class="col-md-6 col-sm-6 form-group">
-												<label for="detalleCuentaReferenciaDireccion">Referencia</label>
-												<div class="input-group mb-md">
-													<span class="input-group-addon">
-														<i class="fa fa-home"></i>
-													</span>
-													<input type="text" class="form-control input-sm" id="detalleCuentaReferenciaDireccion" placeholder="Referencia">
-												</div>
-											</div>
-											<div class="col-md-6 col-sm-6 form-group">
-												<label for="detalleCuentaAnio">A&ntilde;o</label>
-												<div class="input-group mb-md">
-													<span class="input-group-addon">
-														<i class="fa fa-calendar"></i>
-													</span>
-													<input type="text" class="form-control input-sm" id="detalleCuentaAnio" placeholder="A&ntilde;o">
-												</div>
-											</div>
-											<div class="col-md-6 col-sm-6 form-group">
-												<label for="detalleCuentaObservacion">Observacion</label>
-												<textarea class="form-control" rows="3" id="detalleCuentaObservacion"></textarea>
+											<div class="col-md-4 col-lg-4">
+												<section class="panel panel-featured panel-featured-primary">
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12 col-sm-12 form-group">
+																<label for="codigoComprobante">Comprobante</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-pencil-square-o"></i>
+																	</span>
+																	<select class="form-control populate" id="codigoComprobante"></select>
+																</div>
+															</div>
+															<div class="col-md-12 col-sm-12 form-group">
+																<label for="cantidadPago">Monto a Pagar</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-money"></i>
+																	</span>
+																	<input type="number" step="any" class="form-control input-sm" id="cantidadPago" placeholder="0.00">
+																</div>
+															</div>
+															<div class="col-md-12 col-sm-12 form-group">
+																<label for="documentoPersonaPago">DNI Pagador</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-credit-card"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="documentoPersonaPago" placeholder="Numero Documento">
+																</div>
+															</div>
+															<div class="col-md-12 col-sm-12 form-group">
+																<button type="button" id="verDeudaCliente" class="btn btn-sm btn-success btn-block"><i class="fa fa-money" documentoPersonaCliente></i> Ver Deuda Cliente</button>
+															</div>
+														</div>
+													</div>
+												</section>
 											</div>
 											<div class="col-md-12 form-group">
-												<button type="submit" id="generarCuenta" class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Generar Cuenta</button>
+												<button type="submit" id="realizarPagoCliente" class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Realizar Pago</button>
 												<button type="button" id="cancelarAccion" class="btn btn-sm btn-danger"><i class="fa fa-arrow-circle-left"></i> Cancelar</button>
 											</div>
 										</div>

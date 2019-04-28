@@ -205,27 +205,29 @@ public class ClienteRestController {
 			}
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			return new ResponseEntity<ClienteResultViewModel>(HttpStatus.BAD_REQUEST);
 		}
 		return null;
 	}
 	
-	@GetMapping("/clientes/clientesPago")
-	public ResponseEntity<List<ClientePagoResultViewModel>> spListarClientePago() {
+	@GetMapping("/searchClientePago/{documentoPersona}")
+	public ResponseEntity<ClientePagoResultViewModel> spBuscarClientePago(@PathVariable(value="documentoPersona") String documentoPersona) {
 		
 		try {
 			
-			String usuario = "cajero";
-			List<ClientePagoResultViewModel> clientesPago = clienteFacade.spListarClientePago(usuario);
-			if(GenericUtil.isNotEmpty(clientesPago)) {
-				return new ResponseEntity<List<ClientePagoResultViewModel>>(clientesPago, HttpStatus.OK);
-			}
-			else {
-				return new ResponseEntity<List<ClientePagoResultViewModel>>(HttpStatus.NO_CONTENT);
+			if(GenericUtil.isNotEmpty(documentoPersona)) {
+				ClientePagoResultViewModel clientePago = clienteFacade.spBuscarClientePago(documentoPersona);
+				if(GenericUtil.isNotNull(clientePago)) {
+					return new ResponseEntity<ClientePagoResultViewModel>(clientePago, HttpStatus.OK);
+				}
+				else {
+					return new ResponseEntity<ClientePagoResultViewModel>(HttpStatus.NO_CONTENT);
+				}
 			}
 		}
 		catch(Exception e) {
-			return new ResponseEntity<List<ClientePagoResultViewModel>>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<ClientePagoResultViewModel>(HttpStatus.BAD_REQUEST);
 		}
+		return null;
 	}
 }

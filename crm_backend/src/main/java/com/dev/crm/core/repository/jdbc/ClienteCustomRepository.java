@@ -1,9 +1,7 @@
 package com.dev.crm.core.repository.jdbc;
 
 import java.sql.Types;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -18,7 +16,6 @@ import org.springframework.stereotype.Repository;
 import com.dev.crm.core.dto.ClienteFiltroRequest;
 import com.dev.crm.core.dto.ClientePagoResultViewModel;
 import com.dev.crm.core.dto.ClienteResultViewModel;
-import com.dev.crm.core.mapper.ClientePagoResultViewModelMapper;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.GenericUtil;
 
@@ -75,33 +72,38 @@ public class ClienteCustomRepository implements ClienteJdbcRepository {
 		}
 		return null;
 	}
-
-	@SuppressWarnings("unchecked")
+	
 	@Override
-	public List<ClientePagoResultViewModel> spListarClientePago(String usuario) {
-		
-		List<ClientePagoResultViewModel> clientePagos = new ArrayList<ClientePagoResultViewModel>();
+	public ClientePagoResultViewModel spBuscarClientePago(String documentoPersona) {
 		
 		try {
 			
-			simpleJdbcCall.withProcedureName(Constantes.SP_LISTAR_CLIENTE_VENDEDOR)
-							.returningResultSet("clientesPago", new ClientePagoResultViewModelMapper());
+			simpleJdbcCall.withProcedureName(Constantes.SP_BUSCAR_CLIENTE_PAGO);
 			simpleJdbcCall.withoutProcedureColumnMetaDataAccess();
-			simpleJdbcCall.useInParameterNames("COD_USU");
-			simpleJdbcCall.declareParameters(new SqlParameter("COD_USU", Types.VARCHAR));
+			simpleJdbcCall.useInParameterNames("COD_DOC");
+			simpleJdbcCall.declareParameters(new SqlParameter("COD_DOC", Types.VARCHAR),
+					new SqlOutParameter("VDOCUMENTO", Types.VARCHAR),
+					new SqlOutParameter("VNOMBRECOMERCIAL", Types.VARCHAR),
+					new SqlOutParameter("VCLIENTE", Types.VARCHAR),
+					new SqlOutParameter("VDIRECCION", Types.VARCHAR),
+					new SqlOutParameter("VREFERENCIA", Types.VARCHAR));
 			
 			Map<String, Object> inParams = new HashMap<String, Object>();
-			inParams.put("COD_USU", usuario);
+			inParams.put("COD_DOC", documentoPersona);
 			
-			Map<String, Object> result = simpleJdbcCall.execute(inParams);
-			clientePagos = (List<ClientePagoResultViewModel>) result.get("clientesPago");
-			return clientePagos;
+			Map<String, Object> out = simpleJdbcCall.execute(inParams);
 			
+			ClientePagoResultViewModel cPago = new ClientePagoResultViewModel();
+			cPago.setDireccionActualCliente((String) out.get("VDIRECCION"));
+			cPago.setCliente((String) out.get("VCLIENTE"));
+			cPago.setDocumentoPersonaCliente((String) out.get("VDOCUMENTO"));
+			cPago.setReferencia((String) out.get("VREFERENCIA"));
+			cPago.setNombreComercialCliente((String) out.get("VNOMBRECOMERCIAL"));
+			return cPago;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-
 }

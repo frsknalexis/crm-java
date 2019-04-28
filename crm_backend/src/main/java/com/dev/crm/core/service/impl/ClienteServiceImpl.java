@@ -17,7 +17,6 @@ import com.dev.crm.core.repository.jdbc.ClienteJdbcRepository;
 import com.dev.crm.core.service.ClienteService;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.GenericUtil;
-import com.dev.crm.core.util.StringUtil;
 
 @Service("clienteService")
 @Transactional("hibernateTransactionManager")
@@ -221,19 +220,19 @@ public class ClienteServiceImpl implements ClienteService {
 		}
 		return null;
 	}
-
+	
 	@Override
-	public List<ClientePagoResultViewModel> spListarClientePago(String usuario) {
+	public ClientePagoResultViewModel spBuscarClientePago(String documentoPersona) {
 		
-		List<ClientePagoResultViewModel> clientesPago = new ArrayList<ClientePagoResultViewModel>();
+		ClientePagoResultViewModel clientePago = null;
 		
 		try {
 			
-			if(StringUtil.hasText(usuario)) {
-				 clientesPago = clienteJdbcRepository.spListarClientePago(usuario);
+			if(GenericUtil.isNotEmpty(documentoPersona)) {
+				clientePago = clienteJdbcRepository.spBuscarClientePago(documentoPersona);
 			}
-			if(GenericUtil.isNotNull(clientesPago)) {
-				return clientesPago;
+			if(GenericUtil.isNotNull(clientePago)) {
+				return clientePago;
 			}
 			else {
 				return null;

@@ -1,8 +1,11 @@
 package com.dev.crm.core.model.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -68,9 +72,12 @@ public class Pago implements Serializable {
 	
 	@Column(name = "totapago")
 	private Double totalPago;
+	
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="pago")
+	private List<DetallePago> detallesPago;
 
 	public Pago() {
-		
+		detallesPago = new ArrayList<DetallePago>();
 	}
 
 	public String getCodigoPago() {
@@ -175,5 +182,13 @@ public class Pago implements Serializable {
 
 	public void setTotalPago(Double totalPago) {
 		this.totalPago = totalPago;
+	}
+
+	public List<DetallePago> getDetallesPago() {
+		return detallesPago;
+	}
+
+	public void setDetallesPago(List<DetallePago> detallesPago) {
+		this.detallesPago = detallesPago;
 	}
 }
