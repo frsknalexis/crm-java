@@ -14,7 +14,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
 import com.dev.crm.core.dto.ClienteFiltroRequest;
-import com.dev.crm.core.dto.ClientePagoResultViewModel;
 import com.dev.crm.core.dto.ClienteResultViewModel;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.GenericUtil;
@@ -49,7 +48,7 @@ public class ClienteCustomRepository implements ClienteJdbcRepository {
 			Map<String, Object> inParams = new HashMap<String, Object>();
 			inParams.put("COD_DOC", filtro.getDocumentoPersona());
 			inParams.put("CREADOP", filtro.getCreadoPor());
-			
+					
 			Map<String, Object> result = simpleJdbcCall.execute(inParams);
 			
 			if(GenericUtil.isNotNull(result.get("VDOCUMENTO")) && GenericUtil.isNotNull(result.get("VCLIENTE"))
@@ -66,40 +65,6 @@ public class ClienteCustomRepository implements ClienteJdbcRepository {
 					&& GenericUtil.isNull(result.get("VDIRECCION")) && GenericUtil.isNull(result.get("VANIO"))) {
 				return null;
 			}
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	@Override
-	public ClientePagoResultViewModel spBuscarClientePago(String documentoPersona) {
-		
-		try {
-			
-			simpleJdbcCall.withProcedureName(Constantes.SP_BUSCAR_CLIENTE_PAGO);
-			simpleJdbcCall.withoutProcedureColumnMetaDataAccess();
-			simpleJdbcCall.useInParameterNames("COD_DOC");
-			simpleJdbcCall.declareParameters(new SqlParameter("COD_DOC", Types.VARCHAR),
-					new SqlOutParameter("VDOCUMENTO", Types.VARCHAR),
-					new SqlOutParameter("VNOMBRECOMERCIAL", Types.VARCHAR),
-					new SqlOutParameter("VCLIENTE", Types.VARCHAR),
-					new SqlOutParameter("VDIRECCION", Types.VARCHAR),
-					new SqlOutParameter("VREFERENCIA", Types.VARCHAR));
-			
-			Map<String, Object> inParams = new HashMap<String, Object>();
-			inParams.put("COD_DOC", documentoPersona);
-			
-			Map<String, Object> out = simpleJdbcCall.execute(inParams);
-			
-			ClientePagoResultViewModel cPago = new ClientePagoResultViewModel();
-			cPago.setDireccionActualCliente((String) out.get("VDIRECCION"));
-			cPago.setCliente((String) out.get("VCLIENTE"));
-			cPago.setDocumentoPersonaCliente((String) out.get("VDOCUMENTO"));
-			cPago.setReferencia((String) out.get("VREFERENCIA"));
-			cPago.setNombreComercialCliente((String) out.get("VNOMBRECOMERCIAL"));
-			return cPago;
 		}
 		catch(Exception e) {
 			e.printStackTrace();

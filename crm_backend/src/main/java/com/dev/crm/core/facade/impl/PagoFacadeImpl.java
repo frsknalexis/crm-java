@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.dev.crm.core.dto.ClientePagoResultViewModel;
+import com.dev.crm.core.dto.MesDeudaResultViewModel;
 import com.dev.crm.core.dto.PagoRequest;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.PagoFacade;
@@ -67,4 +68,26 @@ public class PagoFacadeImpl implements PagoFacade {
 		return null;
 	}
 
+	@Override
+	public List<MesDeudaResultViewModel> spMesesDeudas(String documentoPersonaCliente, String numeroCaja) {
+		
+		List<MesDeudaResultViewModel> mesesDeudas = new ArrayList<MesDeudaResultViewModel>();
+		
+		try {
+			
+			if(GenericUtil.isNotEmpty(documentoPersonaCliente) && GenericUtil.isNotEmpty(numeroCaja)) {
+				mesesDeudas = pagoService.spMesesDeudas(documentoPersonaCliente, numeroCaja);
+			}
+			if(GenericUtil.isNotEmpty(mesesDeudas)) {
+				return mesesDeudas;
+			}
+			else {
+				return null;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

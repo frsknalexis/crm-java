@@ -14,6 +14,7 @@ import com.dev.crm.core.dto.ClientePagoResultViewModel;
 import com.dev.crm.core.dto.ClienteResultViewModel;
 import com.dev.crm.core.model.entity.Cliente;
 import com.dev.crm.core.repository.jdbc.ClienteJdbcRepository;
+import com.dev.crm.core.repository.jdbc.ClientePagoResultJdbcRepository;
 import com.dev.crm.core.service.ClienteService;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.GenericUtil;
@@ -29,6 +30,10 @@ public class ClienteServiceImpl implements ClienteService {
 	@Autowired
 	@Qualifier("clienteJdbcRepository")
 	private ClienteJdbcRepository clienteJdbcRepository;
+	
+	@Autowired
+	@Qualifier("clientePagoResultJdbcRepository")
+	private ClientePagoResultJdbcRepository clientePagoResultJdbcRepository;
 	
 	@Override
 	public List<Cliente> findAll() {
@@ -229,7 +234,7 @@ public class ClienteServiceImpl implements ClienteService {
 		try {
 			
 			if(GenericUtil.isNotEmpty(documentoPersona)) {
-				clientePago = clienteJdbcRepository.spBuscarClientePago(documentoPersona);
+				clientePago = clientePagoResultJdbcRepository.spBuscarClientePago(documentoPersona);
 			}
 			if(GenericUtil.isNotNull(clientePago)) {
 				return clientePago;

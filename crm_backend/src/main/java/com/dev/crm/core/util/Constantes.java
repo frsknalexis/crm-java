@@ -30,6 +30,7 @@ public class Constantes {
 	public static final String SP_LISTAR_CLIENTE_VENDEDOR = "sp_listar_cliente_vendedor";
 	public static final String SP_BUSCAR_CLIENTE_PAGO = "sp_buscar_cliente_pago";
 	public static final String SP_LISTAR_COMPROBANTE = "sp_listar_comprobante";
+	public static final String SP_MESES_DEUDAS = "sp_meses_deudas";
 	
 	public static final boolean HABILITADO = true;
 	public static final boolean INHABILITADO = false;

@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.crm.core.dto.ClientePagoResultViewModel;
+import com.dev.crm.core.dto.MesDeudaResultViewModel;
 import com.dev.crm.core.dto.PagoRequest;
+import com.dev.crm.core.repository.jdbc.ClientePagoJdbcRepository;
+import com.dev.crm.core.repository.jdbc.MesDeudaResultJdbcRepository;
 import com.dev.crm.core.repository.jdbc.PagoJdbcRepository;
 import com.dev.crm.core.service.PagoService;
 import com.dev.crm.core.util.GenericUtil;
@@ -22,6 +25,14 @@ public class PagoServiceImpl implements PagoService {
 	@Autowired
 	@Qualifier("pagoJdbcRepository")
 	private PagoJdbcRepository pagoJdbcRepository;
+	
+	@Autowired
+	@Qualifier("clientePagoJdbcRepository")
+	private ClientePagoJdbcRepository clientePagoJdbcRepository;
+	
+	@Autowired
+	@Qualifier("mesDeudaResultJdbcRepository")
+	private MesDeudaResultJdbcRepository mesDeudaResultJdbcRepository;
 	
 	@Override
 	public String spPagoServicio(PagoRequest pagoRequest) {
@@ -43,6 +54,29 @@ public class PagoServiceImpl implements PagoService {
 		}
 		return null;
 	}
+	
+	@Override
+	public List<MesDeudaResultViewModel> spMesesDeudas(String documentoPersonaCliente, String numeroCaja) {
+		
+		List<MesDeudaResultViewModel> mesesDeuda = new ArrayList<MesDeudaResultViewModel>();
+		
+		try {
+			
+			if(GenericUtil.isNotEmpty(documentoPersonaCliente) && GenericUtil.isNotEmpty(numeroCaja)) {
+				mesesDeuda = mesDeudaResultJdbcRepository.spMesesDeudas(documentoPersonaCliente, numeroCaja);
+			}
+			if(GenericUtil.isNotEmpty(mesesDeuda)) {
+				return mesesDeuda;
+			}
+			else {
+				return null;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@Override
 	public List<ClientePagoResultViewModel> spListarClientesPago(String usuario) {
@@ -52,7 +86,7 @@ public class PagoServiceImpl implements PagoService {
 		try {
 			
 			if(GenericUtil.isNotEmpty(usuario)) {
-				clientesPagos = pagoJdbcRepository.spListarClientesPago(usuario);
+				clientesPagos = clientePagoJdbcRepository.spListarClientesPago(usuario);
 			}
 			if(GenericUtil.isNotEmpty(clientesPagos)) {
 				return clientesPagos;

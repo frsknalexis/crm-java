@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.crm.core.dto.ClientePagoResultViewModel;
+import com.dev.crm.core.dto.MesDeudaResultViewModel;
 import com.dev.crm.core.dto.PagoRequest;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.PagoFacade;
@@ -47,11 +49,32 @@ public class PagoRestController {
 		}
 	}
 	
+	@GetMapping("/clientes/listaMesesDeudas/{documentoPersonaCliente}")
+	public ResponseEntity<List<MesDeudaResultViewModel>> spMesesDeudas(@PathVariable(value="documentoPersonaCliente") String documentoPersonaCliente) {
+		
+		try {
+			
+			String numeroCaja = "C1";
+			List<MesDeudaResultViewModel> mesesDeudas = pagoFacade.spMesesDeudas(documentoPersonaCliente, numeroCaja);
+			if(GenericUtil.isNotEmpty(mesesDeudas)) {
+				return new ResponseEntity<List<MesDeudaResultViewModel>>(mesesDeudas, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<MesDeudaResultViewModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<MesDeudaResultViewModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	@PostMapping("/realizarPago")
 	public ResponseEntity<ResponseBaseOperation> spPagoServicio(@Valid @RequestBody PagoRequest pagoRequest) {
 		
 		try {
 			
+			String numeroCaja = "C1";
+			pagoRequest.setNumeroCaja(numeroCaja);
 			ResponseBaseOperation response = pagoFacade.spPagoServicio(pagoRequest);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
 		}

@@ -20,6 +20,8 @@ $(document).on('ready', function() {
 	
 	realizarPago();
 	
+	verDeudaCliente();
+	
 	/**
 	 * function para listar los clientesPago
 	 * 
@@ -140,6 +142,7 @@ $(document).on('ready', function() {
 		$('#cancelarAccion').on('click', function() {
 			mostrarFormRealizarPago(false);
 			limpiarInputs();
+			limpiarDatosModal();
 		});
 	}
 	/**
@@ -165,7 +168,10 @@ $(document).on('ready', function() {
 					$('#nombreComercialPago').val(response.nombreComercialCliente);
 					$('#direccionClientePago').val(response.direccionActualCliente);
 					$('#clienteReferenciaDireccionPago').val(response.referencia);
+					
 					$('#verDeudaCliente').attr('documentoPersonaCliente', response.documentoPersonaCliente);
+					
+					$('#myModalLabelDeudaCliente').html('Deuda Cliente: ' + response.cliente);
 				}
 			});
 		});
@@ -282,6 +288,123 @@ $(document).on('ready', function() {
 		
 		$('#realizarPagoCliente').on('click', function(e) {
 			e.preventDefault();
+			
+			if($('#codigoComprobante').val().trim() != "" && $('#cantidadPago').val() > 0) {
+				
+				var formData = {
+					documentoPersonaCliente: $('#documentoPersonaClientePago').val(),
+					codigoComprobante: $('#codigoComprobante').val(),
+					cantidadPago: $('#cantidadPago').val(),
+					documentoPersonaPago: $('#documentoPersonaPago').val()
+				};
+				
+				console.log(formData);
+				
+				$.ajax({
+					
+					type: 'POST',
+					url: 'http://localhost:8080/api/v1/pago/realizarPago',
+					headers: {
+						"Content-Type": "application/json",
+						"Accept": "application/json"
+					},
+					data: JSON.stringify(formData),
+					dataType: 'json',
+					success: function(response) {
+						console.log(response);
+						
+						if(response.message == "HECHO") {
+							
+							swal({
+								type: "success",
+								title: "Se Realizo el Pago con exito",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar",
+								closeOnConfirm: false
+							}).then((result) => {
+
+								if(result.value) {
+									$(location).attr('href', '/pago/pagos');
+								}
+							});
+						}
+					},
+					error: function() {
+						swal({
+			                type: 'error',
+			                title: 'Ooops',
+			                text: 'Error al Realizar Pago !'
+			            });
+					}
+				});
+			}
 		})
 	}
+	
+	/**
+	 * 
+	 *funcion para limpiar inputs del modal 
+	 * 
+	 */
+	function limpiarDatosModal() {
+		$('#myModalLabelDeudaCliente').html('');
+	}
+	
+	/**
+	 * 
+	 *funcion para ver deuda cliente 
+	 */
+	function verDeudaCliente() {
+		
+		$('#verDeudaCliente').on('click', function() {
+			
+			var documentoPersonaCliente = $(this).attr('documentoPersonaCliente');
+			console.log("documentoPersonaCliente: " + documentoPersonaCliente);
+			
+			setTimeout(function() {
+				$('#modalVerDeudaCliente').modal('show');
+			}, 2000);
+			var contenidoDeudasCliente = document.querySelector('#contenidoDeudasCliente')
+			
+			$.ajax({
+				
+				type: 'GET',
+				url: 'http://localhost:8080/api/v1/pago/clientes/listaMesesDeudas/' + documentoPersonaCliente,
+				dataType: 'json',
+				success: function(response) {
+					
+					if(response != null) {
+						contenidoDeudasCliente.innerHTML = '';
+						for(var i = 0; i < response.length; i++) {
+							console.log(response[i]);
+							var mes;
+							var mesNumber = response[i].mesDeuda;
+							switch(mesNumber) {
+								case 1: mes = "Enero"; break;
+								case 2: mes = "Febrero"; break;
+								case 3: mes = "Marzo"; break;
+								case 4: mes = "Abril"; break;
+								case 5: mes = "Mayo"; break;
+								case 6: mes = "Junio"; break;
+								case 7: mes = "Julio"; break;
+								case 8: mes = "Agosto"; break;
+								case 9: mes = "Setiembre"; break;
+								case 10: mes = "Octubre"; break;
+								case 11: mes = "Noviembre"; break;
+								case 12: mes = "Diciembre"; break;
+							}
+							
+							contenidoDeudasCliente.innerHTML += '<tr>';
+							contenidoDeudasCliente.innerHTML += '<td>'+ mes +'</td><td>'+ response[i].anioValido +'</td><td>'+ response[i].tipoServicio +'</td><td>'+ response[i].sumaPago +'</td><td>'+ response[i].descuento +'</td><td><button type="button" class="btn btn-success btn-xs btnPagoDeudaCliente" documentoPersonaClientePago="'+ response[i].documentoPersonaCliente +'"><i class="fa fa-credit-card"></i> Realizar Pago</button></td>';
+							contenidoDeudasCliente.innerHTML += '</tr>';
+						}
+					}
+					else {
+						console.log('No hay Datos');
+					}
+				}
+			});
+		});
+	}
+	
 });
