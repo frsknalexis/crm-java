@@ -29,4 +29,7 @@ public interface PersonaService {
 	boolean isPersonaPresent(String documentoPersona);
 	
 	Long obtenerTotalRegistrosPersona();
+	
+	Long obtenerTotalRegistrosPersonas();
+
 }

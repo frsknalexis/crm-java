@@ -13,4 +13,9 @@ public class DashboardController {
 		
 		return Constantes.DASHBOARD_VIEW;
 	}
+	@GetMapping("/dashboard2")
+	public String dashboardView2Controller() {
+		
+		return Constantes.DASHBOARD_VIEW2;
+	}
 }

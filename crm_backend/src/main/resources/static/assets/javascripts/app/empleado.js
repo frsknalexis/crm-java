@@ -1,4 +1,3 @@
-
 $(document).on('ready', function() {
 	
 	var flag;
@@ -12,6 +11,24 @@ $(document).on('ready', function() {
 		cargarEstadEmpleado();
 		ocultarBotones();
 	}, 6500);
+	
+	setTimeout(function(){
+		cargarEstado();
+	}, 3000);
+	
+	cargarTotalRegistrosPersonita();
+	
+	window.setInterval(
+		    function(){
+		    // Sección de código para modificar el DIV
+		    // $("#miDiv").text(variable);
+		    	$('#total').load(cargarTotalRegistrosPersona());
+		    	evaluando();
+		    // Ejemplo: Cada dos segundos se imprime la hora
+		    /*console.log(Date());*/
+		  }
+		  // Intervalo de tiempo
+		,5000);
 	
 	cargarComboUbigeo();
 	
@@ -78,7 +95,7 @@ $(document).on('ready', function() {
 	$.ajax({
 		
 		type: 'GET',
-		url: 'http://localhost:8080/api/v1/persona/personas/listaPersonasNoEmpleados',
+		url: '/api/v1/persona/personas/listaPersonasNoEmpleados',
 		dataType: 'json',
 		success: function(response){
 			console.log(response);
@@ -108,7 +125,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: 'http://localhost:8080/api/v1/ubigeo/ubigeos',
+			url: '/api/v1/ubigeo/ubigeos',
 			dataType: 'json',
 			success: function(response) {
 				console.log(response);
@@ -150,7 +167,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'PUT',
-					url: 'http://localhost:8080/api/v1/persona/update',
+					url: '/api/v1/persona/update',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -192,7 +209,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type:'POST',
-					url: 'http://localhost:8080/api/v1/persona/save',
+					url: '/api/v1/persona/save',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -504,7 +521,7 @@ $(document).on('ready', function() {
 		},
 		'bProcessing': true,
 		"ajax": {
-			"url": "http://localhost:8080/api/v1/persona/personas/listaPersonasNoEmpleados",
+			"url": "/api/v1/persona/personas/listaPersonasNoEmpleados",
 			"dataSrc": ""
 		},
 		"columns": [
@@ -541,7 +558,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: 'http://localhost:8080/api/v1/persona/persona/' + documentoPersonaEmpleado,
+			url: '/api/v1/persona/persona/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
 				console.log(response);
@@ -578,7 +595,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: 'http://localhost:8080/api/v1/persona/persona/' + documentoPersonaEmpleado,
+			url: '/api/v1/persona/persona/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
 				console.log(response);
@@ -603,7 +620,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: 'http://localhost:8080/api/v1/cargo/cargos',
+			url: '/api/v1/cargo/cargos',
 			dataType: 'json',
 			success: function(response){
 				console.log(response);
@@ -637,7 +654,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'PUT',
-					url: 'http://localhost:8080/api/v1/empleado/update',
+					url: '/api/v1/empleado/update',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -677,7 +694,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'POST',
-					url: 'http://localhost:8080/api/v1/empleado/save',
+					url: '/api/v1/empleado/save',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -737,8 +754,289 @@ $(document).on('ready', function() {
 		}
 	});
 	
+	var tablaEmpleadosPlanta = $('#tablaEmpleadosPlanta').dataTable({
+		"language": {
+			"sProcessing":     "Procesando...",
+			"sLengthMenu":     "Mostrar _MENU_ registros",
+			"sZeroRecords":    "No se encontraron resultados",
+			"sEmptyTable":     "Ningún dato disponible en esta tabla",
+			"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+			"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+			"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+			"sInfoPostFix":    "",
+			"sSearch":         "Buscar:",
+			"sUrl":            "",
+			"sInfoThousands":  ",",
+			"sLoadingRecords": "Cargando...",
+			"oPaginate": {
+				"sFirst":    "Primero",
+				"sLast":     "Último",
+				"sNext":     "Siguiente",
+				"sPrevious": "Anterior"
+			},
+			"oAria": {
+				"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+			}
+		},
+		'bProcessing': true,
+		"ajax": {
+			"url": "/api/v1/empleado/empleados/listarEmpleadoINtExt",
+			"dataSrc": ""
+		},
+		"columns": [
+			{"data": "codigoempleado"},
+			{"data": "documentopersonaempleado"},
+			{"data": "empleadonombre"},
+			{"data": "direccionempleado"},
+			{"data": "telefonoprinciaplempleado"},
+			{"data": "cargoempleado"},
+			{ "defaultContent": '<span class="label label-success valueestado">Planta</span>'},
+			{ "defaultContent": '<div class="btn-group"><button type="button" class="btn btn-success btnplantainterna btn-sm" codigoempleado ><i class="fa fa-times" title="Planta Interna"></i></button><button type="button" class="btn btn-warning btn-sm btnplantaexterna" codigoempleado documentopersonaempleado style="display:none;"><i class="fa fa-times" title="Planta Externa"></i></button><button type="button" class="btn btn-success btn-sm btnsinplanta" codigoempleado documentopersonaempleado style="display:none;"><i class="fa fa-check" title="Sin Planta - Interna"></i></button><button type="button" class="btn btn-warning btn-sm btnsinplantas" codigoempleado documentopersonaempleado style="display:none;"><i class="fa fa-check" title="Sin Planta - Externa"></i></button></div>' }
+			
+		]
+	}).DataTable();
+	
+	$('#tablaEmpleadosPlanta tbody').on('click', 'button', function(){
+		
+		var data = tablaEmpleadosPlanta.row( $(this).parents('tr')).data();
+		$(this).attr('codigoempleado', data.codigoempleado);
+		$(this).attr('documentopersonaempleado', data.documentopersonaempleado);
+		
+	});
+	
+	$('#tablaEmpleadosPlanta tbody').on('click', 'button.btnplantainterna', function(){
+		var codigoplantainterna = $(this).attr('documentopersonaempleado');
+		console.log("codigoplantainterna: " + codigoplantainterna);
+		
+		swal({
+	        title: '¿Esta Seguro de quitar al Empleado de la Planta Interna?',
+	        text: '¡Si no lo esta puede Cancelar la accion!',
+	        type: 'warning',
+	        showCancelButton: true,
+	        confirmButtonColor: '#3085d6',
+	        cancelButtonColor: '#d33',
+	        cancelButtonText: 'Cancelar',
+	        confirmButtonText: '¡Si, quitar de Planta Interna !'
+	    }).then((result) => {
+	    	if(result.value){
+
+	        	 $.ajax({
+	                 url: '/api/v1/empleado/plantaempleado/' + codigoplantainterna,
+	                 type: 'GET',
+	                 success: function(response){
+	                	 
+	                	 console.log(response);
+	                     swal({
+	                         type: "success",
+	                         title: "El Empleado: " + codigoplantainterna+ " ha sido quitado de la Planta Interna correctamente",
+	                         showConfirmButton: true,
+	                         confirmButtonText: "Cerrar",
+	                         closeOnConfirm: false
+	                     }).then((result) => {
+	                         if(result.value) {
+	                             $(location).attr("href", "/empleado/view");
+	                         }
+	                     })
+	                 }
+	             });
+	    	}
+	    	else {
+	            swal({
+	                type: "error",
+	                title: "Cancelado", 
+	                text: "Usted ha cancelado la acción de Quitar de Planta Interna"
+	            });
+	        }
+	    });
+	});
+	
+	$('#tablaEmpleadosPlanta tbody').on('click', 'button.btnplantaexterna', function(){
+		var codigoplantaexterna = $(this).attr('documentopersonaempleado');
+		console.log("codigoplantainterna: " + codigoplantaexterna);
+		
+		swal({
+	        title: '¿Esta Seguro de quitar al Empleado de la Planta Externa?',
+	        text: '¡Si no lo esta puede Cancelar la accion!',
+	        type: 'warning',
+	        showCancelButton: true,
+	        confirmButtonColor: '#3085d6',
+	        cancelButtonColor: '#d33',
+	        cancelButtonText: 'Cancelar',
+	        confirmButtonText: '¡Si, quitar de Planta Externa !'
+	    }).then((result) => {
+	    	if(result.value){
+
+	        	 $.ajax({
+	                 url: '/api/v1/empleado/plantaempleado/' + codigoplantaexterna,
+	                 type: 'GET',
+	                 success: function(response){
+	                	 
+	                	 console.log(response);
+	                     swal({
+	                         type: "success",
+	                         title: "El Empleado: " + codigoplantaexterna+ " ha sido quitado de la Planta Externa correctamente",
+	                         showConfirmButton: true,
+	                         confirmButtonText: "Cerrar",
+	                         closeOnConfirm: false
+	                     }).then((result) => {
+	                         if(result.value) {
+	                             $(location).attr("href", "/empleado/view");
+	                         }
+	                     })
+	                 }
+	             });
+	    	}
+	    	else {
+	            swal({
+	                type: "error",
+	                title: "Cancelado", 
+	                text: "Usted ha cancelado la acción de Quitar de Planta Externa"
+	            });
+	        }
+	    });
+	});
+	
+	$('#tablaEmpleadosPlanta tbody').on('click', 'button.btnsinplanta', function(){
+		var codigodocumento = $(this).attr('documentopersonaempleado');
+		var tipoplantainterno = codigodocumento + 'NI';
+		var valueestado = $('.valueestado');
+		
+		
+		console.log("tipoplantainterno: " + tipoplantainterno );
+				
+				swal({
+			        title: '¿Esta Seguro de agregar al Empleado a la Planta Interna?',
+			        text: '¡Si no lo esta puede Cancelar la accion!',
+			        type: 'warning',
+			        showCancelButton: true,
+			        confirmButtonColor: '#3085d6',
+			        cancelButtonColor: '#d33',
+			        cancelButtonText: 'Cancelar',
+			        confirmButtonText: '¡Si, agregar a la Planta Interna !'
+			    }).then((result) => {
+			    	if(result.value){
+
+			        	 $.ajax({
+			                 url: '/api/v1/empleado/plantaempleado/' + tipoplantainterno,
+			                 type: 'GET',
+			                 success: function(response){
+			                	 
+			                	 console.log(response);
+			                     swal({
+			                         type: "success",
+			                         title: "El Empleado: " + tipoplantainterno + " ha sido guardado a la Planta Interna correctamente",
+			                         showConfirmButton: true,
+			                         confirmButtonText: "Cerrar",
+			                         closeOnConfirm: false
+			                     }).then((result) => {
+			                         if(result.value) {
+			                             $(location).attr("href", "/empleado/view");
+			                         }
+			                     })
+			                 }
+			             });
+			    	}
+			    	else {
+			            swal({
+			                type: "error",
+			                title: "Cancelado", 
+			                text: "Usted ha cancelado la acción de Agregar a la Planta Interna"
+			            });
+			        }
+			    });
+	});
+	
+	$('#tablaEmpleadosPlanta tbody').on('click', 'button.btnsinplantas', function(){
+		var codigodocumento = $(this).attr('documentopersonaempleado');
+		var tipoplantaexterno = codigodocumento + 'NE';
+		var valueestado = $('.valueestado');
+		
+		
+		console.log("tipoplantainterno: " + tipoplantaexterno );
+				
+				swal({
+			        title: '¿Esta Seguro de agregar al Empleado a la Planta Externa?',
+			        text: '¡Si no lo esta puede Cancelar la accion!',
+			        type: 'warning',
+			        showCancelButton: true,
+			        confirmButtonColor: '#3085d6',
+			        cancelButtonColor: '#d33',
+			        cancelButtonText: 'Cancelar',
+			        confirmButtonText: '¡Si, agregar a la Planta Externa !'
+			    }).then((result) => {
+			    	if(result.value){
+
+			        	 $.ajax({
+			                 url: '/api/v1/empleado/plantaempleado/' + tipoplantaexterno,
+			                 type: 'GET',
+			                 success: function(response){
+			                	 
+			                	 console.log(response);
+			                     swal({
+			                         type: "success",
+			                         title: "El Empleado: " + tipoplantaexterno + " ha sido guardado a la Planta Externa correctamente",
+			                         showConfirmButton: true,
+			                         confirmButtonText: "Cerrar",
+			                         closeOnConfirm: false
+			                     }).then((result) => {
+			                         if(result.value) {
+			                             $(location).attr("href", "/empleado/view");
+			                         }
+			                     })
+			                 }
+			             });
+			    	}
+			    	else {
+			            swal({
+			                type: "error",
+			                title: "Cancelado", 
+			                text: "Usted ha cancelado la acción de Agregar a la Planta Externa"
+			            });
+			        }
+			    });
+	});
+	
+	function cargarEstado(){
+		
+		var valueestado = $('.valueestado');
+		var btnplantaexterna = $('.btnplantaexterna');
+		var btnplantainterna = $('.btnplantainterna');
+		var btnsinplanta = $('.btnsinplanta');
+		var btnsinplantas = $('.btnsinplantas');
+		for(var i=0; i < valueestado.length; i++) {
+			var data = tablaEmpleadosPlanta.row($(valueestado[i]).parents('tr')).data();
+			if(data.valueestado == 1) {
+				$(valueestado[i]).attr("class", "label label-success");
+				$(valueestado[i]).html('Planta Interna');
+				$(btnplantaexterna[i]).attr('style', 'display:none');
+				$(btnplantainterna[i]).attr('style', 'display:block');
+				$(btnsinplanta[i]).attr('style', 'display:none');
+				$(btnsinplantas[i]).attr('style', 'display:none');
+			}
+			if(data.valueestado == 2) {
+				$(valueestado[i]).attr("class", "label label-warning");
+				$(valueestado[i]).html('Planta Externa');
+				$(btnplantaexterna[i]).attr('style', 'display:block');
+				$(btnplantainterna[i]).attr('style', 'display:none');
+				$(btnsinplanta[i]).attr('style', 'display:none');
+				$(btnsinplantas[i]).attr('style', 'display:none');
+			}
+			if(data.valueestado == 0) {
+				$(valueestado[i]).attr("class", "label label-info");
+				$(valueestado[i]).html('Sin Planta');
+				$(btnplantaexterna[i]).attr('style', 'display:none');
+				$(btnplantainterna[i]).attr('style', 'display:none');
+				$(btnsinplanta[i]).attr('style', 'display:block');
+				$(btnsinplantas[i]).attr('style', 'display:block');
+			}
+		}
+	}
+	
+	
 	
 	/**
+	 * 
 	 * 
 	 * Tabla Empleados
 	 *
@@ -770,7 +1068,7 @@ $(document).on('ready', function() {
 		},
 		"bProcessing": true,
 		"ajax": {
-			"url": "http://localhost:8080/api/v1/empleado/empleados/listarPersonaEmpleado",
+			"url": "/api/v1/empleado/empleados/listarPersonaEmpleado",
 			"dataSrc": ""
 		},
 		"columns": [
@@ -795,6 +1093,7 @@ $(document).on('ready', function() {
 		$(this).attr('idDocumentoEmpleado', data.documentoPersonaEmpleado);
 		
 	});
+	
 	
 	/**
 	 * 
@@ -897,7 +1196,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: 'http://localhost:8080/api/v1/persona/persona/' + documentoPersonaEmpleado,
+			url: '/api/v1/persona/persona/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
 				console.log(response);
@@ -912,7 +1211,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: 'http://localhost:8080/api/v1/empleado/empleado/' + documentoPersonaEmpleado,
+			url: '/api/v1/empleado/empleado/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
 				console.log(response);
@@ -941,7 +1240,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: 'http://localhost:8080/api/v1/persona/persona/' + documentoPersonaEmpleado,
+			url: '/api/v1/persona/persona/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
 				console.log(response);
@@ -953,7 +1252,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: 'http://localhost:8080/api/v1/empleado/empleado/' + documentoPersonaEmpleado,
+			url: '/api/v1/empleado/empleado/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
 				console.log(response);
@@ -981,12 +1280,12 @@ $(document).on('ready', function() {
 	        confirmButtonColor: '#3085d6',
 	        cancelButtonColor: '#d33',
 	        cancelButtonText: 'Cancelar',
-	        confirmButtonText: '¡Si!'
+	        confirmButtonText: '¡Si, deshabilitar!'
 	    }).then((result) => {
 	        if(result.value){
 	           
 	        	 $.ajax({
-	                 url: 'http://localhost:8080/api/v1/empleado/empleado/disabled/' + documentoPersonaEmpleado,
+	                 url: '/api/v1/empleado/empleado/disabled/' + documentoPersonaEmpleado,
 	                 type: 'GET',
 	                 success: function(response){
 	                	 
@@ -1032,13 +1331,13 @@ $(document).on('ready', function() {
 		        confirmButtonColor: '#3085d6',
 		        cancelButtonColor: '#d33',
 		        cancelButtonText: 'Cancelar',
-		        confirmButtonText: '¡Si!'
+		        confirmButtonText: '¡Si, habilitar!'
 		    }).then((result) => {
 		        if(result.value){
 		           
 		        	$.ajax({
 		        		
-		        		url: 'http://localhost:8080/api/v1/empleado/empleado/enabled/' + documentoPersonaEmpleado,
+		        		url: '/api/v1/empleado/empleado/enabled/' + documentoPersonaEmpleado,
 		        		type: 'GET',
 		        		success: function(response){
 		        			console.log(response);
@@ -1066,4 +1365,169 @@ $(document).on('ready', function() {
 		        }
 		    });
 	 });
+		
+		function cargarmensajespopus(id){
+			
+			var i=1;
+			
+			var title = "Tareas Pendientes!!!";
+			
+			var position = "Bottom right";
+			var duration = "1000";
+			var theme = "warning";
+			var closeOnClick = true;
+			var displayClose =true;
+			
+			if(id === 0)
+			{
+				
+			}else{
+				
+				for(i;i <= id;i++)
+				{			
+					if(i <= id){
+						var message = "I am a default message" + i;
+						window.createNotification({
+							closeOnClick: closeOnClick,
+							displayCloseButton: displayClose,
+							positionClass: position,
+							showDuration: duration,
+							theme: theme
+						})({
+							title: title,
+							message: message
+						});
+					}
+				}
+				
+			}
+		}
+		
+	function estado(id){
+			
+			
+			if(id !== 0){
+				
+				
+				for(var i=1;i<=id;i++){
+				if(i <= id){
+					
+					$.ajax({
+						
+						type: 'GET',
+						url: '/api/v1/atencion/searchMensaje/' + i,
+						dataType: 'json',
+						success: function(response) {
+							
+							
+							var tag = document.createElement("li");
+							tag.innerHTML = '<span class="toggle">Jan</span>';
+							
+							var mensaje = response.nombrepersona;
+							var respuesta = response.descripcionmensaje;
+							var listNode = document.getElementById('agregarmensajesnoti');
+							var liNode = document.createElement('li');
+							var txtNode = document.createTextNode(mensaje);
+							
+							liNode.innerHTML = '<a href="#" class="clearfix"><figure class="image"><img src="http://clipart-library.com/images/8i6oer5KT.png" wight="40" height="40" alt="Joseph Junior" class="img-circle" /></figure><span class="title">' + String(mensaje) + '</span><span class="mensage">' + String(respuesta) + '</span></a>';
+							listNode.appendChild(liNode);
+						}
+					});
+				}
+			}
+		}
+	}
+		
+		function evaluando(){
+			
+			var estatico = null;
+			var dinamico = null;
+			var valuee = null;
+			
+			estatico = document.getElementsByName("canje")[0].value;
+			dinamico = document.getElementsByName("canjes")[0].value;
+			valuee = document.getElementsByName("canjess")[0].value;
+			
+			
+			var verificando = valuee - dinamico;
+			
+			if(estatico === valuee && valuee === dinamico){
+				console.log("inicio");
+				estado(valuee);
+				cargarmensajespopus(valuee);
+				$('#canje').val("0");
+			}
+			if(verificando === 0){
+				console.log("igual");
+				estado(verificando);
+				cargarmensajespopus(verificando);
+				$('#canje').val("0");
+			}
+			if(verificando !== 0){
+				console.log("nuevo");
+				estado(verificando);
+				cargarmensajespopus(verificando);
+				$('#canje').val("0");
+				$('#canjes').val(valuee);
+			}
+		}
+		
+		function cargarTotalRegistrosPersona() {
+			
+			
+			var formData = {
+					
+			};
+			
+			$.ajax({
+				
+				type: 'POST',
+				url: '/api/v1/atencion/obtenercantidad',
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json"
+				},
+				data: JSON.stringify(formData),
+				dataType: 'json',
+				success: function(response) {
+					
+					$('#total').html(response.message);
+					$('#totalidad').html(response.message);
+					$('#canjess').val(response.message);
+				}
+				
+			});	
+			
+		}
+		
+		
+		function cargarTotalRegistrosPersonita() {
+			
+			
+			var formData = {
+					
+			};
+			
+			$.ajax({
+				
+				type: 'POST',
+				url: '/api/v1/atencion/obtenercantidad',
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json"
+				},
+				data: JSON.stringify(formData),
+				dataType: 'json',
+				success: function(response) {
+					
+					$('#total').html(response.message);
+					$('#totalidad').html(response.message);
+					$('#canje').val(response.message);
+					$('#canjes').val(response.message);
+					$('#canjess').val(response.message);
+				}
+				
+			});	
+			
+		}
 });

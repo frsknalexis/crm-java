@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.dev.crm.core.dto.ClientePagoResultViewModel;
 import com.dev.crm.core.dto.MesDeudaResultViewModel;
+import com.dev.crm.core.dto.PagoMoraRequest;
 import com.dev.crm.core.dto.PagoRequest;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.PagoFacade;
@@ -33,6 +34,27 @@ public class PagoFacadeImpl implements PagoFacade {
 				String result = pagoService.spPagoServicio(pagoRequest);
 				if(StringUtil.hasText(result)) {
 					return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, result, pagoRequest);
+				}
+				else {
+					return null;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public ResponseBaseOperation spPagoMora(PagoMoraRequest pagoMora) {
+		
+		try {
+			
+			if(GenericUtil.isNotNull(pagoMora)) {
+				String result = pagoService.spPagoMora(pagoMora);
+				if(StringUtil.hasText(result)) {
+					return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, result, pagoMora);
 				}
 				else {
 					return null;

@@ -9,12 +9,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.crm.core.dao.EmpleadoDAO;
+import com.dev.crm.core.dto.EmpleadoEXTINTResultViewModel;
 import com.dev.crm.core.dto.EmpleadoResultViewModel;
 import com.dev.crm.core.model.entity.Empleado;
 import com.dev.crm.core.repository.jdbc.EmpleadoJdbcRepository;
+import com.dev.crm.core.repository.jdbc.EmpleadointextJdbcRepository;
+import com.dev.crm.core.repository.jdbc.EstadoPlantaJdbcRepository;
 import com.dev.crm.core.service.EmpleadoService;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.GenericUtil;
+import com.dev.crm.core.util.StringUtil;
 
 @Service("empleadoService")
 @Transactional("hibernateTransactionManager")
@@ -27,6 +31,14 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 	@Autowired
 	@Qualifier("empleadoJdbcRepository")
 	private EmpleadoJdbcRepository empleadoJdbcRepository;
+	
+	@Autowired
+	@Qualifier("EmpleadointextJdbcRepository")
+	private EmpleadointextJdbcRepository empleadointextJdbcRepository;
+	
+	@Autowired
+	@Qualifier("EstadoPlantaJdbcRepository")
+	private EstadoPlantaJdbcRepository estadoPlantaJdbcRepository;
 	
 	@Override
 	public void spInsercionEmpleado(Empleado e) {
@@ -203,6 +215,48 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 			}
 			else {
 				return null;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<EmpleadoEXTINTResultViewModel> spListarEmpleadoDatos() {
+		
+		List<EmpleadoEXTINTResultViewModel> empleadatos = new ArrayList<EmpleadoEXTINTResultViewModel>();
+		
+		try {
+			
+			empleadatos = empleadointextJdbcRepository.spListarEmpleadoDetalleGeneral();
+			if(!GenericUtil.isEmpty(empleadatos)) {
+				return empleadatos;
+			}
+			else {
+				return null;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public String spEstadoPlanta(String codidocu) {
+		
+		try {
+			
+			if(GenericUtil.isNotNull(codidocu)) {
+				String result = estadoPlantaJdbcRepository.spEnaDisaPlanta(codidocu);
+				if(StringUtil.hasText(result)) {
+					return result;
+				}
+				else {
+					return null;
+				}
 			}
 		}
 		catch(Exception e) {

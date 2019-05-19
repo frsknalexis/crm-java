@@ -15,14 +15,7 @@
 						<li class="nav-active">
 							<a th:href="@{/dashboard}"> 
 								<i class="fa fa-home" aria-hidden="true"></i> 
-								<span>Dashboard</span>
-							</a>
-						</li>
-						<li>
-							<a href="mailbox-folder.html"> 
-								<span class="pull-right label label-primary">182</span> 
-								<i class="fa fa-envelope" aria-hidden="true"></i> 
-								<span>Mailbox</span>
+								<span>Inicio</span>
 							</a>
 						</li>
 						<li class="nav-parent">
@@ -55,10 +48,10 @@
 									<a th:href="@{/detalleCuenta/reprogramacion/view}"><i class="fa fa-calendar"></i> Re - Programacion </a>
 								</li>
 								<li>
-									<a href="pages-log-viewer.html"> Log Viewer </a>
+									<a th:href="@{/instalacion/cortes/view}"><i class="fa fa-bars"></i> Cortes</a>
 								</li>
 								<li>
-									<a href="pages-search-results.html"> Search Results </a>
+									<a th:href="@{/instalacion/instalaciones/view}"><i class="fa fa-archive"></i> Instalaciones del Dia</a>
 								</li>
 							</ul>
 						</li>
@@ -71,86 +64,33 @@
 								<li>
 									<a th:href="@{/pago/pagos}"><i class="fa fa-credit-card"></i> Pagos </a>
 								</li>
+							</ul>
+						</li>
+						<li class="nav-parent">
+							<a> 
+								<i class="fa fa-map-marker" aria-hidden="true"></i> 
+								<span>Modulo Atencion</span>
+							</a>
+							<ul class="nav nav-children">
 								<li>
-									<a href="ui-elements-icons.html"> Icons </a>
+									<a th:href="@{/atencion/atencion/view}"> Atencion </a>
 								</li>
 								<li>
-									<a href="ui-elements-tabs.html"> Tabs </a>
+									<a th:href="@{/atencion/herramientas/view}"> Herramientas </a>
 								</li>
 								<li>
-									<a href="ui-elements-panels.html"> Panels </a>
-								</li>
-								<li>
-									<a href="ui-elements-widgets.html"> Widgets </a>
+									<a th:href="@{/atencion/reclamo/view}"> Reclamo </a>
 								</li>
 							</ul>
 						</li>
 						<li class="nav-parent">
 							<a> 
 								<i class="fa fa-map-marker" aria-hidden="true"></i> 
-								<span>Maps</span>
+								<span>Modulo Tarea</span>
 							</a>
 							<ul class="nav nav-children">
 								<li>
-									<a href="maps-google-maps.html"> Basic </a>
-								</li>
-								<li>
-									<a href="maps-google-maps-builder.html"> Map Builder </a>
-								</li>
-								<li>
-									<a href="maps-vector.html"> Vector </a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-parent">
-							<a> 
-								<i class="fa fa-columns" aria-hidden="true"></i> 
-								<span>Layouts</span>
-							</a>
-							<ul class="nav nav-children">
-								<li>
-									<a href="layouts-default.html"> Default </a>
-								</li>
-								<li>
-									<a href="layouts-boxed.html"> Boxed </a>
-								</li>
-								<li>
-									<a href="layouts-menu-collapsed.html"> Menu Collapsed </a>
-								</li>
-								<li>
-									<a href="layouts-scroll.html"> Scroll </a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-parent">
-							<a> 
-								<i class="fa fa-align-left" aria-hidden="true"></i> 
-								<span>Menu Levels</span>
-							</a>
-							<ul class="nav nav-children">
-								<li>
-									<a>First Level</a>
-								</li>
-								<li class="nav-parent">
-									<a>Second Level</a>
-									<ul class="nav nav-children">
-										<li class="nav-parent"><a>Third Level</a>
-											<ul class="nav nav-children">
-												<li>
-													<a>Third Level Link #1</a>
-												</li>
-												<li>
-													<a>Third Level Link #2</a>
-												</li>
-											</ul>
-										</li>
-										<li>
-											<a>Second Level Link #1</a>
-										</li>
-										<li>
-											<a>Second Level Link #2</a>
-										</li>
-									</ul>
+									<a th:href="@{/tarea/tarea/view}"> Tarea </a>
 								</li>
 							</ul>
 						</li>

@@ -250,4 +250,19 @@ public class PersonaServiceImpl implements PersonaService {
 		}
 		return null;
 	}
+
+	@Override
+	public Long obtenerTotalRegistrosPersonas() {
+		
+		try {
+			
+			Long totalRegistrosPersonas = personaDAO.totalRegistrosPersonas();
+			return totalRegistrosPersonas;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
 }

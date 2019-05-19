@@ -2,92 +2,78 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 	<header class="header" th:fragment="header">
-		<div class="logo-container">
-			<a href="../" class="logo"> 
-				<img th:src="@{/assets/images/logo.png}" height="35" alt="JSOFT Admin" />
-			</a>
-			<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html"
-				data-fire-event="sidebar-left-opened">
-				<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+		
+			<div class="logo-container">
+			
+				<a href="/dashboard" class="logo"> 
+					
+				 
+						<img src="https://lh3.googleusercontent.com/Blbv_qqo88mwyy6eqxI6w038cgaXZkoCdRqFMMdNbe2-tP5zrlHD5Ok7NEvKvCetZx3TNQ=s170" height="35" alt="JSOFT Admin" /> 
+			 
+					
+				</a>
+				<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html"
+					data-fire-event="sidebar-left-opened">
+					<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+				</div>
 			</div>
-		</div>
+		
+		
 		<!-- start: search & user box -->
 		<div class="header-right">
-			<form action="pages-search-results.html" class="search nav-form">
-				<div class="input-group input-search">
-					<input type="text" class="form-control" name="q" id="q" placeholder="Search..."> 
-					<span class="input-group-btn">
-						<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-					</span>
-				</div>
-			</form>
+		
 			<span class="separator"></span>
+			
 			<ul class="notifications">
-				<li>
-					<a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown"> <i class="fa fa-bell"></i> 
-					<span class="badge">3</span>
+			
+				<li class="dropdown notifications-menu">
+					<a href="/tarea/tarea/view" class="dropdown-toggle notification-icon" data-toggle="dropdown">
+						<i class="fa fa-envelope"></i>
+						<span class="badge" id="total"></span>
 					</a>
+			
 					<div class="dropdown-menu notification-menu">
-						<div class="notification-title">
-							<span class="pull-right label label-default">3</span> Alerts
-						</div>
-						<div class="content">
-							<ul>
-								<li>
-									<a href="#" class="clearfix">
-										<div class="image">
-											<i class="fa fa-thumbs-down bg-danger"></i>
-										</div> 
-										<span class="title">Server is Down!</span> 
-										<span class="message">Just now</span>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="clearfix">
-										<div class="image">
-											<i class="fa fa-lock bg-warning"></i>
-										</div> 
-										<span class="title">User Locked</span> 
-										<span class="message">15 minutes ago</span>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="clearfix">
-										<div class="image">
-											<i class="fa fa-signal bg-success"></i>
-										</div> 
-										<span class="title">Connection Restaured</span> 
-										<span class="message">10/10/2014</span>
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</li>
-			</ul>
+								<div class="notification-title">
+									<span class="pull-right label label-default" id="totalidad"></span>
+									Mensajes
+								</div>
+
+			
+								<div class="content">
+								
+									<ul id="agregarmensajesnoti">
+										
+									</ul>
+			
+									<hr />
+			
+									<div class="text-right">
+										<a href="/tarea/tarea/view" class="view-more">View All</a>
+									</div>
+								</div>
+							</div>
+						</li>
+					
+				</ul>
+			
 			<span class="separator"></span>
+			
 			<div id="userbox" class="userbox">
-				<a href="#" data-toggle="dropdown">
+				<a href="/dashboard" data-toggle="dropdown">
 					<figure class="profile-picture">
-						<img th:src="@{/assets/images/!logged-user.jpg}" alt="Joseph Doe" class="img-circle" th:data-lock-picture="@{/assets/images/!logged-user.jpg}" />
+						<img src="https://scontent.flim19-1.fna.fbcdn.net/v/t1.0-9/11228509_10205223842547991_347119019958263288_n.jpg?_nc_cat=101&_nc_ht=scontent.flim19-1.fna&oh=9b6239d6844ee3e53687e3d7112bea26&oe=5D5F6E23" alt="Joseph Doe" class="img-circle" th:data-lock-picture="@{/assets/images/!logged-user.jpg}" />
 					</figure>
-					<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@JSOFT.com">
-						<span class="name">John Doe Junior</span> 
+					<div class="profile-info" data-lock-name="Usuario Logeado">
+						<span class="name">VIPCHANNEL</span> 
 						<span class="role">administrator</span>
 					</div> 
 					<i class="fa custom-caret"></i>
 				</a>
-				<div class="dropdown-menu">
-					<ul class="list-unstyled">
-						<li class="divider"></li>
-						<li><a role="menuitem" tabindex="-1" href="pages-user-profile.html"><i class="fa fa-user"></i> My Profile</a></li>
-						<li><a role="menuitem" tabindex="-1" href="#" data-lock-screen="true"><i class="fa fa-lock"></i> Lock Screen</a></li>
-						<li><a role="menuitem" tabindex="-1" href="pages-signin.html"><i class="fa fa-power-off"></i> Logout</a></li>
-					</ul>
-				</div>
 			</div>
 		</div>
 		<!-- end: search & user box -->
 	</header>
+	
 </body>
+
 </html>

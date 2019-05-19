@@ -175,8 +175,7 @@ public class EmpleadoDAOImpl extends BaseDAOHibernateImpl implements EmpleadoDAO
 		
 		try {
 			
-			StoredProcedureQuery storeProcedure = em.createStoredProcedureQuery(Constantes.SP_LISTAR_PERSONA_EMPLEADO, Empleado.class);
-			storeProcedure.registerStoredProcedureParameter("COD_USU", String.class, ParameterMode.IN);
+			StoredProcedureQuery storeProcedure = em.createNamedStoredProcedureQuery("listarPersonaEmpleado");
 			storeProcedure.setParameter("COD_USU", creadoPor);
 			storeProcedure.execute();
 			empleados = storeProcedure.getResultList();

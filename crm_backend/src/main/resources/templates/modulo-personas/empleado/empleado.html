@@ -26,8 +26,8 @@
 					</div>
 					<!-- start: page -->
 					<div class="row" id="listadoPersonasEmpleadosRegistro">
-						<div class="col-md-6 col-lg-6">
-							<button type="button" id="btnAgregarPersonaEmpleado" class="mb-xs btn-md btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Persona - Empleado</button>
+						<div class="col-md-4 col-lg-4">
+							<button type="button" id="btnAgregarPersonaEmpleado" class="mb-xs btn-sm btn-block btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Persona - Empleado</button>
 						</div>
 						<div class="col-md-12 col-lg-12">
 							<div class="tabs tabs-primary">
@@ -37,6 +37,9 @@
 									</li>
 									<li>
 										<a href="#empleados" data-toggle="tab"><i class="fa fa-users"></i> Empleados</a>
+									</li>
+									<li>
+										<a href="#empleadosplanta" data-toggle="tab"><i class="fa fa-users"></i> Empleados Planta</a>
 									</li>
 								</ul>
 								<div class="tab-content">
@@ -77,6 +80,29 @@
 															<th>DNI-RUC</th>
 															<th>Cargo</th>
 															<th>Activo</th>
+															<th>Acciones</th>
+														</tr>
+													</thead>
+												</table>
+											</div>
+										</section>
+									</div>
+									<div id="empleadosplanta" class="tab-pane">
+										<section class="panel panel-featured panel-featured-primary panel-primary">
+											<header class="panel-heading">
+												<h2 class="panel-title">Listado de Empleados - Planta</h2>
+											</header>
+											<div class="panel-body">
+												<table class="table table-hover table-striped table-condensed mb-none" id="tablaEmpleadosPlanta" width="100%">
+													<thead class="text-center">
+														<tr>
+															<th>Codigo Empleado</th>
+															<th>DNI-RUC</th>
+															<th>Empleado</th>
+															<th>Direcccion</th>
+															<th>Telefono</th>
+															<th>Cargo</th>
+															<th>Planta?</th>
 															<th>Acciones</th>
 														</tr>
 													</thead>
@@ -324,11 +350,15 @@
 								</div>
 							</div>
 						</div>
+						<input style="display:none" id="canje" name="canje" value="0"></input>
+						<input style="display:none" id="canjes" name="canjes" value="0"></input>
+						<input style="display:none" id="canjess" name="canjess" value="0"></input>
 				</div>
 			</section>
 		</div>
 	</section>
 	<th:block th:replace="fragments/script :: script"></th:block>
 	<script type="text/javascript" th:src="@{/assets/javascripts/app/empleado.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/javascripts/app/notifications.js}"></script>
 </body>
 </html>

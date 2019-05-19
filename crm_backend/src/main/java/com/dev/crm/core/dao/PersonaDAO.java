@@ -22,4 +22,6 @@ public interface PersonaDAO extends BaseDAOHibernate {
 	void enabledPersona(Persona persona);
 	
 	Long totalRegistrosPersona();
+	
+	Long totalRegistrosPersonas();
 }

@@ -22,7 +22,7 @@ public class Cargo implements Serializable {
 	private static final long serialVersionUID = 7606171843507268516L;
 
 	@Id
-	@Column(name="codi_cargo", nullable=false, length=4)
+	@Column(name="codi_cargo", nullable=false, length=4, unique=true)
 	private String codigoCargo;
 	
 	@Column(name="descripcion_cargo", length=50)

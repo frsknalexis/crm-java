@@ -51,9 +51,13 @@ public class EmpleadoInterno implements Serializable {
 	
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="empleadoInterno")
 	private List<Pago> pagos;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "empleadoInterno")
+	private List<Herramienta> herramientas;
 
 	public EmpleadoInterno() {
 		pagos = new ArrayList<Pago>();
+		herramientas = new ArrayList<Herramienta>();
 	}
 
 	public String getCodigoInterno() {
@@ -118,5 +122,13 @@ public class EmpleadoInterno implements Serializable {
 
 	public void setPagos(List<Pago> pagos) {
 		this.pagos = pagos;
+	}
+
+	public List<Herramienta> getHerramientas() {
+		return herramientas;
+	}
+
+	public void setHerramientas(List<Herramienta> herramientas) {
+		this.herramientas = herramientas;
 	}
 }

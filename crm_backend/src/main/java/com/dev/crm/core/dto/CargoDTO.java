@@ -1,6 +1,8 @@
 package com.dev.crm.core.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,7 +14,7 @@ public class CargoDTO implements Serializable {
 	 */
 	private static final long serialVersionUID = 8875458392102013130L;
 
-	private String codigoCargo;
+	private BigDecimal codigoCargo;
 	
 	private String descripcionCargo;
 	
@@ -20,14 +22,14 @@ public class CargoDTO implements Serializable {
 	private List<EmpleadoDTO> empleados;
 
 	public CargoDTO() {
-		
+		empleados = new ArrayList<EmpleadoDTO>();
 	}
 
-	public String getCodigoCargo() {
+	public BigDecimal getCodigoCargo() {
 		return codigoCargo;
 	}
 
-	public void setCodigoCargo(String codigoCargo) {
+	public void setCodigoCargo(BigDecimal codigoCargo) {
 		this.codigoCargo = codigoCargo;
 	}
 

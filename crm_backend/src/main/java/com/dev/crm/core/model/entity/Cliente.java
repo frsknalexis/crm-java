@@ -80,11 +80,15 @@ public class Cliente implements Serializable {
 	
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="cliente")
 	private List<InternetServicio> internetServicios;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cliente")
+	private List<Reclamo> reclamos;
 
 	public Cliente() {
 		cablesServicios = new ArrayList<CableServicio>();
 		pagos = new ArrayList<Pago>();
 		internetServicios = new ArrayList<InternetServicio>();
+		reclamos = new ArrayList<Reclamo>();
 	}
 
 	public Integer getConsecutivoCliente() {
@@ -173,5 +177,13 @@ public class Cliente implements Serializable {
 
 	public void setInternetServicios(List<InternetServicio> internetServicios) {
 		this.internetServicios = internetServicios;
+	}
+
+	public List<Reclamo> getReclamos() {
+		return reclamos;
+	}
+
+	public void setReclamos(List<Reclamo> reclamos) {
+		this.reclamos = reclamos;
 	}
 }

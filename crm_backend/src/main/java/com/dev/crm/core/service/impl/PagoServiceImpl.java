@@ -10,10 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.crm.core.dto.ClientePagoResultViewModel;
 import com.dev.crm.core.dto.MesDeudaResultViewModel;
+import com.dev.crm.core.dto.PagoMoraRequest;
 import com.dev.crm.core.dto.PagoRequest;
 import com.dev.crm.core.repository.jdbc.ClientePagoJdbcRepository;
 import com.dev.crm.core.repository.jdbc.MesDeudaResultJdbcRepository;
 import com.dev.crm.core.repository.jdbc.PagoJdbcRepository;
+import com.dev.crm.core.repository.jdbc.PagoMoraJdbcRepository;
 import com.dev.crm.core.service.PagoService;
 import com.dev.crm.core.util.GenericUtil;
 import com.dev.crm.core.util.StringUtil;
@@ -34,6 +36,10 @@ public class PagoServiceImpl implements PagoService {
 	@Qualifier("mesDeudaResultJdbcRepository")
 	private MesDeudaResultJdbcRepository mesDeudaResultJdbcRepository;
 	
+	@Autowired
+	@Qualifier("pagoMoraJdbcRepository")
+	private PagoMoraJdbcRepository pagoMoraJdbcRepository;
+	
 	@Override
 	public String spPagoServicio(PagoRequest pagoRequest) {
 		
@@ -41,6 +47,27 @@ public class PagoServiceImpl implements PagoService {
 			
 			if(GenericUtil.isNotNull(pagoRequest)) {
 				String result = pagoJdbcRepository.spPagoServicio(pagoRequest);
+				if(StringUtil.hasText(result)) {
+					return result;
+				}
+				else {
+					return null;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public String spPagoMora(PagoMoraRequest pagoMora) {
+		
+		try {
+			
+			if(GenericUtil.isNotNull(pagoMora)) {
+				String result = pagoMoraJdbcRepository.spPagoMora(pagoMora);
 				if(StringUtil.hasText(result)) {
 					return result;
 				}

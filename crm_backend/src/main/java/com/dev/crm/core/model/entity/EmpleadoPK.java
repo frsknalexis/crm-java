@@ -1,7 +1,6 @@
 package com.dev.crm.core.model.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class EmpleadoPK implements Serializable {
@@ -11,15 +10,15 @@ public class EmpleadoPK implements Serializable {
 	 */
 	private static final long serialVersionUID = 2062011058915275185L;
 
-	private String documentoPersonaEmpleado;
+	private Integer codigoEmpleado;
 	
-	private BigDecimal codigoEmpleado;
+	private String documentoPersonaEmpleado;
 	
 	public EmpleadoPK() {
 		
 	}
 
-	public EmpleadoPK(String documentoPersonaEmpleado, BigDecimal codigoEmpleado) {
+	public EmpleadoPK(String documentoPersonaEmpleado, Integer codigoEmpleado) {
 		super();
 		this.documentoPersonaEmpleado = documentoPersonaEmpleado;
 		this.codigoEmpleado = codigoEmpleado;
@@ -33,11 +32,11 @@ public class EmpleadoPK implements Serializable {
 		this.documentoPersonaEmpleado = documentoPersonaEmpleado;
 	}
 
-	public BigDecimal getCodigoEmpleado() {
+	public Integer getCodigoEmpleado() {
 		return codigoEmpleado;
 	}
 
-	public void setCodigoEmpleado(BigDecimal codigoEmpleado) {
+	public void Integer(Integer codigoEmpleado) {
 		this.codigoEmpleado = codigoEmpleado;
 	}
 

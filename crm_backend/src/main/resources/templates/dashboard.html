@@ -8,19 +8,20 @@
 			<!-- end: header -->
 			<div class="inner-wrapper">
 				<!-- start: sidebar -->
+				
 				<aside th:replace="fragments/sidebar :: sidebar"></aside>
 				<!-- end: sidebar -->
 				<section role="main" class="content-body">
 					<header class="page-header">
-						<h2>Dashboard</h2>
+						<h2>Inicio</h2>
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
 								<li>
-									<a href="index.html">
+									<a href="/dashboard">
 										<i class="fa fa-home"></i>
 									</a>
 								</li>
-								<li><span>Dashboard</span></li>
+								<li><span>Inicio</span></li>
 							</ol>
 						</div>
 					</header>
@@ -37,6 +38,9 @@
 														<i class="fa fa-users"></i>
 													</div>
 												</div>
+												<input style="display:none" id="canje" name="canje" value="0"></input>
+												<input style="display:none" id="canjes" name="canjes" value="0"></input>
+												<input style="display:none" id="canjess" name="canjess" value="0"></input>
 												<div class="widget-summary-col">
 													<div class="summary">
 														<h4 class="title">Total Usuarios</h4>
@@ -133,5 +137,6 @@
 		</section>
 		<th:block th:replace="fragments/script :: script"></th:block>
 		<script type="text/javascript" th:src="@{/assets/javascripts/app/dashboard.js}"></script>
+		<script type="text/javascript" th:src="@{/assets/javascripts/app/notifications.js}"></script>
 	</body>
 </html>

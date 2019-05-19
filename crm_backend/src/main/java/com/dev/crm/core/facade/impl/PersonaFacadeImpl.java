@@ -252,4 +252,23 @@ public class PersonaFacadeImpl implements PersonaFacade {
 		}
 		return null;
 	}
+	
+	@Override
+	public ResponseBaseOperation totalRegistrosPersonas() {
+		
+		try {
+			
+			Long totalRegistrosPersona = personaService.obtenerTotalRegistrosPersona();
+			if(totalRegistrosPersona == 0) {
+				return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.MESSAGE_TOTAL_REGISTROS_CON + totalRegistrosPersona, totalRegistrosPersona);
+			}
+			else if(totalRegistrosPersona > 0) {
+				return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.MESSAGE_TOTAL_REGISTROS_CON + totalRegistrosPersona, totalRegistrosPersona);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

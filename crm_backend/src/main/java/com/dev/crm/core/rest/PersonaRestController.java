@@ -114,7 +114,7 @@ public class PersonaRestController {
 		
 		try {
 			
-			String creadoPor = "vendedor";
+			String creadoPor = "admin";
 			List<PersonaDTO> personasDTO = personaFacade.spListaPersonaNoEmpleado(creadoPor);
 			if(GenericUtil.isNotEmpty(personasDTO)) {
 				return new ResponseEntity<List<PersonaDTO>>(personasDTO, HttpStatus.OK);
@@ -222,6 +222,19 @@ public class PersonaRestController {
 		try {
 			
 			ResponseBaseOperation response = personaFacade.totalRegistrosPersona();
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/totalidad")
+	public ResponseEntity<ResponseBaseOperation> totalRegistrosPersonas() {
+		
+		try {
+			
+			ResponseBaseOperation response = personaFacade.totalRegistrosPersonas();
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
 		}
 		catch(Exception e) {

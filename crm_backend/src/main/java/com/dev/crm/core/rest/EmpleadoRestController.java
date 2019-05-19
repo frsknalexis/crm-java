@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.crm.core.dto.EmpleadoDTO;
+import com.dev.crm.core.dto.EmpleadoEXTINTResultViewModel;
 import com.dev.crm.core.dto.EmpleadoResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.EmpleadoFacade;
@@ -89,7 +90,7 @@ public class EmpleadoRestController {
 		
 		try {
 			
-			String creadoPor = "vendedor";
+			String creadoPor = "admin";
 			List<EmpleadoDTO> empleadosDTO = empleadoFacade.spListarPersonaEmpleado(creadoPor);
 			if(GenericUtil.isNotEmpty(empleadosDTO)) {
 				return new ResponseEntity<List<EmpleadoDTO>>(empleadosDTO, HttpStatus.OK);
@@ -198,6 +199,38 @@ public class EmpleadoRestController {
 			
 			ResponseBaseOperation response = empleadoFacade.totalRegistrosEmpleado();
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/empleados/listarEmpleadoINtExt")
+	public ResponseEntity<List<EmpleadoEXTINTResultViewModel>> spListarDatosGenrales() {
+		
+		try {
+			
+			List<EmpleadoEXTINTResultViewModel> empleadosDTO = empleadoFacade.spListarDatosGenrales();
+			if(GenericUtil.isNotEmpty(empleadosDTO)) {
+				return new ResponseEntity<List<EmpleadoEXTINTResultViewModel>>(empleadosDTO, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<EmpleadoEXTINTResultViewModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<EmpleadoEXTINTResultViewModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+
+	@GetMapping("/plantaempleado/{documentoPersona}")
+	public ResponseEntity<ResponseBaseOperation> spEstadoPlanta(@PathVariable("documentoPersona") String documentoPersona) {
+		
+		try
+		{
+			ResponseBaseOperation response = empleadoFacade.spEstadoPlanta(documentoPersona);
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);

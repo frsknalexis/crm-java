@@ -64,7 +64,7 @@
 												<button type="button" id="reprogramacionDelDia" class="btn btn-sm btn-success btn-block"><i class="fa fa-calendar"></i> Reprogramar Instalaciones del dia</button>
 											</div>
 											<div class="col-md-12 col-sm-12 form-group">
-												<label for="detalleCuentaReferenciaDireccion">Contador</label>
+												<label for="detalleCuentaReferenciaDireccion">Contador Instalaciones Pendientes</label>
 												<div class="input-group mb-md">
 													<span class="input-group-addon">
 														<i class="fa fa-tag"></i>
@@ -82,11 +82,16 @@
 						</div>		
 					</div>
 					<!-- end: page -->
+					<input style="display:none" id="canje" name="canje" value="0"></input>
+					<input style="display:none" id="canjes" name="canjes" value="0"></input>
+					<input style="display:none" id="canjess" name="canjess" value="0"></input>
 				</div>
 			</section>
 		</div>
 	</section>
 	<th:block th:replace="fragments/script :: script"></th:block>
 	<script type="text/javascript" th:src="@{/assets/javascripts/app/reprogramacion.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/javascripts/app/notifications.js}"></script>
+	
 </body>
 </html>

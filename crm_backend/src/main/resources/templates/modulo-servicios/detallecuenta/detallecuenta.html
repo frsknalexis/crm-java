@@ -24,8 +24,59 @@
 					</div>
 					<!-- start: page -->
 					<div class="row">
-						<div class="col-md-8 col-lg-8 col-xl-8 col-sm-8">
+						<div class="col-md-4 col-lg-4 mb-xs">
 							<section class="panel panel-featured-left panel-featured-primary">
+								<header class="panel-heading">
+									<h2 class="panel-title">
+										<span class="va-middle">Buscar Cliente</span>
+									</h2>
+								</header>
+								<div class="panel-body">
+									<div class="content">
+										<form method="post" role="form">
+											<div class="input-group input-search">
+												<input type="text" class="form-control" id="busqueda" placeholder="Search..."> 
+													<span class="input-group-btn">
+														<button id="buscarCliente" class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+													</span>
+											</div>
+										</form>
+									</div>
+								</div>
+								<div class="panel-footer">
+								</div>
+							</section>
+							<section class="panel panel-featured-left panel-featured-primary">
+								<header class="panel-heading">
+									<h2 class="panel-title">
+										<span class="va-middle">Servicios</span>
+									</h2>
+								</header>
+								<div class="panel-body">
+									<div class="content">
+										<div class="row">
+											<div class="col-md-12 form-group">
+												<label for="tipoServicio">Servicios</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-tags"></i>
+													</span>
+													<select  class="form-control populate" id="tipoServicio">
+														<option value="">Seleccione un Servicio</option>
+														<option value="IC">Internet Color</option>
+														<option value="CC">Cable Color</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="panel-footer">
+								</div>
+							</section>
+						</div>
+						<div class="col-md-8 col-lg-8 col-xl-8 col-sm-8">
+							<section class="panel panel-featured-right panel-featured-primary">
 								<header class="panel-heading">
 									<h2 class="panel-title">Generar Cuenta</h2>
 								</header>
@@ -90,64 +141,17 @@
 								</div>
 							</section>
 						</div>
-						<div class="col-md-4 col-lg-4 mb-xs">
-							<section class="panel panel-featured-right panel-featured-primary">
-								<header class="panel-heading">
-									<h2 class="panel-title">
-										<span class="va-middle">Buscar Cliente</span>
-									</h2>
-								</header>
-								<div class="panel-body">
-									<div class="content">
-										<form method="post" role="form">
-											<div class="input-group input-search">
-												<input type="text" class="form-control" id="busqueda" placeholder="Search..."> 
-													<span class="input-group-btn">
-														<button id="buscarCliente" class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-													</span>
-											</div>
-										</form>
-									</div>
-								</div>
-								<div class="panel-footer">
-								</div>
-							</section>
-							<section class="panel panel-featured-right panel-featured-primary">
-								<header class="panel-heading">
-									<h2 class="panel-title">
-										<span class="va-middle">Servicios</span>
-									</h2>
-								</header>
-								<div class="panel-body">
-									<div class="content">
-										<div class="row">
-											<div class="col-md-12 form-group">
-												<label for="tipoServicio">Servicios</label>
-												<div class="input-group mb-md">
-													<span class="input-group-addon">
-														<i class="fa fa-tags"></i>
-													</span>
-													<select  class="form-control populate" id="tipoServicio">
-														<option value="">Seleccione un Servicio</option>
-														<option value="IC">Internet Color</option>
-														<option value="CC">Cable Color</option>
-													</select>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="panel-footer">
-								</div>
-							</section>
-						</div>
 					</div>
 					<!-- end: page -->
+					<input  id="canje" name="canje" value="0"></input>
+					<input  id="canjes" name="canjes" value="0"></input>
+					<input id="canjess" name="canjess" value="0"></input>
 				</div>
 			</section>
 		</div>
 	</section>
 	<th:block th:replace="fragments/script :: script"></th:block>
 	<script type="text/javascript" th:src="@{/assets/javascripts/app/detallecuenta.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/javascripts/app/notifications.js}"></script>
 </body>
 </html>

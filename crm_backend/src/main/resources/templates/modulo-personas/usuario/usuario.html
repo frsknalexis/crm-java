@@ -26,8 +26,8 @@
 					</div>
 					<!-- start: page -->
 					<div class="row">
-						<div class="col-md-6 col-lg-6">
-							<button type="button" data-toggle="modal" id="btnAgregarUsuario" class="mb-xs btn-md btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Usuario</button>
+						<div class="col-md-4 col-lg-4">
+							<button type="button" data-toggle="modal" id="btnAgregarUsuario" class="mb-xs btn-sm btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> Agregar Usuario</button>
 						</div>
 						<div class="col-md-12 col-lg-12">
 							<section class="panel panel-featured panel-featured-primary panel-primary">
@@ -57,7 +57,7 @@
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<form role="form" method="post">
-									<div class="modal-header" style="background:#0088cc; color:white">
+									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 										<h4 class="modal-title" id="myModalLabelUsuario">Nuevo Usuario</h4>
 									</div>
@@ -96,11 +96,14 @@
 									</div>
 									<div class="modal-footer">
 										<button type="button" id="cancelarAccion" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-										<button type="submit" id="guardarUsuario" class="btn btn-primary">Guardar</button>
+										<button type="submit" id="guardarUsuario" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
 									</div>
 								</form>
 							</div>
 						</div>
+						<input style="display:none" id="canje" name="canje" value="0"></input>
+						<input style="display:none" id="canjes" name="canjes" value="0"></input>
+						<input style="display:none" id="canjess" name="canjess" value="0"></input>
 					</div>				
 				</section>
 			</div>
@@ -108,5 +111,6 @@
 		
 		<th:block th:replace="fragments/script :: script"></th:block>
 		<script type="text/javascript" th:src="@{/assets/javascripts/app/usuario.js}"></script>
+		<script type="text/javascript" th:src="@{/assets/javascripts/app/notifications.js}"></script>
 </body>
 </html>

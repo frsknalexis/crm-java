@@ -2,6 +2,7 @@ package com.dev.crm.core.service;
 
 import java.util.List;
 
+import com.dev.crm.core.dto.EmpleadoEXTINTResultViewModel;
 import com.dev.crm.core.dto.EmpleadoResultViewModel;
 import com.dev.crm.core.model.entity.Empleado;
 
@@ -28,5 +29,9 @@ public interface EmpleadoService {
 	void enabledEmpleado(String documentoPersonaEmpleado);
 	
 	Long totalRegistrosEmpleado();
+	
+	List<EmpleadoEXTINTResultViewModel> spListarEmpleadoDatos();
+	
+	String spEstadoPlanta(String codidocu);
 	
 }

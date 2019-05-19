@@ -1,7 +1,6 @@
 package com.dev.crm.core.model.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,18 +8,28 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="tb_ci_empleado", schema="public")
 @IdClass(value=EmpleadoPK.class)
+@NamedStoredProcedureQueries({
+	
+	@NamedStoredProcedureQuery(name="listarPersonaEmpleado", procedureName="sp_listar_persona_empleado",
+			resultClasses = {Empleado.class}, parameters= {
+			@StoredProcedureParameter(mode=ParameterMode.IN, name="COD_USU", type=String.class)
+	})
+})
+
 public class Empleado implements Serializable {
 
 	/**
@@ -33,9 +42,8 @@ public class Empleado implements Serializable {
 	private String documentoPersonaEmpleado;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="codigo_empleado", nullable=false, unique=true)
-	private BigDecimal codigoEmpleado;
+	@Column(name="codigo_empleado", length=11)
+	private Integer codigoEmpleado;
 	
 	@Column(name="activo_empleado")
 	private Boolean estado;
@@ -55,11 +63,11 @@ public class Empleado implements Serializable {
 		empleadosExternos = new ArrayList<EmpleadoExterno>();
 	}
 
-	public BigDecimal getCodigoEmpleado() {
+	public Integer getCodigoEmpleado() {
 		return codigoEmpleado;
 	}
 
-	public void setCodigoEmpleado(BigDecimal codigoEmpleado) {
+	public void setCodigoEmpleado(Integer codigoEmpleado) {
 		this.codigoEmpleado = codigoEmpleado;
 	}
 

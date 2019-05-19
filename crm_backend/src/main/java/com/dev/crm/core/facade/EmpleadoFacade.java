@@ -3,6 +3,7 @@ package com.dev.crm.core.facade;
 import java.util.List;
 
 import com.dev.crm.core.dto.EmpleadoDTO;
+import com.dev.crm.core.dto.EmpleadoEXTINTResultViewModel;
 import com.dev.crm.core.dto.EmpleadoResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 
@@ -27,4 +28,8 @@ public interface EmpleadoFacade {
 	ResponseBaseOperation enabledEmpleado(String documentoPersonaEmpleado);
 	
 	ResponseBaseOperation totalRegistrosEmpleado();
+	
+	List<EmpleadoEXTINTResultViewModel> spListarDatosGenrales();
+	
+	ResponseBaseOperation spEstadoPlanta(String codidocu);
 }

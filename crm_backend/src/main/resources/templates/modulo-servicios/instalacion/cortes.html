@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es" class="fixed sidebar-left-collapsed" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/headinc :: head"></head>
+<body>
+	<section class="body">
+		<!-- start: header -->
+		<header th:replace="fragments/header :: header"></header>
+		<!-- end: header -->
+		<div class="inner-wrapper">
+			<!-- start: sidebar -->
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<!-- end: sidebar -->
+			<section role="main" class="content-body">
+				<div>
+					<div class="page-header">
+						<h2>
+							<a th:href="@{/dashboard}"><i class="fa fa-home"></i></a>
+						</h2>
+						<ol class="breadcrumbs">
+							<li class="active">
+								<span>Cortes</span>
+							</li>
+						</ol>
+					</div>
+					<!-- start: page -->
+					<div class="row">
+						<div class="col-md-4 col-lg-4 mb-xs">
+							<button type="button" id="cancelarAccion" class="btn btn-block btn-sm btn-info"><i class="fa fa-download"></i> Exportar Datos</button>
+						</div>
+						<div class="col-md-4 col-lg-4 mb-xs">
+							<button type="button" id="buttonInstalacionesDelDia" class="btn btn-block btn-sm btn-success"><i class="fa fa-archive"></i> Instalaciones del Dia</button>
+						</div>
+						<div class="col-md-12 col-lg-12">
+							<section class="panel panel-featured panel-featured-primary panel-primary">
+								<header class="panel-heading">
+									<h2 class="panel-title">Listado de Cortes</h2>
+								</header>
+								<div class="panel-body">
+									<table class="table table-hover table-striped table-condensed mb-none" id="tablaCortes" width="100%">
+									<thead class="text-center">
+										<tr>
+											<th>#</th>
+											<th>Tipo Herramienta</th>
+											<th>Fecha Inicio</th>
+											<th>Fecha Fin</th>
+											<th>Agregar Pregunta</th>
+											<th>Listado de Preguntas</th>
+											<th>Acciones</th>
+										</tr>
+									</thead>
+									</table>
+								</div>
+							</section>
+						</div>
+					</div>
+					<!-- end: page -->
+				</div>
+			</section>
+		</div>
+	</section>
+	<th:block th:replace="fragments/script :: script"></th:block>
+	<script type="text/javascript" th:src="@{/assets/javascripts/app/corte.js}"></script>
+</body>
+</html>

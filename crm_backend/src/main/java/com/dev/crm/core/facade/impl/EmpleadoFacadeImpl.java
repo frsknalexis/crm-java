@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.dev.crm.core.dto.EmpleadoDTO;
+import com.dev.crm.core.dto.EmpleadoEXTINTResultViewModel;
 import com.dev.crm.core.dto.EmpleadoResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.EmpleadoFacade;
@@ -16,6 +17,7 @@ import com.dev.crm.core.model.entity.Empleado;
 import com.dev.crm.core.service.EmpleadoService;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.GenericUtil;
+import com.dev.crm.core.util.StringUtil;
 
 @Component("empleadoFacade")
 public class EmpleadoFacadeImpl implements EmpleadoFacade {
@@ -227,6 +229,48 @@ public class EmpleadoFacadeImpl implements EmpleadoFacade {
 			}
 			else if(totalRegistrosEmpleado > 0) {
 				return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.MESSAGE_TOTAL_REGISTROS + ": " + totalRegistrosEmpleado, totalRegistrosEmpleado);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<EmpleadoEXTINTResultViewModel> spListarDatosGenrales() {
+		
+		List<EmpleadoEXTINTResultViewModel> empleados = new ArrayList<EmpleadoEXTINTResultViewModel>();
+		
+		try {
+			
+			empleados = empleadoService.spListarEmpleadoDatos();
+			if(!GenericUtil.isCollectionEmpty(empleados)) {
+				return empleados;
+			}
+			else {
+				return null;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public ResponseBaseOperation spEstadoPlanta(String codidocu) {
+		
+		try {
+			
+			if(GenericUtil.isNotNull(codidocu)) {
+				String result = empleadoService.spEstadoPlanta(codidocu);
+				if(StringUtil.hasText(result)) {
+					return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, result, codidocu);
+				}
+				else {
+					return null;
+				}
 			}
 		}
 		catch(Exception e) {

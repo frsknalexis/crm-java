@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.crm.core.dto.ClientePagoResultViewModel;
 import com.dev.crm.core.dto.MesDeudaResultViewModel;
+import com.dev.crm.core.dto.PagoMoraRequest;
 import com.dev.crm.core.dto.PagoRequest;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.PagoFacade;
@@ -35,7 +36,7 @@ public class PagoRestController {
 		
 		try {
 			
-			String usuario = "cajero";
+			String usuario = "cajero1";
 			List<ClientePagoResultViewModel> clientesPagos = pagoFacade.spListarClientesPago(usuario);
 			if(GenericUtil.isNotEmpty(clientesPagos)) {
 				return new ResponseEntity<List<ClientePagoResultViewModel>>(clientesPagos, HttpStatus.OK);
@@ -76,6 +77,21 @@ public class PagoRestController {
 			String numeroCaja = "C1";
 			pagoRequest.setNumeroCaja(numeroCaja);
 			ResponseBaseOperation response = pagoFacade.spPagoServicio(pagoRequest);
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PostMapping("/realizarPagoMora")
+	public ResponseEntity<ResponseBaseOperation> spPagoMora(@Valid @RequestBody PagoMoraRequest pagoMora) {
+		
+		try {
+			
+			String numeroCaja = "C1";
+			pagoMora.setNumeroCaja(numeroCaja);
+			ResponseBaseOperation response = pagoFacade.spPagoMora(pagoMora);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
 		}
 		catch(Exception e) {
