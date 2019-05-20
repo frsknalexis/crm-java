@@ -61,6 +61,9 @@ public class Constantes {
 	public static final String SP_EDITAR_RECLAMO_TECNICO = "sp_update_reclamo_tecnico";
 	public static final String SP_CANTIDAD_TAREA = "sp_noti_tarea";
 	public static final String SP_RECUPERAR_MENSAJE_NOTI = "sp_recuperar_noti_mensajes";
+	public static final String SP_LISTAR_CORTE_INTERNET = "sp_listar_corte";
+	public static final String SP_UPDATE_SERVICIO_INTERNET = "sp_update_servicio_internet";
+	public static final String SP_LISTAR_INSTALACION_DIA_INTERNET = "sp_listar_instalacion_dia";
 	
 	public static final boolean HABILITADO = true;
 	public static final boolean INHABILITADO = false;
