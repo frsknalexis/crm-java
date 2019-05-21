@@ -15,6 +15,8 @@ public interface UsuarioService {
 	
 	Usuario getByNombre(String nombreUsuario);
 	
+	Usuario getByNombreUsuarioAndPassword(String nombreUsuario, String passwordUsuario);
+	
 	Usuario getByDocumentoUsuario(String documentoUsuario);
 	
 	void disabledUsuario(BigDecimal usuarioId);

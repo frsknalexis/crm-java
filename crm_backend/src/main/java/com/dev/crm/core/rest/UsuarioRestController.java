@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.dto.UsuarioDTO;
+import com.dev.crm.core.dto.UsuarioRequest;
+import com.dev.crm.core.dto.UsuarioResponse;
 import com.dev.crm.core.facade.UsuarioFacade;
 import com.dev.crm.core.util.GenericUtil;
 
@@ -136,6 +138,25 @@ public class UsuarioRestController {
 		catch(Exception e) {
 			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	@PostMapping("/searchUsuario")
+	public ResponseEntity<UsuarioResponse> getByNombreUsuarioAndPassword(@Valid @RequestBody UsuarioRequest usuarioRequest) {
+		
+		try {
+			
+			UsuarioResponse usuario = usuarioFacade.getByNombreUsuarioAndPassword(usuarioRequest);
+			if(GenericUtil.isNotNull(usuario)) {
+				return new ResponseEntity<UsuarioResponse>(usuario, HttpStatus.OK);
+			}
+			else if(GenericUtil.isNull(usuario)) {
+				return new ResponseEntity<UsuarioResponse>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<UsuarioResponse>(HttpStatus.BAD_REQUEST);
+		}
+		return null;
 	}
 	
 	@GetMapping("/usuario/disabled/{usuarioId}")

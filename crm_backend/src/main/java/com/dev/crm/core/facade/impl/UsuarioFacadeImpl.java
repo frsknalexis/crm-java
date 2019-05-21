@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.dto.UsuarioDTO;
+import com.dev.crm.core.dto.UsuarioRequest;
+import com.dev.crm.core.dto.UsuarioResponse;
 import com.dev.crm.core.facade.UsuarioFacade;
 import com.dev.crm.core.model.entity.Usuario;
 import com.dev.crm.core.service.UsuarioService;
@@ -108,6 +110,27 @@ public class UsuarioFacadeImpl implements UsuarioFacade {
 		return null;
 	}
 
+	@Override
+	public UsuarioResponse getByNombreUsuarioAndPassword(UsuarioRequest usuarioRequest) {
+		
+		UsuarioResponse usuarioResponse = null;
+		
+		try {
+		
+			if(GenericUtil.isNotNull(usuarioRequest)) {
+				Usuario usuario = usuarioService.getByNombreUsuarioAndPassword(usuarioRequest.getNombreUsuario(), usuarioRequest.getPasswordUsuario());
+				if(GenericUtil.isNotNull(usuario)) {
+					usuarioResponse = modelMapper.map(usuario, UsuarioResponse.class);
+				}
+			}
+			return usuarioResponse;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	@Override
 	public UsuarioDTO getByDocumento(String documentoUsuario) {
 		

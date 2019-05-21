@@ -100,6 +100,26 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 		return null;
 	}
+	
+	@Override
+	public Usuario getByNombreUsuarioAndPassword(String nombreUsuario, String passwordUsuario) {
+		
+		Usuario usuario = null;
+		
+		try {
+			
+			if(GenericUtil.isNotEmpty(nombreUsuario) && GenericUtil.isNotEmpty(passwordUsuario)) {
+				usuario = usuarioDAO.getByNombreUsuarioAndPassword(nombreUsuario, passwordUsuario);
+			}
+			if(GenericUtil.isNotNull(usuario)) {
+				return usuario;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@Override
 	public Usuario getByDocumentoUsuario(String documentoUsuario) {

@@ -87,6 +87,38 @@ public class UsuarioDAOImpl extends BaseDAOHibernateImpl implements UsuarioDAO  
 		}
 		return null;
 	}
+	
+	@Override
+	public Usuario getByNombreUsuarioAndPassword(String nombreUsuario, String passwordUsuario) {
+		
+		Usuario usuario = null;
+		
+		try {
+			
+			StringBuilder builder = new StringBuilder();
+			builder.append("SELECT u FROM Usuario u WHERE u.nombreUsuario = :nombreUsuario AND u.passwordUsuario = :passwordUsuario");
+			Query query = em.createQuery(builder.toString());
+			query.setParameter("nombreUsuario", nombreUsuario);
+			query.setParameter("passwordUsuario", passwordUsuario);
+			
+			try {
+				
+				usuario = (Usuario) query.getSingleResult();
+				if(GenericUtil.isNotNull(usuario)) {
+					return usuario;
+				}
+			}
+			catch(NoResultException ex) {
+				if(GenericUtil.isNull(usuario)) {
+					return null;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@Override
 	public Usuario getByDocumentoUsuario(String documentoUsuario) {
@@ -120,7 +152,7 @@ public class UsuarioDAOImpl extends BaseDAOHibernateImpl implements UsuarioDAO  
 		}
 		return null;
 	}
-
+	
 	@Override
 	public boolean isUserPresent(String documentoUsuario) {
 		

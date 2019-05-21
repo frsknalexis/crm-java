@@ -17,6 +17,7 @@ public class Constantes {
 	public static final String TAREA_VIEW= "modulo-notificacion/tarea/view";
 	public static final String CORTE_VIEW = "modulo-servicios/instalacion/cortes";
 	public static final String INSTALACIONES_VIEW = "modulo-servicios/instalacion/instalaciones";
+	public static final String LOGIN_VIEW = "login";
 	
 	public static final String SP_ACTIVAR_DESACTIVAR_CLIENTE = "sp_activar_desactivar";
 	public static final String SP_LISTA_PERSONA_NO_EMPLEADO = "sp_lista_persona_no_empleado";
