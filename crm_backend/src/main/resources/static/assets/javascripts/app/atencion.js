@@ -15,6 +15,8 @@ $(document).on('ready', function() {
 	
 	cargarTotalRegistrosPersonita();
 	
+	ocultar_mostrar(20);
+	
 	window.setInterval(
 		    function(){
 		    // Sección de código para modificar el DIV
@@ -22,7 +24,7 @@ $(document).on('ready', function() {
 		    	$('#total').load(cargarTotalRegistrosPersona());
 		    	evaluando();
 		    // Ejemplo: Cada dos segundos se imprime la hora
-		    /*console.log(Date());*/
+		 
 		  }
 		  // Intervalo de tiempo
 		,5000);
@@ -44,6 +46,33 @@ $(document).on('ready', function() {
 	 * 
 	 *function para listarTablaClientesAtencion 
 	 */
+	function ocultar_mostrar(id){
+		
+		if(id !== 0){
+			
+			
+			for( var i = 1;i < id ; i++ ){
+			if(i < id){
+				
+				$.ajax({
+					
+					type: 'GET',
+					url: '/api/v1/usuario/listamodulos/' + i,
+					dataType: 'json',
+					success: function(response) {
+							console.log(response);
+							
+							var descrip = response.descripcionmodulo;
+							
+							document.getElementById(descrip).style.display = 'block';
+						}
+					});
+				}
+			}
+		}
+	
+	}
+	
 	function listarTablaClientesAtencion(){
 		
 		tablaClientesAtencion = $('#tablaClientesAtencion').dataTable({
@@ -96,12 +125,12 @@ $(document).on('ready', function() {
 		
 		setTimeout(function() {
 			cargarEstadoClienteAtencion();
-		}, 4000);
+		}, 3000);
 		
 		$('#tablaClientesAtencion tbody').on('click', 'button.btnAgregarReclamo', function(){
 			var codigodniruc = $(this).attr('documentoClienteAtencion');
 			var nombreclientegeneral = $(this).attr('clientenombre');
-			console.log("codigodniruc: " + codigodniruc + "nombreclientegeneral" +  nombreclientegeneral);
+			
 			$('#modalFormAgregarReclamo').modal('show');
 			$('#dniruc').attr('disabled', true);
 			$('#dniruc').val(codigodniruc);
@@ -116,11 +145,62 @@ $(document).on('ready', function() {
 	 * 
 	 *
 	 *function para cargarEstadoClienteAtencion
-	 * 
-	 */
+	 * */
+	function cargarmensajespopusnuevo(valor,id){
+		
+		
+		
+		var title = "Tareas Pendientes!!!";
+		
+		var position = "Bottom right";
+		var duration = "1000";
+		var theme = "warning";
+		var closeOnClick = true;
+		var displayClose =true;
+		
+		
+		
+		if(valor !== 0)
+		{
+			
+			for(var i = 0;id > i;i++)
+			{			
+				if(id > i){
+					$.ajax(
+							{
+								
+								type: 'GET',
+								url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+								dataType: 'json',
+								success: function(response) {
+									
+									var mensaje = response.descripcionmensaje;
+									var message = mensaje;
+							
+									
+									
+									window.createNotification({
+										closeOnClick: closeOnClick,
+										displayCloseButton: displayClose,
+										positionClass: position,
+										showDuration: duration,
+										theme: theme
+									})({
+								title: title,
+								message: message
+							});
+							
+						}
+					});
+				}
+			}
+			
+		}
+	}
+
 	function cargarmensajespopus(id){
 		
-		var i=1;
+		
 		
 		var title = "Tareas Pendientes!!!";
 		
@@ -135,19 +215,33 @@ $(document).on('ready', function() {
 			
 		}else{
 			
-			for(i;i <= id;i++)
+			for(var i=1;i <= id;i++)
 			{			
 				if(i <= id){
-					var message = "I am a default message" + i;
-					window.createNotification({
-						closeOnClick: closeOnClick,
-						displayCloseButton: displayClose,
-						positionClass: position,
-						showDuration: duration,
-						theme: theme
-					})({
-						title: title,
-						message: message
+					$.ajax(
+							{
+						
+								type: 'GET',
+								url: '/api/v1/atencion/searchMensaje/' + i,
+								dataType: 'json',
+								success: function(response) {
+									
+									var mensaje = response.descripcionmensaje;
+									var message = mensaje;
+							
+									
+									window.createNotification({
+										closeOnClick: closeOnClick,
+										displayCloseButton: displayClose,
+										positionClass: position,
+										showDuration: duration,
+										theme: theme
+									})({
+								title: title,
+								message: message
+							});
+							
+						}
 					});
 				}
 			}
@@ -155,7 +249,7 @@ $(document).on('ready', function() {
 		}
 	}
 	
-function estado(id){
+	function estado(id){
 		
 		
 		if(id !== 0){
@@ -183,12 +277,47 @@ function estado(id){
 						
 						liNode.innerHTML = '<a href="#" class="clearfix"><figure class="image"><img src="http://clipart-library.com/images/8i6oer5KT.png" wight="40" height="40" alt="Joseph Junior" class="img-circle" /></figure><span class="title">' + String(mensaje) + '</span><span class="mensage">' + String(respuesta) + '</span></a>';
 						listNode.appendChild(liNode);
-					}
-				});
+						}
+					});
+				}
 			}
 		}
 	}
-}
+	
+	function estadonuevo(valor){
+		
+		
+		if(valor !== 0){
+			
+			document.getElementById("agregarmensajesnoti").innerHTML="";
+			for(var i=0;i<valor;i++){
+			if(i < valor && (parseInt(valor) - parseInt(i)) >-1){
+				
+				$.ajax({
+					
+					type: 'GET',
+					url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+					dataType: 'json',
+					success: function(response) {
+						
+						
+						var tag = document.createElement("li");
+						tag.innerHTML = '<span class="toggle">Jan</span>';
+						
+						var mensaje = response.nombrepersona;
+						var respuesta = response.descripcionmensaje;
+						var listNode = document.getElementById('agregarmensajesnoti');
+						var liNode = document.createElement('li');
+						var txtNode = document.createTextNode(mensaje);
+						
+						liNode.innerHTML = '<a href="#" class="clearfix"><figure class="image"><img src="http://clipart-library.com/images/8i6oer5KT.png" wight="40" height="40" alt="Joseph Junior" class="img-circle" /></figure><span class="title">' + String(mensaje) + '</span><span class="mensage">' + String(respuesta) + '</span></a>';
+						listNode.appendChild(liNode);
+						}
+					});
+				}
+			}
+		}
+	}
 	
 	function evaluando(){
 		
@@ -204,21 +333,23 @@ function estado(id){
 		var verificando = valuee - dinamico;
 		
 		if(estatico === valuee && valuee === dinamico){
-			console.log("inicio");
+			
 			estado(valuee);
 			cargarmensajespopus(valuee);
 			$('#canje').val("0");
 		}
 		if(verificando === 0){
-			console.log("igual");
+			
 			estado(verificando);
 			cargarmensajespopus(verificando);
 			$('#canje').val("0");
 		}
 		if(verificando !== 0){
-			console.log("nuevo");
-			estado(verificando);
-			cargarmensajespopus(verificando);
+			
+			estadonuevo(parseInt(valuee));
+			
+			cargarmensajespopusnuevo(parseInt(dinamico) + 1,parseInt(verificando));
+		
 			$('#canje').val("0");
 			$('#canjes').val(valuee);
 		}
@@ -334,7 +465,7 @@ function estado(id){
 		
 		$('#tablaClientesAtencion tbody').on('click', 'button.btnDetalleClienteAtencion', function() {
 			var documentoPersonaCliente = $(this).attr('documentoClienteAtencion');
-			console.log("documentoPersonaCliente: " + documentoPersonaCliente);
+		
 			mostrarFormDatosGeneralesCliente(true);
 			
 			$.ajax({
@@ -343,7 +474,7 @@ function estado(id){
 				url: '/api/v1/atencion/clienteDatosAtencion/' + documentoPersonaCliente,
 				dataType: 'json',
 				success: function(response){
-					console.log(response);
+					
 					$('#nombreCliente').html('Detalle Cliente: ' + response.cliente);
 					$('#nombreClienteDetalle').html(response.cliente);
 					$('#documentoPersonaClienteDetalle').html(response.documentoPersonaCliente);
@@ -453,55 +584,51 @@ function estado(id){
 			}
 		});
 	}
-	
 	function guardarreclamo() {
 		$('#guardarreclamo').on('click', function(e) {
 			e.preventDefault();
 			
-			if($('#desrecl').val() != "") {
+			var formData = {
+					descripcionreclamo: $('#desrecl').val(),
+					documento: $('#dniruc').val()
+			};
+			
+			
+			
+			$.ajax({
 				
-				var formData = {
-						descripcionreclamo: $('#desrecl').val(),
-						documento: $('#dniruc').val()
-				};
-				
-				console.log(formData);
-				
-				$.ajax({
+				type: 'POST',
+				url: '/api/v1/atencion/insrreclamo',
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json"
+				},
+				data: JSON.stringify(formData),
+				dataType: 'json',
+				success: function(response) {
 					
-					type: 'POST',
-					url: '/api/v1/atencion/insrreclamo',
-					headers: {
-						"Content-Type": "application/json",
-						"Accept": "application/json"
-					},
-					data: JSON.stringify(formData),
-					dataType: 'json',
-					success: function(response) {
-						console.log(response);
-						
-						swal({
-							type: "success",
-							title: "Se Registro el Reclamo con exito",
-							showConfirmButton: true,
-							confirmButtonText: "Cerrar",
-							closeOnConfirm: false
-						}).then((result) => {
+					
+					swal({
+						type: "success",
+						title: "Se Registro el Reclamo con exito",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar",
+						closeOnConfirm: false
+					}).then((result) => {
 
-							if(result.value) {
-								$(location).attr('href', '/atencion/atencion/view');
-							}
-						});
-					},
-					error: function() {
-						swal({
-			                type: 'error',
-			                title: 'Ooops',
-			                text: 'Error el Reclamo!'
-			            });
-					}
-				});
-			}
+						if(result.value) {
+							$(location).attr('href', '/atencion/atencion/view');
+						}
+					});
+				},
+				error: function() {
+					swal({
+		                type: 'error',
+		                title: 'Ooops',
+		                text: 'Error el Reclamo!'
+		            });
+				}
+			});
 		});
 	}
 

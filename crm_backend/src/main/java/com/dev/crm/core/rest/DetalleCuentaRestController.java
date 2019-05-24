@@ -28,7 +28,8 @@ public class DetalleCuentaRestController {
 	public ResponseEntity<ResponseBaseOperation> spInsercionCuentaInternet(@Valid @RequestBody DetalleCuentaDTO detalleCuentaDTO) {
 		
 		try {
-			
+			String Mensaje = "mimoraleext";
+			detalleCuentaDTO.setCodigoexterno(Mensaje);
 			ResponseBaseOperation response = detalleCuentaFacade.spInsercionCuentaInternet(detalleCuentaDTO);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
 		}
@@ -41,7 +42,8 @@ public class DetalleCuentaRestController {
 	public ResponseEntity<ResponseBaseOperation> spInsercionCuentaCable(@Valid @RequestBody DetalleCuentaDTO detalleCuentaDTO) {
 		
 		try {
-			
+			String Mensaje = "mimoraleext";
+			detalleCuentaDTO.setCodigoexterno(Mensaje);
 			ResponseBaseOperation response = detalleCuentaFacade.spInsercionCuentaCable(detalleCuentaDTO);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
 		}

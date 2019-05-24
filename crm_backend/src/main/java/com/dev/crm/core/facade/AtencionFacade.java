@@ -6,6 +6,7 @@ import com.dev.crm.core.dto.AsignarTecnicoComboResultViewModel;
 import com.dev.crm.core.dto.ClienteAtencionDetalleResultViewModel;
 import com.dev.crm.core.dto.ClienteAtencionResultViewModel;
 import com.dev.crm.core.dto.ClienteDatosAtencionResultViewModel;
+import com.dev.crm.core.dto.DatosOnusResultViewModel;
 import com.dev.crm.core.dto.InsertarReclamoRequest;
 import com.dev.crm.core.dto.InsertarTecnicTareaRequest;
 import com.dev.crm.core.dto.MensajeNotiResultViewModel;
@@ -37,4 +38,8 @@ public interface AtencionFacade {
 	List<TareasResultViewModel> spListarTareas(String usuario);
 	
 	ResponseBaseOperation speditartarea(String valor);
+	
+	DatosOnusResultViewModel sppRecuperarDatos(String sn,String mac);
+	
+	ResponseBaseOperation speditarinstmaotecnico(InsertarTecnicTareaRequest codidocu);
 }

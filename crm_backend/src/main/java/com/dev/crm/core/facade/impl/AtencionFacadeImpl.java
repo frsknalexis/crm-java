@@ -11,6 +11,7 @@ import com.dev.crm.core.dto.AsignarTecnicoComboResultViewModel;
 import com.dev.crm.core.dto.ClienteAtencionDetalleResultViewModel;
 import com.dev.crm.core.dto.ClienteAtencionResultViewModel;
 import com.dev.crm.core.dto.ClienteDatosAtencionResultViewModel;
+import com.dev.crm.core.dto.DatosOnusResultViewModel;
 import com.dev.crm.core.dto.InsertarReclamoRequest;
 import com.dev.crm.core.dto.InsertarTecnicTareaRequest;
 import com.dev.crm.core.dto.MensajeNotiResultViewModel;
@@ -266,5 +267,49 @@ public class AtencionFacadeImpl implements AtencionFacade {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public DatosOnusResultViewModel sppRecuperarDatos(String sn, String mac) {
+
+		DatosOnusResultViewModel cDaOnu;
+		
+		try {
+			
+			if(!GenericUtil.isEmpty(sn) && !GenericUtil.isEmpty(mac)) {
+				cDaOnu = atencionService.spRecuperarDatos(sn, mac);
+				if(GenericUtil.isNotNull(cDaOnu)) {
+					return cDaOnu;
+				}
+				else {
+					return null;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public ResponseBaseOperation speditarinstmaotecnico(InsertarTecnicTareaRequest codidocu) {
+
+		try {
+			
+			if(GenericUtil.isNotNull(codidocu)) {
+				String result = atencionService.speditarinstalaciontecnico(codidocu);
+				if(StringUtil.hasText(result)) {
+					return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, result, codidocu);
+				}
+				else {
+					return null;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;	
 	}
 }

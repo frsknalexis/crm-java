@@ -4,15 +4,14 @@ $(document).on('ready', function() {
 	 disabledAllButtons();
 	 disabledInputContador(true);
 	 cargarTotalRegistrosPersonita();
-	 
+	 ocultar_mostrar(20);
 	 window.setInterval(
 			    function(){
 			    // Sección de código para modificar el DIV
 			    // $("#miDiv").text(variable);
-			    	$('#total').load(cargarTotalRegistrosPersonas());
+			    	$('#total').load(cargarTotalRegistrosPersona());
 			    	evaluando();
-			    // Ejemplo: Cada dos segundos se imprime la hora
-			    /*console.log(Date());*/
+			   
 			  }
 			  // Intervalo de tiempo
 			,5000);
@@ -22,6 +21,33 @@ $(document).on('ready', function() {
 	  *function para deshabilitar todos los botones 
 	  * 
 	  */
+	 function ocultar_mostrar(id){
+			
+			if(id !== 0){
+				
+				
+				for( var i = 1;i < id ; i++ ){
+				if(i < id){
+					
+					$.ajax({
+						
+						type: 'GET',
+						url: '/api/v1/usuario/listamodulos/' + i,
+						dataType: 'json',
+						success: function(response) {
+								console.log(response);
+								
+								var descrip = response.descripcionmodulo;
+								
+								document.getElementById(descrip).style.display = 'block';
+							}
+						});
+					}
+				}
+			}
+		
+	}
+	 
 	 function disabledAllButtons() {
 		 
 		 disabledButtonReprogramacionDelDia(true);
@@ -112,11 +138,11 @@ $(document).on('ready', function() {
 			url: '/api/v1/detalleCuenta/contadorPendientesCable',
 			dataType: 'json',
 			success: function(response) {
-				console.log(response);
+			
 				$('#contador').val(response.data);
 				var contador = $('#contador').val(response.data);
 				contador = contador.val();
-				console.log(contador);
+				
 				activarDesactivarBotonesSegunContador(contador);
 			}
 		});
@@ -134,11 +160,11 @@ $(document).on('ready', function() {
 			url: '/api/v1/detalleCuenta/contadorPendientesInternet',
 			dataType: 'json',
 			success: function(response) {
-				console.log(response);
+				
 				$('#contador').val(response.data);
 				var contador = $('#contador').val(response.data);
 				contador = contador.val();
-				console.log(contador);
+				
 				activarDesactivarBotonesSegunContador(contador);
 			}
 		});
@@ -159,7 +185,7 @@ $(document).on('ready', function() {
 				url: '/api/v1/detalleCuenta/reprogramacionInstalacionInternet',
 				dataType: 'json',
 				success: function(response) {
-					console.log(response);
+					
 					
 					if(response.status == "SUCCESS" && response.data == "HECHO") {
 						
@@ -196,7 +222,7 @@ $(document).on('ready', function() {
 				url: '/api/v1/detalleCuenta/reprogramacionInstalacionCable',
 				dataType: 'json',
 				success: function(response) {
-					console.log(response);
+					
 					
 					if(response.status == "SUCCESS" && response.data == "HECHO") {
 						
@@ -234,7 +260,7 @@ $(document).on('ready', function() {
 				dataType: 'json',
 				success: function(response) {
 					
-					console.log(response);
+					
 					
 					if(response.status == "SUCCESS" && response.data == "HECHO") {
 						
@@ -272,7 +298,7 @@ $(document).on('ready', function() {
 				dataType: 'json',
 				success: function(response) {
 					
-					console.log(response);
+					
 					
 					if(response.status == "SUCCESS" && response.data == "HECHO") {
 						
@@ -326,9 +352,60 @@ $(document).on('ready', function() {
 		});
 	}
 	
-function cargarmensajespopus(id){
+function cargarmensajespopusnuevo(valor,id){
 		
-		var i=1;
+		
+		
+		var title = "Tareas Pendientes!!!";
+		
+		var position = "Bottom right";
+		var duration = "1000";
+		var theme = "warning";
+		var closeOnClick = true;
+		var displayClose =true;
+		
+		
+		if(valor !== 0)
+		{
+			
+			for(var i = 0;id > i;i++)
+			{			
+				if(id > i){
+					$.ajax(
+							{
+								
+								type: 'GET',
+								url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+								dataType: 'json',
+								success: function(response) {
+									
+									var mensaje = response.descripcionmensaje;
+									var message = mensaje;
+							
+									
+									
+									window.createNotification({
+										closeOnClick: closeOnClick,
+										displayCloseButton: displayClose,
+										positionClass: position,
+										showDuration: duration,
+										theme: theme
+									})({
+								title: title,
+								message: message
+							});
+							
+						}
+					});
+				}
+			}
+			
+		}
+	}
+
+	function cargarmensajespopus(id){
+		
+		
 		
 		var title = "Tareas Pendientes!!!";
 		
@@ -343,19 +420,33 @@ function cargarmensajespopus(id){
 			
 		}else{
 			
-			for(i;i <= id;i++)
+			for(var i=1;i <= id;i++)
 			{			
 				if(i <= id){
-					var message = "I am a default message" + i;
-					window.createNotification({
-						closeOnClick: closeOnClick,
-						displayCloseButton: displayClose,
-						positionClass: position,
-						showDuration: duration,
-						theme: theme
-					})({
-						title: title,
-						message: message
+					$.ajax(
+							{
+						
+								type: 'GET',
+								url: '/api/v1/atencion/searchMensaje/' + i,
+								dataType: 'json',
+								success: function(response) {
+									
+									var mensaje = response.descripcionmensaje;
+									var message = mensaje;
+							
+									
+									window.createNotification({
+										closeOnClick: closeOnClick,
+										displayCloseButton: displayClose,
+										positionClass: position,
+										showDuration: duration,
+										theme: theme
+									})({
+								title: title,
+								message: message
+							});
+							
+						}
 					});
 				}
 			}
@@ -363,7 +454,7 @@ function cargarmensajespopus(id){
 		}
 	}
 	
-function estado(id){
+	function estado(id){
 		
 		
 		if(id !== 0){
@@ -391,12 +482,47 @@ function estado(id){
 						
 						liNode.innerHTML = '<a href="#" class="clearfix"><figure class="image"><img src="http://clipart-library.com/images/8i6oer5KT.png" wight="40" height="40" alt="Joseph Junior" class="img-circle" /></figure><span class="title">' + String(mensaje) + '</span><span class="mensage">' + String(respuesta) + '</span></a>';
 						listNode.appendChild(liNode);
-					}
-				});
+						}
+					});
+				}
 			}
 		}
 	}
-}
+	
+	function estadonuevo(valor){
+		
+		
+		if(valor !== 0){
+			
+			document.getElementById("agregarmensajesnoti").innerHTML="";
+			for(var i=0;i<valor;i++){
+			if(i < valor && (parseInt(valor) - parseInt(i)) >-1){
+				
+				$.ajax({
+					
+					type: 'GET',
+					url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+					dataType: 'json',
+					success: function(response) {
+						
+						
+						var tag = document.createElement("li");
+						tag.innerHTML = '<span class="toggle">Jan</span>';
+						
+						var mensaje = response.nombrepersona;
+						var respuesta = response.descripcionmensaje;
+						var listNode = document.getElementById('agregarmensajesnoti');
+						var liNode = document.createElement('li');
+						var txtNode = document.createTextNode(mensaje);
+						
+						liNode.innerHTML = '<a href="#" class="clearfix"><figure class="image"><img src="http://clipart-library.com/images/8i6oer5KT.png" wight="40" height="40" alt="Joseph Junior" class="img-circle" /></figure><span class="title">' + String(mensaje) + '</span><span class="mensage">' + String(respuesta) + '</span></a>';
+						listNode.appendChild(liNode);
+						}
+					});
+				}
+			}
+		}
+	}
 	
 	function evaluando(){
 		
@@ -412,27 +538,58 @@ function estado(id){
 		var verificando = valuee - dinamico;
 		
 		if(estatico === valuee && valuee === dinamico){
-			console.log("inicio");
+		
 			estado(valuee);
 			cargarmensajespopus(valuee);
 			$('#canje').val("0");
 		}
 		if(verificando === 0){
-			console.log("igual");
+		
 			estado(verificando);
 			cargarmensajespopus(verificando);
 			$('#canje').val("0");
 		}
 		if(verificando !== 0){
-			console.log("nuevo");
-			estado(verificando);
-			cargarmensajespopus(verificando);
+		
+			estadonuevo(parseInt(valuee));
+			
+			cargarmensajespopusnuevo(parseInt(dinamico) + 1,parseInt(verificando));
+		
 			$('#canje').val("0");
 			$('#canjes').val(valuee);
 		}
 	}
 	
-function cargarTotalRegistrosPersonita() {
+	function cargarTotalRegistrosPersona() {
+		
+		
+		var formData = {
+				
+		};
+		
+		$.ajax({
+			
+			type: 'POST',
+			url: '/api/v1/atencion/obtenercantidad',
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json"
+			},
+			data: JSON.stringify(formData),
+			dataType: 'json',
+			success: function(response) {
+				
+				$('#total').html(response.message);
+				$('#totalidad').html(response.message);
+				$('#canjess').val(response.message);
+			}
+			
+		});	
+		
+	}
+	
+	
+	function cargarTotalRegistrosPersonita() {
 		
 		
 		var formData = {
@@ -455,34 +612,6 @@ function cargarTotalRegistrosPersonita() {
 				$('#totalidad').html(response.message);
 				$('#canje').val(response.message);
 				$('#canjes').val(response.message);
-				$('#canjess').val(response.message);
-			}
-			
-		});	
-		
-	}
-	
-	function cargarTotalRegistrosPersonas() {
-		
-		
-		var formData = {
-				
-		};
-		
-		$.ajax({
-			
-			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
-			headers: {
-				"Content-Type": "application/json",
-				"Accept": "application/json"
-			},
-			data: JSON.stringify(formData),
-			dataType: 'json',
-			success: function(response) {
-				
-				$('#total').html(response.message);
-				$('#totalidad').html(response.message);
 				$('#canjess').val(response.message);
 			}
 			

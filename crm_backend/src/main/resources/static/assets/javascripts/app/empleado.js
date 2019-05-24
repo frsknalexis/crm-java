@@ -1,3 +1,4 @@
+
 $(document).on('ready', function() {
 	
 	var flag;
@@ -7,14 +8,16 @@ $(document).on('ready', function() {
 		 mostrarFormPersona(false);
 	}, 100);
 	
+	ocultar_mostrar(20);
+	
 	setTimeout(function() {
 		cargarEstadEmpleado();
 		ocultarBotones();
-	}, 6500);
+	}, 8000);
 	
 	setTimeout(function(){
 		cargarEstado();
-	}, 3000);
+	}, 6000);
 	
 	cargarTotalRegistrosPersonita();
 	
@@ -25,7 +28,7 @@ $(document).on('ready', function() {
 		    	$('#total').load(cargarTotalRegistrosPersona());
 		    	evaluando();
 		    // Ejemplo: Cada dos segundos se imprime la hora
-		    /*console.log(Date());*/
+		   
 		  }
 		  // Intervalo de tiempo
 		,5000);
@@ -33,6 +36,33 @@ $(document).on('ready', function() {
 	cargarComboUbigeo();
 	
 	cargarComboCargo();
+	
+	function ocultar_mostrar(id){
+		
+		if(id !== 0){
+			
+			
+			for( var i = 1;i < id ; i++ ){
+			if(i < id){
+				
+				$.ajax({
+					
+					type: 'GET',
+					url: '/api/v1/usuario/listamodulos/' + i,
+					dataType: 'json',
+					success: function(response) {
+							console.log(response);
+							
+							var descrip = response.descripcionmodulo;
+							
+							document.getElementById(descrip).style.display = 'block';
+						}
+					});
+				}
+			}
+		}
+	
+	}
 	
 	function limpiar() {
 		$('#codigoEmpleado').val('');
@@ -98,7 +128,7 @@ $(document).on('ready', function() {
 		url: '/api/v1/persona/personas/listaPersonasNoEmpleados',
 		dataType: 'json',
 		success: function(response){
-			console.log(response);
+			
 		}
 	});
 	
@@ -128,7 +158,7 @@ $(document).on('ready', function() {
 			url: '/api/v1/ubigeo/ubigeos',
 			dataType: 'json',
 			success: function(response) {
-				console.log(response);
+			
 				$codigoUbigeo.html('');
 				$codigoUbigeo.append('<option value="">Seleccione un Ubigeo</option>');
 				for(var i = 0; i < response.length; i++) {
@@ -175,7 +205,7 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formData),
 					dataType: 'json',
 					success: function(response){
-						console.log(response);
+						
 						
 						if(response.status == "UPDATED") {
 							
@@ -217,7 +247,7 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formData),
 					dataType: 'json',
 					success: function(response){
-						console.log(response);
+						
 						
 						if(response.status == 'CREATED') {
 							
@@ -549,7 +579,7 @@ $(document).on('ready', function() {
 	 */
 	$('#tablaPersonasEmpleados tbody').on('click', 'button.btnEditarPersonaEmpleado', function(){
 		var documentoPersonaEmpleado = $(this).attr('idDocumentoPersona');
-		console.log("documentoPersonaEmpleado: " + documentoPersonaEmpleado);
+		
 		mostrarFormPersona(true);
 		$('#documentoPersona').attr('disabled', true);
 		$('#documentoPersona').val(documentoPersonaEmpleado);
@@ -561,7 +591,7 @@ $(document).on('ready', function() {
 			url: '/api/v1/persona/persona/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
-				console.log(response);
+				
 				$("#codigoUbigeo option[value="+ response.ubigeo.codigoUbigeo +"]").attr("selected",true);
 				$('#nombrePersona').val(response.nombrePersona);
 				$('#apellidoPaternoPersona').val(response.apellidoPaternoPersona);
@@ -585,7 +615,7 @@ $(document).on('ready', function() {
 	
 	$('#tablaPersonasEmpleados tbody').on('click', 'button.btnAgregarPersonaEmpleado', function() {
 		var documentoPersonaEmpleado = $(this).attr('idDocumentoPersona');
-		console.log("documentoPersonaEmpleado: " + documentoPersonaEmpleado);
+		
 		mostrarForm(true);
 		$('#documentoPersonaEmpleado').attr('disabled', true);
 		$('#documentoPersonaEmpleado').val(documentoPersonaEmpleado);
@@ -598,7 +628,7 @@ $(document).on('ready', function() {
 			url: '/api/v1/persona/persona/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
-				console.log(response);
+			
 				$('#empleadoNombrePersona').val(response.nombrePersona);
 				$('#empleadoApellidosPersona').val(response.apellidoPaternoPersona + ' ' + response.apellidoMaternoPersona);
 			}
@@ -623,7 +653,7 @@ $(document).on('ready', function() {
 			url: '/api/v1/cargo/cargos',
 			dataType: 'json',
 			success: function(response){
-				console.log(response);
+			
 				$codigoCargo.html('');
 				$codigoCargo.append('<option value="">Seleccione un Cargo</option>');
 				for(var i = 0; i < response.length; i++) {
@@ -649,7 +679,7 @@ $(document).on('ready', function() {
 			
 			if(formData.codigoEmpleado) {
 				codigoEmpleado = formData.codigoEmpleado;
-				console.log("codigoEmpleado: " + codigoEmpleado);
+				
 				
 				$.ajax({
 					
@@ -662,7 +692,7 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formData),
 					dataType: 'json',
 					success: function(response){
-						console.log(response);
+						
 						
 						if(response.status == 'UPDATED') {
 							
@@ -703,7 +733,7 @@ $(document).on('ready', function() {
 					dataType: 'json',
 					success: function(response) {
 						
-						console.log(response);
+					
 						
 						if(response.status == 'CREATED') {
 							
@@ -807,7 +837,7 @@ $(document).on('ready', function() {
 	
 	$('#tablaEmpleadosPlanta tbody').on('click', 'button.btnplantainterna', function(){
 		var codigoplantainterna = $(this).attr('documentopersonaempleado');
-		console.log("codigoplantainterna: " + codigoplantainterna);
+		
 		
 		swal({
 	        title: '¿Esta Seguro de quitar al Empleado de la Planta Interna?',
@@ -826,7 +856,7 @@ $(document).on('ready', function() {
 	                 type: 'GET',
 	                 success: function(response){
 	                	 
-	                	 console.log(response);
+	                	
 	                     swal({
 	                         type: "success",
 	                         title: "El Empleado: " + codigoplantainterna+ " ha sido quitado de la Planta Interna correctamente",
@@ -853,7 +883,7 @@ $(document).on('ready', function() {
 	
 	$('#tablaEmpleadosPlanta tbody').on('click', 'button.btnplantaexterna', function(){
 		var codigoplantaexterna = $(this).attr('documentopersonaempleado');
-		console.log("codigoplantainterna: " + codigoplantaexterna);
+	
 		
 		swal({
 	        title: '¿Esta Seguro de quitar al Empleado de la Planta Externa?',
@@ -872,7 +902,7 @@ $(document).on('ready', function() {
 	                 type: 'GET',
 	                 success: function(response){
 	                	 
-	                	 console.log(response);
+	                
 	                     swal({
 	                         type: "success",
 	                         title: "El Empleado: " + codigoplantaexterna+ " ha sido quitado de la Planta Externa correctamente",
@@ -903,7 +933,7 @@ $(document).on('ready', function() {
 		var valueestado = $('.valueestado');
 		
 		
-		console.log("tipoplantainterno: " + tipoplantainterno );
+		
 				
 				swal({
 			        title: '¿Esta Seguro de agregar al Empleado a la Planta Interna?',
@@ -922,7 +952,7 @@ $(document).on('ready', function() {
 			                 type: 'GET',
 			                 success: function(response){
 			                	 
-			                	 console.log(response);
+			              
 			                     swal({
 			                         type: "success",
 			                         title: "El Empleado: " + tipoplantainterno + " ha sido guardado a la Planta Interna correctamente",
@@ -953,7 +983,7 @@ $(document).on('ready', function() {
 		var valueestado = $('.valueestado');
 		
 		
-		console.log("tipoplantainterno: " + tipoplantaexterno );
+		
 				
 				swal({
 			        title: '¿Esta Seguro de agregar al Empleado a la Planta Externa?',
@@ -972,7 +1002,7 @@ $(document).on('ready', function() {
 			                 type: 'GET',
 			                 success: function(response){
 			                	 
-			                	 console.log(response);
+			                	
 			                     swal({
 			                         type: "success",
 			                         title: "El Empleado: " + tipoplantaexterno + " ha sido guardado a la Planta Externa correctamente",
@@ -1199,7 +1229,7 @@ $(document).on('ready', function() {
 			url: '/api/v1/persona/persona/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
-				console.log(response);
+				
 				$('#myModalLabelEmpleado').html('Empleado: ' + response.nombrePersona + ' ' + response.apellidoPaternoPersona + ' ' + response.apellidoMaternoPersona);
 				$('#detalleEmpleadoDocumento').val(response.documentoPersona);
 				$('#detalleEmpleadoNombre').val(response.nombrePersona + ' ' + response.apellidoPaternoPersona + ' ' + response.apellidoMaternoPersona);
@@ -1214,7 +1244,7 @@ $(document).on('ready', function() {
 			url: '/api/v1/empleado/empleado/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
-				console.log(response);
+				
 				$('#detalleCodigoEmpleado').val(response.codigoEmpleado);
 				$('#detalleCargoEmpleado').val(response.cargo.descripcionCargo);
 			}
@@ -1229,7 +1259,7 @@ $(document).on('ready', function() {
 	$('#tablaEmpleados tbody').on('click', 'button.btnEditarEmpleado', function() {
 		
 		var documentoPersonaEmpleado = $(this).attr('idDocumentoEmpleado');
-		console.log("documentoPersonaEmpleado: " + documentoPersonaEmpleado);
+		
 		
 		mostrarForm(true);
 		$('#documentoPersonaEmpleado').attr('disabled', true);
@@ -1243,7 +1273,7 @@ $(document).on('ready', function() {
 			url: '/api/v1/persona/persona/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
-				console.log(response);
+				
 				$('#empleadoNombrePersona').val(response.nombrePersona);
 				$('#empleadoApellidosPersona').val(response.apellidoPaternoPersona + ' ' + response.apellidoMaternoPersona);
 			}
@@ -1255,7 +1285,7 @@ $(document).on('ready', function() {
 			url: '/api/v1/empleado/empleado/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
-				console.log(response);
+				
 				$('#codigoEmpleado').val(response.codigoEmpleado);
 				$("#codigoCargo option[value="+ response.cargo.codigoCargo +"]").attr("selected",true);
 			}
@@ -1270,8 +1300,8 @@ $(document).on('ready', function() {
 	 $('#tablaEmpleados tbody').on('click', 'button.btnDeshabilitarEmpleado', function(){
 		
 		var documentoPersonaEmpleado = $(this).attr('idDocumentoEmpleado');
-		console.log("documentoPersonaEmpleado: " + documentoPersonaEmpleado);
-		
+
+
 		swal({
 	        title: '¿Esta Seguro de deshabilitar a este Empleado ?',
 	        text: '¡Si no lo esta puede Cancelar la accion!',
@@ -1280,7 +1310,7 @@ $(document).on('ready', function() {
 	        confirmButtonColor: '#3085d6',
 	        cancelButtonColor: '#d33',
 	        cancelButtonText: 'Cancelar',
-	        confirmButtonText: '¡Si, deshabilitar!'
+	        confirmButtonText: '¡Si!'
 	    }).then((result) => {
 	        if(result.value){
 	           
@@ -1289,7 +1319,7 @@ $(document).on('ready', function() {
 	                 type: 'GET',
 	                 success: function(response){
 	                	 
-	                	 console.log(response);
+	                	
 	                     swal({
 	                         type: "success",
 	                         title: "El Empleado ha sido deshabilitado correctamente",
@@ -1321,8 +1351,8 @@ $(document).on('ready', function() {
 	  */
 	 $('#tablaEmpleados tbody').on('click', 'button.btnHabilitarEmpleado', function() {
 		 var documentoPersonaEmpleado = $(this).attr('idDocumentoEmpleado');
-		 console.log("documentoPersonaEmpleado: " + documentoPersonaEmpleado);
-		 
+
+
 		 swal({
 		        title: '¿Esta Seguro de habilitar a este Empleado ?',
 		        text: '¡Si no lo esta puede Cancelar la accion!',
@@ -1331,7 +1361,7 @@ $(document).on('ready', function() {
 		        confirmButtonColor: '#3085d6',
 		        cancelButtonColor: '#d33',
 		        cancelButtonText: 'Cancelar',
-		        confirmButtonText: '¡Si, habilitar!'
+		        confirmButtonText: '¡Si!'
 		    }).then((result) => {
 		        if(result.value){
 		           
@@ -1340,7 +1370,7 @@ $(document).on('ready', function() {
 		        		url: '/api/v1/empleado/empleado/enabled/' + documentoPersonaEmpleado,
 		        		type: 'GET',
 		        		success: function(response){
-		        			console.log(response);
+		        			
 		        			
 		        			swal({
 		        				type: "success",
@@ -1366,9 +1396,60 @@ $(document).on('ready', function() {
 		    });
 	 });
 		
+	function cargarmensajespopusnuevo(valor,id){
+			
+			
+			
+			var title = "Tareas Pendientes!!!";
+			
+			var position = "Bottom right";
+			var duration = "1000";
+			var theme = "warning";
+			var closeOnClick = true;
+			var displayClose =true;
+			
+			
+			if(valor !== 0)
+			{
+				
+				for(var i = 0;id > i;i++)
+				{			
+					if(id > i){
+						$.ajax(
+								{
+									
+									type: 'GET',
+									url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+									dataType: 'json',
+									success: function(response) {
+										
+										var mensaje = response.descripcionmensaje;
+										var message = mensaje;
+								
+										
+										
+										window.createNotification({
+											closeOnClick: closeOnClick,
+											displayCloseButton: displayClose,
+											positionClass: position,
+											showDuration: duration,
+											theme: theme
+										})({
+									title: title,
+									message: message
+								});
+								
+							}
+						});
+					}
+				}
+				
+			}
+		}
+
 		function cargarmensajespopus(id){
 			
-			var i=1;
+			
 			
 			var title = "Tareas Pendientes!!!";
 			
@@ -1383,19 +1464,33 @@ $(document).on('ready', function() {
 				
 			}else{
 				
-				for(i;i <= id;i++)
+				for(var i=1;i <= id;i++)
 				{			
 					if(i <= id){
-						var message = "I am a default message" + i;
-						window.createNotification({
-							closeOnClick: closeOnClick,
-							displayCloseButton: displayClose,
-							positionClass: position,
-							showDuration: duration,
-							theme: theme
-						})({
-							title: title,
-							message: message
+						$.ajax(
+								{
+							
+									type: 'GET',
+									url: '/api/v1/atencion/searchMensaje/' + i,
+									dataType: 'json',
+									success: function(response) {
+										
+										var mensaje = response.descripcionmensaje;
+										var message = mensaje;
+								
+										
+										window.createNotification({
+											closeOnClick: closeOnClick,
+											displayCloseButton: displayClose,
+											positionClass: position,
+											showDuration: duration,
+											theme: theme
+										})({
+									title: title,
+									message: message
+								});
+								
+							}
 						});
 					}
 				}
@@ -1403,7 +1498,7 @@ $(document).on('ready', function() {
 			}
 		}
 		
-	function estado(id){
+		function estado(id){
 			
 			
 			if(id !== 0){
@@ -1431,12 +1526,47 @@ $(document).on('ready', function() {
 							
 							liNode.innerHTML = '<a href="#" class="clearfix"><figure class="image"><img src="http://clipart-library.com/images/8i6oer5KT.png" wight="40" height="40" alt="Joseph Junior" class="img-circle" /></figure><span class="title">' + String(mensaje) + '</span><span class="mensage">' + String(respuesta) + '</span></a>';
 							listNode.appendChild(liNode);
-						}
-					});
+							}
+						});
+					}
 				}
 			}
 		}
-	}
+		
+		function estadonuevo(valor){
+			
+			
+			if(valor !== 0){
+				
+				document.getElementById("agregarmensajesnoti").innerHTML="";
+				for(var i=0;i<valor;i++){
+				if(i < valor && (parseInt(valor) - parseInt(i)) >-1){
+					
+					$.ajax({
+						
+						type: 'GET',
+						url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+						dataType: 'json',
+						success: function(response) {
+							
+							
+							var tag = document.createElement("li");
+							tag.innerHTML = '<span class="toggle">Jan</span>';
+							
+							var mensaje = response.nombrepersona;
+							var respuesta = response.descripcionmensaje;
+							var listNode = document.getElementById('agregarmensajesnoti');
+							var liNode = document.createElement('li');
+							var txtNode = document.createTextNode(mensaje);
+							
+							liNode.innerHTML = '<a href="#" class="clearfix"><figure class="image"><img src="http://clipart-library.com/images/8i6oer5KT.png" wight="40" height="40" alt="Joseph Junior" class="img-circle" /></figure><span class="title">' + String(mensaje) + '</span><span class="mensage">' + String(respuesta) + '</span></a>';
+							listNode.appendChild(liNode);
+							}
+						});
+					}
+				}
+			}
+		}
 		
 		function evaluando(){
 			
@@ -1452,21 +1582,23 @@ $(document).on('ready', function() {
 			var verificando = valuee - dinamico;
 			
 			if(estatico === valuee && valuee === dinamico){
-				console.log("inicio");
+			
 				estado(valuee);
 				cargarmensajespopus(valuee);
 				$('#canje').val("0");
 			}
 			if(verificando === 0){
-				console.log("igual");
+			
 				estado(verificando);
 				cargarmensajespopus(verificando);
 				$('#canje').val("0");
 			}
 			if(verificando !== 0){
-				console.log("nuevo");
-				estado(verificando);
-				cargarmensajespopus(verificando);
+			
+				estadonuevo(parseInt(valuee));
+				
+				cargarmensajespopusnuevo(parseInt(dinamico) + 1,parseInt(verificando));
+			
 				$('#canje').val("0");
 				$('#canjes').val(valuee);
 			}

@@ -22,12 +22,14 @@ public class DetalleCuentaPK implements Serializable {
 	
 	private Integer consecutivoCliente;
 
+	private String codigoexterno;
+
 	public DetalleCuentaPK() {
 		
 	}
 
 	public DetalleCuentaPK(String tipoServicio, String documentoPersonaCliente, Integer codigoDetalleCuenta, String codigoCuenta,
-			String codigoAnio, Integer consecutivoCliente) {
+			String codigoAnio, Integer consecutivoCliente,String codigoexterno) {
 		super();
 		this.tipoServicio = tipoServicio;
 		this.documentoPersonaCliente = documentoPersonaCliente;
@@ -35,6 +37,7 @@ public class DetalleCuentaPK implements Serializable {
 		this.codigoCuenta = codigoCuenta;
 		this.codigoAnio = codigoAnio;
 		this.consecutivoCliente = consecutivoCliente;
+		this.codigoexterno = codigoexterno;
 	}
 	
 	public String getTipoServicio() {
@@ -83,6 +86,14 @@ public class DetalleCuentaPK implements Serializable {
 
 	public void setConsecutivoCliente(Integer consecutivoCliente) {
 		this.consecutivoCliente = consecutivoCliente;
+	}
+	
+	public String getCodigoexterno() {
+		return codigoexterno;
+	}
+
+	public void setCodigoexterno(String codigoexterno) {
+		this.codigoexterno = codigoexterno;
 	}
 
 	@Override

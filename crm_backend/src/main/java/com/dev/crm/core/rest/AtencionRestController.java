@@ -19,6 +19,7 @@ import com.dev.crm.core.dto.AsignarTecnicoComboResultViewModel;
 import com.dev.crm.core.dto.ClienteAtencionDetalleResultViewModel;
 import com.dev.crm.core.dto.ClienteAtencionResultViewModel;
 import com.dev.crm.core.dto.ClienteDatosAtencionResultViewModel;
+import com.dev.crm.core.dto.DatosOnusResultViewModel;
 import com.dev.crm.core.dto.InsertarReclamoRequest;
 import com.dev.crm.core.dto.InsertarTecnicTareaRequest;
 import com.dev.crm.core.dto.MensajeNotiResultViewModel;
@@ -103,7 +104,7 @@ public class AtencionRestController {
 		
 		try
 		{
-			String mensaje = "admin";
+			String mensaje = "jolaurenint";
 			inserther.setCodigousuario(mensaje);
 			ResponseBaseOperation response = atencionFacade.spInsertarReclamo(inserther);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
@@ -137,7 +138,7 @@ public class AtencionRestController {
 		try
 			{
 			
-			String usuario = "admin";
+			String usuario = "jolaurenint";
 			
 			if(StringUtil.hasText(usuario)) {
 				List<ReclamoResultViewModel> herramientasAtencion = atencionFacade.spListarReclamo(usuario);
@@ -159,7 +160,7 @@ public class AtencionRestController {
 		
 		try
 		{
-			String usuario = "admin";
+			String usuario = "jolaurenint";
 			documentoPersona.setCodigousuario(usuario);
 			ResponseBaseOperation response = atencionFacade.speditarreclmaotecnico(documentoPersona);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
@@ -236,6 +237,41 @@ public class AtencionRestController {
 		try
 		{
 			ResponseBaseOperation response = atencionFacade.speditartarea(valor);
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	@GetMapping("/searchDatosOnu/{sn}/{mac}")
+	public ResponseEntity<DatosOnusResultViewModel> spRecuperaDatosOnu(@PathVariable(value="sn") String sn , @PathVariable(value="mac") String mac){
+		
+		try {
+			
+			if(GenericUtil.isNotEmpty(sn) && GenericUtil.isNotEmpty(mac)) {
+				DatosOnusResultViewModel clientePago = atencionFacade.sppRecuperarDatos(sn, mac);
+				if(GenericUtil.isNotNull(clientePago)) {
+					return new ResponseEntity<DatosOnusResultViewModel>(clientePago, HttpStatus.OK);
+				}
+				else {
+					return new ResponseEntity<DatosOnusResultViewModel>(HttpStatus.NO_CONTENT);
+				}
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<DatosOnusResultViewModel>(HttpStatus.BAD_REQUEST);
+		}
+		return null;
+	}
+	
+	@PostMapping("/updatetecnicoinsta")
+	public ResponseEntity<ResponseBaseOperation> spUpdateTecnicoInsta(@Valid @RequestBody InsertarTecnicTareaRequest requ) {
+		
+		try
+		{
+			String usuario = "jolaurenint";
+			requ.setCodigousuario(usuario);
+			ResponseBaseOperation response = atencionFacade.speditarinstmaotecnico(requ);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
 		}
 		catch(Exception e) {

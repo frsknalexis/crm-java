@@ -65,6 +65,11 @@ public class DetalleCuenta implements Serializable {
 	
 	@Column(name="fechacli_detcue")
 	private Date fechaSolicitudClienteDetalleCuenta;
+	
+	@Column(name="codigo_externo")
+	private String codigoexterno;
+	
+	private String codigosuario;
 
 	public DetalleCuenta() {
 		
@@ -165,4 +170,21 @@ public class DetalleCuenta implements Serializable {
 	public void setFechaSolicitudClienteDetalleCuenta(Date fechaSolicitudClienteDetalleCuenta) {
 		this.fechaSolicitudClienteDetalleCuenta = fechaSolicitudClienteDetalleCuenta;
 	}
+
+	public String getCodigoexterno() {
+		return codigoexterno;
+	}
+
+	public void setCodigoexterno(String codigoexterno) {
+		this.codigoexterno = codigoexterno;
+	}
+
+	public String getCodigosuario() {
+		return codigosuario;
+	}
+
+	public void setCodigosuario(String codigosuario) {
+		this.codigosuario = codigosuario;
+	}
+	
 }

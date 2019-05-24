@@ -36,7 +36,7 @@ public class PagoRestController {
 		
 		try {
 			
-			String usuario = "cajero1";
+			String usuario = "romachenint";
 			List<ClientePagoResultViewModel> clientesPagos = pagoFacade.spListarClientesPago(usuario);
 			if(GenericUtil.isNotEmpty(clientesPagos)) {
 				return new ResponseEntity<List<ClientePagoResultViewModel>>(clientesPagos, HttpStatus.OK);
@@ -55,7 +55,7 @@ public class PagoRestController {
 		
 		try {
 			
-			String numeroCaja = "C1";
+			String numeroCaja = "romachenint";
 			List<MesDeudaResultViewModel> mesesDeudas = pagoFacade.spMesesDeudas(documentoPersonaCliente, numeroCaja);
 			if(GenericUtil.isNotEmpty(mesesDeudas)) {
 				return new ResponseEntity<List<MesDeudaResultViewModel>>(mesesDeudas, HttpStatus.OK);
@@ -74,7 +74,7 @@ public class PagoRestController {
 		
 		try {
 			
-			String numeroCaja = "C1";
+			String numeroCaja = "romachenint";
 			pagoRequest.setNumeroCaja(numeroCaja);
 			ResponseBaseOperation response = pagoFacade.spPagoServicio(pagoRequest);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
@@ -89,7 +89,7 @@ public class PagoRestController {
 		
 		try {
 			
-			String numeroCaja = "C1";
+			String numeroCaja = "romachenint";
 			pagoMora.setNumeroCaja(numeroCaja);
 			ResponseBaseOperation response = pagoFacade.spPagoMora(pagoMora);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);

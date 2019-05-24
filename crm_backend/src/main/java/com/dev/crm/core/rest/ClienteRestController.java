@@ -93,7 +93,7 @@ public class ClienteRestController {
 		
 		try {
 			
-			String creadoPor = "vendedor";
+			String creadoPor = "mimoraleext";
 			List<ClienteDTO> clientesDTO = clienteFacade.spListarClienteVendedor(creadoPor);
 			if(GenericUtil.isNotEmpty(clientesDTO)) {
 				return new ResponseEntity<List<ClienteDTO>>(clientesDTO, HttpStatus.OK);
@@ -194,7 +194,7 @@ public class ClienteRestController {
 		try {
 			
 			if(GenericUtil.isNotNull(filtro)) {
-				filtro.setCreadoPor("vendedor");
+				filtro.setCreadoPor("mimoraleext");
 				ClienteResultViewModel cliente = clienteFacade.spBuscarPersonaClienteVendedor(filtro);
 				if(GenericUtil.isNotNull(cliente)) {
 					return new ResponseEntity<ClienteResultViewModel>(cliente, HttpStatus.OK);

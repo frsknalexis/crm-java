@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.crm.core.dao.UsuarioDAO;
+import com.dev.crm.core.dto.ModuloResultViewModel;
 import com.dev.crm.core.model.entity.Usuario;
+import com.dev.crm.core.repository.jdbc.ModuloResultJdbcRepository;
 import com.dev.crm.core.service.UsuarioService;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.DateUtil;
@@ -24,6 +26,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Autowired
 	@Qualifier("usuarioDAO")
 	private UsuarioDAO usuarioDAO;
+	
+	@Autowired
+	@Qualifier("ModuloResultJdbcRepository")
+	private ModuloResultJdbcRepository moduloResultJdbcRepository;
 	
 	@Override
 	public List<Usuario> findAll() {
@@ -223,6 +229,29 @@ public class UsuarioServiceImpl implements UsuarioService {
 			
 			Long totalRegistrosUsuario = usuarioDAO.obtenerTotalRegistrosUsuario();
 			return totalRegistrosUsuario;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public ModuloResultViewModel spListarModulo(String usuario,String numero) {
+
+		ModuloResultViewModel cDaOn;
+		
+		try {
+			
+			if(!GenericUtil.isEmpty(usuario) && !GenericUtil.isEmpty(numero)) {
+				cDaOn = moduloResultJdbcRepository.spListaModulo(usuario, numero);
+				if(GenericUtil.isNotNull(cDaOn)) {
+					return cDaOn;
+				}
+				else {
+					return null;
+				}
+			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();

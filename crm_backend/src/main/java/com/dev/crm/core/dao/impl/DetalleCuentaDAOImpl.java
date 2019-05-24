@@ -21,9 +21,11 @@ public class DetalleCuentaDAOImpl extends BaseDAOHibernateImpl implements Detall
 			StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery(Constantes.SP_INSERCION_CUENTA_INTERNET);
 			storedProcedure.registerStoredProcedureParameter("COD_DOC", String.class, ParameterMode.IN);
 			storedProcedure.registerStoredProcedureParameter("OBS", String.class, ParameterMode.IN);
+			storedProcedure.registerStoredProcedureParameter("CODUSU", String.class, ParameterMode.IN);
 			storedProcedure.registerStoredProcedureParameter("MENSAJE", String.class, ParameterMode.OUT);
 			storedProcedure.setParameter("COD_DOC", dC.getDocumentoPersonaCliente());
 			storedProcedure.setParameter("OBS", dC.getObservacionDetalleCuenta());
+			storedProcedure.setParameter("CODUSU", dC.getCodigoexterno());
 			storedProcedure.execute();
 			String result = (String) storedProcedure.getOutputParameterValue("MENSAJE");
 			return result;
@@ -42,9 +44,11 @@ public class DetalleCuentaDAOImpl extends BaseDAOHibernateImpl implements Detall
 			StoredProcedureQuery storeProcedure = em.createStoredProcedureQuery(Constantes.SP_INSERCION_CUENTA_CABLE);
 			storeProcedure.registerStoredProcedureParameter("COD_DOC", String.class, ParameterMode.IN);
 			storeProcedure.registerStoredProcedureParameter("OBS", String.class, ParameterMode.IN);
+			storeProcedure.registerStoredProcedureParameter("CODUSU", String.class, ParameterMode.IN);
 			storeProcedure.registerStoredProcedureParameter("MENSAJE", String.class, ParameterMode.OUT);
 			storeProcedure.setParameter("COD_DOC", dC.getDocumentoPersonaCliente());
 			storeProcedure.setParameter("OBS", dC.getObservacionDetalleCuenta());
+			storeProcedure.setParameter("CODUSU", dC.getCodigoexterno());
 			storeProcedure.execute();
 			String result = (String) storeProcedure.getOutputParameterValue("MENSAJE");
 			return result;

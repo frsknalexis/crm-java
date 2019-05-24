@@ -20,7 +20,7 @@ public class MesDeudaResultViewModelMapper implements RowMapper<MesDeudaResultVi
 		mesDeuda.setTipoServicio(rs.getString("servicio_cod"));
 		mesDeuda.setDescuento(rs.getDouble("descuento_mes"));
 		mesDeuda.setDocumentoPersonaCliente(rs.getString("COD_DOC"));
-		mesDeuda.setNumeroCaja(rs.getString("COD_CAJA"));
+		mesDeuda.setNumeroCaja(rs.getString("CODIGOCAJA"));
 		return mesDeuda;
 	}
 

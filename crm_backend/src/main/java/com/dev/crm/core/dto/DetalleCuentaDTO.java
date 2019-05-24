@@ -33,6 +33,10 @@ public class DetalleCuentaDTO implements Serializable {
 	private Integer estadoDetalleCuenta;
 	
 	private Date fechaSolicitudClienteDetalleCuenta;
+	
+	private String codigoexterno;
+	
+	private String codigousuario;
 
 	public DetalleCuentaDTO() {
 		
@@ -133,4 +137,21 @@ public class DetalleCuentaDTO implements Serializable {
 	public void setFechaSolicitudClienteDetalleCuenta(Date fechaSolicitudClienteDetalleCuenta) {
 		this.fechaSolicitudClienteDetalleCuenta = fechaSolicitudClienteDetalleCuenta;
 	}
+
+	public String getCodigousuario() {
+		return codigousuario;
+	}
+
+	public void setCodigousuario(String codigousuario) {
+		this.codigousuario = codigousuario;
+	}
+
+	public String getCodigoexterno() {
+		return codigoexterno;
+	}
+
+	public void setCodigoexterno(String codigoexterno) {
+		this.codigoexterno = codigoexterno;
+	}
+	
 }

@@ -3,6 +3,7 @@ package com.dev.crm.core.facade;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.dev.crm.core.dto.ModuloResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.dto.UsuarioDTO;
 import com.dev.crm.core.dto.UsuarioRequest;
@@ -18,9 +19,9 @@ public interface UsuarioFacade {
 	
 	UsuarioDTO getByNombre(String nombreUsuario);
 	
-	UsuarioDTO getByDocumento(String documentoUsuario);
-	
 	UsuarioResponse getByNombreUsuarioAndPassword(UsuarioRequest usuarioRequest);
+	
+	UsuarioDTO getByDocumento(String documentoUsuario);
 	
 	ResponseBaseOperation saveOrUpdate(UsuarioDTO usuarioDTO);
 	
@@ -29,4 +30,6 @@ public interface UsuarioFacade {
 	ResponseBaseOperation enabled(BigDecimal usuarioId);
 	
 	ResponseBaseOperation obtenerTotalRegistrosUsuario();
+	
+	ModuloResultViewModel spListarModulo(String usuario,String numero);
 }

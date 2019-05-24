@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import com.dev.crm.core.dto.ModuloResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.dto.UsuarioDTO;
 import com.dev.crm.core.dto.UsuarioRequest;
@@ -116,7 +117,7 @@ public class UsuarioFacadeImpl implements UsuarioFacade {
 		UsuarioResponse usuarioResponse = null;
 		
 		try {
-		
+			
 			if(GenericUtil.isNotNull(usuarioRequest)) {
 				Usuario usuario = usuarioService.getByNombreUsuarioAndPassword(usuarioRequest.getNombreUsuario(), usuarioRequest.getPasswordUsuario());
 				if(GenericUtil.isNotNull(usuario)) {
@@ -244,6 +245,29 @@ public class UsuarioFacadeImpl implements UsuarioFacade {
 			}
 			else if(totalRegistrosUsuario > 0) {
 				return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.MESSAGE_TOTAL_REGISTROS + ' ' + totalRegistrosUsuario, totalRegistrosUsuario);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public ModuloResultViewModel spListarModulo(String usuario,String numero) {
+
+		ModuloResultViewModel cDaOnu;
+		
+		try {
+			
+			if(!GenericUtil.isEmpty(usuario) && !GenericUtil.isEmpty(numero)) {
+				cDaOnu = usuarioService.spListarModulo(usuario, numero);
+				if(GenericUtil.isNotNull(cDaOnu)) {
+					return cDaOnu;
+				}
+				else {
+					return null;
+				}
 			}
 		}
 		catch(Exception e) {

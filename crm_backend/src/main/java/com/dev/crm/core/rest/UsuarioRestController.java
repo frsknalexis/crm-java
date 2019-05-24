@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dev.crm.core.dto.ModuloResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.dto.UsuarioDTO;
 import com.dev.crm.core.dto.UsuarioRequest;
@@ -212,5 +213,28 @@ public class UsuarioRestController {
 		catch(Exception e) {
 			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	@GetMapping("/listamodulos/{numero}")
+	public ResponseEntity<ModuloResultViewModel> spListarModulo(@PathVariable(value="numero") String numero) {
+		
+		try {
+			
+			if(GenericUtil.isNotEmpty(numero)) {
+				
+				String usuario = "lularosaint";
+				ModuloResultViewModel cusuario = usuarioFacade.spListarModulo(usuario, numero);
+				if(GenericUtil.isNotNull(cusuario)) {
+					return new ResponseEntity<ModuloResultViewModel>(cusuario, HttpStatus.OK);
+				}
+				else {
+					return new ResponseEntity<ModuloResultViewModel>(HttpStatus.NO_CONTENT);
+				}
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ModuloResultViewModel>(HttpStatus.BAD_REQUEST);
+		}
+		return null;
 	}
 }

@@ -29,6 +29,8 @@ public class PagoMoraRequest implements Serializable {
 	private Integer anioValido;
 	
 	private Integer mes;
+	
+	private String codigousuario;
 
 	public PagoMoraRequest() {
 		
@@ -113,4 +115,13 @@ public class PagoMoraRequest implements Serializable {
 	public void setMes(Integer mes) {
 		this.mes = mes;
 	}
+
+	public String getCodigousuario() {
+		return codigousuario;
+	}
+
+	public void setCodigousuario(String codigousuario) {
+		this.codigousuario = codigousuario;
+	}
+	
 }

@@ -9,12 +9,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.dev.crm.core.dto.PersonaDTO;
+import com.dev.crm.core.dto.PersonaRequest;
+import com.dev.crm.core.dto.PersonaRequestE;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.PersonaFacade;
 import com.dev.crm.core.model.entity.Persona;
 import com.dev.crm.core.service.PersonaService;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.GenericUtil;
+import com.dev.crm.core.util.StringUtil;
 
 @Component("personaFacade")
 public class PersonaFacadeImpl implements PersonaFacade {
@@ -264,6 +267,48 @@ public class PersonaFacadeImpl implements PersonaFacade {
 			}
 			else if(totalRegistrosPersona > 0) {
 				return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.MESSAGE_TOTAL_REGISTROS_CON + totalRegistrosPersona, totalRegistrosPersona);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public ResponseBaseOperation spInsertarPersona(PersonaRequest valor) {
+
+		try {
+			
+			if(GenericUtil.isNotNull(valor)) {
+				String result = personaService.spInsertarPersona(valor);
+				if(StringUtil.hasText(result)) {
+					return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, result, valor);
+				}
+				else {
+					return null;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public ResponseBaseOperation spEditarPersona(PersonaRequestE valor) {
+
+		try {
+			
+			if(GenericUtil.isNotNull(valor)) {
+				String result = personaService.spEditarPersona(valor);
+				if(StringUtil.hasText(result)) {
+					return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, result, valor);
+				}
+				else {
+					return null;
+				}
 			}
 		}
 		catch(Exception e) {

@@ -12,6 +12,7 @@ import com.dev.crm.core.dto.AsignarTecnicoComboResultViewModel;
 import com.dev.crm.core.dto.ClienteAtencionDetalleResultViewModel;
 import com.dev.crm.core.dto.ClienteAtencionResultViewModel;
 import com.dev.crm.core.dto.ClienteDatosAtencionResultViewModel;
+import com.dev.crm.core.dto.DatosOnusResultViewModel;
 import com.dev.crm.core.dto.InsertarReclamoRequest;
 import com.dev.crm.core.dto.InsertarTecnicTareaRequest;
 import com.dev.crm.core.dto.MensajeNotiResultViewModel;
@@ -21,6 +22,8 @@ import com.dev.crm.core.dto.TareasResultViewModel;
 import com.dev.crm.core.repository.jdbc.ClienteAtencionDetalleJdbcRepository;
 import com.dev.crm.core.repository.jdbc.ClienteAtencionJdbcRepository;
 import com.dev.crm.core.repository.jdbc.ClienteDatosAtencionJdbcRepository;
+import com.dev.crm.core.repository.jdbc.DatosOnusJdbcRepository;
+import com.dev.crm.core.repository.jdbc.EditarTecnicoInstalacionRequestJdbcRepository;
 import com.dev.crm.core.repository.jdbc.EditarTecnicoReclamoRequesJdbcRepository;
 import com.dev.crm.core.repository.jdbc.InserccionReclamoResultJdbcRepository;
 import com.dev.crm.core.repository.jdbc.MensajeNotiResultJdbcRepository;
@@ -70,6 +73,10 @@ public class AtencionServiceImpl implements AtencionService {
 	private EditarTecnicoReclamoRequesJdbcRepository editarTecnicoReclamoRequesJdbcRepository;
 	
 	@Autowired
+	@Qualifier("EditarTecnicoInstalacionRequestJdbcRepository")
+	private EditarTecnicoInstalacionRequestJdbcRepository editarTecnicoInstalacionRequestJdbcRepository;
+	
+	@Autowired
 	@Qualifier("NotiTareaJdbcRepository")
 	private NotiTareaJdbcRepository notiTareaJdbcRepository;
 	
@@ -80,6 +87,10 @@ public class AtencionServiceImpl implements AtencionService {
 	@Autowired
 	@Qualifier("TareaRequestJdbcRepository")
 	private TareaRequestJdbcRepository tareaRequestJdbcRepository;
+	
+	@Autowired
+	@Qualifier("DatosOnusJdbcRepository")
+	private DatosOnusJdbcRepository datosOnusJdbcRepository;
 	
 	
 	@Override
@@ -305,6 +316,50 @@ public class AtencionServiceImpl implements AtencionService {
 			
 			if(GenericUtil.isNotNull(valor)) {
 				String result = tareaRequestJdbcRepository.spEditarTarea(valor);
+				if(StringUtil.hasText(result)) {
+					return result;
+				}
+				else {
+					return null;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public DatosOnusResultViewModel spRecuperarDatos(String sn, String mac) {
+
+		DatosOnusResultViewModel cDaOn;
+		
+		try {
+			
+			if(!GenericUtil.isEmpty(sn) && !GenericUtil.isEmpty(mac)) {
+				cDaOn = datosOnusJdbcRepository.spRecuperarDatos(sn, mac);
+				if(GenericUtil.isNotNull(cDaOn)) {
+					return cDaOn;
+				}
+				else {
+					return null;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public String speditarinstalaciontecnico(InsertarTecnicTareaRequest codidocu) {
+
+		try {
+			
+			if(GenericUtil.isNotNull(codidocu)) {
+				String result = editarTecnicoInstalacionRequestJdbcRepository.speditinsttec(codidocu);
 				if(StringUtil.hasText(result)) {
 					return result;
 				}

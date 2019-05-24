@@ -152,7 +152,7 @@ public class UsuarioDAOImpl extends BaseDAOHibernateImpl implements UsuarioDAO  
 		}
 		return null;
 	}
-	
+
 	@Override
 	public boolean isUserPresent(String documentoUsuario) {
 		

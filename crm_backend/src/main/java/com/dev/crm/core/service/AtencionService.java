@@ -6,6 +6,7 @@ import com.dev.crm.core.dto.AsignarTecnicoComboResultViewModel;
 import com.dev.crm.core.dto.ClienteAtencionDetalleResultViewModel;
 import com.dev.crm.core.dto.ClienteAtencionResultViewModel;
 import com.dev.crm.core.dto.ClienteDatosAtencionResultViewModel;
+import com.dev.crm.core.dto.DatosOnusResultViewModel;
 import com.dev.crm.core.dto.InsertarReclamoRequest;
 import com.dev.crm.core.dto.InsertarTecnicTareaRequest;
 import com.dev.crm.core.dto.MensajeNotiResultViewModel;
@@ -29,6 +30,8 @@ public interface AtencionService {
 	
 	String speditarreclamotecnico(InsertarTecnicTareaRequest codidocu);
 	
+	String speditarinstalaciontecnico(InsertarTecnicTareaRequest codidocu);
+	
 	String ObtenerTarea(ObtenernumerotareaRequest cantidad);
 	
 	MensajeNotiResultViewModel sprecuperardatosmensaje(String usuario);
@@ -36,4 +39,6 @@ public interface AtencionService {
 	List<TareasResultViewModel> spListarTarea(String usuario);
 	
 	String speditartarea(String valor);
+	
+	DatosOnusResultViewModel spRecuperarDatos(String sn,String mac);
 }

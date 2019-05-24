@@ -13,6 +13,7 @@ $(document).on('ready', function() {
 	editarpregunta();
 	redireccionViewHerramientas();
 	cargarTotalRegistrosPersonita();
+	ocultar_mostrar(20);
 	
 	window.setInterval(
 		    function(){
@@ -21,7 +22,7 @@ $(document).on('ready', function() {
 		    	$('#total').load(cargarTotalRegistrosPersona());
 		    	evaluando();
 		    // Ejemplo: Cada dos segundos se imprime la hora
-		    /*console.log(Date());*/
+		   
 		  }
 		  // Intervalo de tiempo
 		,5000);
@@ -32,7 +33,32 @@ $(document).on('ready', function() {
 	 * 
 	 *function para mostrar el formAgregarHerramienta 
 	 */
+	function ocultar_mostrar(id){
+		
+		if(id !== 0){
+			
+			
+			for( var i = 1;i < id ; i++ ){
+			if(i < id){
+				
+				$.ajax({
+					
+					type: 'GET',
+					url: '/api/v1/usuario/listamodulos/' + i,
+					dataType: 'json',
+					success: function(response) {
+							console.log(response);
+							
+							var descrip = response.descripcionmodulo;
+							
+							document.getElementById(descrip).style.display = 'block';
+						}
+					});
+				}
+			}
+		}
 	
+	}
 	function mostrarFormAgregarHerramienta() {
 		$('#btnAgregarHerramienta').on('click', function() {
 			$('#modalFormAgregarHerramienta').modal('show');
@@ -84,13 +110,13 @@ $(document).on('ready', function() {
 			$(this).attr('idcodigodetalle', data.codigodetalle);
 			$(this).attr('idpregunta', data.pregunta);
 			
-			console.log("idcodigodetalle: " + data.codigodetalle + ' ' + data.pregunta);
+
 		});
 		
 		$('#tablalistardetallepregunta tbody').on('click', 'button.btneditardet', function(){
 			var codigodetalle = $(this).attr('idcodigodetalle');
 			var preguntadetalle = $(this).attr('idpregunta');
-			console.log("codigoherramienta: " + codigodetalle);
+			
 			$('#modalFormEditarPregunta').modal('show');
 			$('#codigoedidet').attr('disabled', true);
 			$('#codigoedidet').val(codigodetalle);
@@ -153,19 +179,19 @@ $(document).on('ready', function() {
 			var data = tablaHerramientas.row( $(this).parents('tr')).data();
 			$(this).attr('idherramienta', data.herramienta);
 			
-			/*console.log("codigoherramienta: " + data.herramienta);*/
+			
 		});
 		
 		$('#tablaHerramientas tbody').on('click', 'button.btnverpregunta', function(){
 			limpiarInputs();
 			var codigoherramienta = $(this).attr('idherramienta');
-			console.log("codigoherramienta: " + codigoherramienta);
+			
 			$('#modalFormListaPregunta').modal('show');
 			$('#codigo').attr('disabled', true);
 			$('#codigo').val(codigoherramienta);
 			flag = false;
 			
-			console.log(codigoherramienta);
+			
 			listardetallepregunta(codigoherramienta);
 			$.ajax({
 				
@@ -173,7 +199,7 @@ $(document).on('ready', function() {
 				url: '/api/v1/herramienta/searchherramienta/' + codigoherramienta,
 				dataType: 'json',
 				success: function(response) {
-					console.log(response);
+					
 					$('#nombreh').val(response.descripcionherramienta);
 					$('#nombreh').attr('disabled', true);
 					
@@ -187,7 +213,7 @@ $(document).on('ready', function() {
 		
 		$('#tablaHerramientas tbody').on('click', 'button.btnenvioherramienta', function(){
 			var codigoherramienta = $(this).attr('idherramienta');
-			console.log("codigoherramienta: " + codigoherramienta);
+			
 			mostardatosherramientagenerales(false);
 			$('#numeroherra').attr('disabled', true);
 			$('#nombreherra').attr('disabled', true);
@@ -200,7 +226,7 @@ $(document).on('ready', function() {
 				url: '/api/v1/herramienta/searchherramienta/' + codigoherramienta,
 				dataType: 'json',
 				success: function(response) {
-					console.log(response);
+					
 					$('#nombreherra').val(response.descripcionherramienta);
 					$('#nombreherra').attr('disabled', true);
 					
@@ -215,7 +241,7 @@ $(document).on('ready', function() {
 		
 		$('#tablaHerramientas tbody').on('click', 'button.btneditarherramienta', function(){
 			var codigoherramienta = $(this).attr('idherramienta');
-			console.log("codigoherramienta: " + codigoherramienta);
+		
 			flag = false;
 			limpiarInputs();
 			$('#modalFormEditarHerramienta').modal('show');
@@ -229,7 +255,7 @@ $(document).on('ready', function() {
 				url: '/api/v1/herramienta/searchdatos/' + (codigoherramienta),
 				dataType: 'json',
 				success: function(response) {
-					console.log(response);
+					
 					$('#nombrehedi').val(response.descripcionherramienta);
 					$('#fechi').val(response.fechainicio);
 					$('#fechf').val(response.fechafinal);
@@ -276,7 +302,7 @@ $(document).on('ready', function() {
 						tipoherramienta: $('#tipoherramienta').val()
 				};
 				
-				console.log(formData);
+				
 				
 				$.ajax({
 					
@@ -289,7 +315,7 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formData),
 					dataType: 'json',
 					success: function(response) {
-						console.log(response);
+						
 						
 						swal({
 							type: "success",
@@ -346,7 +372,7 @@ $(document).on('ready', function() {
 					pregunta: $('#preguntaedidet').val()
 			};
 			
-			console.log(formData);
+			
 			
 			$.ajax({
 				
@@ -359,7 +385,7 @@ $(document).on('ready', function() {
 				data: JSON.stringify(formData),
 				dataType: 'json',
 				success: function(response) {
-					console.log(response);
+				
 					
 					swal({
 						type: "success",
@@ -402,7 +428,7 @@ $(document).on('ready', function() {
 					codigousuario: $('#codigoUusarioe').val()*/
 			};
 			
-			console.log(formData);
+			
 			
 			$.ajax({
 				
@@ -415,7 +441,7 @@ $(document).on('ready', function() {
 				data: JSON.stringify(formData),
 				dataType: 'json',
 				success: function(response) {
-					console.log(response);
+					
 					
 					swal({
 						type: "success",
@@ -454,7 +480,7 @@ $(document).on('ready', function() {
 						preguntadescripcion: $('#pregunta').val()
 				};
 				
-				console.log(formData);
+			
 				
 				$.ajax({
 					
@@ -467,7 +493,6 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formData),
 					dataType: 'json',
 					success: function(response) {
-						console.log(response);
 						
 						swal({
 							type: "success",
@@ -501,9 +526,60 @@ $(document).on('ready', function() {
 		});
 	}
 	
+function cargarmensajespopusnuevo(valor,id){
+		
+		
+		
+		var title = "Tareas Pendientes!!!";
+		
+		var position = "Bottom right";
+		var duration = "1000";
+		var theme = "warning";
+		var closeOnClick = true;
+		var displayClose =true;
+		
+		
+		if(valor !== 0)
+		{
+			
+			for(var i = 0;id > i;i++)
+			{			
+				if(id > i){
+					$.ajax(
+							{
+								
+								type: 'GET',
+								url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+								dataType: 'json',
+								success: function(response) {
+									
+									var mensaje = response.descripcionmensaje;
+									var message = mensaje;
+							
+									
+									
+									window.createNotification({
+										closeOnClick: closeOnClick,
+										displayCloseButton: displayClose,
+										positionClass: position,
+										showDuration: duration,
+										theme: theme
+									})({
+								title: title,
+								message: message
+							});
+							
+						}
+					});
+				}
+			}
+			
+		}
+	}
+
 	function cargarmensajespopus(id){
 		
-		var i=1;
+		
 		
 		var title = "Tareas Pendientes!!!";
 		
@@ -518,19 +594,33 @@ $(document).on('ready', function() {
 			
 		}else{
 			
-			for(i;i <= id;i++)
+			for(var i=1;i <= id;i++)
 			{			
 				if(i <= id){
-					var message = "I am a default message" + i;
-					window.createNotification({
-						closeOnClick: closeOnClick,
-						displayCloseButton: displayClose,
-						positionClass: position,
-						showDuration: duration,
-						theme: theme
-					})({
-						title: title,
-						message: message
+					$.ajax(
+							{
+						
+								type: 'GET',
+								url: '/api/v1/atencion/searchMensaje/' + i,
+								dataType: 'json',
+								success: function(response) {
+									
+									var mensaje = response.descripcionmensaje;
+									var message = mensaje;
+							
+									
+									window.createNotification({
+										closeOnClick: closeOnClick,
+										displayCloseButton: displayClose,
+										positionClass: position,
+										showDuration: duration,
+										theme: theme
+									})({
+								title: title,
+								message: message
+							});
+							
+						}
 					});
 				}
 			}
@@ -538,7 +628,7 @@ $(document).on('ready', function() {
 		}
 	}
 	
-function estado(id){
+	function estado(id){
 		
 		
 		if(id !== 0){
@@ -566,12 +656,47 @@ function estado(id){
 						
 						liNode.innerHTML = '<a href="#" class="clearfix"><figure class="image"><img src="http://clipart-library.com/images/8i6oer5KT.png" wight="40" height="40" alt="Joseph Junior" class="img-circle" /></figure><span class="title">' + String(mensaje) + '</span><span class="mensage">' + String(respuesta) + '</span></a>';
 						listNode.appendChild(liNode);
-					}
-				});
+						}
+					});
+				}
 			}
 		}
 	}
-}
+	
+	function estadonuevo(valor){
+		
+		
+		if(valor !== 0){
+			
+			document.getElementById("agregarmensajesnoti").innerHTML="";
+			for(var i=0;i<valor;i++){
+			if(i < valor && (parseInt(valor) - parseInt(i)) >-1){
+				
+				$.ajax({
+					
+					type: 'GET',
+					url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+					dataType: 'json',
+					success: function(response) {
+						
+						
+						var tag = document.createElement("li");
+						tag.innerHTML = '<span class="toggle">Jan</span>';
+						
+						var mensaje = response.nombrepersona;
+						var respuesta = response.descripcionmensaje;
+						var listNode = document.getElementById('agregarmensajesnoti');
+						var liNode = document.createElement('li');
+						var txtNode = document.createTextNode(mensaje);
+						
+						liNode.innerHTML = '<a href="#" class="clearfix"><figure class="image"><img src="http://clipart-library.com/images/8i6oer5KT.png" wight="40" height="40" alt="Joseph Junior" class="img-circle" /></figure><span class="title">' + String(mensaje) + '</span><span class="mensage">' + String(respuesta) + '</span></a>';
+						listNode.appendChild(liNode);
+						}
+					});
+				}
+			}
+		}
+	}
 	
 	function evaluando(){
 		
@@ -587,21 +712,23 @@ function estado(id){
 		var verificando = valuee - dinamico;
 		
 		if(estatico === valuee && valuee === dinamico){
-			console.log("inicio");
+		
 			estado(valuee);
 			cargarmensajespopus(valuee);
 			$('#canje').val("0");
 		}
 		if(verificando === 0){
-			console.log("igual");
+		
 			estado(verificando);
 			cargarmensajespopus(verificando);
 			$('#canje').val("0");
 		}
 		if(verificando !== 0){
-			console.log("nuevo");
-			estado(verificando);
-			cargarmensajespopus(verificando);
+		
+			estadonuevo(parseInt(valuee));
+			
+			cargarmensajespopusnuevo(parseInt(dinamico) + 1,parseInt(verificando));
+		
 			$('#canje').val("0");
 			$('#canjes').val(valuee);
 		}

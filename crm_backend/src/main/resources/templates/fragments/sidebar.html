@@ -12,84 +12,84 @@
 			<div class="nano-content">
 				<nav id="menu" class="nav-main" role="navigation">
 					<ul class="nav nav-main">
-						<li class="nav-active">
+						<li class="nav-active" id="modulo inicio" style="display:none">
 							<a th:href="@{/dashboard}"> 
 								<i class="fa fa-home" aria-hidden="true"></i> 
 								<span>Inicio</span>
 							</a>
 						</li>
-						<li class="nav-parent">
+						<li class="nav-parent" id="modulo persona" style="display:none">
 							<a>
 								<i class="fa fa-suitcase" aria-hidden="true"></i>
 								<span>Modulo Personas</span>
 							</a>
 							<ul class="nav nav-children">
-								<li>
+								<li id="submodulo usuario" style="display:none">
 									<a th:href="@{/usuario/view}"> Usuarios</a>
 								</li>
-								<li>
+								<li id="submodulo cliente" style="display:none">
 									<a th:href="@{/persona/view}">Clientes</a>
 								</li>
-								<li>
+								<li id="submodulo empleado" style="display:none">
 									<a th:href="@{/empleado/view}">Empleados</a>
 								</li>
 							</ul>
 						</li>
-						<li class="nav-parent">
+						<li class="nav-parent" id="modulo servicio" style="display:none">
 							<a> 
 								<i class="fa fa-tags" aria-hidden="true"></i> 
 								<span>Modulo Servicios</span>
 							</a>
 							<ul class="nav nav-children">
-								<li>
+								<li id="submodulo cuenta" style="display:none">
 									<a th:href="@{/detalleCuenta/generarCuenta/view}"><i class="fa fa-book"></i> Generar Cuenta </a>
 								</li>
-								<li>
+								<li id="submodulo programacion" style="display:none">
 									<a th:href="@{/detalleCuenta/reprogramacion/view}"><i class="fa fa-calendar"></i> Re - Programacion </a>
 								</li>
-								<li>
+								<li id="submodulo corte" style="display:none">
 									<a th:href="@{/instalacion/cortes/view}"><i class="fa fa-bars"></i> Cortes</a>
 								</li>
-								<li>
+								<li id="submodulo instalacion" style="display:none">
 									<a th:href="@{/instalacion/instalaciones/view}"><i class="fa fa-archive"></i> Instalaciones del Dia</a>
 								</li>
 							</ul>
 						</li>
-						<li class="nav-parent">
+						<li class="nav-parent" id="modulo pago" style="display:none">
 							<a> 
 								<i class="fa fa-cubes" aria-hidden="true"></i> 
 								<span>Modulo Pagos</span>
 							</a>
 							<ul class="nav nav-children">
-								<li>
+								<li id="submodulo pago" style="display:none">
 									<a th:href="@{/pago/pagos}"><i class="fa fa-credit-card"></i> Pagos </a>
 								</li>
 							</ul>
 						</li>
-						<li class="nav-parent">
+						<li class="nav-parent" id="modulo atencion" style="display:none">
 							<a> 
 								<i class="fa fa-map-marker" aria-hidden="true"></i> 
 								<span>Modulo Atencion</span>
 							</a>
 							<ul class="nav nav-children">
-								<li>
+								<li id="submodulo atencion" style="display:none">
 									<a th:href="@{/atencion/atencion/view}"> Atencion </a>
 								</li>
-								<li>
+								<li id="submodulo herramienta" style="display:none">
 									<a th:href="@{/atencion/herramientas/view}"> Herramientas </a>
 								</li>
-								<li>
+								<li id="submodulo reclamo" style="display:none">
 									<a th:href="@{/atencion/reclamo/view}"> Reclamo </a>
 								</li>
 							</ul>
 						</li>
-						<li class="nav-parent">
+						<li class="nav-parent" id="modulo tarea" style="display:none">
 							<a> 
 								<i class="fa fa-map-marker" aria-hidden="true"></i> 
 								<span>Modulo Tarea</span>
 							</a>
 							<ul class="nav nav-children">
-								<li>
+								<li id="submodulo tarea" style="display:none">
 									<a th:href="@{/tarea/tarea/view}"> Tarea </a>
 								</li>
 							</ul>

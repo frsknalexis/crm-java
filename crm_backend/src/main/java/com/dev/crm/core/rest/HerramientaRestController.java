@@ -41,7 +41,7 @@ public class HerramientaRestController {
 		
 		try {
 			
-			String usuario = "admin"; 
+			String usuario = "jolaurenint"; 
 			
 			if(StringUtil.hasText(usuario)) {
 				List<HerramientaResultViewModel> herramientasAtencion = herramientaFacade.spListarHerramientaAtencion(usuario);
@@ -64,7 +64,7 @@ public class HerramientaRestController {
 		
 		try {
 			
-			String mensaje = "admin";
+			String mensaje = "jolaurenint";
 			inserther.setMensaje(mensaje);
 			ResponseBaseOperation response = herramientaFacade.spInserccionHerramienta(inserther);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
@@ -79,7 +79,7 @@ public class HerramientaRestController {
 		
 		try {
 			
-			String mensaje = "admin";
+			String mensaje = "jolaurenint";
 			inserther.setCodigousuario(mensaje);
 			inserther.setDescripcionherramienta(inserther.getDescripcionherramienta());
 			ResponseBaseOperation response = herramientaFacade.spInsercciondetalleHerramienta(inserther);

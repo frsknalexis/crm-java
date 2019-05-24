@@ -9,12 +9,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.crm.core.dao.PersonaDAO;
+import com.dev.crm.core.dto.PersonaRequest;
+import com.dev.crm.core.dto.PersonaRequestE;
 import com.dev.crm.core.model.entity.Persona;
+import com.dev.crm.core.repository.jdbc.EditarPersonaResultJdbcRepository;
+import com.dev.crm.core.repository.jdbc.PersonaRequestJdbcRepository;
 import com.dev.crm.core.service.PersonaService;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.DateUtil;
 import com.dev.crm.core.util.GenericUtil;
 import com.dev.crm.core.util.IpUtil;
+import com.dev.crm.core.util.StringUtil;
 
 @Service("personaService")
 @Transactional("hibernateTransactionManager")
@@ -23,6 +28,14 @@ public class PersonaServiceImpl implements PersonaService {
 	@Autowired
 	@Qualifier("personaDAO")
 	private PersonaDAO personaDAO;
+	
+	@Autowired
+	@Qualifier("PersonaRequestJdbcRepository")
+	private PersonaRequestJdbcRepository personaRequestJdbcRepository;
+	
+	@Autowired
+	@Qualifier("EditarPersonaResultJdbcRepository")
+	private EditarPersonaResultJdbcRepository editarPersonaResultJdbcRepository;
 	
 	@Override
 	public List<Persona> findAll() {
@@ -160,7 +173,7 @@ public class PersonaServiceImpl implements PersonaService {
 			p.setUsuarioSistema(IpUtil.getCurrentUserSystem());
 			
 			p.setFechaRegistro(DateUtil.getCurrentDate());
-			p.setCreadoPor("vendedor");
+			p.setCreadoPor("mimoraleext");
 			personaDAO.save(p);
 		}
 		catch(Exception e) {
@@ -192,7 +205,7 @@ public class PersonaServiceImpl implements PersonaService {
 				persona.setTelefonoTresPersona(p.getTelefonoTresPersona());
 				
 				persona.setFechaModificacion(DateUtil.getCurrentDate());
-				persona.setModificadoPor("vendedor");
+				persona.setModificadoPor("mimoraleext");
 				personaDAO.update(persona);
 			}
 		}
@@ -264,5 +277,47 @@ public class PersonaServiceImpl implements PersonaService {
 		}
 		return null;
 
+	}
+
+	@Override
+	public String spInsertarPersona(PersonaRequest valor) {
+
+		try {
+			
+			if(GenericUtil.isNotNull(valor)) {
+				String result = personaRequestJdbcRepository.spInsertarPersona(valor);
+				if(StringUtil.hasText(result)) {
+					return result;
+				}
+				else {
+					return null;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public String spEditarPersona(PersonaRequestE valor) {
+
+		try {
+			
+			if(GenericUtil.isNotNull(valor)) {
+				String result = editarPersonaResultJdbcRepository.spEditarPersona(valor);
+				if(StringUtil.hasText(result)) {
+					return result;
+				}
+				else {
+					return null;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

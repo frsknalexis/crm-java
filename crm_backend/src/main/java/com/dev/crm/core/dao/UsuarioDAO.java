@@ -11,9 +11,9 @@ public interface UsuarioDAO extends BaseDAOHibernate {
 	
 	Usuario getByNombre(String nombreUsuario);
 	
-	Usuario getByDocumentoUsuario(String documentoUsuario);
-	
 	Usuario getByNombreUsuarioAndPassword(String nombreUsuario, String passwordUsuario);
+	
+	Usuario getByDocumentoUsuario(String documentoUsuario);
 	
 	boolean isUserPresent(String documentoUsuario);
 	

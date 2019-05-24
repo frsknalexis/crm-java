@@ -1,3 +1,7 @@
+/**
+ * 
+ */
+
 $(document).on('ready', function() {
 	
 	var flag;
@@ -14,6 +18,8 @@ $(document).on('ready', function() {
 		ocultarBotones();
 	}, 6500);
 	
+	ocultar_mostrar(20);
+	
 	cargarTotalRegistrosPersonita();
 	
 	window.setInterval(
@@ -23,7 +29,7 @@ $(document).on('ready', function() {
 		    	$('#total').load(cargarTotalRegistrosPersona());
 		    	evaluando();
 		    // Ejemplo: Cada dos segundos se imprime la hora
-		    /*console.log(Date());*/
+		   
 		  }
 		  // Intervalo de tiempo
 		,5000);
@@ -36,12 +42,39 @@ $(document).on('ready', function() {
 		url: '/api/v1/persona/personas/listaPersonasNoClientes',
 		dataType: 'json',
 		success: function(response){
-			console.log(response);
+			
 			
 			if(response == null) {
 			}
 		}
 	});
+	
+	function ocultar_mostrar(id){
+		
+		if(id !== 0){
+			
+			
+			for( var i = 1;i < id ; i++ ){
+			if(i < id){
+				
+				$.ajax({
+					
+					type: 'GET',
+					url: '/api/v1/usuario/listamodulos/' + i,
+					dataType: 'json',
+					success: function(response) {
+							console.log(response);
+							
+							var descrip = response.descripcionmodulo;
+							
+							document.getElementById(descrip).style.display = 'block';
+						}
+					});
+				}
+			}
+		}
+	
+	}
 		
 	var tabla = $('#tablaPersonas').dataTable({
 		
@@ -176,6 +209,7 @@ $(document).on('ready', function() {
 	$('#guardarPersona').on('click', function(e) {
 		e.preventDefault();
 		
+		
 		if($('#documentoPersona').val().match(/^[0-9]{7,11}$/) && $('#nombreUbigeo').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
 			&& $('#nombrePersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/) && $('#apellidoPaternoPersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
 			&& $('#apellidoMaternoPersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/) && $('#direccionActualPersona').val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\#.-\s]+$/)
@@ -183,69 +217,28 @@ $(document).on('ready', function() {
 		
 			var formData = {
 					
-					documentoPersona: $('#documentoPersona').val(),
-					ubigeo: {
-						codigoUbigeo: $('#codigoUbigeo').val()
-					},
-					nombrePersona: $('#nombrePersona').val(),
-					apellidoPaternoPersona: $('#apellidoPaternoPersona').val(),
-					apellidoMaternoPersona: $('#apellidoMaternoPersona').val(),
-					direccionReniecPersona: $('#direccionReniecPersona').val(),
-					direccionActualPersona: $('#direccionActualPersona').val(),
-					referenciaPersona: $('#referenciaPersona').val(),
-					telefonoUnoPersona: $('#telefonoUnoPersona').val(),
-					telefonoDosPersona: $('#telefonoDosPersona').val(),
-					telefonoTresPersona: $('#telefonoTresPersona').val()
+					documentopersoma: $('#documentoPersona').val(),
+						codigoubigeo: $('#codigoUbigeo').val(),
+					nombrepersona: $('#nombrePersona').val(),
+					paternopersona: $('#apellidoPaternoPersona').val(),
+					maternopersona: $('#apellidoMaternoPersona').val(),
+					direccionreniecpersona: $('#direccionReniecPersona').val(),
+					direccionactualpersona: $('#direccionActualPersona').val(),
+					referenciapersona: $('#referenciaPersona').val(),
+					primertelefono: $('#telefonoUnoPersona').val(),
+					segundotelefono: $('#telefonoDosPersona').val(),
+					tercertelefono: $('#telefonoTresPersona').val()
 			};
 			
-			if(flag == true) {
-				
-				console.log(flag);
-				
-				$.ajax({
-					
-					type: 'PUT',
-					url: '/api/v1/persona/update',
-					headers: {
-						"Content-Type": "application/json",
-						"Accept": "application/json"
-					},
-					data: JSON.stringify(formData),
-					dataType: 'json',
-					success: function(response) {
-						
-						console.log(response);
-						
-						swal({
-							type: "success",
-							title: "Persona Actualizado con exito",
-							showConfirmButton: true,
-							confirmButtonText: "Cerrar",
-							closeOnConfirm: false
-						}).then((result) => {
-
-							if(result.value) {
-								$(location).attr('href', '/persona/view');
-							}
-						});
-					},
-					error: function() {
-						
-						swal({
-			                type: 'error',
-			                title: 'Ooops',
-			                text: 'Error al Actualizar Persona !'
-			            });
-					}
-				});
-			}
-					
+			console.log(formData);
+			console.log(flag);
 			if(flag == false) {
 				
+				
 				$.ajax({
-					
+
 					type: 'POST',
-					url: '/api/v1/persona/save',
+					url: '/api/v1/persona/insrpersona',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -254,13 +247,13 @@ $(document).on('ready', function() {
 					dataType: 'json',
 					success: function(response) {
 						
-						console.log(response);
+					console.log(response);
 						
-						if(response.status == 'CREATED') {
+						if(response.status == 'SUCCESS' && response.message == "HECHO") {
 							
 							swal({
 								type: "success",
-								title: "Persona: " + response.data.nombrePersona + " Registrado con exito",
+								title: "Persona: " + response.data.nombrepersona + " Registrado con exito",
 								showConfirmButton: true,
 								confirmButtonText: "Cerrar",
 								closeOnConfirm: false
@@ -271,15 +264,69 @@ $(document).on('ready', function() {
 								}
 							});
 						}
-						else if(response.status == 'ERROR') { 
+						else if(response.status == 'SUCCESS' && response.message == "ERROR") { 
 							
 							swal({
 				                type: 'error',
 				                title: 'Ooops',
-				                text: 'Ocurrio un Error al Registrar a la Persona: '+ response.data.nombrePersona +', verifique su Numero Documento !'
+				                text: 'Ocurrio un Error al Registrar a la Persona: '+ response.data.nombrepersona +', verifique su Numero Documento !'
 				            });
 							
-							limpiar();
+							
+						}
+					},
+					error: function() {
+						
+						swal({
+			                type: 'error',
+			                title: 'Ooops',
+			                text: 'Error al Registrar Persona !'
+			            });
+					}
+				});
+			}
+			
+			if(flag == true) {
+			
+			
+				$.ajax({
+
+					type: 'POST',
+					url: '/api/v1/persona/editpersona',
+					headers: {
+						"Content-Type": "application/json",
+						"Accept": "application/json"
+					},
+					data: JSON.stringify(formData),
+					dataType: 'json',
+					success: function(response) {
+						
+					
+						
+						if(response.status == 'SUCCESS' && response.message == "HECHO") {
+							
+							swal({
+								type: "success",
+								title: "Persona: " + response.data.nombrepersona + " Registrado con exito",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar",
+								closeOnConfirm: false
+							}).then((result) => {
+
+								if(result.value) {
+									$(location).attr('href', '/persona/view');
+								}
+							});
+						}
+						else if(response.status == 'SUCCESS' && response.message == "ERROR") { 
+							
+							swal({
+				                type: 'error',
+				                title: 'Ooops',
+				                text: 'Ocurrio un Error al Registrar a la Persona: '+ response.data.nombrepersona +', verifique su Numero Documento !'
+				            });
+							
+							
 						}
 					},
 					error: function() {
@@ -562,7 +609,7 @@ $(document).on('ready', function() {
 	$('#tablaPersonas tbody').on('click', 'button.btnEditarPersona', function() {
 		
 		var documentoPersona = $(this).attr('idDocumento');
-		console.log('documentoPersona: ' + documentoPersona);
+		
 		
 		mostrarForm(true);
 		$('#documentoPersona').attr('disabled', true);
@@ -574,7 +621,7 @@ $(document).on('ready', function() {
 			url: '/api/v1/persona/persona/' + documentoPersona,
 			dataType: 'json',
 			success: function(response) {
-				console.log(response);
+			
 				$('#documentoPersona').val(response.documentoPersona);
 				$('#codigoUbigeo').val(response.ubigeo.codigoUbigeo);
 				$('#nombreUbigeo').val(response.ubigeo.nombreUbigeo);
@@ -601,7 +648,7 @@ $(document).on('ready', function() {
 			url: '/api/v1/sexo/sexos',
 			dataType: 'json',
 			success: function(response) {
-				console.log(response);
+			
 				$codigoSexo.html('');
 				$codigoSexo.append('<option value="">Seleccione una opcion</option>');
 				for(var i = 0; i < response.length; i++) {
@@ -614,7 +661,7 @@ $(document).on('ready', function() {
 	$('#tablaPersonas tbody').on('click', 'button.btnAgregarPersonaCliente', function() {
 		
 		var documentoPersona = $(this).attr('idDocumento');
-		console.log("documentoPersona: " + documentoPersona);
+		
 		mostrarFormCliente(true);
 		accion = false;
 		$('#documentoPersonaCliente').attr('disabled', true);
@@ -630,7 +677,7 @@ $(document).on('ready', function() {
 			url: '/api/v1/persona/persona/' + documentoPersona,
 			dataType: 'json',
 			success: function(response) {
-				console.log(response);
+				
 				$('#clienteNombrePersona').val(response.nombrePersona);
 				$('#clienteApellidosPersona').val(response.apellidoPaternoPersona + ' ' + response.apellidoMaternoPersona);
 			}
@@ -679,7 +726,7 @@ $(document).on('ready', function() {
 					dataType: 'json',
 					success: function(response) {
 						
-						console.log(response);
+					
 						
 						swal({
 							type: "success",
@@ -706,7 +753,7 @@ $(document).on('ready', function() {
 			}
 			
 			else if(accion == false) {
-				console.log(formData);
+				
 				
 				$.ajax({
 					
@@ -719,7 +766,7 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formData),
 					dataType: 'json',
 					success: function(response) {
-						console.log(response);
+						
 						
 						if(response.status == 'CREATED') {
 							
@@ -856,7 +903,7 @@ $(document).on('ready', function() {
 		url: '/api/v1/cliente/clientes/listarClienteVendedor',
 		dataType: 'json',
 		success: function(response){
-			console.log(response);
+			
 		}
 	});
 	
@@ -997,7 +1044,7 @@ $(document).on('ready', function() {
 	$('#tablaClientes tbody').on('click', 'button.btnVerCliente', function(){
 		
 		var documentoPersonaCliente = $(this).attr('idDocumentoCliente');
-		console.log("documentoPersonaCliente: " + documentoPersonaCliente);
+		
 		$('#modalDetalleCliente').modal('show');
 		limpiarModalCliente();
 		$.ajax({
@@ -1006,7 +1053,7 @@ $(document).on('ready', function() {
 			url: '/api/v1/persona/persona/' + documentoPersonaCliente,
 			dataType: 'json',
 			success: function(response) {
-				console.log(response);
+				
 				$('#myModalLabelCliente').html('Cliente : ' + response.nombrePersona + ' ' + response.apellidoPaternoPersona + ' ' + response.apellidoMaternoPersona);
 				$('#detalleClienteDocumento').val(response.documentoPersona);
 				$('#detalleClienteNombre').val(response.nombrePersona + ' ' + response.apellidoPaternoPersona + ' ' + response.apellidoMaternoPersona);
@@ -1021,7 +1068,7 @@ $(document).on('ready', function() {
 			url: '/api/v1/cliente/cliente/' + documentoPersonaCliente,
 			dataType: 'json',
 			success: function(response) {
-				console.log(response);
+				
 				$('#detalleCodigoCliente').val(response.codigoCliente);
 				$('#detalleClienteNombreComercial').val(response.nombreComercialCliente);
 				$('#detalleClienteCorreoElectronico').val(response.correoCliente);
@@ -1038,7 +1085,7 @@ $(document).on('ready', function() {
 	$('#tablaClientes tbody').on('click', 'button.btnEditarCliente', function() {
 		
 		var documentoPersonaCliente = $(this).attr('idDocumentoCliente');
-		console.log("documentoPersonaCliente: " + documentoPersonaCliente);
+		
 		
 		mostrarFormCliente(true);
 		accion = true;
@@ -1058,7 +1105,7 @@ $(document).on('ready', function() {
 			url: '/api/v1/persona/persona/' + documentoPersonaCliente,
 			dataType: 'json',
 			success: function(response) {
-				console.log(response);
+			
 				$('#clienteNombrePersona').val(response.nombrePersona);
 				$('#clienteApellidosPersona').val(response.apellidoPaternoPersona + ' ' + response.apellidoMaternoPersona);
 			}
@@ -1070,7 +1117,7 @@ $(document).on('ready', function() {
 			url: '/api/v1/cliente/cliente/' + documentoPersonaCliente,
 			dataType: 'json',
 			success: function(response) {
-				console.log(response);
+			
 				$('#consecutivoCliente').val(response.consecutivoCliente);
 				$('#codigoCliente').val(response.codigoCliente);
 				$('#nombreComercialCliente').val(response.nombreComercialCliente);
@@ -1089,7 +1136,7 @@ $(document).on('ready', function() {
 	$('#tablaClientes tbody').on('click', 'button.btnDeshabilitarCliente', function() {
 		
 		var documentoPersonaCliente = $(this).attr('idDocumentoCliente');
-		console.log("documentoPersonaCliente: " + documentoPersonaCliente);
+		
 		
 		swal({
 	        title: '¿Esta Seguro de deshabilitar a este Cliente ?',
@@ -1099,7 +1146,7 @@ $(document).on('ready', function() {
 	        confirmButtonColor: '#3085d6',
 	        cancelButtonColor: '#d33',
 	        cancelButtonText: 'Cancelar',
-	        confirmButtonText: '¡Si, deshabilitar !'
+	        confirmButtonText: '¡Si!'
 	    }).then((result) => {
 	        if(result.value){
 	           
@@ -1108,7 +1155,7 @@ $(document).on('ready', function() {
 	                 type: 'GET',
 	                 success: function(response){
 	                	 
-	                	 console.log(response);
+	                	 
 	                     swal({
 	                         type: "success",
 	                         title: "El Cliente ha sido deshabilitado correctamente",
@@ -1142,7 +1189,7 @@ $(document).on('ready', function() {
 	$('#tablaClientes tbody').on('click', 'button.btnHabilitarCliente', function() {
 		
 		var documentoPersonaCliente = $(this).attr('idDocumentoCliente');
-		console.log("documentoPersonaCliente: " + documentoPersonaCliente);
+		
 		
 		swal({
 	        title: '¿Esta Seguro de habilitar a este Cliente ?',
@@ -1152,7 +1199,7 @@ $(document).on('ready', function() {
 	        confirmButtonColor: '#3085d6',
 	        cancelButtonColor: '#d33',
 	        cancelButtonText: 'Cancelar',
-	        confirmButtonText: '¡Si, habilitar !'
+	        confirmButtonText: '¡Si!'
 	    }).then((result) => {
 	        if(result.value){
 	           
@@ -1162,7 +1209,7 @@ $(document).on('ready', function() {
 	        		type: 'GET',
 	        		success: function(response){
 	        			
-	        			console.log(response);
+	        		
 	        			
 	        			swal({
 	        				type: "success",
@@ -1205,7 +1252,7 @@ $(document).on('ready', function() {
 					term : request.term
 				},
 				success : function(data) {
-					console.log(data);
+				
 					response($.map(data, function(item) {
 						return {
 							value: item.codigoUbigeo,
@@ -1225,9 +1272,60 @@ $(document).on('ready', function() {
 	});
 	
 	
+function cargarmensajespopusnuevo(valor,id){
+		
+		
+		
+		var title = "Tareas Pendientes!!!";
+		
+		var position = "Bottom right";
+		var duration = "1000";
+		var theme = "warning";
+		var closeOnClick = true;
+		var displayClose =true;
+		
+		
+		if(valor !== 0)
+		{
+			
+			for(var i = 0;id > i;i++)
+			{			
+				if(id > i){
+					$.ajax(
+							{
+								
+								type: 'GET',
+								url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+								dataType: 'json',
+								success: function(response) {
+									
+									var mensaje = response.descripcionmensaje;
+									var message = mensaje;
+							
+									
+									
+									window.createNotification({
+										closeOnClick: closeOnClick,
+										displayCloseButton: displayClose,
+										positionClass: position,
+										showDuration: duration,
+										theme: theme
+									})({
+								title: title,
+								message: message
+							});
+							
+						}
+					});
+				}
+			}
+			
+		}
+	}
+
 	function cargarmensajespopus(id){
 		
-		var i=1;
+		
 		
 		var title = "Tareas Pendientes!!!";
 		
@@ -1242,19 +1340,33 @@ $(document).on('ready', function() {
 			
 		}else{
 			
-			for(i;i <= id;i++)
+			for(var i=1;i <= id;i++)
 			{			
 				if(i <= id){
-					var message = "I am a default message" + i;
-					window.createNotification({
-						closeOnClick: closeOnClick,
-						displayCloseButton: displayClose,
-						positionClass: position,
-						showDuration: duration,
-						theme: theme
-					})({
-						title: title,
-						message: message
+					$.ajax(
+							{
+						
+								type: 'GET',
+								url: '/api/v1/atencion/searchMensaje/' + i,
+								dataType: 'json',
+								success: function(response) {
+									
+									var mensaje = response.descripcionmensaje;
+									var message = mensaje;
+							
+									
+									window.createNotification({
+										closeOnClick: closeOnClick,
+										displayCloseButton: displayClose,
+										positionClass: position,
+										showDuration: duration,
+										theme: theme
+									})({
+								title: title,
+								message: message
+							});
+							
+						}
 					});
 				}
 			}
@@ -1262,7 +1374,7 @@ $(document).on('ready', function() {
 		}
 	}
 	
-function estado(id){
+	function estado(id){
 		
 		
 		if(id !== 0){
@@ -1290,12 +1402,47 @@ function estado(id){
 						
 						liNode.innerHTML = '<a href="#" class="clearfix"><figure class="image"><img src="http://clipart-library.com/images/8i6oer5KT.png" wight="40" height="40" alt="Joseph Junior" class="img-circle" /></figure><span class="title">' + String(mensaje) + '</span><span class="mensage">' + String(respuesta) + '</span></a>';
 						listNode.appendChild(liNode);
-					}
-				});
+						}
+					});
+				}
 			}
 		}
 	}
-}
+	
+	function estadonuevo(valor){
+		
+		
+		if(valor !== 0){
+			
+			document.getElementById("agregarmensajesnoti").innerHTML="";
+			for(var i=0;i<valor;i++){
+			if(i < valor && (parseInt(valor) - parseInt(i)) >-1){
+				
+				$.ajax({
+					
+					type: 'GET',
+					url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+					dataType: 'json',
+					success: function(response) {
+						
+						
+						var tag = document.createElement("li");
+						tag.innerHTML = '<span class="toggle">Jan</span>';
+						
+						var mensaje = response.nombrepersona;
+						var respuesta = response.descripcionmensaje;
+						var listNode = document.getElementById('agregarmensajesnoti');
+						var liNode = document.createElement('li');
+						var txtNode = document.createTextNode(mensaje);
+						
+						liNode.innerHTML = '<a href="#" class="clearfix"><figure class="image"><img src="http://clipart-library.com/images/8i6oer5KT.png" wight="40" height="40" alt="Joseph Junior" class="img-circle" /></figure><span class="title">' + String(mensaje) + '</span><span class="mensage">' + String(respuesta) + '</span></a>';
+						listNode.appendChild(liNode);
+						}
+					});
+				}
+			}
+		}
+	}
 	
 	function evaluando(){
 		
@@ -1311,21 +1458,23 @@ function estado(id){
 		var verificando = valuee - dinamico;
 		
 		if(estatico === valuee && valuee === dinamico){
-			console.log("inicio");
+		
 			estado(valuee);
 			cargarmensajespopus(valuee);
 			$('#canje').val("0");
 		}
 		if(verificando === 0){
-			console.log("igual");
+		
 			estado(verificando);
 			cargarmensajespopus(verificando);
 			$('#canje').val("0");
 		}
 		if(verificando !== 0){
-			console.log("nuevo");
-			estado(verificando);
-			cargarmensajespopus(verificando);
+		
+			estadonuevo(parseInt(valuee));
+			
+			cargarmensajespopusnuevo(parseInt(dinamico) + 1,parseInt(verificando));
+		
 			$('#canje').val("0");
 			$('#canjes').val(valuee);
 		}

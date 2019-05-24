@@ -41,6 +41,7 @@ public class Constantes {
 	public static final String SP_LISTAR_COMPROBANTE = "sp_listar_comprobante";
 	public static final String SP_MESES_DEUDAS = "sp_meses_deudas";
 	public static final String SP_PAGO_MORA = "sp_insercion_pago_mora";
+	public static final String SP_AGREGAR_PERSONA = "sp_inserccion_persona_ci";
 	public static final String SP_LISTAR_CLIENTES_ATENCION = "sp_listar_clientes_atencion";
 	public static final String SP_LISTAR_DATOS_GENERALES_CLIENTE = "sp_listar_datos_generales_cliente";
 	public static final String SP_LISTAR_CLIENTES_ATENCION_DETALLE = "sp_listar_clientes_atencion_detalle";
@@ -56,12 +57,16 @@ public class Constantes {
 	public static final String SP_LISTAR_EMPLEADO_GENERAL_EXT_INT = "sp_listar_empleados_int_ext";
 	public static final String SP_ESTADO_PLANTA = "sp_ubicacion_empleado_planta";
 	public static final String SP_EDITAR_TAREA = "sp_update_tarea";
+	public static final String SP_EDITAR_PERSONA = "sp_update_persona";
 	public static final String SP_LISTAR_COMBO_TECNICO = "sp_combo_asignar_tecnico";
 	public static final String SP_LISTAR_RECLAMO = "sp_listar_Reclamo";
+	public static final String SP_LISTA_MODULO = "sp_listar_modulos_usuario";
 	public static final String SP_LISTAR_TAREA = "sp_listar_tarea";
 	public static final String SP_EDITAR_RECLAMO_TECNICO = "sp_update_reclamo_tecnico";
+	public static final String SP_EDITAR_INSTALACION_TECNICO = "sp_update_insta_in_tecnico";
 	public static final String SP_CANTIDAD_TAREA = "sp_noti_tarea";
 	public static final String SP_RECUPERAR_MENSAJE_NOTI = "sp_recuperar_noti_mensajes";
+	public static final String SP_DATOS_ONUS = "sp_recuperar_datos_onu";
 	public static final String SP_LISTAR_CORTE_INTERNET = "sp_listar_corte";
 	public static final String SP_UPDATE_SERVICIO_INTERNET = "sp_update_servicio_internet";
 	public static final String SP_LISTAR_INSTALACION_DIA_INTERNET = "sp_listar_instalacion_dia";

@@ -90,7 +90,7 @@ public class EmpleadoRestController {
 		
 		try {
 			
-			String creadoPor = "admin";
+			String creadoPor = "lularosaint";
 			List<EmpleadoDTO> empleadosDTO = empleadoFacade.spListarPersonaEmpleado(creadoPor);
 			if(GenericUtil.isNotEmpty(empleadosDTO)) {
 				return new ResponseEntity<List<EmpleadoDTO>>(empleadosDTO, HttpStatus.OK);

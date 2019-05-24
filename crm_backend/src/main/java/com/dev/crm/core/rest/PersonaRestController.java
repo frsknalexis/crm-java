@@ -21,9 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.crm.core.dto.PersonaDTO;
+import com.dev.crm.core.dto.PersonaRequest;
+import com.dev.crm.core.dto.PersonaRequestE;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.PersonaFacade;
 import com.dev.crm.core.util.GenericUtil;
+import com.dev.crm.core.util.IpUtil;
 import com.dev.crm.core.view.excel.ExcelGenerator;
 import com.dev.crm.core.view.pdf.PdfGenerator;
 
@@ -76,7 +79,7 @@ public class PersonaRestController {
 		
 		try {
 			
-			String creadoPor = "vendedor";
+			String creadoPor = "mimoraleext";
 			List<PersonaDTO> personasDTO = personaFacade.findPersonasByCreadoPor(creadoPor);
 			if(GenericUtil.isNotEmpty(personasDTO)) {
 				return new ResponseEntity<List<PersonaDTO>>(personasDTO, HttpStatus.OK);
@@ -95,7 +98,7 @@ public class PersonaRestController {
 		
 		try {
 			
-			String creadoPor = "vendedor";
+			String creadoPor = "mimoraleext";
 			List<PersonaDTO> personasDTO = personaFacade.spListarPersonasNoClienteByCreadoPor(creadoPor);
 			if(GenericUtil.isNotEmpty(personasDTO)) {
 				return new ResponseEntity<List<PersonaDTO>>(personasDTO, HttpStatus.OK);
@@ -114,7 +117,7 @@ public class PersonaRestController {
 		
 		try {
 			
-			String creadoPor = "admin";
+			String creadoPor = "lularosaint";
 			List<PersonaDTO> personasDTO = personaFacade.spListaPersonaNoEmpleado(creadoPor);
 			if(GenericUtil.isNotEmpty(personasDTO)) {
 				return new ResponseEntity<List<PersonaDTO>>(personasDTO, HttpStatus.OK);
@@ -280,6 +283,39 @@ public class PersonaRestController {
 		}
 		catch(Exception e) {
 			return  new ResponseEntity<InputStreamResource>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PostMapping("/insrpersona")
+	public ResponseEntity<ResponseBaseOperation> spInsertarPersona(@Valid @RequestBody PersonaRequest valor) {
+		
+		try
+		{
+			String mensaje = "mimoraleext";
+			valor.setCreadopor(mensaje);
+			valor.setIpmaquina(IpUtil.getCurrentIPAddress());
+			valor.setUsuariomaquina(IpUtil.getCurrentUserMachine());
+			valor.setUsuariosistema(IpUtil.getCurrentUserSystem());
+			ResponseBaseOperation response = personaFacade.spInsertarPersona(valor);
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PostMapping("/editpersona")
+	public ResponseEntity<ResponseBaseOperation> spEditarPersona(@Valid @RequestBody PersonaRequestE valor) {
+		
+		try
+		{
+			String mensaje = "mimoraleext";
+			valor.setModificadopor(mensaje);
+			ResponseBaseOperation response = personaFacade.spEditarPersona(valor);
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
 		}
 	}
 }

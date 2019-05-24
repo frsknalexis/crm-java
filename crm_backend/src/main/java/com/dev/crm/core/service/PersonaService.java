@@ -2,6 +2,8 @@ package com.dev.crm.core.service;
 
 import java.util.List;
 
+import com.dev.crm.core.dto.PersonaRequest;
+import com.dev.crm.core.dto.PersonaRequestE;
 import com.dev.crm.core.model.entity.Persona;
 
 public interface PersonaService {
@@ -31,5 +33,9 @@ public interface PersonaService {
 	Long obtenerTotalRegistrosPersona();
 	
 	Long obtenerTotalRegistrosPersonas();
+	
+	String spInsertarPersona (PersonaRequest valor);
+	
+	String spEditarPersona (PersonaRequestE valor);
 
 }

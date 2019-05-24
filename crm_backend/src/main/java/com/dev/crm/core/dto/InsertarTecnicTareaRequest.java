@@ -12,6 +12,8 @@ public class InsertarTecnicTareaRequest implements Serializable {
 
 	private String datovaluar;
 	
+	private String codigo;
+	
 	private String descripciontarea;
 	
 	private String codigousuario;
@@ -42,6 +44,14 @@ public class InsertarTecnicTareaRequest implements Serializable {
 
 	public void setCodigousuario(String codigousuario) {
 		this.codigousuario = codigousuario;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 	
 }
