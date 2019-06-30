@@ -25,10 +25,6 @@ import javax.persistence.Table;
 @IdClass(value=ClientePK.class)
 @NamedStoredProcedureQueries({
 	
-	@NamedStoredProcedureQuery(name="listarClientesVendedor", procedureName="sp_listar_cliente_vendedor",
-			resultClasses = {Cliente.class}, parameters= {
-			@StoredProcedureParameter(mode=ParameterMode.IN, name="COD_USU", type=String.class)
-	}),
 	@NamedStoredProcedureQuery(name="insertarCliente", procedureName="sp_inserccion_cliente", resultClasses= {Cliente.class}, parameters= {
 			@StoredProcedureParameter(mode=ParameterMode.IN, name="COD_DOC", type=String.class),
 			@StoredProcedureParameter(mode=ParameterMode.IN, name="NOM_COM", type=String.class),

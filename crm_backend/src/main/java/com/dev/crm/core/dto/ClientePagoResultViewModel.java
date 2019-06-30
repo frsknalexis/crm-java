@@ -1,6 +1,7 @@
 package com.dev.crm.core.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class ClientePagoResultViewModel implements Serializable {
 
@@ -19,6 +20,12 @@ public class ClientePagoResultViewModel implements Serializable {
 	private String direccionActualCliente;
 	
 	private String referencia;
+	
+	private Date fechaInstalacion;
+	
+	private String gestorResponsable;
+	
+	private String telefonoGestor;
 
 	public ClientePagoResultViewModel() {
 		
@@ -62,5 +69,29 @@ public class ClientePagoResultViewModel implements Serializable {
 
 	public void setReferencia(String referencia) {
 		this.referencia = referencia;
+	}
+
+	public Date getFechaInstalacion() {
+		return fechaInstalacion;
+	}
+
+	public void setFechaInstalacion(Date fechaInstalacion) {
+		this.fechaInstalacion = fechaInstalacion;
+	}
+
+	public String getGestorResponsable() {
+		return gestorResponsable;
+	}
+
+	public void setGestorResponsable(String gestorResponsable) {
+		this.gestorResponsable = gestorResponsable;
+	}
+
+	public String getTelefonoGestor() {
+		return telefonoGestor;
+	}
+
+	public void setTelefonoGestor(String telefonoGestor) {
+		this.telefonoGestor = telefonoGestor;
 	}
 }

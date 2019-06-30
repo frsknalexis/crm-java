@@ -1,14 +1,10 @@
-/**
- * 
- */
-
 $(document).on('ready', function() {
 	
 	cargarTotalRegistrosPersonita();
 		
 	limpiarFormulario();
 	
-	ocultar_mostrar(20);
+	ocultar_mostrar(50);
 		
 	window.setInterval(
 		    function(){
@@ -771,10 +767,10 @@ $(document).on('ready', function() {
 	});
 	
 });
-	function limpiarFormulario() {
+function limpiarFormulario() {
 	
-		$('#usuarioId').val('');
-		$('#nombreUsuario').val(''),
-		$('#passwordUsuario').val(''),
-		$('#documentoUsuario').val('')
-	}
+	$('#usuarioId').val('');
+	$('#nombreUsuario').val(''),
+	$('#passwordUsuario').val(''),
+	$('#documentoUsuario').val('')
+}

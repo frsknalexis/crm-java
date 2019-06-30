@@ -1,5 +1,7 @@
 package com.dev.crm.core.dao.impl;
 
+import java.util.Date;
+
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 
@@ -22,10 +24,12 @@ public class DetalleCuentaDAOImpl extends BaseDAOHibernateImpl implements Detall
 			storedProcedure.registerStoredProcedureParameter("COD_DOC", String.class, ParameterMode.IN);
 			storedProcedure.registerStoredProcedureParameter("OBS", String.class, ParameterMode.IN);
 			storedProcedure.registerStoredProcedureParameter("CODUSU", String.class, ParameterMode.IN);
+			storedProcedure.registerStoredProcedureParameter("FECHACLI", Date.class, ParameterMode.IN);
 			storedProcedure.registerStoredProcedureParameter("MENSAJE", String.class, ParameterMode.OUT);
 			storedProcedure.setParameter("COD_DOC", dC.getDocumentoPersonaCliente());
 			storedProcedure.setParameter("OBS", dC.getObservacionDetalleCuenta());
 			storedProcedure.setParameter("CODUSU", dC.getCodigoexterno());
+			storedProcedure.setParameter("FECHACLI", dC.getFechaSolicitudClienteDetalleCuenta());
 			storedProcedure.execute();
 			String result = (String) storedProcedure.getOutputParameterValue("MENSAJE");
 			return result;

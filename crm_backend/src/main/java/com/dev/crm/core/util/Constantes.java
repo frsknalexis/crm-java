@@ -8,6 +8,7 @@ public class Constantes {
 	public static final String PERSONA_VIEW = "modulo-personas/persona/persona";
 	public static final String EMPLEADO_VIEW = "modulo-personas/empleado/empleado";
 	public static final String DETALLE_CUENTA_VIEW = "modulo-servicios/detallecuenta/detallecuenta";
+	public static final String CUENTAS_VIEW = "modulo-servicios/detallecuenta/cuentas";
 	public static final String REPROGRAMACION_VIEW = "modulo-servicios/detallecuenta/reprogramacion";
 	public static final String PAGOS_VIEW = "modulo-pagos/pagos/pago";
 	public static final String ATENCION_VIEW = "modulo-atencion/herramienta/herramienta";
@@ -17,6 +18,9 @@ public class Constantes {
 	public static final String TAREA_VIEW= "modulo-notificacion/tarea/view";
 	public static final String CORTE_VIEW = "modulo-servicios/instalacion/cortes";
 	public static final String INSTALACIONES_VIEW = "modulo-servicios/instalacion/instalaciones";
+	public static final String INFORME_INSTALACION_VIEW = "modulo-servicios/instalacion/informeinstalaciones";
+	public static final String LISTA_PAGOS_VIEW = "modulo-pagos/pagos/listapagos";
+	public static final String CLIENTE_GESTORES_VIEW = "modulo-pagos/gestores/clientegestores";
 	public static final String LOGIN_VIEW = "login";
 	
 	public static final String SP_ACTIVAR_DESACTIVAR_CLIENTE = "sp_activar_desactivar";
@@ -38,6 +42,7 @@ public class Constantes {
 	public static final String SP_PAGO_SERVICIO = "sp_pago_servicio";
 	public static final String SP_LISTAR_CLIENTE_VENDEDOR = "sp_listar_cliente_vendedor";
 	public static final String SP_BUSCAR_CLIENTE_PAGO = "sp_buscar_cliente_pago";
+	public static final String SP_BUSCAR_DATOS_PAGOS_MES = "a";
 	public static final String SP_LISTAR_COMPROBANTE = "sp_listar_comprobante";
 	public static final String SP_MESES_DEUDAS = "sp_meses_deudas";
 	public static final String SP_PAGO_MORA = "sp_insercion_pago_mora";
@@ -47,6 +52,7 @@ public class Constantes {
 	public static final String SP_LISTAR_CLIENTES_ATENCION_DETALLE = "sp_listar_clientes_atencion_detalle";
 	public static final String SP_LISTAR_HERRAMIENTA_GENERAL = "sp_listar_herramienta_general";
 	public static final String SP_INSERCCION_HERRAMIENTA = "sp_inserccion_herramienta";
+	public static final String SP_GUARDAR_DESCUENTO_MES= "sp_inserccion_historial_descuento";
 	public static final String SP_INSERCCION_DETALLE_HERRAMIENTA = "sp_inserccion_detalle_herramienta";
 	public static final String SP_BUSQUEDA_HERRAMIENTA = "sp_envio_herramienta";
 	public static final String SP_LISTAR_PREGUNTAS = "sp_listar_detalle_herramienta";
@@ -59,6 +65,7 @@ public class Constantes {
 	public static final String SP_EDITAR_TAREA = "sp_update_tarea";
 	public static final String SP_EDITAR_PERSONA = "sp_update_persona";
 	public static final String SP_LISTAR_COMBO_TECNICO = "sp_combo_asignar_tecnico";
+	public static final String SP_LISTA_PLANILLA = "sp_listar_pagos_pdf_dia";
 	public static final String SP_LISTAR_RECLAMO = "sp_listar_Reclamo";
 	public static final String SP_LISTA_MODULO = "sp_listar_modulos_usuario";
 	public static final String SP_LISTAR_TAREA = "sp_listar_tarea";
@@ -70,6 +77,30 @@ public class Constantes {
 	public static final String SP_LISTAR_CORTE_INTERNET = "sp_listar_corte";
 	public static final String SP_UPDATE_SERVICIO_INTERNET = "sp_update_servicio_internet";
 	public static final String SP_LISTAR_INSTALACION_DIA_INTERNET = "sp_listar_instalacion_dia";
+	public static final String SP_LISTAR_PAGOS_DEL_DIA = "sp_listar_pagos_del_dia";
+	public static final String SP_INSERTAR_CONSECUTIVO_PAGO = "sp_insertar_consecutivo_pago";
+	public static final String SP_LISTAR_DETALLE_PAGO = "sp_recuperar_pagos_cliente";
+	public static final String SP_GENERAR_RECIBO = "sp_generar_recibo";
+	public static final String SP_LISTAR_PAGOS_POR_CAJA_REPORTE = "sp_listar_excel_pdf_pagos_por_caja";
+	public static final String SP_LISTAR_PAGOS_PDF_DIA= "sp_listar_pagos_pdf_dia";
+	public static final String SP_LISTAR_PAGOS_PDF_RANGO = "sp_listar_pagos_pdf_rango";
+	public static final String SP_RECUPERAR_DATOS_EDIT_CLIENTE = "sp_recuperar_datos_edit_cliente";
+	public static final String SP_UPDATE_PERSONA_CLIENTE= "sp_update_persona_cliente";
+	public static final String SP_CAMBIO_DOMICILIO = "sp_cambios_datos_por_domicilio";
+	public static final String SP_LISTAR_PDF_CLIENTE = "sp_listar_pdf_cliente";
+	public static final String SP_LISTAR_MATERIAL = "sp_listar_material";
+	public static final String SP_ENVIO_DATOS_IN_SERVICIO = "sp_envio_datos_in_servicio";
+	public static final String SP_ENVIO_DATOS_ONU = "sp_envio_datos_onu";
+	public static final String SP_ENVIO_DATOS_MATERIAL = "sp_envio_datos_material";
+	public static final String SP_LISTAR_VENTAS_POR_INSTALAR = "sp_listar_ventas_por_instalar";
+	public static final String SP_LISTAR_CUENTA_POR_INSTALAR = "sp_listar_cuenta_por_instalar";
+	public static final String SP_UPDATE_DETALLE_CUENTA = "sp_update_detalle_cuenta";
+	public static final String SP_RECUPERAR_OBSERVACION = "sp_recuperar_obser";
+	public static final String SP_LISTAR_INFORME_INSTALACION_DIA = "sp_listar_informe_instalacion_dia";
+	public static final String SP_LISTAR_CLIENTE_GESTOR = "sp_listar_cliente_gestor";
+	public static final String SP_UPDATE_CLIENTE_GESTOR = "sp_update_cliente_gestor";
+	public static final String SP_LISTA_GESTORES = "sp_lista_gestores";
+	public static final String SP_INSERTAR_MESES_ADELANTADOS = "sp_insertar_meses_adelantados";
 	
 	public static final boolean HABILITADO = true;
 	public static final boolean INHABILITADO = false;
@@ -89,5 +120,14 @@ public class Constantes {
 	public static final String MESSAGE_TOTAL_REGISTROS_CON = "";
 	public static final String ESTADO = "SERVICIO OPERANDO";
 	public static final String HECHO = "HECHO";
+	public static final String BUENO = "BUENO";
+	public static final String ERROR = "ERROR";
+	public static final String EXCEDIO = "EXCEDIO";
 	public static final String UPS = "UPS";
+	public static final String SIN_PERMISO = "SIN PERMISO";
+	public static final String AUTORIZADO = "MES NO AUTORIZADO";
+	public static final String LLENO = "LLENO";
+	public static final String PAGO_RAPIDO = "PAGO RAPIDO";
+	public static final String PAGO_ADELANTADO_SIN_PROMO = "PAGO ADELANTADO SIN PROMO";
+	public static final String PAGO_ADELANTADO_CON_PROMO = "PAGO ADELANTADO CON PROMO";
 }

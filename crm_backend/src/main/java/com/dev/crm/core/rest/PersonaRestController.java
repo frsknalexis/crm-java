@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,8 +26,8 @@ import com.dev.crm.core.dto.PersonaRequest;
 import com.dev.crm.core.dto.PersonaRequestE;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.PersonaFacade;
+import com.dev.crm.core.security.UserDetail;
 import com.dev.crm.core.util.GenericUtil;
-import com.dev.crm.core.util.IpUtil;
 import com.dev.crm.core.view.excel.ExcelGenerator;
 import com.dev.crm.core.view.pdf.PdfGenerator;
 
@@ -37,6 +38,10 @@ public class PersonaRestController {
 	@Autowired
 	@Qualifier("personaFacade")
 	private PersonaFacade personaFacade;
+	
+	@Autowired
+	@Qualifier("userDetail")
+	private UserDetail userDetail;
 	
 	@GetMapping("/personas")
 	public ResponseEntity<List<PersonaDTO>> findAll() {
@@ -79,8 +84,10 @@ public class PersonaRestController {
 		
 		try {
 			
-			String creadoPor = "mimoraleext";
-			List<PersonaDTO> personasDTO = personaFacade.findPersonasByCreadoPor(creadoPor);
+			User usuarioLogueado = userDetail.findLoggedInUser();
+			String usuario = usuarioLogueado.getUsername();
+			//String creadoPor = "mimoraleext";
+			List<PersonaDTO> personasDTO = personaFacade.findPersonasByCreadoPor(usuario);
 			if(GenericUtil.isNotEmpty(personasDTO)) {
 				return new ResponseEntity<List<PersonaDTO>>(personasDTO, HttpStatus.OK);
 			}
@@ -98,8 +105,10 @@ public class PersonaRestController {
 		
 		try {
 			
-			String creadoPor = "mimoraleext";
-			List<PersonaDTO> personasDTO = personaFacade.spListarPersonasNoClienteByCreadoPor(creadoPor);
+			User usuarioLogueado = userDetail.findLoggedInUser();
+			String usuario = usuarioLogueado.getUsername();
+			//String creadoPor = "mimoraleext";
+			List<PersonaDTO> personasDTO = personaFacade.spListarPersonasNoClienteByCreadoPor(usuario);
 			if(GenericUtil.isNotEmpty(personasDTO)) {
 				return new ResponseEntity<List<PersonaDTO>>(personasDTO, HttpStatus.OK);
 			}
@@ -117,8 +126,10 @@ public class PersonaRestController {
 		
 		try {
 			
-			String creadoPor = "lularosaint";
-			List<PersonaDTO> personasDTO = personaFacade.spListaPersonaNoEmpleado(creadoPor);
+			User usuarioLogueado = userDetail.findLoggedInUser();
+			String usuario = usuarioLogueado.getUsername();
+			//String creadoPor = "lularosaint";
+			List<PersonaDTO> personasDTO = personaFacade.spListaPersonaNoEmpleado(usuario);
 			if(GenericUtil.isNotEmpty(personasDTO)) {
 				return new ResponseEntity<List<PersonaDTO>>(personasDTO, HttpStatus.OK);
 			}
@@ -291,11 +302,7 @@ public class PersonaRestController {
 		
 		try
 		{
-			String mensaje = "mimoraleext";
-			valor.setCreadopor(mensaje);
-			valor.setIpmaquina(IpUtil.getCurrentIPAddress());
-			valor.setUsuariomaquina(IpUtil.getCurrentUserMachine());
-			valor.setUsuariosistema(IpUtil.getCurrentUserSystem());
+			
 			ResponseBaseOperation response = personaFacade.spInsertarPersona(valor);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
 		}
@@ -309,8 +316,6 @@ public class PersonaRestController {
 		
 		try
 		{
-			String mensaje = "mimoraleext";
-			valor.setModificadopor(mensaje);
 			ResponseBaseOperation response = personaFacade.spEditarPersona(valor);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
 		}

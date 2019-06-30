@@ -26,7 +26,7 @@ $(document).on('ready', function() {
 		  // Intervalo de tiempo
 		,5000);
 	
-	ocultar_mostrar(20);
+	ocultar_mostrar(50);
 	/**
 	 * 
 	 * funcion para cargar total registros 

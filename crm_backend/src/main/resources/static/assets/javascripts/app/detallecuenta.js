@@ -9,7 +9,9 @@ $(document).on('ready', function() {
 	
 	cargarTotalRegistrosPersonita();
 	
-	ocultar_mostrar(20);
+	ocultar_mostrar(50);
+	
+	validarFormGenerarCuenta();
 	
 	window.setInterval(
 		    function(){
@@ -150,7 +152,7 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formData),
 					dataType: 'json',
 					success: function(response) {
-						
+		
 						if(response != null) {
 							
 							$('#documentoPersonaCliente').val(response.documentoPersona);
@@ -223,6 +225,31 @@ $(document).on('ready', function() {
 	
 	/**
 	 * 
+	 *function para validarFormGenerarCuenta 
+	 * 
+	 */
+	function validarFormGenerarCuenta() {
+		
+		$('#generarCuenta').on('click', function(e) {
+			
+			e.preventDefault();
+			
+			if($('#fechaSolicitudClienteDetalleCuenta').val() == "") {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'Debe ingresar un valor valido para la Fecha de Solicitud'
+	            });
+				
+				$('#fechaSolicitudClienteDetalleCuenta').focus();
+				return false;
+			}
+		});
+	}
+	
+	/**
+	 * 
 	 *funcion para generarCuentaInternetColor 
 	 * 
 	 */
@@ -231,13 +258,15 @@ $(document).on('ready', function() {
 		$('#generarCuenta').on('click', function(e) {
 			
 			e.preventDefault();
-			if($('#documentoPersonaCliente').val().match(/^[0-9]{7,11}$/)) {
+			if($('#documentoPersonaCliente').val().match(/^[0-9]{7,11}$/) && $('#fechaSolicitudClienteDetalleCuenta').val() != "") {
 				
 				var formDataIC = {
 						documentoPersonaCliente: $('#documentoPersonaCliente').val(),
-						observacionDetalleCuenta: $('#detalleCuentaObservacion').val()
+						observacionDetalleCuenta: $('#detalleCuentaObservacion').val(),
+						fechaSolicitudClienteDetalleCuenta: $('#fechaSolicitudClienteDetalleCuenta').val()
 				};
 				
+				console.log(formDataIC);
 				
 				$.ajax({
 					
@@ -264,7 +293,7 @@ $(document).on('ready', function() {
 							}).then((result) => {
 
 								if(result.value) {
-									$(location).attr('href', '/detalleCuenta/generarCuenta/view');
+									$(location).attr('href', '/detalleCuenta/cuentas/view');
 								}
 							});
 						}
@@ -274,6 +303,14 @@ $(document).on('ready', function() {
 				                type: 'error',
 				                title: 'Ooops',
 				                text: 'Ya se Genero la Cuenta de Internet para el Cliente, verifique el estado del Servicio !'
+				            });
+						}
+						else if(response.status == "ERROR" && response.message == "LLENO") {
+							
+							swal({
+				                type: 'error',
+				                title: 'Ooops',
+				                text: 'Dia Ocupado Totalmente, instalaciones del dia completados !'
 				            });
 						}
 					},

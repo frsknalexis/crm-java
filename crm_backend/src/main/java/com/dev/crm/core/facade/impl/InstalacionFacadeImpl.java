@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import com.dev.crm.core.dto.InformeInstalacionDiaResultViewModel;
 import com.dev.crm.core.dto.InstalacionDiaInternetResultViewModel;
 import com.dev.crm.core.facade.InstalacionFacade;
 import com.dev.crm.core.service.InstalacionService;
@@ -34,6 +35,27 @@ public class InstalacionFacadeImpl implements InstalacionFacade {
 				else {
 					return instalacionesDiaInternet;
 				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<InformeInstalacionDiaResultViewModel> listarInformeInstalacionDia() {
+		
+		List<InformeInstalacionDiaResultViewModel> informesInstalacionDia = new ArrayList<InformeInstalacionDiaResultViewModel>();
+		
+		try {
+			
+			informesInstalacionDia = instalacionService.listarInformeInstalacionDia();
+			if(GenericUtil.isCollectionEmpty(informesInstalacionDia)) {
+				return null;
+			}
+			else {
+				return informesInstalacionDia;
 			}
 		}
 		catch(Exception e) {

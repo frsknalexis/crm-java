@@ -26,8 +26,8 @@ public class Cuenta implements Serializable {
 	private String documentoPersonaCliente;
 	
 	@Id
-	@Column(name="codi_cuenta", nullable=false, length=6)
-	private String codigoCuenta;
+	@Column(name="codi_cuenta", nullable = false)
+	private Integer codigoCuenta;
 	
 	@Id
 	@Column(name="codi_anio", nullable=false, length=4)
@@ -53,11 +53,11 @@ public class Cuenta implements Serializable {
 		this.documentoPersonaCliente = documentoPersonaCliente;
 	}
 	
-	public String getCodigoCuenta() {
+	public Integer getCodigoCuenta() {
 		return codigoCuenta;
 	}
 
-	public void setCodigoCuenta(String codigoCuenta) {
+	public void setCodigoCuenta(Integer codigoCuenta) {
 		this.codigoCuenta = codigoCuenta;
 	}
 

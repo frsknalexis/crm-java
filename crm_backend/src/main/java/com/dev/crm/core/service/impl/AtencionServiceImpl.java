@@ -12,6 +12,7 @@ import com.dev.crm.core.dto.AsignarTecnicoComboResultViewModel;
 import com.dev.crm.core.dto.ClienteAtencionDetalleResultViewModel;
 import com.dev.crm.core.dto.ClienteAtencionResultViewModel;
 import com.dev.crm.core.dto.ClienteDatosAtencionResultViewModel;
+import com.dev.crm.core.dto.DatosOnuRequest;
 import com.dev.crm.core.dto.DatosOnusResultViewModel;
 import com.dev.crm.core.dto.InsertarReclamoRequest;
 import com.dev.crm.core.dto.InsertarTecnicTareaRequest;
@@ -89,7 +90,7 @@ public class AtencionServiceImpl implements AtencionService {
 	private TareaRequestJdbcRepository tareaRequestJdbcRepository;
 	
 	@Autowired
-	@Qualifier("DatosOnusJdbcRepository")
+	@Qualifier("datosOnusJdbcRepository")
 	private DatosOnusJdbcRepository datosOnusJdbcRepository;
 	
 	
@@ -160,6 +161,29 @@ public class AtencionServiceImpl implements AtencionService {
 		return null;
 	}
 
+	@Override
+	public DatosOnusResultViewModel spRecuperarDatosOnu(DatosOnuRequest request) {
+		
+		DatosOnusResultViewModel datosOnu;
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				datosOnu = datosOnusJdbcRepository.spRecuperarDatosOnu(request);
+				if(GenericUtil.isNotNull(datosOnu)) {
+					return datosOnu;
+				}
+				else {
+					return null;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	@Override
 	public String InserrcionReclamo(InsertarReclamoRequest codirecl) {
 		
@@ -318,29 +342,6 @@ public class AtencionServiceImpl implements AtencionService {
 				String result = tareaRequestJdbcRepository.spEditarTarea(valor);
 				if(StringUtil.hasText(result)) {
 					return result;
-				}
-				else {
-					return null;
-				}
-			}
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public DatosOnusResultViewModel spRecuperarDatos(String sn, String mac) {
-
-		DatosOnusResultViewModel cDaOn;
-		
-		try {
-			
-			if(!GenericUtil.isEmpty(sn) && !GenericUtil.isEmpty(mac)) {
-				cDaOn = datosOnusJdbcRepository.spRecuperarDatos(sn, mac);
-				if(GenericUtil.isNotNull(cDaOn)) {
-					return cDaOn;
 				}
 				else {
 					return null;

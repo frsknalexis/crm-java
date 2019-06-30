@@ -1,9 +1,19 @@
-/**
- * 
- */
-
 $(document).on('ready', function() {
 	
+	var tablaClientes;
+	
+	 listarTablaClientes();
+	 
+	 mostrarDatosPersonaCliente();
+	 
+	 validarFormDatosPersonaCliente();
+	
+	 guardarDatosClientePersona();
+	 
+	 mostrarFormCambiarDireccion();
+	 
+	 guardarCambioDireccion();
+	 
 	var flag;
 	
 	var accion;
@@ -16,9 +26,9 @@ $(document).on('ready', function() {
 	setTimeout(function() {
 		cargarEstadoCliente();
 		ocultarBotones();
-	}, 6500);
+	}, 8000);
 	
-	ocultar_mostrar(20);
+	ocultar_mostrar(50);
 	
 	cargarTotalRegistrosPersonita();
 	
@@ -212,8 +222,8 @@ $(document).on('ready', function() {
 		
 		if($('#documentoPersona').val().match(/^[0-9]{7,11}$/) && $('#nombreUbigeo').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
 			&& $('#nombrePersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/) && $('#apellidoPaternoPersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
-			&& $('#apellidoMaternoPersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/) && $('#direccionActualPersona').val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\#.-\s]+$/)
-			&& $('#referenciaPersona').val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\#.-\s]+$/) && $('#telefonoUnoPersona').val().match(/^[0-9]{7,9}$/)) {
+			&& $('#apellidoMaternoPersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/) && $('#direccionActualPersona').val() != "" 
+				&& $('#referenciaPersona').val() != "" && $('#telefonoUnoPersona').val().match(/^[0-9]{7,9}$/)) {
 		
 			var formData = {
 					
@@ -517,6 +527,7 @@ $(document).on('ready', function() {
 			    	return false;
 				}
 				
+				/**
 				else if(!($('#direccionActualPersona').val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\#.-\s]+$/))) {
 					
 					swal({
@@ -530,6 +541,9 @@ $(document).on('ready', function() {
 			    	return false;
 				}
 				
+				*/
+				
+				/**
 				else if(!($('#referenciaPersona').val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\#.-\s]+$/))) {
 					
 					swal({
@@ -542,6 +556,7 @@ $(document).on('ready', function() {
 			    	$('#referenciaPersona').focus();
 			    	return false;
 				}
+				*/
 				
 				else if(!($('#telefonoUnoPersona').val().match(/^[0-9]{7,9}$/))) {
 					
@@ -650,7 +665,7 @@ $(document).on('ready', function() {
 			success: function(response) {
 			
 				$codigoSexo.html('');
-				$codigoSexo.append('<option value="">Seleccione una opcion</option>');
+				$codigoSexo.append('<option value="">Seleccione un sexo</option>');
 				for(var i = 0; i < response.length; i++) {
 					$codigoSexo.append('<option id="optionComboSexo" value="' + response[i].codigoSexo +'">' + response[i].descripcionSexo + '</option>');
 				}
@@ -907,53 +922,459 @@ $(document).on('ready', function() {
 		}
 	});
 	
-	var tablaClientes = $('#tablaClientes').DataTable({
-		"language": {
-			"sProcessing":     "Procesando...",
-			"sLengthMenu":     "Mostrar _MENU_ registros",
-			"sZeroRecords":    "No se encontraron resultados",
-			"sEmptyTable":     "Ningún dato disponible en esta tabla",
-			"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-			"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-			"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-			"sInfoPostFix":    "",
-			"sSearch":         "Buscar:",
-			"sUrl":            "",
-			"sInfoThousands":  ",",
-			"sLoadingRecords": "Cargando...",
-			"oPaginate": {
-				"sFirst":    "Primero",
-				"sLast":     "Último",
-				"sNext":     "Siguiente",
-				"sPrevious": "Anterior"
-			},
-			"oAria": {
-				"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-			}
-		},
-		"bProcessing": true,
-		"ajax": {
-			"url": "/api/v1/cliente/clientes/listarClienteVendedor",
-			"dataSrc": ""
-		},
-		"columns": [
-			{"data": "documentoPersonaCliente"},
-			{"data": "consecutivoCliente"},
-			{"data": "codigoCliente"},
-			{"data": "nombreComercialCliente"},
-			{"data": "correoCliente"},
-			{"data": "facebookCliente"},
-			{"defaultContent": '<span class="label label-success estadoCliente">Activo</span>'},
-			{"defaultContent": '<div class="btn-group"><button type="button" data-toggle="modal" class="btn btn-info btn-sm btnVerCliente" idDocumentoCliente><i class="fa fa-eye" title="Ver"></i></button><button type="button" class="btn btn-primary btn-sm btnEditarCliente" idDocumentoCliente><i class="fa fa-pencil" title="Editar"></i></button><button type="button" class="btn btn-danger btnDeshabilitarCliente btn-sm" idDocumentoCliente><i class="fa fa-times" title="Deshabilitar"></i></button><button type="button" class="btn btn-success btn-sm btnHabilitarCliente" idDocumentoCliente style="display:none;"><i class="fa fa-check" title="Habilitar"></i></button></div>'}
-		]
-	});
-	
-	$('#tablaClientes tbody').on('click', 'button', function() {
+	function listarTablaClientes() {
 		
-		var data = tablaClientes.row( $(this).parents('tr')).data();
-		$(this).attr('idDocumentoCliente', data.documentoPersonaCliente);
-	});
+		tablaClientes = $('#tablaClientes').dataTable({
+			"language": {
+				"sProcessing":     "Procesando...",
+				"sLengthMenu":     "Mostrar _MENU_ registros",
+				"sZeroRecords":    "No se encontraron resultados",
+				"sEmptyTable":     "Ningún dato disponible en esta tabla",
+				"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+				"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+				"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+				"sInfoPostFix":    "",
+				"sSearch":         "Buscar:",
+				"sUrl":            "",
+				"sInfoThousands":  ",",
+				"sLoadingRecords": "Cargando...",
+				"oPaginate": {
+					"sFirst":    "Primero",
+					"sLast":     "Último",
+					"sNext":     "Siguiente",
+					"sPrevious": "Anterior"
+				},
+				"oAria": {
+					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+				}
+			},
+			"bProcessing": true,
+			"ajax": {
+				"url": "/api/v1/cliente/clientes/listarClientesPorVendedor",
+				"dataSrc": ""
+			},
+			"columns": [
+				{"data": "documentoPersonaCliente"},
+				{"data": "cliente"},
+				{"data": "direccionActualCliente"},
+				{"data": "facebookCliente"},
+				{"data": "correoCliente"},
+				{"defaultContent": '<span class="label label-success estadoCliente">Activo</span>'},
+				{"defaultContent": '<div class="btn-group"><button type="button" data-toggle="modal" class="btn btn-info btn-sm btnVerCliente" idDocumentoCliente><i class="fa fa-eye" title="Ver"></i></button><button type="button" class="btn btn-primary btn-sm btnEditarCliente" idDocumentoCliente><i class="fa fa-pencil" title="Editar"></i></button></div>'},
+				{"defaultContent": '<button type="button" data-toggle="modal" class="btn btn-warning btn-xs btnEditarDatosPersona" idDocumentoCliente><i class="fa fa-user" title="Editar"></i> Datos Persona</button>'},
+				{"defaultContent": '<button type="button" data-toggle="modal" class="btn btn-success btn-xs btnCambiarDireccionCliente" idDocumentoCliente><i class="fa fa-home" title="Editar"></i> Cambiar Direccion</button>'}
+			]
+		}).DataTable();
+		
+		$('#tablaClientes tbody').on('click', 'button', function() {
+			
+			var data = tablaClientes.row( $(this).parents('tr')).data();
+			console.log(data);
+			$(this).attr('idDocumentoCliente', data.documentoPersonaCliente);
+		});
+	}
+	
+	/**
+	 *
+	 * function para limpiarInputsDelFormDatosPersonaCliente
+	 * 
+	 */
+	function limpiarInputsFormDatosPersonaCliente() {
+		
+		$('#myModalLabelDatosPersona').html('');
+		$('#documentoPersonaClientePersona').val('');
+		$('#nombreClientePersona').val('');
+		$('#apellidoPaternoClientePersona').val('');
+		$('#apellidoMaternoClientePersona').val('');
+		$('#telefonoUnoClientePersona').val('');
+		$('#telefonoDosClientePersona').val('');
+		$('#telefonoTresClientePersona').val('');
+		$('#direccionClientePersona').val('');
+	}
+	
+	/**
+	 * 
+	 *function para mostrarDatosPersonaCliente 
+	 *
+	 **/
+	function mostrarDatosPersonaCliente() {
+		
+		$('#tablaClientes tbody').on('click', 'button.btnEditarDatosPersona', function() {
+			
+			var documentoPersonaCliente = $(this).attr('idDocumentoCliente');
+			console.log('documentoPersonaCliente: ' + documentoPersonaCliente);
+			
+			limpiarInputsFormDatosPersonaCliente();
+			$('#modalDatosPersona').modal('show');
+			$('#documentoPersonaClientePersona').attr('disabled', true);
+			$('#direccionClientePersona').attr('disabled', true);
+			
+			$.ajax({
+				
+				type:'GET',
+				url: '/api/v1/cliente/cliente/recuperarDatosCliente/' + documentoPersonaCliente,
+				dataType: 'json',
+				success: function(response) {
+					console.log(response);
+					$('#myModalLabelDatosPersona').html('Persona: ' + response.apellidoPaternoCliente + ' ' + response.apellidoMaternoCliente + ', ' + response.nombresCliente);
+					$('#documentoPersonaClientePersona').val(response.documentoPersonaCliente);
+					$('#nombreClientePersona').val(response.nombresCliente);
+					$('#apellidoPaternoClientePersona').val(response.apellidoPaternoCliente);
+					$('#apellidoMaternoClientePersona').val(response.apellidoMaternoCliente);
+					$('#telefonoUnoClientePersona').val(response.telefonoUnoCliente);
+					$('#telefonoDosClientePersona').val(response.telefonoDosCliente);
+					$('#telefonoTresClientePersona').val(response.telefonoTresCliente);
+					$('#direccionClientePersona').val(response.direccionActualCliente);
+				}
+			});
+		});
+	}
+	
+	/**
+	 * 
+	 *function para limpiar el modal de cambiar direccion 
+	 * 
+	 */
+	function limpiarInputsCambiarDireccion() {
+		
+		$('#myModalLabelCambiarDireccion').html('');
+		$('#documentoPersonaClienteCambiarDireccion').val('');
+		$('#nombreClienteCambiarDireccion').val('');
+		$('#apellidoPaternoClienteCambiarDireccion').val('');
+		$('#direccionClienteCambiarDireccion').val('');
+		$('#nuevaDireccionCliente').val('');
+		$('#observacionCambiarDireccion').val('');
+		$('#fechaSugerenciaCambiarDireccion').val('');
+	}
+	
+	/**
+	 * 
+	 *function para mostrarFormDireccion 
+	 * 
+	 */
+	function mostrarFormCambiarDireccion() {
+	
+		$('#tablaClientes tbody').on('click', 'button.btnCambiarDireccionCliente', function() {
+			
+			var documentoPersonaCliente = $(this).attr('idDocumentoCliente');
+			console.log('documentoPersonaCliente: ' + documentoPersonaCliente);
+			
+			$('#documentoPersonaClienteCambiarDireccion').attr('disabled', true);
+			$('#nombreClienteCambiarDireccion').attr('disabled', true);
+			$('#apellidoPaternoClienteCambiarDireccion').attr('disabled', true);
+			$('#direccionClienteCambiarDireccion').attr('disabled', true);
+			
+			limpiarInputsCambiarDireccion();
+			$('#modalCambiarDireccion').modal('show');
+			
+			$.ajax({
+				
+				type: 'GET',
+				url: '/api/v1/cliente/cliente/recuperarDatosCliente/' + documentoPersonaCliente,
+				dataType: 'json',
+				success: function(response) {
+					console.log(response);
+					$('#myModalLabelCambiarDireccion').html('Cliente: ' + response.apellidoPaternoCliente + ' ' + response.apellidoMaternoCliente + ', ' + response.nombresCliente);
+					$('#documentoPersonaClienteCambiarDireccion').val(response.documentoPersonaCliente);
+					$('#nombreClienteCambiarDireccion').val(response.nombresCliente);
+					$('#apellidoPaternoClienteCambiarDireccion').val(response.apellidoPaternoCliente + ' ' + response.apellidoMaternoCliente);
+					$('#direccionClienteCambiarDireccion').val(response.direccionActualCliente);
+				}
+			});
+		});
+	}
+	
+	
+	/**
+	 * 
+	 *realizar evento guardarCambioDireccion 
+	 * 
+	 */
+	function guardarCambioDireccion() {
+		
+		$('#guardarDatosCambiarDireccion').on('click', function(e) {
+			e.preventDefault();
+			
+			if($('#nuevaDireccionCliente').val() != "") {
+				
+				var formDataCambiarDireccion = {
+						documentoPersonaCliente: $('#documentoPersonaClienteCambiarDireccion').val(),
+						nuevaDireccion: $('#nuevaDireccionCliente').val(),
+						observacionCuenta: $('#observacionCambiarDireccion').val(),
+						fechaElegida: $('#fechaSugerenciaCambiarDireccion').val()
+				};
+				console.log(formDataCambiarDireccion);
+				
+				$.ajax({
+					
+					type: 'POST',
+					url: '/api/v1/cliente/cliente/cambiarDomicilio',
+					headers: {
+						"Content-Type": "application/json",
+						"Accept": "application/json"
+					},
+					data: JSON.stringify(formDataCambiarDireccion),
+					dataType: 'json',
+					success: function(response) {
+						console.log(response);
+						
+						swal({
+							type: "success",
+							title: "Direccion del Cliente Actualizada con exito",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar",
+							closeOnConfirm: false
+						}).then((result) => {
+
+							if(result.value) {
+								$(location).attr('href', '/persona/view');
+							}
+						});
+					},
+					error: function() {
+						
+						swal({
+			                type: 'error',
+			                title: 'Ooops',
+			                text: 'Error al Actualizar Direccion del Cliente !'
+			            });
+					}
+				});
+			}
+		});
+	}
+	
+	
+	/**
+	 * 
+	 *function validarFormDatosPersonaCliente 
+	 * 
+	 */
+	function validarFormDatosPersonaCliente() {
+		
+		$('#guardarDatosClientePersona').on('click', function(e) {
+			e.preventDefault();
+			
+			if($('#nombreClientePersona').val() == "" && $('#apellidoPaternoClientePersona').val() == "" && $('#apellidoMaternoClientePersona').val() == ""
+				&& $('#telefonoUnoClientePersona').val() == "") {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'Debe llenar algunos Campos !'
+	            });
+			
+				return false;
+			}
+			else {
+				
+				if($('#nombreClientePersona').val() == "" || $('#nombreClientePersona').val() == 0) {
+					
+					swal({
+		                type: 'error',
+		                title: 'Ooops',
+		                text: 'El campo Nombre Persona no puede estar vacio, ingrese un valor valido'
+		            });
+			    	
+			    	$('#nombreClientePersona').focus();
+			    	return false;
+				}
+				
+				if($('#apellidoPaternoClientePersona').val() == "" || $('#apellidoPaternoClientePersona').val() == 0) {
+					
+					swal({
+		                type: 'error',
+		                title: 'Ooops',
+		                text: 'El campo Apellido Paterno Persona no puede estar vacio, ingrese un valor valido'
+		            });
+			    	
+			    	$('#apellidoPaternoClientePersona').focus();
+			    	return false;
+				}
+				
+				if($('#apellidoMaternoClientePersona').val() == "" || $('#apellidoMaternoClientePersona').val() == 0) {
+					
+					swal({
+		                type: 'error',
+		                title: 'Ooops',
+		                text: 'El campo Apellido Materno Persona no puede estar vacio, ingrese un valor valido'
+		            });
+			    	
+			    	$('#apellidoMaternoClientePersona').focus();
+			    	return false;
+				}
+				
+				if($('#telefonoUnoClientePersona').val() == "" || $('#telefonoUnoClientePersona').val() == 0) {
+					
+					swal({
+		                type: 'error',
+		                title: 'Ooops',
+		                text: 'El campo Telefono o Celular no puede estar vacio, ingrese un valor valido'
+		            });
+			    	
+			    	$('#telefonoUnoClientePersona').focus();
+			    	return false;
+				}
+				
+				if(!($('#nombreClientePersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/))) {
+					
+					swal({
+		                type: 'error',
+		                title: 'Ooops',
+		                text: 'El campo Nombre no permite caracteres especiales ni numeros'
+		            });
+					
+					$('#nombreClientePersona').val('');
+					$('#nombreClientePersona').focus();
+			    	return false;
+				}
+				
+				if(!($('#apellidoPaternoClientePersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/))) {
+					
+					swal({
+		                type: 'error',
+		                title: 'Ooops',
+		                text: 'El campo Apellido Paterno no permite caracteres especiales ni numeros'
+		            });
+					
+					$('#apellidoPaternoClientePersona').val('');
+					$('#apellidoPaternoClientePersona').focus();
+			    	return false;
+				}
+				
+				if(!($('#apellidoMaternoClientePersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/))) {
+					
+					swal({
+		                type: 'error',
+		                title: 'Ooops',
+		                text: 'El campo Apellido Materno no permite caracteres especiales ni numeros'
+		            });
+					
+					$('#apellidoMaternoClientePersona').val('');
+					$('#apellidoMaternoClientePersona').focus();
+			    	return false;
+				}
+				
+				if(!($('#telefonoUnoClientePersona').val().match(/^[0-9]{7,9}$/))) {
+					
+					swal({
+		                type: 'error',
+		                title: 'Ooops',
+		                text: 'El campo Telefono o Celular Uno no permite caracteres especiales, ni letras'
+		            });
+			    	
+					$('#telefonoUnoClientePersona').val('');
+			    	$('#telefonoUnoClientePersona').focus();
+			    	return false;
+				}
+			}
+		});
+		
+		/**
+		 * 
+		 * Evento change para el input Telefono 2
+		 * 
+		 * */
+		$('#telefonoDosClientePersona').on('change', function() {
+			
+			if(!($('#telefonoDosClientePersona').val().match(/^[0-9]{7,9}$/))) {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'El campo Telefono o Celular Dos no permite caracteres especiales, ni letras'
+	            });
+		    	
+				$('#telefonoDosClientePersona').val('');
+		    	$('#telefonoDosClientePersona').focus();
+		    	return false;
+			}
+		});
+		
+		$('#telefonoTresClientePersona').on('change', function() {
+			
+			if(!($('#telefonoTresClientePersona').val().match(/^[0-9]{7,9}$/))) {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'El campo Telefono o Celular Tres no permite caracteres especiales, ni letras'
+	            });
+		    	
+				$('#telefonoTresClientePersona').val('');
+		    	$('#telefonoTresClientePersona').focus();
+		    	return false;
+			}
+		});
+	}
+	
+	/**
+	 * 
+	 *function guardar datos clientePersona 
+	 * 
+	 */
+	function guardarDatosClientePersona() {
+		
+		$('#guardarDatosClientePersona').on('click', function(e) {
+			e.preventDefault();
+			
+			if($('#nombreClientePersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/) && $('#apellidoPaternoClientePersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
+					&& $('#apellidoMaternoClientePersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/) && $('#telefonoUnoClientePersona').val().match(/^[0-9]{7,9}$/)) {
+				
+				var formDataDatosPersonaCliente = {
+						documentoPersonaCliente: $('#documentoPersonaClientePersona').val(),
+						apellidoPaternoCliente: $('#apellidoPaternoClientePersona').val(),
+						apellidoMaternoCliente: $('#apellidoMaternoClientePersona').val(),
+						nombrePersonaCliente: $('#nombreClientePersona').val(),
+						telefonoUnoCliente: $('#telefonoUnoClientePersona').val(),
+						telefonoDosCliente: $('#telefonoDosClientePersona').val(),
+						telefonoTresCliente: $('#telefonoTresClientePersona').val()
+				};
+				
+				console.log(formDataDatosPersonaCliente);
+				
+				$.ajax({
+					
+					type: 'PUT',
+					url: '/api/v1/cliente/updatePersonaCliente',
+					headers: {
+						"Content-Type": "application/json",
+						"Accept": "application/json"
+					},
+					data: JSON.stringify(formDataDatosPersonaCliente),
+					dataType: 'json',
+					success: function(response) {
+						console.log(response);
+						
+						if(response.status == 'SUCCESS' && response.message == 'HECHO') {
+							
+							swal({
+								type: "success",
+								title: "Datos de la Persona Actualizado con exito",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar",
+								closeOnConfirm: false
+							}).then((result) => {
+
+								if(result.value) {
+									$(location).attr('href', '/persona/view');
+								}
+							});
+						}
+					},
+					error: function() {
+						
+						swal({
+			                type: 'error',
+			                title: 'Ooops',
+			                text: 'Error al Actualizar Datos de la Persona !'
+			            });
+					}
+				});
+			}
+		});
+	}
 	
 	function cargarEstadoCliente() {
 		

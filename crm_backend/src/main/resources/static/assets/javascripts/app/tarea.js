@@ -9,6 +9,8 @@ $(document).on('ready', function() {
 	
 	devolvervalor();
 	
+	ocultar_mostrar(50);
+	
 	listartablatareas();
 	
 	cargarTotalRegistrosPersonita();

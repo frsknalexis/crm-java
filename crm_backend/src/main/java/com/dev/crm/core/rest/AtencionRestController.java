@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import com.dev.crm.core.dto.AsignarTecnicoComboResultViewModel;
 import com.dev.crm.core.dto.ClienteAtencionDetalleResultViewModel;
 import com.dev.crm.core.dto.ClienteAtencionResultViewModel;
 import com.dev.crm.core.dto.ClienteDatosAtencionResultViewModel;
+import com.dev.crm.core.dto.DatosOnuRequest;
 import com.dev.crm.core.dto.DatosOnusResultViewModel;
 import com.dev.crm.core.dto.InsertarReclamoRequest;
 import com.dev.crm.core.dto.InsertarTecnicTareaRequest;
@@ -28,6 +30,7 @@ import com.dev.crm.core.dto.ReclamoResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.dto.TareasResultViewModel;
 import com.dev.crm.core.facade.AtencionFacade;
+import com.dev.crm.core.security.UserDetail;
 import com.dev.crm.core.util.GenericUtil;
 import com.dev.crm.core.util.StringUtil;
 
@@ -38,6 +41,10 @@ public class AtencionRestController {
 	@Autowired
 	@Qualifier("atencionFacade")
 	private AtencionFacade atencionFacade;
+	
+	@Autowired
+	@Qualifier("userDetail")
+	private UserDetail userDetail;
 	
 	@GetMapping("/clientesAtencion")
 	public ResponseEntity<List<ClienteAtencionResultViewModel>> spListarClientesAtencion() {
@@ -104,8 +111,10 @@ public class AtencionRestController {
 		
 		try
 		{
-			String mensaje = "jolaurenint";
-			inserther.setCodigousuario(mensaje);
+			User usuarioLogueado = userDetail.findLoggedInUser();
+			//String mensaje = "jolaurenint";
+			String usuario = usuarioLogueado.getUsername();
+			inserther.setCodigousuario(usuario);
 			ResponseBaseOperation response = atencionFacade.spInsertarReclamo(inserther);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
 		}
@@ -138,8 +147,9 @@ public class AtencionRestController {
 		try
 			{
 			
-			String usuario = "jolaurenint";
-			
+			User usuarioLogueado = userDetail.findLoggedInUser();
+			//String usuario = "jolaurenint";
+			String usuario = usuarioLogueado.getUsername();
 			if(StringUtil.hasText(usuario)) {
 				List<ReclamoResultViewModel> herramientasAtencion = atencionFacade.spListarReclamo(usuario);
 				if(!GenericUtil.isEmpty(herramientasAtencion)) {
@@ -160,7 +170,9 @@ public class AtencionRestController {
 		
 		try
 		{
-			String usuario = "jolaurenint";
+			User usuarioLogueado = userDetail.findLoggedInUser();
+			//String usuario = "jolaurenint";
+			String usuario = usuarioLogueado.getUsername();
 			documentoPersona.setCodigousuario(usuario);
 			ResponseBaseOperation response = atencionFacade.speditarreclmaotecnico(documentoPersona);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
@@ -175,7 +187,9 @@ public class AtencionRestController {
 		
 		try
 		{
-			String usuario = "joroblesext";
+			User usuarioLogueado = userDetail.findLoggedInUser();
+			//String usuario = "joroblesext";
+			String usuario = usuarioLogueado.getUsername();
 			documentoPersona.setDatovaluar(usuario);
 			ResponseBaseOperation response = atencionFacade.spObtnerCantidadTarea(documentoPersona);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
@@ -192,7 +206,9 @@ public class AtencionRestController {
 			
 			if(GenericUtil.isNotEmpty(usuariocombinado)) {
 				
-				String usuario = "joroblesext";
+				User usuarioLogueado = userDetail.findLoggedInUser();
+				//String usuario = "joroblesext";
+				String usuario = usuarioLogueado.getUsername();
 				String valor = usuariocombinado + usuario;
 				MensajeNotiResultViewModel cusuario =atencionFacade.spbuscardatosmensaje(valor);
 				if(GenericUtil.isNotNull(cusuario)) {
@@ -214,7 +230,9 @@ public class AtencionRestController {
 		
 		try {
 			
-			String usuario = "joroblesext";
+			User usuarioLogueado = userDetail.findLoggedInUser();
+			//String usuario = "joroblesext";
+			String usuario = usuarioLogueado.getUsername();
 			if(GenericUtil.isNotEmpty(usuario)) {
 				List<TareasResultViewModel> tarea = atencionFacade.spListarTareas(usuario);
 				if(!GenericUtil.isCollectionEmpty(tarea)) {
@@ -243,17 +261,18 @@ public class AtencionRestController {
 			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	@GetMapping("/searchDatosOnu/{sn}/{mac}")
-	public ResponseEntity<DatosOnusResultViewModel> spRecuperaDatosOnu(@PathVariable(value="sn") String sn , @PathVariable(value="mac") String mac){
+	
+	@PostMapping("/searchDatosOnu")
+	public ResponseEntity<DatosOnusResultViewModel> spRecuperarDatosOnu(@Valid @RequestBody DatosOnuRequest request) {
 		
 		try {
 			
-			if(GenericUtil.isNotEmpty(sn) && GenericUtil.isNotEmpty(mac)) {
-				DatosOnusResultViewModel clientePago = atencionFacade.sppRecuperarDatos(sn, mac);
-				if(GenericUtil.isNotNull(clientePago)) {
-					return new ResponseEntity<DatosOnusResultViewModel>(clientePago, HttpStatus.OK);
+			if(GenericUtil.isNotNull(request)) {
+				DatosOnusResultViewModel datosOnu = atencionFacade.spRecuperarDatosOnu(request);
+				if(GenericUtil.isNotNull(datosOnu)) {
+					return new ResponseEntity<DatosOnusResultViewModel>(datosOnu, HttpStatus.OK);
 				}
-				else {
+				else if(GenericUtil.isNull(datosOnu)) {
 					return new ResponseEntity<DatosOnusResultViewModel>(HttpStatus.NO_CONTENT);
 				}
 			}
@@ -269,7 +288,9 @@ public class AtencionRestController {
 		
 		try
 		{
-			String usuario = "jolaurenint";
+			User usuarioLogueado = userDetail.findLoggedInUser();
+			//String usuario = "jolaurenint";
+			String usuario = usuarioLogueado.getUsername();
 			requ.setCodigousuario(usuario);
 			ResponseBaseOperation response = atencionFacade.speditarinstmaotecnico(requ);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);

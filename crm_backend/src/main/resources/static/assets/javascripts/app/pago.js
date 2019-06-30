@@ -4,6 +4,8 @@ $(document).on('ready', function() {
 	
 	var tablaDeudasCliente;
 	
+	var tablaPagoClienteDetalle;
+	
 	cargarTotalRegistrosPersonita();
 	
 	listarClientesPago();
@@ -12,7 +14,7 @@ $(document).on('ready', function() {
 		mostrarFormRealizarPago(false);
 	}, 100);
 	
-	ocultar_mostrar(20);
+	ocultar_mostrar(50);
 	
 	window.setInterval(
 		    function(){
@@ -39,6 +41,16 @@ $(document).on('ready', function() {
 	realizarPago();
 	
 	verDeudaCliente();
+	
+	evaluadopagos();
+	
+	valgenerardescuento();
+	
+	redireccionarListaPagosView();
+	
+	mostrarFormReportePagosPorDia();
+	
+	mostrarFormReporteRangoDeFechas();
 	
 	/**
 	 * function para listar los clientesPago
@@ -151,6 +163,9 @@ $(document).on('ready', function() {
 			$('#nombreComercialPago').attr('disabled', true);
 			$('#direccionClientePago').attr('disabled', true);
 			$('#clienteReferenciaDireccionPago').attr('disabled', true);
+			$('#clienteFechaInstalacionPago').attr('disabled', true);
+			$('#clienteGestorResponsablePago').attr('disabled', true);
+			$('#clienteTelefonoGestorPago').attr('disabled', true);
 		}
 		else {
 			$('#documentoPersonaClientePago').attr('disabled', false);
@@ -158,6 +173,9 @@ $(document).on('ready', function() {
 			$('#nombreComercialPago').attr('disabled', false);
 			$('#direccionClientePago').attr('disabled', false);
 			$('#clienteReferenciaDireccionPago').attr('disabled', false);
+			$('#clienteFechaInstalacionPago').attr('disabled', false);
+			$('#clienteGestorResponsablePago').attr('disabled', false);
+			$('#clienteTelefonoGestorPago').attr('disabled', false);
 		}
 	}
 	
@@ -172,6 +190,9 @@ $(document).on('ready', function() {
 		$('#nombreComercialPago').val('');
 		$('#direccionClientePago').val('');
 		$('#clienteReferenciaDireccionPago').val('');
+		$('#clienteFechaInstalacionPago').val('');
+		$('#clienteGestorResponsablePago').val('');
+		$('#clienteTelefonoGestorPago').val('');
 		$('#codigoComprobante').val('');
 		$('#cantidadPago').val('');
 		$('#documentoPersonaPago').val('');
@@ -213,10 +234,17 @@ $(document).on('ready', function() {
 					$('#nombreComercialPago').val(response.nombreComercialCliente);
 					$('#direccionClientePago').val(response.direccionActualCliente);
 					$('#clienteReferenciaDireccionPago').val(response.referencia);
+					$('#clienteFechaInstalacionPago').val(response.fechaInstalacion);
+					$('#clienteGestorResponsablePago').val(response.gestorResponsable);
+					$('#clienteTelefonoGestorPago').val(response.telefonoGestor);
 					
 					$('#verDeudaCliente').attr('documentoPersonaCliente', response.documentoPersonaCliente);
-					
+					$('#verPagoCliente').attr('documentoPersonaCliente', response.documentoPersonaCliente);
+					$('#generarDescuento').attr('documentoPersonaCliente', response.documentoPersonaCliente);
 					$('#myModalLabelDeudaCliente').html('Deuda Cliente: ' + response.cliente);
+					$('#myModalLabelPagoCliente').html('Pagos Cliente: ' + response.cliente);
+					$('#myModalLabelDstosClienteDescuento').html('Cliente: ' + response.cliente);
+					$('#documentoPersonaClienteDescuento').val(response.documentoPersonaCliente);
 				}
 			});
 		});
@@ -339,16 +367,16 @@ $(document).on('ready', function() {
 				var formData = {
 					documentoPersonaCliente: $('#documentoPersonaClientePago').val(),
 					codigoComprobante: $('#codigoComprobante').val(),
-					cantidadPago: $('#cantidadPago').val(),
+					montoPago: $('#cantidadPago').val(),
 					documentoPersonaPago: $('#documentoPersonaPago').val()
 				};
 				
-				
+				console.log(formData);
 				
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/pago/realizarPago',
+					url: '/api/v1/pago/pagosAdelantados',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -357,19 +385,50 @@ $(document).on('ready', function() {
 					dataType: 'json',
 					success: function(response) {
 						
+						console.log(response);
 						
-						if(response.message == "HECHO") {
+						if(response.status == "SUCCESS" && response.message == "PAGO ADELANTADO CON PROMO") {
 							
 							swal({
 								type: "success",
-								title: "Se Realizo el Pago con exito",
+								title: "Se Realizo el Pago Correctamente",
 								showConfirmButton: true,
 								confirmButtonText: "Cerrar",
 								closeOnConfirm: false
 							}).then((result) => {
 
 								if(result.value) {
-									$(location).attr('href', '/pago/pagos');
+									$(location).attr('href', '/pago/listaPagos');
+								}
+							});
+						}
+						else if(response.status == "SUCCESS" && response.message == "PAGO ADELANTADO SIN PROMO") {
+							
+							swal({
+								type: "success",
+								title: "Se Realizo el Pago Correctamente",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar",
+								closeOnConfirm: false
+							}).then((result) => {
+
+								if(result.value) {
+									$(location).attr('href', '/pago/listaPagos');
+								}
+							});
+						}
+						else if(response.status == "SUCCESS" && response.message == "PAGO RAPIDO") {
+							
+							swal({
+								type: "success",
+								title: "Se Realizo el Pago Correctamente",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar",
+								closeOnConfirm: false
+							}).then((result) => {
+
+								if(result.value) {
+									$(location).attr('href', '/pago/listaPagos');
 								}
 							});
 						}
@@ -393,6 +452,58 @@ $(document).on('ready', function() {
 	 */
 	function limpiarDatosModal() {
 		$('#myModalLabelDeudaCliente').html('');
+	}
+	
+	/**
+	 *
+	 *function para listar deudas cliente  
+	 * 
+	 */
+	
+	function listarPagosCliente(documentoPersonaCliente) {
+		
+		var flag = documentoPersonaCliente;
+		console.log("flag: " + flag);
+		
+		tablaPagoClienteDetalle = $('#tablaPagoClienteDetalle').dataTable({
+			"language": {
+				"sProcessing":     "Procesando...",
+				"sLengthMenu":     "Mostrar _MENU_ registros",
+				"sZeroRecords":    "No se encontraron resultados",
+				"sEmptyTable":     "Ningún dato disponible en esta tabla",
+				"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+				"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+				"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+				"sInfoPostFix":    "",
+				"sSearch":         "Buscar:",
+				"sUrl":            "",
+				"sInfoThousands":  ",",
+				"sLoadingRecords": "Cargando...",
+				"oPaginate": {
+					"sFirst":    "Primero",
+					"sLast":     "Último",
+					"sNext":     "Siguiente",
+					"sPrevious": "Anterior"
+				},
+				"oAria": {
+					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+				}
+			},
+			'bProcessing': true,
+			"bDestroy": true,
+			"ajax": {
+				"url": "/api/v1/pago/listaDetallePago/" + flag,
+				"dataSrc": ""
+			},
+			"columns": [
+				{"data": "totalpago"},
+				{"data": "descuentototal"},
+				{"data": "cantidadpago"},
+				{"data": "fechadepago"},
+				{"data": "informacionpago"}
+			]
+		}).DataTable();
 	}
 	
 	/**
@@ -504,6 +615,79 @@ $(document).on('ready', function() {
 		});
 	}
 	
+	function evaluadopagos(){
+		
+		$('#verPagoCliente').on('click', function() {
+			
+			var documentoPersonaCliente = $(this).attr('documentoPersonaCliente');
+			
+			setTimeout(function() {
+				$('#modalVerPagoCliente').modal('show');
+				listarPagosCliente(documentoPersonaCliente);
+			}, 2300);
+			
+			
+			
+			$.ajax({
+				
+				type: 'GET',
+				url: '/api/v1/pago/listaDetallePago/' + documentoPersonaCliente,
+				dataType: 'json',
+				success: function(response) {
+					
+					if(response != null) {
+						
+					}
+					else {
+						
+					}
+				}
+			});
+			
+		});
+	}
+	
+	/**
+	 * 
+	 * GENERAR DESCUENTOS POR MOTIVO
+	 * 
+	 * */
+	
+	function valgenerardescuento(){
+		
+	$('#generarDescuento').on('click', function() {
+		
+		var documentoPersonaCliente = $(this).attr('documentoPersonaCliente');
+		
+		setTimeout(function() {
+			$('#modalGenerarDescuentoMes').modal('show');
+		}, 2300);
+		
+		
+		$.ajax({
+			
+			type: 'GET',
+			url: '/api/v1/pago/recuperarDatoPagoMes/' + documentoPersonaCliente,
+			dataType: 'json',
+			success: function(response) {
+				
+				if(response != null) {
+					$('#ClienteDescuentoMesPago').val(response.mesvalidopago);
+					$('#ClienteDescuentoMT').val(response.montoapagar);
+					$('#ClienteDescuento').val(response.montoapagar);
+					$('#ClienteDescuento').focus();
+				}
+				else {
+					
+				}
+			}
+		});
+		
+		GuardarDescuentDelMESACTUAL();
+		
+	});
+	}
+
 	/**
 	 * 
 	 * funcion para cargar combo comprobante pago deuda
@@ -562,6 +746,7 @@ $(document).on('ready', function() {
 
 			
 			enabledFormPagoDeuda(true);
+			$('#modalFormPagoDeuda').modal('show');
 			
 			$('#documentoPersonaClientePagoDeuda').val(documentoPersonaClienteDeuda);
 			$('#tipoServicioDeudaCliente').val(tipoServicio);
@@ -600,6 +785,63 @@ $(document).on('ready', function() {
 		$('#cancelarAccionPagoDeuda').on('click', function() {
 			enabledFormPagoDeuda(false);
 			limpiarFormPagoDeuda();
+		})
+	}
+	
+	function GuardarDescuentDelMESACTUAL() {
+		
+		$('#generarDescuentoClienteSave').on('click', function(e) {
+			e.preventDefault();
+			
+			var formData = {
+					documentopersoma: $('#documentoPersonaClienteDescuento').val(),
+					numerodemes: $('#ClienteDescuentoMesPago').val(),
+					anioalido: $('#ClienteDescuentoMesPago').val(),
+					descuentodelmes: $('#ClienteDescuento').val(),
+					motivodeldescuento: $('#ClienteDescuentoMotivo').val()
+			};
+			
+			console.log(formData);
+			
+			$.ajax({
+				
+				type: 'POST',
+				url: '/api/v1/pago/generarDescuentoMensualidad',
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json"
+				},
+				data: JSON.stringify(formData),
+				dataType: 'json',
+				success: function(response) {
+					
+					console.log(response);
+					if(response.message == "HECHO") {
+						
+						swal({
+							type: "success",
+							title: "Se Realizo el Descuento con exito",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar",
+							closeOnConfirm: false
+						}).then((result) => {
+
+							if(result.value) {
+								$(location).attr('href', '/pago/pagos');
+							}
+						});
+					}
+					else if(response.message == "ERROR") {
+						
+						swal({
+			                type: 'error',
+			                title: 'Ooops',
+			                text: 'Ups algo salio mal, contatce con el responsable del sistema !'
+			            });
+					}
+				}
+			});
+			
 		})
 	}
 	
@@ -706,7 +948,7 @@ $(document).on('ready', function() {
 						anioValido:$('#anioValidoDeuda').val()
 				};
 				
-			
+				
 				
 				$.ajax({
 					
@@ -719,35 +961,57 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formDataPagoDeuda),
 					dataType: 'json',
 					success: function(response) {
-						
-						
-						swal({
-							type: "success",
-							title: "Se Realizo el Pago con exito",
-							showConfirmButton: true,
-							confirmButtonText: "Cerrar",
-							closeOnConfirm: false
-						}).then((result) => {
+						console.log(response);
+						if(response.message == "HECHO") {
+							
+							swal({
+								type: "success",
+								title: "Se Realizo el Pago con exito",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar",
+								closeOnConfirm: false
+							}).then((result) => {
 
-							if(result.value) {
-								$(location).attr('href', '/pago/pagos');
-							}
-						});
-						
-					},
-					error: function() {
-						swal({
-			                type: 'error',
-			                title: 'Ooops',
-			                text: 'Error al Realizar Pago !'
-			            });
+								if(result.value) {
+									$(location).attr('href', '/pago/listaPagos');
+								}
+							});
+						}
+						else if(response.message == "EXCEDIO") {
+							
+							swal({
+				                type: 'error',
+				                title: 'Ooops',
+				                text: 'Excedio el monto a Pagar !'
+				            });
+						}
+						else if(response.message == "ERROR") {
+							
+							swal({
+				                type: 'error',
+				                title: 'Ooops',
+				                text: 'Hubo un error al Realizar el Pago !'
+				            });
+						}
 					}
 				});
 			}
 		});
 	}
 	
-function cargarmensajespopusnuevo(valor,id){
+	/**
+	 * 
+	 *function para redireccionar a la vista lista pagos 
+	 * 
+	 */
+	function redireccionarListaPagosView() {
+		
+		$('#buttonListaPagos').on('click', function() {
+			$(location).attr('href', '/pago/listaPagos');
+		});
+	}
+	
+	function cargarmensajespopusnuevo(valor,id){
 		
 		
 		
@@ -1012,5 +1276,156 @@ function cargarmensajespopusnuevo(valor,id){
 			
 		});	
 		
+	}
+	
+	
+	/**
+	 * 
+	 *function para mostrar el modal de reporte de pagosPorDia 
+	 * 
+	 */
+	function mostrarFormReportePagosPorDia() {
+		
+		$('#buttonReportePagosDia').on('click', function() {
+			
+			$('#modalPagosPorDia').modal('show');
+		});
+		
+		validarFormReportePagosPorDia();
+	}
+	
+	function validarFormReportePagosPorDia() {
+		
+		$('#buscarPagosPorFecha').on('click', function(e) {
+			e.preventDefault();
+			
+			if($('#fechaPagoPorDia').val() == "") {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'Debe ingresar un valor valido para este campo !'
+	            });
+			}
+			else if($('#fechaPagoPorDia').val() != "") {
+				
+				var fechaPago = $('#fechaPagoPorDia').val();
+				console.log('fechaPago: ' + fechaPago);
+						
+				var formDataPagoPorDia = {
+						fechaBusqueda: $('#fechaPagoPorDia').val()	
+				};
+				console.log(formDataPagoPorDia);
+						
+				$.ajax({
+					
+					type: 'POST',
+					url: '/api/v1/pago/pagosPorDia',
+					headers: {
+						"Content-Type": "application/json",
+						"Accept": "application/json"
+					},
+					data: JSON.stringify(formDataPagoPorDia),
+					dataType: 'json',
+					success: function(response) {
+						console.log(response);
+					},
+					error: function() {
+						
+						swal({
+			                type: 'error',
+			                title: 'Ooops',
+			                text: 'Ocurrio un Error !'
+			            });
+					}
+				});
+			}
+		});
+	}
+	
+	/**
+	 * 
+	 *function para mostrar el modal de reporte de pagosPorRangoDeFecha
+	 * 
+	 */
+	function mostrarFormReporteRangoDeFechas() {
+		
+		$('#buttonReportePagosPorRangoFecha').on('click', function() {
+			$('#modalPagosPorRangoFecha').modal('show');
+		});
+		
+		validarFormReporteRangoDeFechas();
+		buscarReportePagosPorRangoDeFecha();
+		cancelarAccionBusquedaRangoDeFechas();
+	}
+	
+	function cancelarAccionBusquedaRangoDeFechas() {
+		
+		$('#cancelarAccionBuscarRangoPorFecha').on('click', function() {
+			$('#fechaInicialBusqueda').val('');
+			$('#fechaFinBusqueda').val('');
+		});
+	}
+	
+	/**
+	 * 
+	 * function para validar el form Reporte Rango de Fechas
+	 * 
+	 * */
+	
+	function validarFormReporteRangoDeFechas() {
+		
+		$('#buscarPagosPorRangoFecha').on('click', function(e) {
+			e.preventDefault();
+			
+			if($('#fechaInicialBusqueda').val() == "" && $('#fechaFinBusqueda').val() == "") {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'Debe llenar todos los campos !'
+	            });
+				return false;
+			}
+			else {
+				if($('#fechaInicialBusqueda').val() == "") {
+					swal({
+		                type: 'error',
+		                title: 'Ooops',
+		                text: 'Debe ingresar un valor valido para la Fecha Inicial !'
+		            });
+					return false;
+				}
+				if($('#fechaFinBusqueda').val() == "") {
+					swal({
+		                type: 'error',
+		                title: 'Ooops',
+		                text: 'Debe ingresar un valor valido para la Fecha Final !'
+		            });
+					return false;
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 
+	 *function para buscarReportePorRangoDeFechas 
+	 * 
+	 */
+	function buscarReportePagosPorRangoDeFecha() {
+		
+		$('#buscarPagosPorRangoFecha').on('click', function(e) {
+			e.preventDefault();
+			
+			if($('#fechaInicialBusqueda').val() != "" && $('#fechaFinBusqueda').val() != "") {
+				
+				var formDataBusquedaPorRangoFecha = {
+						fechaInicial: $('#fechaInicialBusqueda').val(),
+						fechaFinal: $('#fechaFinBusqueda').val()
+				};
+				console.log(formDataBusquedaPorRangoFecha);
+			}
+		});
 	}
 });

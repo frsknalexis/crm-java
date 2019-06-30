@@ -16,20 +16,18 @@ public class DetalleCuentaPK implements Serializable {
 	
 	private Integer codigoDetalleCuenta;
 	
-	private String codigoCuenta;
+	private Integer codigoCuenta;
 	
 	private String codigoAnio;
 	
 	private Integer consecutivoCliente;
 
-	private String codigoexterno;
-
 	public DetalleCuentaPK() {
 		
 	}
 
-	public DetalleCuentaPK(String tipoServicio, String documentoPersonaCliente, Integer codigoDetalleCuenta, String codigoCuenta,
-			String codigoAnio, Integer consecutivoCliente,String codigoexterno) {
+	public DetalleCuentaPK(String tipoServicio, String documentoPersonaCliente, Integer codigoDetalleCuenta, Integer codigoCuenta,
+			String codigoAnio, Integer consecutivoCliente) {
 		super();
 		this.tipoServicio = tipoServicio;
 		this.documentoPersonaCliente = documentoPersonaCliente;
@@ -37,7 +35,6 @@ public class DetalleCuentaPK implements Serializable {
 		this.codigoCuenta = codigoCuenta;
 		this.codigoAnio = codigoAnio;
 		this.consecutivoCliente = consecutivoCliente;
-		this.codigoexterno = codigoexterno;
 	}
 	
 	public String getTipoServicio() {
@@ -64,11 +61,11 @@ public class DetalleCuentaPK implements Serializable {
 		this.codigoDetalleCuenta = codigoDetalleCuenta;
 	}
 
-	public String getCodigoCuenta() {
+	public Integer getCodigoCuenta() {
 		return codigoCuenta;
 	}
 
-	public void setCodigoCuenta(String codigoCuenta) {
+	public void setCodigoCuenta(Integer codigoCuenta) {
 		this.codigoCuenta = codigoCuenta;
 	}
 
@@ -86,14 +83,6 @@ public class DetalleCuentaPK implements Serializable {
 
 	public void setConsecutivoCliente(Integer consecutivoCliente) {
 		this.consecutivoCliente = consecutivoCliente;
-	}
-	
-	public String getCodigoexterno() {
-		return codigoexterno;
-	}
-
-	public void setCodigoexterno(String codigoexterno) {
-		this.codigoexterno = codigoexterno;
 	}
 
 	@Override

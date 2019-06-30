@@ -16,7 +16,7 @@ public class DetalleCuentaDTO implements Serializable {
 	
 	private Integer codigoDetalleCuenta;
 	
-	private String codigoCuenta;
+	private Integer codigoCuenta;
 	
 	private String codigoAnio;
 	
@@ -34,10 +34,8 @@ public class DetalleCuentaDTO implements Serializable {
 	
 	private Date fechaSolicitudClienteDetalleCuenta;
 	
-	private String codigoexterno;
+	private Integer codigoexterno;
 	
-	private String codigousuario;
-
 	public DetalleCuentaDTO() {
 		
 	}
@@ -66,11 +64,11 @@ public class DetalleCuentaDTO implements Serializable {
 		this.codigoDetalleCuenta = codigoDetalleCuenta;
 	}
 
-	public String getCodigoCuenta() {
+	public Integer getCodigoCuenta() {
 		return codigoCuenta;
 	}
 
-	public void setCodigoCuenta(String codigoCuenta) {
+	public void setCodigoCuenta(Integer codigoCuenta) {
 		this.codigoCuenta = codigoCuenta;
 	}
 
@@ -138,20 +136,11 @@ public class DetalleCuentaDTO implements Serializable {
 		this.fechaSolicitudClienteDetalleCuenta = fechaSolicitudClienteDetalleCuenta;
 	}
 
-	public String getCodigousuario() {
-		return codigousuario;
-	}
-
-	public void setCodigousuario(String codigousuario) {
-		this.codigousuario = codigousuario;
-	}
-
-	public String getCodigoexterno() {
+	public Integer getCodigoexterno() {
 		return codigoexterno;
 	}
 
-	public void setCodigoexterno(String codigoexterno) {
+	public void setCodigoexterno(Integer codigoexterno) {
 		this.codigoexterno = codigoexterno;
-	}
-	
+	}	
 }

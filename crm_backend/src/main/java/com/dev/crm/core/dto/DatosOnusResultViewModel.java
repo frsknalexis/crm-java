@@ -10,78 +10,77 @@ public class DatosOnusResultViewModel implements Serializable {
 	private static final long serialVersionUID = -192569864502908955L;
 
 	
-	private String outmacvalor;
+	private String macDescripcion;
 	
-	private String outsnvalor;
+	private String snDescripcion;
 	
-	private String outuservalor;
+	private String winUser;
 	
-	private String outpassvalor;
+	private String winPassword;
 	
-	private String outssidvalor;
+	private String wifissidDescripcion;
 	
-	private String outwifipassvalor;
+	private String wifiPasswordDescripcion;
 	
-	private String outestadovalor;
+	private String estado;
 
 	public DatosOnusResultViewModel() {
 		
 	}
 
-	public String getOutmacvalor() {
-		return outmacvalor;
+	public String getMacDescripcion() {
+		return macDescripcion;
 	}
 
-	public void setOutmacvalor(String outmacvalor) {
-		this.outmacvalor = outmacvalor;
+	public void setMacDescripcion(String macDescripcion) {
+		this.macDescripcion = macDescripcion;
 	}
 
-	public String getOutsnvalor() {
-		return outsnvalor;
+	public String getSnDescripcion() {
+		return snDescripcion;
 	}
 
-	public void setOutsnvalor(String outsnvalor) {
-		this.outsnvalor = outsnvalor;
+	public void setSnDescripcion(String snDescripcion) {
+		this.snDescripcion = snDescripcion;
 	}
 
-	public String getOutuservalor() {
-		return outuservalor;
+	public String getWinUser() {
+		return winUser;
 	}
 
-	public void setOutuservalor(String outuservalor) {
-		this.outuservalor = outuservalor;
+	public void setWinUser(String winUser) {
+		this.winUser = winUser;
 	}
 
-	public String getOutpassvalor() {
-		return outpassvalor;
+	public String getWinPassword() {
+		return winPassword;
 	}
 
-	public void setOutpassvalor(String outpassvalor) {
-		this.outpassvalor = outpassvalor;
+	public void setWinPassword(String winPassword) {
+		this.winPassword = winPassword;
 	}
 
-	public String getOutssidvalor() {
-		return outssidvalor;
+	public String getWifissidDescripcion() {
+		return wifissidDescripcion;
 	}
 
-	public void setOutssidvalor(String outssidvalor) {
-		this.outssidvalor = outssidvalor;
+	public void setWifissidDescripcion(String wifissidDescripcion) {
+		this.wifissidDescripcion = wifissidDescripcion;
 	}
 
-	public String getOutwifipassvalor() {
-		return outwifipassvalor;
+	public String getWifiPasswordDescripcion() {
+		return wifiPasswordDescripcion;
 	}
 
-	public void setOutwifipassvalor(String outwifipassvalor) {
-		this.outwifipassvalor = outwifipassvalor;
+	public void setWifiPasswordDescripcion(String wifiPasswordDescripcion) {
+		this.wifiPasswordDescripcion = wifiPasswordDescripcion;
 	}
 
-	public String getOutestadovalor() {
-		return outestadovalor;
+	public String getEstado() {
+		return estado;
 	}
 
-	public void setOutestadovalor(String outestadovalor) {
-		this.outestadovalor = outestadovalor;
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
-	
 }

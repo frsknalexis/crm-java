@@ -9,6 +9,11 @@ import com.dev.crm.core.util.Constantes;
 @Controller
 @RequestMapping("/detalleCuenta")
 public class DetalleCuentaController {
+	
+	@GetMapping("/cuentas/view")
+	public String cuentasViewController() {
+		return Constantes.CUENTAS_VIEW;
+	}
 
 	@GetMapping("/generarCuenta/view")
 	public String detalleCuentaViewController() {

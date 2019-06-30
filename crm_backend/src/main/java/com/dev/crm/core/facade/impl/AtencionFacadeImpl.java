@@ -11,6 +11,7 @@ import com.dev.crm.core.dto.AsignarTecnicoComboResultViewModel;
 import com.dev.crm.core.dto.ClienteAtencionDetalleResultViewModel;
 import com.dev.crm.core.dto.ClienteAtencionResultViewModel;
 import com.dev.crm.core.dto.ClienteDatosAtencionResultViewModel;
+import com.dev.crm.core.dto.DatosOnuRequest;
 import com.dev.crm.core.dto.DatosOnusResultViewModel;
 import com.dev.crm.core.dto.InsertarReclamoRequest;
 import com.dev.crm.core.dto.InsertarTecnicTareaRequest;
@@ -87,6 +88,29 @@ public class AtencionFacadeImpl implements AtencionFacade {
 				clienteDatosAtencion = atencionService.spListarDatosGeneralesCliente(documentoPersonaCliente);
 				if(GenericUtil.isNotNull(clienteDatosAtencion)) {
 					return clienteDatosAtencion;
+				}
+				else {
+					return null;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public DatosOnusResultViewModel spRecuperarDatosOnu(DatosOnuRequest request) {
+		
+		DatosOnusResultViewModel datosOnu;
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				datosOnu = atencionService.spRecuperarDatosOnu(request);
+				if(GenericUtil.isNotNull(datosOnu)) {
+					return datosOnu;
 				}
 				else {
 					return null;
@@ -257,29 +281,6 @@ public class AtencionFacadeImpl implements AtencionFacade {
 				String result = atencionService.speditartarea(valor);
 				if(StringUtil.hasText(result)) {
 					return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, result, valor);
-				}
-				else {
-					return null;
-				}
-			}
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public DatosOnusResultViewModel sppRecuperarDatos(String sn, String mac) {
-
-		DatosOnusResultViewModel cDaOnu;
-		
-		try {
-			
-			if(!GenericUtil.isEmpty(sn) && !GenericUtil.isEmpty(mac)) {
-				cDaOnu = atencionService.spRecuperarDatos(sn, mac);
-				if(GenericUtil.isNotNull(cDaOnu)) {
-					return cDaOnu;
 				}
 				else {
 					return null;

@@ -33,6 +33,9 @@ public class Usuario extends AuditingEntity implements Serializable, BaseEntity 
 	@Column(name="contra_usuario", nullable=false, length=100)
 	private String passwordUsuario;
 	
+	@Column(name = "encrypt_password")
+	private String encryptedPassword;
+	
 	@Column(name="documento_usuario", nullable=false, length=8)
 	private String documentoUsuario;
 
@@ -62,6 +65,14 @@ public class Usuario extends AuditingEntity implements Serializable, BaseEntity 
 
 	public void setPasswordUsuario(String passwordUsuario) {
 		this.passwordUsuario = passwordUsuario;
+	}
+
+	public String getEncryptedPassword() {
+		return encryptedPassword;
+	}
+
+	public void setEncryptedPassword(String encryptedPassword) {
+		this.encryptedPassword = encryptedPassword;
 	}
 
 	public String getDocumentoUsuario() {

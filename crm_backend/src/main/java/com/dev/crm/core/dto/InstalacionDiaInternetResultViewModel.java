@@ -1,6 +1,7 @@
 package com.dev.crm.core.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class InstalacionDiaInternetResultViewModel implements Serializable {
 
@@ -20,6 +21,10 @@ public class InstalacionDiaInternetResultViewModel implements Serializable {
 	private String telefonoCliente;
 	
 	private String documentoPersonaCliente;
+	
+	private Integer codigoCuenta;
+	
+	private Date fechaInstalacion;
 
 	public InstalacionDiaInternetResultViewModel() {
 	
@@ -71,5 +76,21 @@ public class InstalacionDiaInternetResultViewModel implements Serializable {
 
 	public void setDocumentoPersonaCliente(String documentoPersonaCliente) {
 		this.documentoPersonaCliente = documentoPersonaCliente;
+	}
+
+	public Integer getCodigoCuenta() {
+		return codigoCuenta;
+	}
+
+	public void setCodigoCuenta(Integer codigoCuenta) {
+		this.codigoCuenta = codigoCuenta;
+	}
+
+	public Date getFechaInstalacion() {
+		return fechaInstalacion;
+	}
+
+	public void setFechaInstalacion(Date fechaInstalacion) {
+		this.fechaInstalacion = fechaInstalacion;
 	}
 }

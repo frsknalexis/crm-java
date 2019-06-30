@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import com.dev.crm.core.dto.PersonaRequestE;
 import com.dev.crm.core.model.entity.Persona;
 import com.dev.crm.core.repository.jdbc.EditarPersonaResultJdbcRepository;
 import com.dev.crm.core.repository.jdbc.PersonaRequestJdbcRepository;
+import com.dev.crm.core.security.UserDetail;
 import com.dev.crm.core.service.PersonaService;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.DateUtil;
@@ -36,6 +38,10 @@ public class PersonaServiceImpl implements PersonaService {
 	@Autowired
 	@Qualifier("EditarPersonaResultJdbcRepository")
 	private EditarPersonaResultJdbcRepository editarPersonaResultJdbcRepository;
+	
+	@Autowired
+	@Qualifier("userDetail")
+	private UserDetail userDetail;
 	
 	@Override
 	public List<Persona> findAll() {
@@ -114,6 +120,8 @@ public class PersonaServiceImpl implements PersonaService {
 	@Override
 	public void disabledPersona(String documentoPersona) {
 		
+		User usuarioLogueado = userDetail.findLoggedInUser();
+		
 		try {
 			
 			Persona persona = null;
@@ -122,6 +130,7 @@ public class PersonaServiceImpl implements PersonaService {
 				persona.setHabilitado(Constantes.INHABILITADO);
 				persona.setFechaModificacion(DateUtil.getCurrentDate());
 				persona.setFechaDesactivacion(DateUtil.getCurrentDate());
+				persona.setModificadoPor(usuarioLogueado.getUsername());
 				persona.setIpUsuario(IpUtil.getCurrentIPAddress());
 				persona.setUsuarioMaquina(IpUtil.getCurrentUserMachine());
 			}
@@ -135,6 +144,8 @@ public class PersonaServiceImpl implements PersonaService {
 	@Override
 	public void enabledPersona(String documentoPersona) {
 		
+		User usuarioLogueado = userDetail.findLoggedInUser();
+		
 		try {
 			
 			Persona persona = null;
@@ -143,6 +154,7 @@ public class PersonaServiceImpl implements PersonaService {
 				persona.setHabilitado(Constantes.HABILITADO);
 				persona.setFechaModificacion(DateUtil.getCurrentDate());
 				persona.setFechaDesactivacion(DateUtil.getCurrentDate());
+				persona.setModificadoPor(usuarioLogueado.getUsername());
 				persona.setIpUsuario(IpUtil.getCurrentIPAddress());
 				persona.setUsuarioMaquina(IpUtil.getCurrentUserMachine());
 			}
@@ -165,6 +177,8 @@ public class PersonaServiceImpl implements PersonaService {
 	@Override
 	public void save(Persona p) {
 		
+		User usuarioLogueado = userDetail.findLoggedInUser();
+		
 		try {
 			
 			p.setHabilitado(Constantes.HABILITADO);
@@ -173,7 +187,7 @@ public class PersonaServiceImpl implements PersonaService {
 			p.setUsuarioSistema(IpUtil.getCurrentUserSystem());
 			
 			p.setFechaRegistro(DateUtil.getCurrentDate());
-			p.setCreadoPor("mimoraleext");
+			p.setCreadoPor(usuarioLogueado.getUsername());
 			personaDAO.save(p);
 		}
 		catch(Exception e) {
@@ -183,6 +197,8 @@ public class PersonaServiceImpl implements PersonaService {
 
 	@Override
 	public void update(Persona p) {
+		
+		User usuarioLogueado = userDetail.findLoggedInUser();
 		
 		try {
 			
@@ -205,7 +221,7 @@ public class PersonaServiceImpl implements PersonaService {
 				persona.setTelefonoTresPersona(p.getTelefonoTresPersona());
 				
 				persona.setFechaModificacion(DateUtil.getCurrentDate());
-				persona.setModificadoPor("mimoraleext");
+				persona.setModificadoPor(usuarioLogueado.getUsername());
 				personaDAO.update(persona);
 			}
 		}
@@ -282,9 +298,17 @@ public class PersonaServiceImpl implements PersonaService {
 	@Override
 	public String spInsertarPersona(PersonaRequest valor) {
 
+		User usuarioLogueado = userDetail.findLoggedInUser();
+		
 		try {
 			
 			if(GenericUtil.isNotNull(valor)) {
+				
+				valor.setIpmaquina(IpUtil.getCurrentIPAddress());
+				valor.setUsuariomaquina(IpUtil.getCurrentUserMachine());
+				valor.setUsuariosistema(IpUtil.getCurrentUserSystem());
+				
+				valor.setCreadopor(usuarioLogueado.getUsername());
 				String result = personaRequestJdbcRepository.spInsertarPersona(valor);
 				if(StringUtil.hasText(result)) {
 					return result;
@@ -303,9 +327,17 @@ public class PersonaServiceImpl implements PersonaService {
 	@Override
 	public String spEditarPersona(PersonaRequestE valor) {
 
+		User usuarioLogueado = userDetail.findLoggedInUser();
+		
 		try {
 			
 			if(GenericUtil.isNotNull(valor)) {
+				
+				valor.setIpMaquina(IpUtil.getCurrentIPAddress());
+				valor.setUsuarioMaquina(IpUtil.getCurrentUserMachine());
+				valor.setUsuarioSistema(IpUtil.getCurrentUserSystem());
+				
+				valor.setModificadopor(usuarioLogueado.getUsername());
 				String result = editarPersonaResultJdbcRepository.spEditarPersona(valor);
 				if(StringUtil.hasText(result)) {
 					return result;

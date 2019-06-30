@@ -1,6 +1,7 @@
 package com.dev.crm.core.repository.jdbc;
 
 import java.sql.Types;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dev.crm.core.dto.ClientePagoResultViewModel;
 import com.dev.crm.core.util.Constantes;
+import com.dev.crm.core.util.GenericUtil;
 
 @Repository("clientePagoResultJdbcRepository")
 public class ClientePagoResultCustomJdbcRepository implements ClientePagoResultJdbcRepository {
@@ -40,20 +42,33 @@ public class ClientePagoResultCustomJdbcRepository implements ClientePagoResultJ
 					new SqlOutParameter("VNOMBRECOMERCIAL", Types.VARCHAR),
 					new SqlOutParameter("VCLIENTE", Types.VARCHAR),
 					new SqlOutParameter("VDIRECCION", Types.VARCHAR),
-					new SqlOutParameter("VREFERENCIA", Types.VARCHAR));
+					new SqlOutParameter("VREFERENCIA", Types.VARCHAR),
+					new SqlOutParameter("FECHAI", Types.DATE),
+					new SqlOutParameter("GESTOR", Types.VARCHAR),
+					new SqlOutParameter("GESTORT", Types.VARCHAR));
 			
 			Map<String, Object> inParam = new HashMap<String, Object>();
 			inParam.put("COD_DOC", documentoPersona);
 			
 			Map<String, Object> out = simpleJdbcCall.execute(inParam);
+			System.out.println(out);
 			
-			ClientePagoResultViewModel cPago = new ClientePagoResultViewModel();
-			cPago.setDireccionActualCliente((String) out.get("VDIRECCION"));
-			cPago.setCliente((String) out.get("VCLIENTE"));
-			cPago.setDocumentoPersonaCliente((String) out.get("VDOCUMENTO"));
-			cPago.setReferencia((String) out.get("VREFERENCIA"));
-			cPago.setNombreComercialCliente((String) out.get("VNOMBRECOMERCIAL"));
-			return cPago;
+			if(GenericUtil.isNotNull(out.get("VCLIENTE")) && GenericUtil.isNotNull(out.get("VDOCUMENTO"))) {
+				
+				ClientePagoResultViewModel cPago = new ClientePagoResultViewModel();
+				cPago.setDireccionActualCliente((String) out.get("VDIRECCION"));
+				cPago.setCliente((String) out.get("VCLIENTE"));
+				cPago.setDocumentoPersonaCliente((String) out.get("VDOCUMENTO"));
+				cPago.setReferencia((String) out.get("VREFERENCIA"));
+				cPago.setNombreComercialCliente((String) out.get("VNOMBRECOMERCIAL"));
+				cPago.setFechaInstalacion((Date) out.get("FECHAI"));
+				cPago.setGestorResponsable((String) out.get("GESTOR"));
+				cPago.setTelefonoGestor((String) out.get("GESTORT"));
+				return cPago;
+			}
+			else if(GenericUtil.isNull(out.get("VCLIENTE")) && GenericUtil.isNull(out.get("VDOCUMENTO"))) {
+				return null;
+			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();

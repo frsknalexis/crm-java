@@ -41,6 +41,9 @@
 								<span>Modulo Servicios</span>
 							</a>
 							<ul class="nav nav-children">
+								<li>
+									<a th:href="@{/detalleCuenta/cuentas/view}"><i class="fa fa-book"></i> Cuentas</a>
+								</li>
 								<li id="submodulo cuenta" style="display:none">
 									<a th:href="@{/detalleCuenta/generarCuenta/view}"><i class="fa fa-book"></i> Generar Cuenta </a>
 								</li>
@@ -53,6 +56,9 @@
 								<li id="submodulo instalacion" style="display:none">
 									<a th:href="@{/instalacion/instalaciones/view}"><i class="fa fa-archive"></i> Instalaciones del Dia</a>
 								</li>
+								<li id="submodulo informe" style="display:none">
+									<a th:href="@{/instalacion/informeInstalaciones/view}"><i class="fa fa-book"></i> Informe Instalaciones</a>
+								</li>
 							</ul>
 						</li>
 						<li class="nav-parent" id="modulo pago" style="display:none">
@@ -63,6 +69,9 @@
 							<ul class="nav nav-children">
 								<li id="submodulo pago" style="display:none">
 									<a th:href="@{/pago/pagos}"><i class="fa fa-credit-card"></i> Pagos </a>
+								</li>
+								<li id="submodulo gestorpago" style="display:none">
+									<a th:href="@{/gestor/clienteGestores/view}"><i class="fa fa-paper-plane"></i> Cliente Gestor</a>
 								</li>
 							</ul>
 						</li>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import com.dev.crm.core.dto.EmpleadoEXTINTResultViewModel;
 import com.dev.crm.core.dto.EmpleadoResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.EmpleadoFacade;
+import com.dev.crm.core.security.UserDetail;
 import com.dev.crm.core.util.GenericUtil;
 
 @RestController
@@ -30,6 +32,10 @@ public class EmpleadoRestController {
 	@Autowired
 	@Qualifier("empleadoFacade")
 	private EmpleadoFacade empleadoFacade;
+	
+	@Autowired
+	@Qualifier("userDetail")
+	private UserDetail userDetail;
 	
 	@GetMapping("/empleados")
 	public ResponseEntity<List<EmpleadoDTO>> findAll() {
@@ -90,8 +96,10 @@ public class EmpleadoRestController {
 		
 		try {
 			
-			String creadoPor = "lularosaint";
-			List<EmpleadoDTO> empleadosDTO = empleadoFacade.spListarPersonaEmpleado(creadoPor);
+			User usuarioLogueado = userDetail.findLoggedInUser();
+			String usuario = usuarioLogueado.getUsername();
+			//String creadoPor = "lularosaint";
+			List<EmpleadoDTO> empleadosDTO = empleadoFacade.spListarPersonaEmpleado(usuario);
 			if(GenericUtil.isNotEmpty(empleadosDTO)) {
 				return new ResponseEntity<List<EmpleadoDTO>>(empleadosDTO, HttpStatus.OK);
 			}
@@ -223,7 +231,6 @@ public class EmpleadoRestController {
 		}
 	}
 	
-
 	@GetMapping("/plantaempleado/{documentoPersona}")
 	public ResponseEntity<ResponseBaseOperation> spEstadoPlanta(@PathVariable("documentoPersona") String documentoPersona) {
 		

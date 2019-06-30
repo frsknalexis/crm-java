@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +24,7 @@ import com.dev.crm.core.dto.UsuarioDTO;
 import com.dev.crm.core.dto.UsuarioRequest;
 import com.dev.crm.core.dto.UsuarioResponse;
 import com.dev.crm.core.facade.UsuarioFacade;
+import com.dev.crm.core.security.UserDetail;
 import com.dev.crm.core.util.GenericUtil;
 
 @RestController
@@ -31,6 +34,10 @@ public class UsuarioRestController {
 	@Autowired
 	@Qualifier("usuarioFacade")
 	private UsuarioFacade usuarioFacade;
+	
+	@Autowired
+	@Qualifier("userDetail")
+	private UserDetail userDetail;
 	
 	@GetMapping("/usuarios")
 	public ResponseEntity<List<UsuarioDTO>> findAll() {
@@ -222,7 +229,8 @@ public class UsuarioRestController {
 			
 			if(GenericUtil.isNotEmpty(numero)) {
 				
-				String usuario = "lularosaint";
+				User usuarioLogueado = userDetail.findLoggedInUser();
+				String usuario = usuarioLogueado.getUsername();
 				ModuloResultViewModel cusuario = usuarioFacade.spListarModulo(usuario, numero);
 				if(GenericUtil.isNotNull(cusuario)) {
 					return new ResponseEntity<ModuloResultViewModel>(cusuario, HttpStatus.OK);
@@ -236,5 +244,23 @@ public class UsuarioRestController {
 			return new ResponseEntity<ModuloResultViewModel>(HttpStatus.BAD_REQUEST);
 		}
 		return null;
+	}
+	
+	@GetMapping("/usuarioLogueado")
+	public ResponseEntity<User> findLoggedInUser() {
+		
+		try {
+			
+			User user = userDetail.findLoggedInUser();
+			if(GenericUtil.isNotNull(user)) {
+				return new ResponseEntity<User>(user, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(UsernameNotFoundException e) {
+			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+		}
 	}
 }

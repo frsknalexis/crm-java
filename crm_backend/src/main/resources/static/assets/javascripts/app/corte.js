@@ -12,7 +12,7 @@ $(document).on('ready', function() {
 	
 	 realizarCorte();
 	 
-	 ocultar_mostrar(20);
+	 ocultar_mostrar(50);
 	 
 	 window.setInterval(
 			    function(){

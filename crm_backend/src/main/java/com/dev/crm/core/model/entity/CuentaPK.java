@@ -12,7 +12,7 @@ public class CuentaPK implements Serializable {
 
 	private String documentoPersonaCliente;
 	
-	private String codigoCuenta;
+	private Integer codigoCuenta;
 	
 	private String codigoAnio;
 	
@@ -22,7 +22,7 @@ public class CuentaPK implements Serializable {
 	
 	}
 	
-	public CuentaPK(String documentoPersonaCliente, String codigoCuenta, String codigoAnio,
+	public CuentaPK(String documentoPersonaCliente, Integer codigoCuenta, String codigoAnio,
 			Integer consecutivoCliente) {
 		super();
 		this.documentoPersonaCliente = documentoPersonaCliente;
@@ -39,11 +39,11 @@ public class CuentaPK implements Serializable {
 		this.documentoPersonaCliente = documentoPersonaCliente;
 	}
 
-	public String getCodigoCuenta() {
+	public Integer getCodigoCuenta() {
 		return codigoCuenta;
 	}
 
-	public void setCodigoCuenta(String codigoCuenta) {
+	public void setCodigoCuenta(Integer codigoCuenta) {
 		this.codigoCuenta = codigoCuenta;
 	}
 

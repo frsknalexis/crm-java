@@ -13,7 +13,7 @@ $(document).on('ready', function() {
 	editarpregunta();
 	redireccionViewHerramientas();
 	cargarTotalRegistrosPersonita();
-	ocultar_mostrar(20);
+	ocultar_mostrar(50);
 	
 	window.setInterval(
 		    function(){

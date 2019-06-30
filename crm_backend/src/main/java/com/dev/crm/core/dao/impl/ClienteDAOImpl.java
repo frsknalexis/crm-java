@@ -25,26 +25,6 @@ import com.dev.crm.core.util.StringUtil;
 @Repository("clienteDAO")
 public class ClienteDAOImpl extends BaseDAOHibernateImpl implements ClienteDAO {
 
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Cliente> spListarClienteVendedor(String creadoPor) {
-		
-		List<Cliente> clientes = new ArrayList<Cliente>();
-		
-		try {
-			
-			StoredProcedureQuery storeProcedure = em.createNamedStoredProcedureQuery("listarClientesVendedor");
-			storeProcedure.setParameter("COD_USU", creadoPor);
-			storeProcedure.execute();
-			clientes = storeProcedure.getResultList();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		return clientes;
-	}
-
 	@Override
 	public Cliente getByDocumentoPersonaCliente(String documentoPersonaCliente) {
 		

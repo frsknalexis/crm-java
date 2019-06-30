@@ -64,6 +64,79 @@ public class DateUtil {
 		return calendar.get(Calendar.MONTH);
 	}
 	
+	public static String getCurrentMonthWithZeroLeft() {
+		
+		Calendar calendar = Calendar.getInstance();
+		String MM = "";
+		int mm = calendar.get(Calendar.MONTH) + 1;
+		
+		if(mm < 10) {
+			MM = "0" + String.valueOf(mm);
+			return MM;
+		}
+		return String.valueOf(mm);
+	}
+	
+	public static void main(String[] args) {
+		Date date = new Date();
+		System.out.println(getYearOfDateWithString(date));
+	}
+	
+	public static String getDayOfDateWithZeroLeft(Date date) {
+		
+		String formato = "dd";
+		SimpleDateFormat dateFormat = new SimpleDateFormat(formato);
+		int dd = Integer.valueOf(dateFormat.format(date));
+		
+		if(dd < 10) {
+			String day = "0" + String.valueOf(dd);
+			return day;
+		}
+		return String.valueOf(dd);
+	}
+	
+	public static Integer getDayOfDate(Date date) {
+		
+		String formato = "dd";
+		SimpleDateFormat format = new SimpleDateFormat(formato);
+		return Integer.valueOf(format.format(date));
+	}
+	
+	public static String getMonthOfDateWithZeroLeft(Date date) {
+		
+		String formato = "MM";
+		SimpleDateFormat dateFormat = new SimpleDateFormat(formato);
+		int mm = Integer.valueOf(dateFormat.format(date));
+		
+		if(mm < 10) {
+			String month = "0" + String.valueOf(mm);
+			return month;
+		}
+		return String.valueOf(mm);
+	}
+	
+	public static Integer getMonthOfDate(Date date) {
+		
+		String formato = "MM";
+		SimpleDateFormat format = new SimpleDateFormat(formato);
+		return Integer.valueOf(format.format(date));
+	}
+	
+	public static Integer getYearOfDate(Date date) {
+		
+		String formato = "yyyy";
+		SimpleDateFormat dateFormat = new SimpleDateFormat(formato);
+		return Integer.valueOf(dateFormat.format(date));
+	}
+	
+	public static String getYearOfDateWithString(Date date) {
+		
+		String formato = "yyyy";
+		SimpleDateFormat dateFormat = new SimpleDateFormat(formato);
+		String anio = dateFormat.format(date);
+		return anio;
+	}
+	
 	/**
 	 * 
 	 *@return 
@@ -84,6 +157,19 @@ public class DateUtil {
 		
 		Calendar calendar = Calendar.getInstance();
 		return calendar.get(Calendar.DAY_OF_MONTH);
+	}
+	
+	public static String getCurrentDayWithZeroLeft() {
+		
+		Calendar calendar = Calendar.getInstance();
+		String day = "";
+		int dd = calendar.get(Calendar.DAY_OF_MONTH);
+		
+		if(dd < 10) {
+			day = "0" + String.valueOf(dd);
+			return day;
+		}
+		return String.valueOf(dd);
 	}
 	
 	/**

@@ -32,6 +32,12 @@ public class PersonaRequestE implements Serializable {
 	private String modificadopor;
 	
 	private String codigoubigeo;
+	
+	private String ipMaquina;
+	
+	private String usuarioMaquina;
+	
+	private String usuarioSistema;
 
 	public PersonaRequestE() {
 	
@@ -132,5 +138,28 @@ public class PersonaRequestE implements Serializable {
 	public void setCodigoubigeo(String codigoubigeo) {
 		this.codigoubigeo = codigoubigeo;
 	}
-	
+
+	public String getIpMaquina() {
+		return ipMaquina;
+	}
+
+	public void setIpMaquina(String ipMaquina) {
+		this.ipMaquina = ipMaquina;
+	}
+
+	public String getUsuarioMaquina() {
+		return usuarioMaquina;
+	}
+
+	public void setUsuarioMaquina(String usuarioMaquina) {
+		this.usuarioMaquina = usuarioMaquina;
+	}
+
+	public String getUsuarioSistema() {
+		return usuarioSistema;
+	}
+
+	public void setUsuarioSistema(String usuarioSistema) {
+		this.usuarioSistema = usuarioSistema;
+	}
 }

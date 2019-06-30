@@ -9,8 +9,6 @@ public interface ClienteDAO extends BaseDAOHibernate {
 
 	List<Cliente> getActiveListClientes();
 	
-	List<Cliente> spListarClienteVendedor(String creadoPor);
-	
 	Cliente getByDocumentoPersonaCliente(String documentoPersonaCliente);
 	
 	boolean isClientePresent(String documentoPersonaCliente);

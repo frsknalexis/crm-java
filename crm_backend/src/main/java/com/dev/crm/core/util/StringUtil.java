@@ -115,6 +115,13 @@ public class StringUtil {
 		}
 	}
 	
+	public static String bigDecimalToString(BigDecimal value) {
+		
+		BigDecimal bigDecimal = new BigDecimal(value.intValue());
+		String toStringBigDecimal = bigDecimal.toString();
+		return toStringBigDecimal;
+	}
+	
 	public static Double parseDoubleNull(String str) {
 		
 		if(str == null) {

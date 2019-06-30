@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +15,7 @@ import com.dev.crm.core.dao.UsuarioDAO;
 import com.dev.crm.core.dto.ModuloResultViewModel;
 import com.dev.crm.core.model.entity.Usuario;
 import com.dev.crm.core.repository.jdbc.ModuloResultJdbcRepository;
+import com.dev.crm.core.security.UserDetail;
 import com.dev.crm.core.service.UsuarioService;
 import com.dev.crm.core.util.Constantes;
 import com.dev.crm.core.util.DateUtil;
@@ -24,12 +27,19 @@ import com.dev.crm.core.util.IpUtil;
 public class UsuarioServiceImpl implements UsuarioService {
 
 	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
 	@Qualifier("usuarioDAO")
 	private UsuarioDAO usuarioDAO;
 	
 	@Autowired
 	@Qualifier("ModuloResultJdbcRepository")
 	private ModuloResultJdbcRepository moduloResultJdbcRepository;
+	
+	@Autowired
+	@Qualifier("userDetail")
+	private UserDetail userDetail;
 	
 	@Override
 	public List<Usuario> findAll() {
@@ -150,6 +160,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public void disabledUsuario(BigDecimal usuarioId) {
 		
+		User usuarioLogueado = userDetail.findLoggedInUser();
+		
 		try {
 			
 			Usuario usuario = null;
@@ -158,6 +170,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 				usuario.setHabilitado(Constantes.INHABILITADO);
 				usuario.setFechaModificacion(DateUtil.getCurrentDate());
 				usuario.setFechaDesactivacion(DateUtil.getCurrentDate());
+				usuario.setModificadoPor(usuarioLogueado.getUsername());
 				usuario.setIpUsuario(IpUtil.getCurrentIPAddress());
 				usuario.setUsuarioMaquina(IpUtil.getCurrentUserMachine());
 				usuario.setUsuarioSistema(IpUtil.getCurrentUserSystem());
@@ -172,6 +185,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public void enabledUsuario(BigDecimal usuarioId) {
 		
+		User usuarioLogueado = userDetail.findLoggedInUser();
+		
 		try {
 			
 			Usuario usuario = null;
@@ -180,6 +195,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 				usuario.setHabilitado(Constantes.HABILITADO);
 				usuario.setFechaModificacion(DateUtil.getCurrentDate());
 				usuario.setFechaActivacion(DateUtil.getCurrentDate());
+				usuario.setModificadoPor(usuarioLogueado.getUsername());
 				usuario.setIpUsuario(IpUtil.getCurrentIPAddress());
 				usuario.setUsuarioMaquina(IpUtil.getCurrentUserMachine());
 				usuario.setUsuarioSistema(IpUtil.getCurrentUserSystem());
@@ -194,17 +210,22 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public void saveOrUpdate(Usuario u) {
 		
+		User usuarioLogueado = userDetail.findLoggedInUser();
+		
 		try {
 			
 			u.setHabilitado(Constantes.HABILITADO);
 			u.setIpUsuario(IpUtil.getCurrentIPAddress());
 			u.setUsuarioMaquina(IpUtil.getCurrentUserMachine());
 			u.setUsuarioSistema(IpUtil.getCurrentUserSystem());
+			u.setEncryptedPassword(bCryptPasswordEncoder.encode(u.getPasswordUsuario()));
 			if(GenericUtil.isNotEmpty(u.getUsuarioId()) && u.getUsuarioId().intValue() > 0) {
+				u.setModificadoPor(usuarioLogueado.getUsername());
 				u.setFechaModificacion(DateUtil.getCurrentDate());
 				usuarioDAO.update(u);
 			}
 			else {
+				u.setCreadoPor(usuarioLogueado.getUsername());
 				u.setFechaRegistro(DateUtil.getCurrentDate());
 				usuarioDAO.save(u);
 			}

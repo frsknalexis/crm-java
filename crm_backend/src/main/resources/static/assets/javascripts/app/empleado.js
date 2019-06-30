@@ -6,18 +6,18 @@ $(document).on('ready', function() {
 	setTimeout(function() {
 		 mostrarForm(false);
 		 mostrarFormPersona(false);
-	}, 100);
+	}, 1000);
 	
-	ocultar_mostrar(20);
+	ocultar_mostrar(50);
 	
 	setTimeout(function() {
 		cargarEstadEmpleado();
 		ocultarBotones();
-	}, 8000);
+	}, 9000);
 	
 	setTimeout(function(){
 		cargarEstado();
-	}, 6000);
+	}, 9000);
 	
 	cargarTotalRegistrosPersonita();
 	

@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ import com.dev.crm.core.dto.HerramientaRequest;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.dto.ValorHerramientaRequest;
 import com.dev.crm.core.facade.HerramientaFacade;
+import com.dev.crm.core.security.UserDetail;
 import com.dev.crm.core.util.GenericUtil;
 import com.dev.crm.core.util.StringUtil;
 
@@ -36,15 +38,20 @@ public class HerramientaRestController {
 	@Qualifier("herramientaFacade")
 	private HerramientaFacade herramientaFacade;
 	
+	@Autowired
+	@Qualifier("userDetail")
+	private UserDetail userDetail;
+	
 	@GetMapping("/herramientas")
 	public ResponseEntity<List<HerramientaResultViewModel>> spListarDatosGeneralesCliente() {
 		
 		try {
 			
-			String usuario = "jolaurenint"; 
-			
-			if(StringUtil.hasText(usuario)) {
-				List<HerramientaResultViewModel> herramientasAtencion = herramientaFacade.spListarHerramientaAtencion(usuario);
+			User usuarioLogueado = userDetail.findLoggedInUser();
+			String user = usuarioLogueado.getUsername();
+			//String usuario = "jolaurenint"; 
+			if(StringUtil.hasText(user)) {
+				List<HerramientaResultViewModel> herramientasAtencion = herramientaFacade.spListarHerramientaAtencion(user);
 				if(!GenericUtil.isEmpty(herramientasAtencion)) {
 					return new ResponseEntity<List<HerramientaResultViewModel>>(herramientasAtencion, HttpStatus.OK);
 				}
@@ -64,8 +71,10 @@ public class HerramientaRestController {
 		
 		try {
 			
-			String mensaje = "jolaurenint";
-			inserther.setMensaje(mensaje);
+			User usuarioLogueado = userDetail.findLoggedInUser();
+			String usuario = usuarioLogueado.getUsername();
+			//String mensaje = "jolaurenint";
+			inserther.setMensaje(usuario);
 			ResponseBaseOperation response = herramientaFacade.spInserccionHerramienta(inserther);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
 		}
@@ -79,8 +88,10 @@ public class HerramientaRestController {
 		
 		try {
 			
-			String mensaje = "jolaurenint";
-			inserther.setCodigousuario(mensaje);
+			User usuarioLogueado = userDetail.findLoggedInUser();
+			String usuario = usuarioLogueado.getUsername();
+			//String mensaje = "jolaurenint";
+			inserther.setCodigousuario(usuario);
 			inserther.setDescripcionherramienta(inserther.getDescripcionherramienta());
 			ResponseBaseOperation response = herramientaFacade.spInsercciondetalleHerramienta(inserther);
 			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);

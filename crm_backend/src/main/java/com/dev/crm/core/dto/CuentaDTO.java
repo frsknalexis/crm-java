@@ -11,7 +11,7 @@ public class CuentaDTO implements Serializable {
 
 	private String documentoPersonaCliente;
 	
-	private String codigoCuenta;
+	private Integer codigoCuenta;
 	
 	private String codigoAnio;
 	
@@ -31,11 +31,11 @@ public class CuentaDTO implements Serializable {
 		this.documentoPersonaCliente = documentoPersonaCliente;
 	}
 
-	public String getCodigoCuenta() {
+	public Integer getCodigoCuenta() {
 		return codigoCuenta;
 	}
 
-	public void setCodigoCuenta(String codigoCuenta) {
+	public void setCodigoCuenta(Integer codigoCuenta) {
 		this.codigoCuenta = codigoCuenta;
 	}
 

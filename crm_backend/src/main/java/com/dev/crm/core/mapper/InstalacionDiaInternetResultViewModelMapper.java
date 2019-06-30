@@ -19,6 +19,8 @@ public class InstalacionDiaInternetResultViewModelMapper implements RowMapper<In
 		instalacionDiaInternet.setReferenciaDireccion(rs.getString("referencia_persona"));
 		instalacionDiaInternet.setTelefonoCliente(rs.getString("telefonou_persona"));
 		instalacionDiaInternet.setDocumentoPersonaCliente(rs.getString("documento_persona"));
+		instalacionDiaInternet.setCodigoCuenta(rs.getInt("codi_cuenta"));
+		instalacionDiaInternet.setFechaInstalacion(rs.getDate("fechacli_detcue"));
 		return instalacionDiaInternet;
 	}
 

@@ -26,7 +26,7 @@ public class DetalleCuenta implements Serializable {
 	private String tipoServicio;
 	
 	@Id
-	@Column(name="documento_personac", nullable=false, length=11)
+	@Column(name="documento_personac", nullable=false, length=12)
 	private String documentoPersonaCliente;
 	
 	@Id
@@ -35,7 +35,7 @@ public class DetalleCuenta implements Serializable {
 
 	@Id
 	@Column(name="codi_cuenta", nullable=false)
-	private String codigoCuenta;
+	private Integer codigoCuenta;
 	
 	@Id
 	@Column(name="codi_anio", nullable=false)
@@ -66,11 +66,9 @@ public class DetalleCuenta implements Serializable {
 	@Column(name="fechacli_detcue")
 	private Date fechaSolicitudClienteDetalleCuenta;
 	
-	@Column(name="codigo_externo")
-	private String codigoexterno;
+	@Column(name="codigoextervalue")
+	private Integer codigoexterno;
 	
-	private String codigosuario;
-
 	public DetalleCuenta() {
 		
 	}
@@ -99,11 +97,11 @@ public class DetalleCuenta implements Serializable {
 		this.codigoDetalleCuenta = codigoDetalleCuenta;
 	}
 
-	public String getCodigoCuenta() {
+	public Integer getCodigoCuenta() {
 		return codigoCuenta;
 	}
 
-	public void setCodigoCuenta(String codigoCuenta) {
+	public void setCodigoCuenta(Integer codigoCuenta) {
 		this.codigoCuenta = codigoCuenta;
 	}
 
@@ -171,20 +169,11 @@ public class DetalleCuenta implements Serializable {
 		this.fechaSolicitudClienteDetalleCuenta = fechaSolicitudClienteDetalleCuenta;
 	}
 
-	public String getCodigoexterno() {
+	public Integer getCodigoexterno() {
 		return codigoexterno;
 	}
 
-	public void setCodigoexterno(String codigoexterno) {
+	public void setCodigoexterno(Integer codigoexterno) {
 		this.codigoexterno = codigoexterno;
-	}
-
-	public String getCodigosuario() {
-		return codigosuario;
-	}
-
-	public void setCodigosuario(String codigosuario) {
-		this.codigosuario = codigosuario;
-	}
-	
+	}	
 }

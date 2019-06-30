@@ -4,7 +4,7 @@ $(document).on('ready', function() {
 	 disabledAllButtons();
 	 disabledInputContador(true);
 	 cargarTotalRegistrosPersonita();
-	 ocultar_mostrar(20);
+	 ocultar_mostrar(50);
 	 window.setInterval(
 			    function(){
 			    // Sección de código para modificar el DIV
