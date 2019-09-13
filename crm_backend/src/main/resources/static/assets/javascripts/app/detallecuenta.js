@@ -1,6 +1,5 @@
 $(document).on('ready', function() {
 	
-	
 	disabledButtonGenerarCuenta(true);
 	
 	disabledInputs(false);
@@ -13,6 +12,10 @@ $(document).on('ready', function() {
 	
 	validarFormGenerarCuenta();
 	
+	cargarComboVendedores();
+	
+	listarCuentasGeneradas();
+	
 	window.setInterval(
 		    function(){
 		    // Sección de código para modificar el DIV
@@ -20,7 +23,6 @@ $(document).on('ready', function() {
 		    	$('#total').load(cargarTotalRegistrosPersona());
 		    	evaluando();
 		    // Ejemplo: Cada dos segundos se imprime la hora
-		    
 		  }
 		  // Intervalo de tiempo
 		,5000);
@@ -29,20 +31,31 @@ $(document).on('ready', function() {
 	
 	/**
 	 * 
+	 *function para listar las cuentas generadas 
+	 * 
+	 */
+	function listarCuentasGeneradas() {
+		
+		$('#listaCuentasGeneradas').on('click', function() {
+			$(location).attr('href', '/detalleCuenta/cuentas/view');
+		});
+	}
+	
+	/**
+	 * 
 	 *Funcion para deshabilitar inicialmente el boton guardar cuenta 
 	 */
 	function ocultar_mostrar(id){
 		
 		if(id !== 0){
-			
-			
+						
 			for( var i = 1;i < id ; i++ ){
 			if(i < id){
 				
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/usuario/listamodulos/' + i,
+					url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 					dataType: 'json',
 					success: function(response) {
 							console.log(response);
@@ -55,7 +68,6 @@ $(document).on('ready', function() {
 				}
 			}
 		}
-	
 	}
 	
 	function disabledButtonGenerarCuenta(flag) {
@@ -76,7 +88,6 @@ $(document).on('ready', function() {
 	 * 
 	 */
 	function limpiarForm() {
-		
 		$('#documentoPersonaCliente').val('');
 		$('#detalleCuentaCliente').val('');
 		$('#detalleCuentaDireccion').val('');
@@ -114,9 +125,7 @@ $(document).on('ready', function() {
 	 * 
 	 */
 	function cancelarAccion() {
-		
 		$('#cancelarAccion').on('click', function() {
-			
 			limpiarForm();
 			disabledInputs(true);
 			disabledButtonGenerarCuenta(true);
@@ -133,18 +142,16 @@ $(document).on('ready', function() {
 		$('#buscarCliente').on('click', function(e) {
 			e.preventDefault();
 			
-			if($('#busqueda').val().match(/^[0-9]{7,11}$/)) {
+			if($('#busqueda').val().match(/^[0-9\.-\s]{7,12}$/)) {
 				
 				var formData = {
 						documentoPersona: $('#busqueda').val()
 				};
-				
-				
-				
+						
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/cliente/searchCliente',
+					url: '/crm-app/api/v1/cliente/searchCliente',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -153,8 +160,8 @@ $(document).on('ready', function() {
 					dataType: 'json',
 					success: function(response) {
 		
-						if(response != null) {
-							
+						console.log(response);
+						if(response != null) {				
 							$('#documentoPersonaCliente').val(response.documentoPersona);
 							$('#detalleCuentaCliente').val(response.cliente);
 							$('#detalleCuentaDireccion').val(response.direccionPersona);
@@ -172,7 +179,6 @@ $(document).on('ready', function() {
 							disabledInputs(false);
 							limpiarForm();
 						}
-						
 						$('#busqueda').val('');
 					},
 					error: function() {
@@ -185,15 +191,12 @@ $(document).on('ready', function() {
 					}
 				});
 			}
-			
-			if(!($('#busqueda').val().match(/^[0-9]{7,11}$/))) {
-				
+			if(!($('#busqueda').val().match(/^[0-9\.-\s]{7,12}$/))) {
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'Debe ingresar un valor valido de DNI/RUC para realizar la busqueda'
 	            });
-				
 				$('#busqueda').val('');
 				$('#busqueda').focus();
 		    	return false;
@@ -234,16 +237,54 @@ $(document).on('ready', function() {
 			
 			e.preventDefault();
 			
-			if($('#fechaSolicitudClienteDetalleCuenta').val() == "") {
-				
+			if($('#fechaSolicitudClienteDetalleCuenta').val() == "" && $('#detalleCuentaVendedor').val().trim() == "") {
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'Debe llenar todos los Campos !'
+	            });
+				return false;
+			}
+			
+			else if($('#fechaSolicitudClienteDetalleCuenta').val() == "") {
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'Debe ingresar un valor valido para la Fecha de Solicitud'
 	            });
-				
-				$('#fechaSolicitudClienteDetalleCuenta').focus();
 				return false;
+			}
+			else if($('#detalleCuentaVendedor').val().trim() == "") {
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'Debe Seleccionar un Vendedor Responsable'
+	            });
+				return false;
+			}
+		});
+	}
+	
+	/**
+	 *
+	 * cargar combo vendedores
+	 * 
+	 */
+	function cargarComboVendedores() {
+		
+		var $detalleCuentaVendedor = $('#detalleCuentaVendedor');
+		
+		$.ajax({
+			
+			type: 'GET',
+			url: '/crm-app/api/v1/vendedor/vendedores',
+			dataType: 'json',
+			success: function(response) {
+				$detalleCuentaVendedor.html('');
+				$detalleCuentaVendedor.append('<option value="">Seleccione un  Vendedor Responsable</option>');
+				for(var i = 0; i < response.length; i++) {
+					$detalleCuentaVendedor.append('<option value="'+ response[i].vendedor +'">'+ response[i].vendedor +'</option>');
+				}
 			}
 		});
 	}
@@ -258,20 +299,20 @@ $(document).on('ready', function() {
 		$('#generarCuenta').on('click', function(e) {
 			
 			e.preventDefault();
-			if($('#documentoPersonaCliente').val().match(/^[0-9]{7,11}$/) && $('#fechaSolicitudClienteDetalleCuenta').val() != "") {
+			if($('#documentoPersonaCliente').val().match(/^[0-9\.-\s]{7,12}$/) && $('#fechaSolicitudClienteDetalleCuenta').val() != "" 
+				&& $('#detalleCuentaVendedor').val().trim() != "") {
 				
 				var formDataIC = {
 						documentoPersonaCliente: $('#documentoPersonaCliente').val(),
 						observacionDetalleCuenta: $('#detalleCuentaObservacion').val(),
-						fechaSolicitudClienteDetalleCuenta: $('#fechaSolicitudClienteDetalleCuenta').val()
+						fechaSolicitudClienteDetalleCuenta: $('#fechaSolicitudClienteDetalleCuenta').val(),
+						nombreVendedor: $('#detalleCuentaVendedor').val()
 				};
-				
 				console.log(formDataIC);
-				
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/detalleCuenta/saveCuentaInternet',
+					url: '/crm-app/api/v1/detalleCuenta/saveCuentaInternet',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -279,8 +320,6 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formDataIC),
 					dataType: 'json',
 					success: function(response) {
-						
-						
 						
 						if(response.status == "CREATED" && response.message == "HECHO") {
 							
@@ -329,6 +368,72 @@ $(document).on('ready', function() {
 	
 	/**
 	 * 
+	 * function para generarCuentaDuo
+	 * 
+	 */
+	function generarCuentaDuo() {
+		
+		$('#generarCuenta').on('click', function(e) {
+			
+			e.preventDefault();
+			if($('#documentoPersonaCliente').val().match(/^[0-9\.-\s]{7,12}$/) && $('#fechaSolicitudClienteDetalleCuenta').val() != "" 
+				&& $('#detalleCuentaVendedor').val().trim() != "") {
+				
+				var formDataDuo = {
+						documentoPersonCliente: $('#documentoPersonaCliente').val(),
+						observacionDetalleCuenta: $('#detalleCuentaObservacion').val(),
+						fechaSolicitudClienteDetalleCuenta: $('#fechaSolicitudClienteDetalleCuenta').val(), 
+						nombreVendedor: $('#detalleCuentaVendedor').val()
+				};
+				console.log(formDataDuo);
+				$.ajax({
+					type: 'POST',
+					url: '/crm-app/api/v1/detalleCuenta/saveCuentaDuo',
+					headers: {
+						"Content-Type": "application/json",
+						"Accept": "application/json"
+					},
+					data: JSON.stringify(formDataDuo),
+					dataType: 'json',
+					success: function(response) {
+						console.log(response);
+						if(response.status == "CREATED" && response.message == "HECHO") {	
+							swal({
+								type: "success",
+								title: "Se Genero la Cuenta de Duo con exito",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar",
+								closeOnConfirm: false
+							}).then((result) => {
+
+								if(result.value) {
+									$(location).attr('href', '/detalleCuenta/generarCuenta/view');
+								}
+							});
+						}
+						else if(response.status == "ERROR" && response.message == "SERVICIO OPERANDO") {
+							
+							swal({
+				                type: 'error',
+				                title: 'Ooops',
+				                text: 'Ya se Genero la Cuenta de Duo para el Cliente, verifique el estado del Servicio !'
+				            });
+						}
+					},
+					error: function() {	
+						swal({
+			                type: 'error',
+			                title: 'Ooops',
+			                text: 'Error al Generar Cuenta de Duo !'
+			            });
+					}
+				});
+			}
+		});
+	}
+	
+	/**
+	 * 
 	 *funcion para generarCuentaCableColor 
 	 * 
 	 */
@@ -337,19 +442,20 @@ $(document).on('ready', function() {
 		$('#generarCuenta').on('click', function(e) {
 			
 			e.preventDefault();
-			if($('#documentoPersonaCliente').val().match(/^[0-9]{7,11}$/)) {
+			if($('#documentoPersonaCliente').val().match(/^[0-9\.-\s]{7,12}$/) && $('#fechaSolicitudClienteDetalleCuenta').val() != "" 
+				&& $('#detalleCuentaVendedor').val().trim() != "") {
 				
 				var formDataCC = {
-					documentoPersonaCliente: $('#documentoPersonaCliente').val(),
-					observacionDetalleCuenta: $('#detalleCuentaObservacion').val()
+						documentoPersonaCliente: $('#documentoPersonaCliente').val(),
+						observacionDetalleCuenta: $('#detalleCuentaObservacion').val(),
+						fechaSolicitudClienteDetalleCuenta: $('#fechaSolicitudClienteDetalleCuenta').val(),
+						nombreVendedor: $('#detalleCuentaVendedor').val()
 				};
-				
-			
-				
+				console.log(formDataCC);
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/detalleCuenta/saveCuentaCable',
+					url: '/crm-app/api/v1/detalleCuenta/saveCuentaCable',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -357,9 +463,7 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formDataCC),
 					dataType: 'json',
 					success: function(response) {
-						
-					
-						
+						console.log(response);
 						if(response.status =="CREATED" && response.message == "HECHO") {
 							
 							swal({
@@ -412,34 +516,35 @@ $(document).on('ready', function() {
 				limpiarForm();
 				disabledInputs(false);
 				disabledButtonGenerarCuenta(true);
-				
 			}
 			else if($tipoServicio.val() == "IC") {
-				
 				limpiarForm();
 				disabledInputs(true);
 				disabledButtonGenerarCuenta(false);
 				cancelarAccion();
 				verificarCliente();
 				generarCuentaInternetColor();
-				
 			}
 			else if($tipoServicio.val() == 'CC') {
-				
 				limpiarForm();
 				disabledInputs(true);
 				disabledButtonGenerarCuenta(false);
 				cancelarAccion();
 				verificarCliente();
 				generarCuentaCableColor();
-				
+			}
+			else if($tipoServicio.val() == 'DUO') {
+				limpiarForm();
+				disabledInputs(true);
+				disabledButtonGenerarCuenta(false);
+				cancelarAccion();
+				verificarCliente();
+				generarCuentaDuo();
 			}
 		});
 	}
 	
 	function cargarmensajespopusnuevo(valor,id){
-		
-		
 		
 		var title = "Tareas Pendientes!!!";
 		
@@ -448,8 +553,6 @@ $(document).on('ready', function() {
 		var theme = "warning";
 		var closeOnClick = true;
 		var displayClose =true;
-		
-		
 		
 		if(valor !== 0)
 		{
@@ -461,15 +564,13 @@ $(document).on('ready', function() {
 							{
 								
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
 								success: function(response) {
 									
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
-							
-									
-									
+																
 									window.createNotification({
 										closeOnClick: closeOnClick,
 										displayCloseButton: displayClose,
@@ -480,18 +581,14 @@ $(document).on('ready', function() {
 								title: title,
 								message: message
 							});
-							
 						}
 					});
 				}
 			}
-			
 		}
 	}
 
 	function cargarmensajespopus(id){
-		
-		
 		
 		var title = "Tareas Pendientes!!!";
 		
@@ -513,14 +610,13 @@ $(document).on('ready', function() {
 							{
 						
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + i,
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
 								success: function(response) {
 									
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
-							
-									
+														
 									window.createNotification({
 										closeOnClick: closeOnClick,
 										displayCloseButton: displayClose,
@@ -536,27 +632,23 @@ $(document).on('ready', function() {
 					});
 				}
 			}
-			
 		}
 	}
 	
 	function estado(id){
 		
-		
 		if(id !== 0){
-			
-			
+				
 			for(var i=1;i<=id;i++){
 			if(i <= id){
 				
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + i,
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
 					success: function(response) {
-						
-						
+									
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
 						
@@ -577,7 +669,6 @@ $(document).on('ready', function() {
 	
 	function estadonuevo(valor){
 		
-		
 		if(valor !== 0){
 			
 			document.getElementById("agregarmensajesnoti").innerHTML="";
@@ -587,11 +678,10 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
 					success: function(response) {
-						
-						
+										
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
 						
@@ -620,27 +710,21 @@ $(document).on('ready', function() {
 		dinamico = document.getElementsByName("canjes")[0].value;
 		valuee = document.getElementsByName("canjess")[0].value;
 		
-		
 		var verificando = valuee - dinamico;
 		
 		if(estatico === valuee && valuee === dinamico){
-			
 			estado(valuee);
 			cargarmensajespopus(valuee);
 			$('#canje').val("0");
 		}
 		if(verificando === 0){
-			
 			estado(verificando);
 			cargarmensajespopus(verificando);
 			$('#canje').val("0");
 		}
 		if(verificando !== 0){
-			
 			estadonuevo(parseInt(valuee));
-			
 			cargarmensajespopusnuevo(parseInt(dinamico) + 1,parseInt(verificando));
-		
 			$('#canje').val("0");
 			$('#canjes').val(valuee);
 		}
@@ -648,15 +732,13 @@ $(document).on('ready', function() {
 	
 	function cargarTotalRegistrosPersona() {
 		
-		
 		var formData = {
 				
 		};
 		
 		$.ajax({
-			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -664,28 +746,22 @@ $(document).on('ready', function() {
 			data: JSON.stringify(formData),
 			dataType: 'json',
 			success: function(response) {
-				
 				$('#total').html(response.message);
 				$('#totalidad').html(response.message);
 				$('#canjess').val(response.message);
 			}
-			
 		});	
-		
 	}
 	
-	
 	function cargarTotalRegistrosPersonita() {
-		
-		
+			
 		var formData = {
 				
 		};
 		
 		$.ajax({
-			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -693,15 +769,12 @@ $(document).on('ready', function() {
 			data: JSON.stringify(formData),
 			dataType: 'json',
 			success: function(response) {
-				
 				$('#total').html(response.message);
 				$('#totalidad').html(response.message);
 				$('#canje').val(response.message);
 				$('#canjes').val(response.message);
 				$('#canjess').val(response.message);
 			}
-			
 		});	
-		
 	}
 });

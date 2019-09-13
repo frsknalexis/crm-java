@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.crm.core.dto.UbigeoDTO;
+import com.dev.crm.core.dto.UbigeoResultViewModel;
 import com.dev.crm.core.facade.UbigeoFacade;
 import com.dev.crm.core.util.GenericUtil;
 
@@ -38,6 +39,22 @@ public class UbigeoRestController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<List<UbigeoDTO>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/listaUbigeo")
+	public ResponseEntity<List<UbigeoResultViewModel>> listarUbigeo() {
+		
+		try {
+			
+			List<UbigeoResultViewModel> listaUbigeo = ubigeoFacade.listarUbigeo();
+			if(GenericUtil.isCollectionEmpty(listaUbigeo)) {
+				return new ResponseEntity<List<UbigeoResultViewModel>>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<List<UbigeoResultViewModel>>(listaUbigeo, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<UbigeoResultViewModel>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	

@@ -21,7 +21,6 @@ $(document).on('ready', function() {
 		    	$('#total').load(cargarTotalRegistrosPersona());
 		    	evaluando();
 		    // Ejemplo: Cada dos segundos se imprime la hora
-		 
 		  }
 		  // Intervalo de tiempo
 		,5000);
@@ -54,7 +53,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/usuario/listamodulos/' + i,
+					url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 					dataType: 'json',
 					success: function(response) {
 							
@@ -98,7 +97,7 @@ $(document).on('ready', function() {
 			},
 			'bProcessing': true,
 			"ajax": {
-				"url": "/api/v1/atencion/clientesAtencion",
+				"url": "/crm-app/api/v1/atencion/clientesAtencion",
 				"dataSrc": ""
 			},
 			"columns": [
@@ -143,8 +142,6 @@ $(document).on('ready', function() {
 	 * */
 	function cargarmensajespopusnuevo(valor,id){
 		
-		
-		
 		var title = "Tareas Pendientes!!!";
 		
 		var position = "Bottom right";
@@ -152,9 +149,7 @@ $(document).on('ready', function() {
 		var theme = "warning";
 		var closeOnClick = true;
 		var displayClose =true;
-		
-		
-		
+			
 		if(valor !== 0)
 		{
 			
@@ -165,15 +160,13 @@ $(document).on('ready', function() {
 							{
 								
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
 								success: function(response) {
 									
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
 							
-									
-									
 									window.createNotification({
 										closeOnClick: closeOnClick,
 										displayCloseButton: displayClose,
@@ -183,19 +176,15 @@ $(document).on('ready', function() {
 									})({
 								title: title,
 								message: message
-							});
-							
+							});	
 						}
 					});
 				}
 			}
-			
 		}
 	}
 
 	function cargarmensajespopus(id){
-		
-		
 		
 		var title = "Tareas Pendientes!!!";
 		
@@ -217,14 +206,13 @@ $(document).on('ready', function() {
 							{
 						
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + i,
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
 								success: function(response) {
 									
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
-							
-									
+								
 									window.createNotification({
 										closeOnClick: closeOnClick,
 										displayCloseButton: displayClose,
@@ -234,29 +222,25 @@ $(document).on('ready', function() {
 									})({
 								title: title,
 								message: message
-							});
-							
+							});							
 						}
 					});
 				}
-			}
-			
+			}	
 		}
 	}
 	
 	function estado(id){
 		
-		
 		if(id !== 0){
-			
-			
+				
 			for(var i=1;i<=id;i++){
 			if(i <= id){
 				
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + i,
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
 					success: function(response) {
 						
@@ -291,7 +275,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
 					success: function(response) {
 						
@@ -324,7 +308,6 @@ $(document).on('ready', function() {
 		dinamico = document.getElementsByName("canjes")[0].value;
 		valuee = document.getElementsByName("canjess")[0].value;
 		
-		
 		var verificando = valuee - dinamico;
 		
 		if(estatico === valuee && valuee === dinamico){
@@ -352,7 +335,6 @@ $(document).on('ready', function() {
 	
 	function cargarTotalRegistrosPersona() {
 		
-		
 		var formData = {
 				
 		};
@@ -360,7 +342,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -373,11 +355,8 @@ $(document).on('ready', function() {
 				$('#totalidad').html(response.message);
 				$('#canjess').val(response.message);
 			}
-			
-		});	
-		
+		});		
 	}
-	
 	
 	function cargarTotalRegistrosPersonita() {
 		
@@ -389,7 +368,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -404,9 +383,7 @@ $(document).on('ready', function() {
 				$('#canjes').val(response.message);
 				$('#canjess').val(response.message);
 			}
-			
 		});	
-		
 	}
 	
 	function cargarEstadoClienteAtencion() {
@@ -466,7 +443,7 @@ $(document).on('ready', function() {
 			$.ajax({
 				
 				type: 'GET',
-				url: '/api/v1/atencion/clienteDatosAtencion/' + documentoPersonaCliente,
+				url: '/crm-app/api/v1/atencion/clienteDatosAtencion/' + documentoPersonaCliente,
 				dataType: 'json',
 				success: function(response){
 					
@@ -536,7 +513,7 @@ $(document).on('ready', function() {
 			'bProcessing': true,
 			"bDestroy": true,
 			"ajax": {
-				"url": "/api/v1/atencion/clientesAtencionDetalle/" + flag,
+				"url": "/crm-app/api/v1/atencion/clientesAtencionDetalle/" + flag,
 				"dataSrc": ""
 			},
 			"columns": [
@@ -593,7 +570,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/atencion/insrreclamo',
+					url: '/crm-app/api/v1/atencion/insrreclamo',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"

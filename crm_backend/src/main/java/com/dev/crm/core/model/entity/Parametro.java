@@ -12,7 +12,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "tb_ci_parametro", schema = "public")
+@Table(name = "tb_ci_parametro")
 @IdClass(value=ParametroPK.class)
 public class Parametro implements Serializable {
 

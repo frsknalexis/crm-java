@@ -26,8 +26,11 @@ import com.dev.crm.core.dto.CambioDireccionRequest;
 import com.dev.crm.core.dto.ClienteDTO;
 import com.dev.crm.core.dto.ClienteFiltroRequest;
 import com.dev.crm.core.dto.ClientePagoResultViewModel;
+import com.dev.crm.core.dto.ClienteRequest;
 import com.dev.crm.core.dto.ClienteResultViewModel;
 import com.dev.crm.core.dto.ClienteVendedorResultViewModel;
+import com.dev.crm.core.dto.CodigoConsecutivoClienteRequest;
+import com.dev.crm.core.dto.CodigoConsecutivoClienteResultViewModel;
 import com.dev.crm.core.dto.DatosClienteResultViewModel;
 import com.dev.crm.core.dto.PdfClienteResultViewModel;
 import com.dev.crm.core.dto.PersonaClienteRequest;
@@ -159,6 +162,23 @@ public class ClienteRestController {
 		}
 	}
 	
+	@PostMapping("/saveCliente")
+	public ResponseEntity<ResponseBaseOperation> insertarCliente(@Valid @RequestBody ClienteRequest request) {
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				
+				ResponseBaseOperation response = clienteFacade.insertarCliente(request);
+				return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.CREATED);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+		return null;
+	}
+	
 	@PutMapping("/update")
 	public ResponseEntity<ResponseBaseOperation> updateCliente(@Valid @RequestBody ClienteDTO clienteDTO) {
 		
@@ -276,6 +296,26 @@ public class ClienteRestController {
 			return new ResponseEntity<ClienteResultViewModel>(HttpStatus.BAD_REQUEST);
 		}
 		return null;
+	}
+	
+	@PostMapping("/generarConsecutivoCliente")
+	public ResponseEntity<CodigoConsecutivoClienteResultViewModel> generarCodigoConsecutivoCliente(@Valid @RequestBody CodigoConsecutivoClienteRequest request) {
+		
+		CodigoConsecutivoClienteResultViewModel codigoConsecutivoCliente = null;
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				codigoConsecutivoCliente = clienteFacade.generarCodigoConsecutivoCliente(request);
+			}
+			if(GenericUtil.isNull(codigoConsecutivoCliente)) {
+				return new ResponseEntity<CodigoConsecutivoClienteResultViewModel>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<CodigoConsecutivoClienteResultViewModel>(codigoConsecutivoCliente, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<CodigoConsecutivoClienteResultViewModel>(HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@GetMapping("/searchClientePago/{documentoPersona}")

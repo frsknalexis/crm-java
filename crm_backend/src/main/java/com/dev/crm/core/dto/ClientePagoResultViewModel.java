@@ -26,6 +26,10 @@ public class ClientePagoResultViewModel implements Serializable {
 	private String gestorResponsable;
 	
 	private String telefonoGestor;
+	
+	private Date fechaInstalacionCable;
+	
+	private String codigoClienteCable;
 
 	public ClientePagoResultViewModel() {
 		
@@ -93,5 +97,21 @@ public class ClientePagoResultViewModel implements Serializable {
 
 	public void setTelefonoGestor(String telefonoGestor) {
 		this.telefonoGestor = telefonoGestor;
+	}
+
+	public Date getFechaInstalacionCable() {
+		return fechaInstalacionCable;
+	}
+
+	public void setFechaInstalacionCable(Date fechaInstalacionCable) {
+		this.fechaInstalacionCable = fechaInstalacionCable;
+	}
+
+	public String getCodigoClienteCable() {
+		return codigoClienteCable;
+	}
+
+	public void setCodigoClienteCable(String codigoClienteCable) {
+		this.codigoClienteCable = codigoClienteCable;
 	}
 }

@@ -17,6 +17,7 @@ public class ClienteGestorResultViewModelMapper implements RowMapper<ClienteGest
 		clienteGestor.setConsecutivoCliente(rs.getInt("cons_cliente"));
 		clienteGestor.setCliente(rs.getString("cliente"));
 		clienteGestor.setGestor(rs.getString("gestor"));
+		clienteGestor.setDireccionActualCliente(rs.getString("direccióna_persona"));
 		return clienteGestor;
 	}
 }

@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.crm.core.dto.ModuloResultViewModel;
+import com.dev.crm.core.dto.PerfilUsuarioResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.dto.UsuarioDTO;
+import com.dev.crm.core.dto.UsuarioPerfilRequest;
 import com.dev.crm.core.dto.UsuarioRequest;
 import com.dev.crm.core.dto.UsuarioResponse;
 import com.dev.crm.core.facade.UsuarioFacade;
@@ -148,6 +150,25 @@ public class UsuarioRestController {
 		}
 	}
 	
+	@PostMapping("/updatePerfil")
+	public ResponseEntity<ResponseBaseOperation> actualizarPerfilPassword(@Valid @RequestBody UsuarioPerfilRequest request) {
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				
+				User usuarioLogueado = userDetail.findLoggedInUser();
+				request.setUsuario(usuarioLogueado.getUsername());
+				ResponseBaseOperation response = usuarioFacade.actualizarPerfilPassword(request);
+				return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+		return null;
+	}
+	
 	@PostMapping("/searchUsuario")
 	public ResponseEntity<UsuarioResponse> getByNombreUsuarioAndPassword(@Valid @RequestBody UsuarioRequest usuarioRequest) {
 		
@@ -262,5 +283,28 @@ public class UsuarioRestController {
 		catch(UsernameNotFoundException e) {
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	@GetMapping("/perfilUsuario")
+	public ResponseEntity<PerfilUsuarioResultViewModel> perfilUsuario() {
+		
+		try {
+			
+			User usuarioLogueado = userDetail.findLoggedInUser();
+			String usuario = usuarioLogueado.getUsername();
+			if(GenericUtil.isNotNull(usuario)) {
+				PerfilUsuarioResultViewModel perfilUsuario = usuarioFacade.perfilUsuario(usuario);
+				if(GenericUtil.isNotNull(perfilUsuario)) {
+					return new ResponseEntity<PerfilUsuarioResultViewModel>(perfilUsuario, HttpStatus.OK);
+				}
+				else {
+					return new ResponseEntity<PerfilUsuarioResultViewModel>(HttpStatus.NO_CONTENT);
+				}
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<PerfilUsuarioResultViewModel>(HttpStatus.BAD_REQUEST);
+		}
+		return null;
 	}
 }

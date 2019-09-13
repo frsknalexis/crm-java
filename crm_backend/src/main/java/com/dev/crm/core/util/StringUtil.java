@@ -115,6 +115,16 @@ public class StringUtil {
 		}
 	}
 	
+	public static String integerToString(Integer value) {
+		
+		if(value == 0) {
+			return null;
+		}
+		
+		String numberAsString = Integer.toString(value);
+		return numberAsString;
+	}
+	
 	public static String bigDecimalToString(BigDecimal value) {
 		
 		BigDecimal bigDecimal = new BigDecimal(value.intValue());

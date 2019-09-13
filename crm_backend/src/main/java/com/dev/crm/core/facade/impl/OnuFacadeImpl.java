@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.dev.crm.core.dto.DatosOnuInstalacionRequest;
+import com.dev.crm.core.dto.DatosOnuInstalacionResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.facade.OnuFacade;
 import com.dev.crm.core.service.OnuService;
@@ -32,6 +33,29 @@ public class OnuFacadeImpl implements OnuFacade {
 				else if(StringUtil.eq(result, Constantes.ERROR)) {
 					return new ResponseBaseOperation(Constantes.ERROR_STATUS, result, request);
 				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public DatosOnuInstalacionResultViewModel spBuscarDatos(String codigo) {
+
+		DatosOnuInstalacionResultViewModel datosonu = null;
+		
+		try {
+			
+			if(StringUtil.hasText(codigo)) {
+				datosonu = onuService.spBuscarDatos(codigo);
+			}
+			if(GenericUtil.isNotNull(datosonu)) {
+				return datosonu;
+			}
+			else {
+				return null;
 			}
 		}
 		catch(Exception e) {

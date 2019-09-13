@@ -1,7 +1,5 @@
 $(document).on('ready', function() {
-	
 	var cont = 0;
-	
 	var num;
 	var arrayMaterialesJson = new Array();
 	
@@ -66,14 +64,13 @@ $(document).on('ready', function() {
 		
 		if(id !== 0){
 			
-			
 			for( var i = 1;i < id ; i++ ){
 			if(i < id){
 				
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/usuario/listamodulos/' + i,
+					url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 					dataType: 'json',
 					success: function(response) {
 							var descrip = response.descripcionmodulo;
@@ -183,7 +180,7 @@ $(document).on('ready', function() {
 			'bProcessing': true,
 			"bDestroy": true,
 			"ajax": {
-				"url": "/api/v1/instalacion/instalacionesDiaInternet",
+				"url": "/crm-app/api/v1/instalacion/instalacionesDiaInternet",
 				"dataSrc": ""
 			},
 			"columns": [
@@ -258,7 +255,7 @@ $(document).on('ready', function() {
 			$.ajax({
 				
 				type: 'GET',
-				url: '/api/v1/detalleCuenta/observacion/' + codigoDetalleCuenta,
+				url: '/crm-app/api/v1/detalleCuenta/observacion/' + codigoDetalleCuenta,
 				dataType: 'json',
 				success: function(response) {	
 					$('#observacionCuenta').val(response.observacion);
@@ -296,7 +293,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/material/materiales',
+			url: '/crm-app/api/v1/material/materiales',
 			dataType: 'json',
 			success: function(response) {
 				
@@ -504,7 +501,7 @@ $(document).on('ready', function() {
 		$.ajax({
 
 			type: 'GET',
-			url: '/api/v1/atencion/comboempleado/0',
+			url: '/crm-app/api/v1/atencion/comboempleado/0',
 			dataType: 'json',
 			success: function(response) {
 				
@@ -540,7 +537,7 @@ $(document).on('ready', function() {
 					$.ajax({
 						
 						type: 'POST',
-						url: '/api/v1/atencion/updatetecnicoinsta',
+						url: '/crm-app/api/v1/atencion/updatetecnicoinsta',
 						headers: {
 							"Content-Type": "application/json",
 							"Accept": "application/json"
@@ -598,7 +595,7 @@ $(document).on('ready', function() {
 							{
 								
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
 								success: function(response) {
 									
@@ -711,7 +708,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/atencion/searchDatosOnu',
+					url: '/crm-app/api/v1/atencion/searchDatosOnu',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -796,7 +793,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/detalleCuenta/envioDatos',
+					url: '/crm-app/api/v1/detalleCuenta/envioDatos',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -823,7 +820,7 @@ $(document).on('ready', function() {
 							$.ajax({
 								
 								type: 'POST',
-								url: '/api/v1/onu/envioDatosOnu',
+								url: '/crm-app/api/v1/onu/envioDatosOnu',
 								headers: {
 									"Content-Type": "application/json",
 									"Accept": "application/json"
@@ -846,7 +843,7 @@ $(document).on('ready', function() {
 											
 											$.ajax({
 												type: 'POST',
-												url: '/api/v1/detalleCuenta/datosMateriales',
+												url: '/crm-app/api/v1/detalleCuenta/datosMateriales',
 												headers: {
 													"Content-Type": "application/json",
 													"Accept": "application/json"
@@ -954,7 +951,7 @@ $(document).on('ready', function() {
 							{
 						
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + i,
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
 								success: function(response) {
 									
@@ -993,7 +990,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + i,
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
 					success: function(response) {
 						
@@ -1028,7 +1025,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
 					success: function(response) {
 						
@@ -1097,7 +1094,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -1126,7 +1123,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -1141,8 +1138,6 @@ $(document).on('ready', function() {
 				$('#canjes').val(response.message);
 				$('#canjess').val(response.message);
 			}
-			
 		});	
-		
 	}
 });

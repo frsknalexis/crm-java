@@ -11,6 +11,7 @@
 	<groupId>com.dev.crm</groupId>
 	<artifactId>crm_backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>crm_backend</name>
 	<description>CRM for CC Application using Spring Boot</description>
 
@@ -72,6 +73,12 @@
 			<artifactId>modelmapper</artifactId>
 			<version>0.7.4</version>
 		</dependency>
+		<!-- Jasper Dependency -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.4.0</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
 		<dependency>
   			<groupId>org.apache.poi</groupId>
@@ -91,6 +98,7 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<finalName>crm-app</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

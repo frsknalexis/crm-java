@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.dev.crm.core.dto.UbigeoDTO;
+import com.dev.crm.core.dto.UbigeoResultViewModel;
 import com.dev.crm.core.facade.UbigeoFacade;
 import com.dev.crm.core.model.entity.Ubigeo;
 import com.dev.crm.core.service.UbigeoService;
@@ -56,6 +57,27 @@ public class UbigeoFacadeImpl implements UbigeoFacade {
 					ubigeosDTO.add(modelMapper.map(u, UbigeoDTO.class));
 				});
 				return ubigeosDTO;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<UbigeoResultViewModel> listarUbigeo() {
+		
+		List<UbigeoResultViewModel> listaUbigeo = new ArrayList<UbigeoResultViewModel>();
+		
+		try {
+			
+			listaUbigeo = ubigeoService.listarUbigeo();
+			if(GenericUtil.isCollectionEmpty(listaUbigeo)) {
+				return null;
+			}
+			else {
+				return listaUbigeo;
 			}
 		}
 		catch(Exception e) {

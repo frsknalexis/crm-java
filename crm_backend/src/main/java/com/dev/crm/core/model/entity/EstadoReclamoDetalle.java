@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_ci_estado_recldet", schema = "public")
+@Table(name = "tb_ci_estado_recldet")
 public class EstadoReclamoDetalle implements Serializable {
 
 	/**

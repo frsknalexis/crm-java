@@ -15,4 +15,9 @@ public class UsuarioController {
 		
 		return Constantes.USUARIO_VIEW;
 	}
+	
+	@GetMapping("/profileUser")
+	public String profileUserViewController() {
+		return Constantes.PROFILE_USER_VIEW;
+	}
 }

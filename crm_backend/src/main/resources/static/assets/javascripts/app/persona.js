@@ -2,17 +2,23 @@ $(document).on('ready', function() {
 	
 	var tablaClientes;
 	
-	 listarTablaClientes();
+	listarTablaClientes();
 	 
-	 mostrarDatosPersonaCliente();
+	mostrarDatosPersonaCliente();
 	 
-	 validarFormDatosPersonaCliente();
+	validarFormDatosPersonaCliente();
 	
-	 guardarDatosClientePersona();
+	validarDocumentoPersonaCliente();
+	
+	guardarDatosClientePersona();
 	 
-	 mostrarFormCambiarDireccion();
+	mostrarFormCambiarDireccion();
 	 
-	 guardarCambioDireccion();
+	guardarCambioDireccion();
+	 
+	cargarComboListaVendedoresCambio();
+	 
+	cargarComboUbigeo();
 	 
 	var flag;
 	
@@ -21,7 +27,7 @@ $(document).on('ready', function() {
 	setTimeout(function() {
 		mostrarForm(false);
 		mostrarFormCliente(false);
-	}, 200);
+	},100);
 	
 	setTimeout(function() {
 		cargarEstadoCliente();
@@ -46,31 +52,17 @@ $(document).on('ready', function() {
 	
 	cargarComboSexo();
 	
-	$.ajax({
-		
-		type: 'GET',
-		url: '/api/v1/persona/personas/listaPersonasNoClientes',
-		dataType: 'json',
-		success: function(response){
-			
-			
-			if(response == null) {
-			}
-		}
-	});
-	
 	function ocultar_mostrar(id){
 		
 		if(id !== 0){
-			
-			
+					
 			for( var i = 1;i < id ; i++ ){
 			if(i < id){
 				
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/usuario/listamodulos/' + i,
+					url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 					dataType: 'json',
 					success: function(response) {
 							console.log(response);
@@ -83,7 +75,6 @@ $(document).on('ready', function() {
 				}
 			}
 		}
-	
 	}
 		
 	var tabla = $('#tablaPersonas').dataTable({
@@ -114,7 +105,7 @@ $(document).on('ready', function() {
 		}, 
 		"bProcessing": true,
 		"ajax": {
-			"url": "/api/v1/persona/personas/listaPersonasNoClientes",
+			"url": "/crm-app/api/v1/persona/personas/listaPersonasNoClientes",
 			"dataSrc": ""
 		},
 		"columns": [
@@ -208,6 +199,7 @@ $(document).on('ready', function() {
 		
 		mostrarForm(true);
 		$('#documentoPersona').attr('disabled', false);
+		$('#inputDireccionReniec').hide();
 		flag = false;
 	});
 	
@@ -216,19 +208,103 @@ $(document).on('ready', function() {
 		cancelarForm();
 	});
 	
+	/**
+	 * 
+	 * function accionValidarDocumentoPersonaCliente
+	 * 
+	 * */
+	function validarDocumentoPersonaCliente() {
+		
+		$('#validarDocumentoPersonaCLiente').on('click', function(e) {
+			e.preventDefault();
+			
+			if($('#documentoPersona').val().match(/^[0-9\.-\s]{7,12}$/)) {
+				
+				var formDataValidarDocumentoPersonaCliente = {
+						documentoPersonaCliente: $('#documentoPersona').val()	
+				};
+				console.log(formDataValidarDocumentoPersonaCliente);
+				
+				$.ajax({
+					
+					type: 'POST',
+					url: '/crm-app/api/v1/cliente/generarConsecutivoCliente',
+					headers: {
+						"Content-Type": "application/json",
+						"Accept": "application/json"
+					},
+					data: JSON.stringify(formDataValidarDocumentoPersonaCliente),
+					dataType: 'json',
+					success: function(response) {
+						
+						if(response == null) {
+							swal({
+				                type: 'warning',
+				                title: 'Ooops',
+				                text: 'No se Encontraron Resultados de Busqueda !'
+				            });
+						}
+						else if(response != null) {
+							console.log(response);
+							$('#documentoPersona').val(response.documentoCliente);
+							$('#nombrePersona').val(response.nombreCliente);
+							$('#apellidoPaternoPersona').val(response.apellidoPaternoCliente);
+							$('#apellidoMaternoPersona').val(response.apellidoMaternoCliente);
+							$('#telefonoUnoPersona').val(response.telefonoCliente);
+							$('#nombreComercialCliente').val(response.empresaCliente);
+							$('#correoCliente').val(response.correoCliente);
+						}
+					},
+					error: function() {
+						swal({
+			                type: 'error',
+			                title: 'Ooops',
+			                text: 'Ocurrio un Error !'
+			            });
+					}
+				});
+			}
+			
+			if($('#documentoPersona').val() == "") {
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'El campo Numero Documento no puede estar vacio, ingrese un valor valido'
+	            });
+		    	
+		    	$('#documentoPersona').focus();
+		    	return false;
+			}
+			else if(!($('#documentoPersona').val().match(/^[0-9\.-\s]{7,12}$/))) {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'El campo Numero Documento no permite caracteres especiales ni letras'
+	            });
+				
+				$('#documentoPersona').val('');
+				$('#documentoPersona').focus();
+		    	return false;
+			}
+		});
+	}
+	
 	$('#guardarPersona').on('click', function(e) {
 		e.preventDefault();
-		
-		
-		if($('#documentoPersona').val().match(/^[0-9]{7,11}$/) && $('#nombreUbigeo').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
+				
+		if($('#documentoPersona').val().match(/^[0-9\.-\s]{7,12}$/) && $('#codigoUbigeo').val().trim() != ""
 			&& $('#nombrePersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/) && $('#apellidoPaternoPersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
 			&& $('#apellidoMaternoPersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/) && $('#direccionActualPersona').val() != "" 
-				&& $('#referenciaPersona').val() != "" && $('#telefonoUnoPersona').val().match(/^[0-9]{7,9}$/)) {
+			&& $('#referenciaPersona').val() != "" && $('#telefonoUnoPersona').val().match(/^[0-9]{7,9}$/) 
+			&& $('#correoCliente').val().match(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/)
+			&& $('#facebookCliente').val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\,.-\s]+$/)
+			&& $('#codigoSexo').val().trim() != "" ) {
 		
 			var formData = {
 					
 					documentopersoma: $('#documentoPersona').val(),
-						codigoubigeo: $('#codigoUbigeo').val(),
+					codigoubigeo: $('#codigoUbigeo').val(),
 					nombrepersona: $('#nombrePersona').val(),
 					paternopersona: $('#apellidoPaternoPersona').val(),
 					maternopersona: $('#apellidoMaternoPersona').val(),
@@ -240,15 +316,13 @@ $(document).on('ready', function() {
 					tercertelefono: $('#telefonoTresPersona').val()
 			};
 			
-			console.log(formData);
 			console.log(flag);
 			if(flag == false) {
-				
 				
 				$.ajax({
 
 					type: 'POST',
-					url: '/api/v1/persona/insrpersona',
+					url: '/crm-app/api/v1/persona/insrpersona',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -257,20 +331,65 @@ $(document).on('ready', function() {
 					dataType: 'json',
 					success: function(response) {
 						
-					console.log(response);
-						
+						console.log(response);
+												
 						if(response.status == 'SUCCESS' && response.message == "HECHO") {
 							
-							swal({
-								type: "success",
-								title: "Persona: " + response.data.nombrepersona + " Registrado con exito",
-								showConfirmButton: true,
-								confirmButtonText: "Cerrar",
-								closeOnConfirm: false
-							}).then((result) => {
+							var formDataCliente = {	
+									documentoPersonaCliente: $('#documentoPersona').val(),
+									nombreComercialCliente: $('#nombreComercialCliente').val(),
+									correoCliente: $('#correoCliente').val(),
+									facebookCliente: $('#facebookCliente').val(),
+									codigoSexo: $('#codigoSexo').val()
+							};
+							
+							$.ajax({
+								
+								type:'POST',
+								url: '/crm-app/api/v1/cliente/saveCliente',
+								headers: {
+									"Content-Type": "application/json",
+									"Accept": "application/json"
+								},
+								data: JSON.stringify(formDataCliente),
+								dataType: 'json',
+								success: function(response) {
+									
+									console.log(response);
+									
+									if(response.status == 'CREATED') {
+										
+										swal({
+											type: "success",
+											title: "Cliente Registrado con exito",
+											showConfirmButton: true,
+											confirmButtonText: "Cerrar",
+											closeOnConfirm: false
+										}).then((result) => {
 
-								if(result.value) {
-									$(location).attr('href', '/persona/view');
+											if(result.value) {
+												$(location).attr('href', '/persona/view');
+											}
+										});
+									}
+									else if(response.status == 'ERROR') {
+										
+										swal({
+							                type: 'error',
+							                title: 'Ooops',
+							                text: 'Ocurrio un Error al Registrar al Cliente, verifique si ya existe !'
+							            });
+										
+										limpiarClientes();
+									}
+								},
+								error: function() {
+									
+									swal({
+						                type: 'error',
+						                title: 'Ooops',
+						                text: 'Error al Registrar Cliente !'
+						            });
 								}
 							});
 						}
@@ -279,10 +398,8 @@ $(document).on('ready', function() {
 							swal({
 				                type: 'error',
 				                title: 'Ooops',
-				                text: 'Ocurrio un Error al Registrar a la Persona: '+ response.data.nombrepersona +', verifique su Numero Documento !'
+				                text: 'Ocurrio un Error al Registrar al Cliente: '+ response.data.nombrepersona +', verifique su Numero Documento !'
 				            });
-							
-							
 						}
 					},
 					error: function() {
@@ -290,7 +407,7 @@ $(document).on('ready', function() {
 						swal({
 			                type: 'error',
 			                title: 'Ooops',
-			                text: 'Error al Registrar Persona !'
+			                text: 'Error al Registrar Cliente !'
 			            });
 					}
 				});
@@ -298,11 +415,10 @@ $(document).on('ready', function() {
 			
 			if(flag == true) {
 			
-			
 				$.ajax({
 
 					type: 'POST',
-					url: '/api/v1/persona/editpersona',
+					url: '/crm-app/api/v1/persona/editpersona',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -310,14 +426,12 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formData),
 					dataType: 'json',
 					success: function(response) {
-						
-					
-						
+								
 						if(response.status == 'SUCCESS' && response.message == "HECHO") {
 							
 							swal({
 								type: "success",
-								title: "Persona: " + response.data.nombrepersona + " Registrado con exito",
+								title: "Persona: " + response.data.nombrepersona + " Actualizada con exito",
 								showConfirmButton: true,
 								confirmButtonText: "Cerrar",
 								closeOnConfirm: false
@@ -333,10 +447,8 @@ $(document).on('ready', function() {
 							swal({
 				                type: 'error',
 				                title: 'Ooops',
-				                text: 'Ocurrio un Error al Registrar a la Persona: '+ response.data.nombrepersona +', verifique su Numero Documento !'
+				                text: 'Ocurrio un Error al Actualizar a la Persona: '+ response.data.nombrepersona +', verifique su Numero Documento !'
 				            });
-							
-							
 						}
 					},
 					error: function() {
@@ -344,16 +456,17 @@ $(document).on('ready', function() {
 						swal({
 			                type: 'error',
 			                title: 'Ooops',
-			                text: 'Error al Registrar Persona !'
+			                text: 'Error al Actualizar Persona !'
 			            });
 					}
 				});
 			}
 		}
 		
-		if($('#documentoPersona').val() == "" && $('#nombreUbigeo').val() == "" && $('#nombrePersona').val() == "" 
+		if($('#documentoPersona').val() == "" && $('#codigoUbigeo').val().trim() == "" && $('#nombrePersona').val() == "" 
 				&& $('#apellidoPaternoPersona').val() == "" && $('#apellidoMaternoPersona').val() == "" && $('#direccionActualPersona').val() == ""
-				&& $('#referenciaPersona').val() == "" && $('#telefonoUnoPersona').val() == "")  {
+				&& $('#referenciaPersona').val() == "" && $('#telefonoUnoPersona').val() == "" && $('#correoCliente').val() == "" 
+				&& $('#facebookCliente').val() == "" && $('#codigoSexo').val().trim() == "")  {
 			
 			swal({
                 type: 'error',
@@ -376,15 +489,17 @@ $(document).on('ready', function() {
 		    	return false;
 			}
 			
-			if($('#nombreUbigeo').val() == "" || $('#nombreUbigeo').val() == 0) {
+			if($('#codigoUbigeo').val().trim() == "") {
 				
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
-	                text: 'El campo Ubigeo no puede estar vacio, ingrese un valor valido'
+	                text: 'Debe seleccionar un Ubigeo'
 	            });
+				
+		    	return false;
 		    	
-		    	$('#nombreUbigeo').focus();
+		    	$('#codigoUbigeo').focus();
 		    	return false;
 			}
 			
@@ -460,7 +575,68 @@ $(document).on('ready', function() {
 		    	return false;
 			}
 			
-			if(!($('#documentoPersona').val().match(/^[0-9]{7,11}$/))) {
+			if($('#correoCliente').val() == "" || $('#correoCliente').val() == 0) {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'El campo Correo Electronico no puede estar vacio, ingrese un valor valido'
+	            });
+		    	
+		    	$('#correoCliente').focus();
+		    	return false;
+			}
+			
+			else if(!($('#correoCliente').val().match(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/))) {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'El campo Correo Electronico no tiene un formato de Correo valido'
+	            });
+				
+				$('#correoCliente').val('');
+				$('#correoCliente').focus();
+		    	return false;
+			}
+			
+			if($('#facebookCliente').val() == "" || $('#facebookCliente').val() == 0) {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'El campo Facebook Cliente no puede estar vacio, ingrese un valor valido'
+	            });
+		    	
+		    	$('#facebookCliente').focus();
+		    	return false;
+			}
+			
+			else if(!($('#facebookCliente').val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\,.-\s]+$/))) {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'Ingrese un valor valido para el Facebook Cliente'
+	            });
+				
+				$('#facebookCliente').val('');
+				$('#facebookCliente').focus();
+		    	return false;
+			}
+			
+			if($('#codigoSexo').val().trim() == "") {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'Debe seleccionar un Sexo'
+	            });
+				
+		    	return false;
+			}
+											
+			if(!($('#documentoPersona').val().match(/^[0-9\.-\s]{7,12}$/))) {
 				
 				swal({
 	                type: 'error',
@@ -475,20 +651,7 @@ $(document).on('ready', function() {
 			
 			else {
 				
-				if(!($('#nombreUbigeo').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/))) {
-					
-					swal({
-		                type: 'error',
-		                title: 'Ooops',
-		                text: 'El campo Ubigeo no permite caracteres especiales ni numeros'
-		            });
-					
-					$('#nombreUbigeo').val('');
-					$('#nombreUbigeo').focus();
-			    	return false;
-				}
-				
-				else if(!($('#nombrePersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/))) {
+				if(!($('#nombrePersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/))) {
 					
 					swal({
 		                type: 'error',
@@ -540,7 +703,6 @@ $(document).on('ready', function() {
 					$('#direccionActualPersona').focus();
 			    	return false;
 				}
-				
 				*/
 				
 				/**
@@ -625,7 +787,6 @@ $(document).on('ready', function() {
 		
 		var documentoPersona = $(this).attr('idDocumento');
 		
-		
 		mostrarForm(true);
 		$('#documentoPersona').attr('disabled', true);
 		flag = true;
@@ -633,7 +794,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/persona/persona/' + documentoPersona,
+			url: '/crm-app/api/v1/persona/persona/' + documentoPersona,
 			dataType: 'json',
 			success: function(response) {
 			
@@ -653,6 +814,26 @@ $(document).on('ready', function() {
 		});
 	});
 	
+	function cargarComboUbigeo() {
+		
+		var $codigoUbigeo = $('#codigoUbigeo');
+		
+		$.ajax({
+			
+			type: 'GET',
+			url: '/crm-app/api/v1/ubigeo/listaUbigeo',
+			dataType: 'json',
+			success: function(response) {
+				
+				$codigoUbigeo.html('');
+				$codigoUbigeo.append('<option value="">Seleccione un Ubigeo</option>');
+				for(var i = 0; i < response.length; i++) {
+					$codigoUbigeo.append('<option value="' + response[i].codigoUbigeo + '">' + response [i].nombreUbigeo + '</option>');
+				}
+			}
+		});
+	}
+	
 	function cargarComboSexo() {
 		
 		var $codigoSexo = $('#codigoSexo');
@@ -660,7 +841,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/sexo/sexos',
+			url: '/crm-app/api/v1/sexo/listaSexo',
 			dataType: 'json',
 			success: function(response) {
 			
@@ -689,7 +870,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/persona/persona/' + documentoPersona,
+			url: '/crm-app/api/v1/persona/persona/' + documentoPersona,
 			dataType: 'json',
 			success: function(response) {
 				
@@ -697,9 +878,6 @@ $(document).on('ready', function() {
 				$('#clienteApellidosPersona').val(response.apellidoPaternoPersona + ' ' + response.apellidoMaternoPersona);
 			}
 		});
-		
-		
-		
 	});
 	
 	$('#cancelarAccionCliente').on('click', function() {
@@ -732,7 +910,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'PUT',
-					url: '/api/v1/cliente/update',
+					url: '/crm-app/api/v1/cliente/update',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -740,8 +918,6 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formData),
 					dataType: 'json',
 					success: function(response) {
-						
-					
 						
 						swal({
 							type: "success",
@@ -768,12 +944,11 @@ $(document).on('ready', function() {
 			}
 			
 			else if(accion == false) {
-				
-				
+					
 				$.ajax({
 					
 					type:'POST',
-					url: '/api/v1/cliente/save',
+					url: '/crm-app/api/v1/cliente/save',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -909,17 +1084,6 @@ $(document).on('ready', function() {
 			$('#nombreComercialCliente').focus();
 	    	return false;
 		}
-		
-	});
-	
-	$.ajax({
-		
-		type: 'GET',
-		url: '/api/v1/cliente/clientes/listarClienteVendedor',
-		dataType: 'json',
-		success: function(response){
-			
-		}
 	});
 	
 	function listarTablaClientes() {
@@ -951,7 +1115,7 @@ $(document).on('ready', function() {
 			},
 			"bProcessing": true,
 			"ajax": {
-				"url": "/api/v1/cliente/clientes/listarClientesPorVendedor",
+				"url": "/crm-app/api/v1/cliente/clientes/listarClientesPorVendedor",
 				"dataSrc": ""
 			},
 			"columns": [
@@ -1013,7 +1177,7 @@ $(document).on('ready', function() {
 			$.ajax({
 				
 				type:'GET',
-				url: '/api/v1/cliente/cliente/recuperarDatosCliente/' + documentoPersonaCliente,
+				url: '/crm-app/api/v1/cliente/cliente/recuperarDatosCliente/' + documentoPersonaCliente,
 				dataType: 'json',
 				success: function(response) {
 					console.log(response);
@@ -1071,7 +1235,7 @@ $(document).on('ready', function() {
 			$.ajax({
 				
 				type: 'GET',
-				url: '/api/v1/cliente/cliente/recuperarDatosCliente/' + documentoPersonaCliente,
+				url: '/crm-app/api/v1/cliente/cliente/recuperarDatosCliente/' + documentoPersonaCliente,
 				dataType: 'json',
 				success: function(response) {
 					console.log(response);
@@ -1085,6 +1249,29 @@ $(document).on('ready', function() {
 		});
 	}
 	
+	/**
+	 * function para cargar combo lista vendedores
+	 * 
+	 * */
+	function cargarComboListaVendedoresCambio() {
+		
+		$vendedorResponsableCambio = $('#vendedorResponsableCambio');
+		
+		$.ajax({
+			
+			type: 'GET',
+			url: '/crm-app/api/v1/vendedor/vendedores',
+			dataType: 'json',
+			success: function(response) {
+				console.log(response);
+				$vendedorResponsableCambio.html('');
+				$vendedorResponsableCambio.append('<option value="">Seleccione un  Vendedor Responsable</option>');
+				for(var i = 0; i < response.length; i++) {
+					$vendedorResponsableCambio.append('<option value="' + response[i].vendedor + '">' + response[i].vendedor + '</option>');
+				}
+			}
+		});
+	}
 	
 	/**
 	 * 
@@ -1096,12 +1283,13 @@ $(document).on('ready', function() {
 		$('#guardarDatosCambiarDireccion').on('click', function(e) {
 			e.preventDefault();
 			
-			if($('#nuevaDireccionCliente').val() != "") {
+			if($('#nuevaDireccionCliente').val() != "" && $('#fechaSugerenciaCambiarDireccion').val() != "" && $('#vendedorResponsableCambio').val().trim() != "") {
 				
 				var formDataCambiarDireccion = {
 						documentoPersonaCliente: $('#documentoPersonaClienteCambiarDireccion').val(),
 						nuevaDireccion: $('#nuevaDireccionCliente').val(),
 						observacionCuenta: $('#observacionCambiarDireccion').val(),
+						vendedorResponsable: $('#vendedorResponsableCambio').val(),
 						fechaElegida: $('#fechaSugerenciaCambiarDireccion').val()
 				};
 				console.log(formDataCambiarDireccion);
@@ -1109,7 +1297,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/cliente/cliente/cambiarDomicilio',
+					url: '/crm-app/api/v1/cliente/cliente/cambiarDomicilio',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -1142,9 +1330,53 @@ $(document).on('ready', function() {
 					}
 				});
 			}
+			
+			if($('#nuevaDireccionCliente').val() == "" && $('#fechaSugerenciaCambiarDireccion').val() == "" && $('#vendedorResponsableCambio').val().trim() == "") {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'Debe llenar todos los Campos !'
+	            });
+			
+				return false;
+				
+			}
+			else {
+				if($('#nuevaDireccionCliente').val() == "") {
+					swal({
+		                type: 'error',
+		                title: 'Ooops',
+		                text: 'El campo Nueva Direccion no puede estar vacio, ingrese un valor valido'
+		            });
+			    	
+			    	$('#nuevaDireccionCliente').focus();
+			    	return false;
+				}
+				
+				if($('#fechaSugerenciaCambiarDireccion').val() == "") {
+					swal({
+		                type: 'error',
+		                title: 'Ooops',
+		                text: 'El campo Fecha Sugerencia no puede estar vacio, ingrese un valor valido'
+		            });
+			    	
+			    	$('#fechaSugerenciaCambiarDireccion').focus();
+			    	return false;
+				}
+				
+				if($('#vendedorResponsableCambio').val().trim() == "") {
+					
+					swal({
+		                type: 'error',
+		                title: 'Ooops',
+		                text: 'Debe Seleccionar un Vendedor Responsable !'
+		            });
+					return false;
+				}
+			}
 		});
 	}
-	
 	
 	/**
 	 * 
@@ -1337,7 +1569,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'PUT',
-					url: '/api/v1/cliente/updatePersonaCliente',
+					url: '/crm-app/api/v1/cliente/updatePersonaCliente',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -1471,7 +1703,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/persona/persona/' + documentoPersonaCliente,
+			url: '/crm-app/api/v1/persona/persona/' + documentoPersonaCliente,
 			dataType: 'json',
 			success: function(response) {
 				
@@ -1486,7 +1718,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/cliente/cliente/' + documentoPersonaCliente,
+			url: '/crm-app/api/v1/cliente/cliente/' + documentoPersonaCliente,
 			dataType: 'json',
 			success: function(response) {
 				
@@ -1507,7 +1739,6 @@ $(document).on('ready', function() {
 		
 		var documentoPersonaCliente = $(this).attr('idDocumentoCliente');
 		
-		
 		mostrarFormCliente(true);
 		accion = true;
 		$('#documentoPersonaCliente').attr('disabled', true);
@@ -1519,11 +1750,10 @@ $(document).on('ready', function() {
 		$('#consecutivoCliente').attr('disabled', true);
 		$('#codigoCliente').attr('disabled', true);
 		
-		
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/persona/persona/' + documentoPersonaCliente,
+			url: '/crm-app/api/v1/persona/persona/' + documentoPersonaCliente,
 			dataType: 'json',
 			success: function(response) {
 			
@@ -1535,7 +1765,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/cliente/cliente/' + documentoPersonaCliente,
+			url: '/crm-app/api/v1/cliente/cliente/' + documentoPersonaCliente,
 			dataType: 'json',
 			success: function(response) {
 			
@@ -1572,7 +1802,7 @@ $(document).on('ready', function() {
 	        if(result.value){
 	           
 	        	 $.ajax({
-	                 url: '/api/v1/cliente/cliente/disabled/' + documentoPersonaCliente,
+	                 url: '/crm-app/api/v1/cliente/cliente/disabled/' + documentoPersonaCliente,
 	                 type: 'GET',
 	                 success: function(response){
 	                	 
@@ -1611,7 +1841,6 @@ $(document).on('ready', function() {
 		
 		var documentoPersonaCliente = $(this).attr('idDocumentoCliente');
 		
-		
 		swal({
 	        title: '¿Esta Seguro de habilitar a este Cliente ?',
 	        text: '¡Si no lo esta puede Cancelar la accion!',
@@ -1626,12 +1855,10 @@ $(document).on('ready', function() {
 	           
 	        	$.ajax({
 	        		
-	        		url: '/api/v1/cliente/cliente/enabled/' + documentoPersonaCliente,
+	        		url: '/crm-app/api/v1/cliente/cliente/enabled/' + documentoPersonaCliente,
 	        		type: 'GET',
 	        		success: function(response){
-	        			
-	        		
-	        			
+	        			        			
 	        			swal({
 	        				type: "success",
 	                        title: "El Cliente ha sido habilitado correctamente",
@@ -1656,46 +1883,7 @@ $(document).on('ready', function() {
 	    });
 	});
 	
-	/**
-	 * 
-	 * Autocomplete para el Ubigeo
-	 * 
-	 */
-	
-	$("#nombreUbigeo").autocomplete({
-		
-		source: function(request, response) {
-			
-			$.ajax({
-				url : "/api/v1/ubigeo/ubigeos/autocomplete/" + request.term,
-				dataType : 'json',
-				data : {
-					term : request.term
-				},
-				success : function(data) {
-				
-					response($.map(data, function(item) {
-						return {
-							value: item.codigoUbigeo,
-							label: item.nombreUbigeo,
-							
-						};
-					}));
-				},
-			});
-		},
-		
-		select: function(event, ui) {
-			$("#nombreUbigeo").val(ui.item.label);
-			$("#codigoUbigeo").val(ui.item.value);
-			return false;
-		}
-	});
-	
-	
-function cargarmensajespopusnuevo(valor,id){
-		
-		
+	function cargarmensajespopusnuevo(valor,id){
 		
 		var title = "Tareas Pendientes!!!";
 		
@@ -1704,7 +1892,6 @@ function cargarmensajespopusnuevo(valor,id){
 		var theme = "warning";
 		var closeOnClick = true;
 		var displayClose =true;
-		
 		
 		if(valor !== 0)
 		{
@@ -1716,15 +1903,13 @@ function cargarmensajespopusnuevo(valor,id){
 							{
 								
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
 								success: function(response) {
 									
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
-							
-									
-									
+														
 									window.createNotification({
 										closeOnClick: closeOnClick,
 										displayCloseButton: displayClose,
@@ -1740,13 +1925,10 @@ function cargarmensajespopusnuevo(valor,id){
 					});
 				}
 			}
-			
 		}
 	}
 
 	function cargarmensajespopus(id){
-		
-		
 		
 		var title = "Tareas Pendientes!!!";
 		
@@ -1768,7 +1950,7 @@ function cargarmensajespopusnuevo(valor,id){
 							{
 						
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + i,
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
 								success: function(response) {
 									
@@ -1790,28 +1972,24 @@ function cargarmensajespopusnuevo(valor,id){
 						}
 					});
 				}
-			}
-			
+			}	
 		}
 	}
 	
 	function estado(id){
 		
-		
 		if(id !== 0){
-			
-			
+				
 			for(var i=1;i<=id;i++){
 			if(i <= id){
 				
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + i,
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
 					success: function(response) {
-						
-						
+									
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
 						
@@ -1832,7 +2010,6 @@ function cargarmensajespopusnuevo(valor,id){
 	
 	function estadonuevo(valor){
 		
-		
 		if(valor !== 0){
 			
 			document.getElementById("agregarmensajesnoti").innerHTML="";
@@ -1842,11 +2019,10 @@ function cargarmensajespopusnuevo(valor,id){
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
 					success: function(response) {
-						
-						
+										
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
 						
@@ -1875,7 +2051,6 @@ function cargarmensajespopusnuevo(valor,id){
 		dinamico = document.getElementsByName("canjes")[0].value;
 		valuee = document.getElementsByName("canjess")[0].value;
 		
-		
 		var verificando = valuee - dinamico;
 		
 		if(estatico === valuee && valuee === dinamico){
@@ -1903,7 +2078,6 @@ function cargarmensajespopusnuevo(valor,id){
 	
 	function cargarTotalRegistrosPersona() {
 		
-		
 		var formData = {
 				
 		};
@@ -1911,7 +2085,7 @@ function cargarmensajespopusnuevo(valor,id){
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -1924,15 +2098,11 @@ function cargarmensajespopusnuevo(valor,id){
 				$('#totalidad').html(response.message);
 				$('#canjess').val(response.message);
 			}
-			
 		});	
-		
 	}
 	
-	
 	function cargarTotalRegistrosPersonita() {
-		
-		
+			
 		var formData = {
 				
 		};
@@ -1940,7 +2110,7 @@ function cargarmensajespopusnuevo(valor,id){
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -1954,9 +2124,7 @@ function cargarmensajespopusnuevo(valor,id){
 				$('#canje').val(response.message);
 				$('#canjes').val(response.message);
 				$('#canjess').val(response.message);
-			}
-			
+			}	
 		});	
-		
 	}
 });

@@ -4,8 +4,10 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.dev.crm.core.dto.ModuloResultViewModel;
+import com.dev.crm.core.dto.PerfilUsuarioResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.dto.UsuarioDTO;
+import com.dev.crm.core.dto.UsuarioPerfilRequest;
 import com.dev.crm.core.dto.UsuarioRequest;
 import com.dev.crm.core.dto.UsuarioResponse;
 
@@ -24,6 +26,8 @@ public interface UsuarioFacade {
 	UsuarioDTO getByDocumento(String documentoUsuario);
 	
 	ResponseBaseOperation saveOrUpdate(UsuarioDTO usuarioDTO);
+
+	ResponseBaseOperation actualizarPerfilPassword(UsuarioPerfilRequest request);
 	
 	ResponseBaseOperation disabled(BigDecimal usuarioId);
 	
@@ -32,4 +36,6 @@ public interface UsuarioFacade {
 	ResponseBaseOperation obtenerTotalRegistrosUsuario();
 	
 	ModuloResultViewModel spListarModulo(String usuario,String numero);
+	
+	PerfilUsuarioResultViewModel perfilUsuario(String usuario);
 }

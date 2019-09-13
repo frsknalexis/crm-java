@@ -1,4 +1,3 @@
-
 $(document).on('ready', function() {
 	
 	var flag;
@@ -28,7 +27,6 @@ $(document).on('ready', function() {
 		    	$('#total').load(cargarTotalRegistrosPersona());
 		    	evaluando();
 		    // Ejemplo: Cada dos segundos se imprime la hora
-		   
 		  }
 		  // Intervalo de tiempo
 		,5000);
@@ -40,15 +38,13 @@ $(document).on('ready', function() {
 	function ocultar_mostrar(id){
 		
 		if(id !== 0){
-			
-			
 			for( var i = 1;i < id ; i++ ){
 			if(i < id){
 				
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/usuario/listamodulos/' + i,
+					url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 					dataType: 'json',
 					success: function(response) {
 							console.log(response);
@@ -61,7 +57,6 @@ $(document).on('ready', function() {
 				}
 			}
 		}
-	
 	}
 	
 	function limpiar() {
@@ -125,7 +120,7 @@ $(document).on('ready', function() {
 	$.ajax({
 		
 		type: 'GET',
-		url: '/api/v1/persona/personas/listaPersonasNoEmpleados',
+		url: '/crm-app/api/v1/persona/personas/listaPersonasNoEmpleados',
 		dataType: 'json',
 		success: function(response){
 			
@@ -155,7 +150,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/ubigeo/ubigeos',
+			url: '/crm-app/api/v1/ubigeo/ubigeos',
 			dataType: 'json',
 			success: function(response) {
 			
@@ -197,7 +192,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'PUT',
-					url: '/api/v1/persona/update',
+					url: '/crm-app/api/v1/persona/update',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -239,7 +234,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type:'POST',
-					url: '/api/v1/persona/save',
+					url: '/crm-app/api/v1/persona/save',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -551,7 +546,7 @@ $(document).on('ready', function() {
 		},
 		'bProcessing': true,
 		"ajax": {
-			"url": "/api/v1/persona/personas/listaPersonasNoEmpleados",
+			"url": "/crm-app/api/v1/persona/personas/listaPersonasNoEmpleados",
 			"dataSrc": ""
 		},
 		"columns": [
@@ -588,7 +583,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/persona/persona/' + documentoPersonaEmpleado,
+			url: '/crm-app/api/v1/persona/persona/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
 				
@@ -625,7 +620,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/persona/persona/' + documentoPersonaEmpleado,
+			url: '/crm-app/api/v1/persona/persona/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
 			
@@ -650,7 +645,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/cargo/cargos',
+			url: '/crm-app/api/v1/cargo/cargos',
 			dataType: 'json',
 			success: function(response){
 			
@@ -684,7 +679,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'PUT',
-					url: '/api/v1/empleado/update',
+					url: '/crm-app/api/v1/empleado/update',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -724,7 +719,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/empleado/save',
+					url: '/crm-app/api/v1/empleado/save',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -811,7 +806,7 @@ $(document).on('ready', function() {
 		},
 		'bProcessing': true,
 		"ajax": {
-			"url": "/api/v1/empleado/empleados/listarEmpleadoINtExt",
+			"url": "/crm-app/api/v1/empleado/empleados/listarEmpleadoINtExt",
 			"dataSrc": ""
 		},
 		"columns": [
@@ -852,7 +847,7 @@ $(document).on('ready', function() {
 	    	if(result.value){
 
 	        	 $.ajax({
-	                 url: '/api/v1/empleado/plantaempleado/' + codigoplantainterna,
+	                 url: '/crm-app/api/v1/empleado/plantaempleado/' + codigoplantainterna,
 	                 type: 'GET',
 	                 success: function(response){
 	                	 
@@ -898,7 +893,7 @@ $(document).on('ready', function() {
 	    	if(result.value){
 
 	        	 $.ajax({
-	                 url: '/api/v1/empleado/plantaempleado/' + codigoplantaexterna,
+	                 url: '/crm-app/api/v1/empleado/plantaempleado/' + codigoplantaexterna,
 	                 type: 'GET',
 	                 success: function(response){
 	                	 
@@ -932,9 +927,6 @@ $(document).on('ready', function() {
 		var tipoplantainterno = codigodocumento + 'NI';
 		var valueestado = $('.valueestado');
 		
-		
-		
-				
 				swal({
 			        title: '¿Esta Seguro de agregar al Empleado a la Planta Interna?',
 			        text: '¡Si no lo esta puede Cancelar la accion!',
@@ -948,11 +940,10 @@ $(document).on('ready', function() {
 			    	if(result.value){
 
 			        	 $.ajax({
-			                 url: '/api/v1/empleado/plantaempleado/' + tipoplantainterno,
+			                 url: '/crm-app/api/v1/empleado/plantaempleado/' + tipoplantainterno,
 			                 type: 'GET',
 			                 success: function(response){
 			                	 
-			              
 			                     swal({
 			                         type: "success",
 			                         title: "El Empleado: " + tipoplantainterno + " ha sido guardado a la Planta Interna correctamente",
@@ -981,10 +972,7 @@ $(document).on('ready', function() {
 		var codigodocumento = $(this).attr('documentopersonaempleado');
 		var tipoplantaexterno = codigodocumento + 'NE';
 		var valueestado = $('.valueestado');
-		
-		
-		
-				
+						
 				swal({
 			        title: '¿Esta Seguro de agregar al Empleado a la Planta Externa?',
 			        text: '¡Si no lo esta puede Cancelar la accion!',
@@ -998,11 +986,10 @@ $(document).on('ready', function() {
 			    	if(result.value){
 
 			        	 $.ajax({
-			                 url: '/api/v1/empleado/plantaempleado/' + tipoplantaexterno,
+			                 url: '/crm-app/api/v1/empleado/plantaempleado/' + tipoplantaexterno,
 			                 type: 'GET',
 			                 success: function(response){
 			                	 
-			                	
 			                     swal({
 			                         type: "success",
 			                         title: "El Empleado: " + tipoplantaexterno + " ha sido guardado a la Planta Externa correctamente",
@@ -1063,8 +1050,6 @@ $(document).on('ready', function() {
 		}
 	}
 	
-	
-	
 	/**
 	 * 
 	 * 
@@ -1098,7 +1083,7 @@ $(document).on('ready', function() {
 		},
 		"bProcessing": true,
 		"ajax": {
-			"url": "/api/v1/empleado/empleados/listarPersonaEmpleado",
+			"url": "/crm-app/api/v1/empleado/empleados/listarPersonaEmpleado",
 			"dataSrc": ""
 		},
 		"columns": [
@@ -1226,7 +1211,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/persona/persona/' + documentoPersonaEmpleado,
+			url: '/crm-app/api/v1/persona/persona/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
 				
@@ -1241,7 +1226,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/empleado/empleado/' + documentoPersonaEmpleado,
+			url: '/crm-app/api/v1/empleado/empleado/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
 				
@@ -1260,7 +1245,6 @@ $(document).on('ready', function() {
 		
 		var documentoPersonaEmpleado = $(this).attr('idDocumentoEmpleado');
 		
-		
 		mostrarForm(true);
 		$('#documentoPersonaEmpleado').attr('disabled', true);
 		$('#documentoPersonaEmpleado').val(documentoPersonaEmpleado);
@@ -1270,7 +1254,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/persona/persona/' + documentoPersonaEmpleado,
+			url: '/crm-app/api/v1/persona/persona/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
 				
@@ -1282,7 +1266,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/empleado/empleado/' + documentoPersonaEmpleado,
+			url: '/crm-app/api/v1/empleado/empleado/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
 				
@@ -1301,7 +1285,6 @@ $(document).on('ready', function() {
 		
 		var documentoPersonaEmpleado = $(this).attr('idDocumentoEmpleado');
 
-
 		swal({
 	        title: '¿Esta Seguro de deshabilitar a este Empleado ?',
 	        text: '¡Si no lo esta puede Cancelar la accion!',
@@ -1315,11 +1298,10 @@ $(document).on('ready', function() {
 	        if(result.value){
 	           
 	        	 $.ajax({
-	                 url: '/api/v1/empleado/empleado/disabled/' + documentoPersonaEmpleado,
+	                 url: '/crm-app/api/v1/empleado/empleado/disabled/' + documentoPersonaEmpleado,
 	                 type: 'GET',
 	                 success: function(response){
 	                	 
-	                	
 	                     swal({
 	                         type: "success",
 	                         title: "El Empleado ha sido deshabilitado correctamente",
@@ -1367,10 +1349,9 @@ $(document).on('ready', function() {
 		           
 		        	$.ajax({
 		        		
-		        		url: '/api/v1/empleado/empleado/enabled/' + documentoPersonaEmpleado,
+		        		url: '/crm-app/api/v1/empleado/empleado/enabled/' + documentoPersonaEmpleado,
 		        		type: 'GET',
 		        		success: function(response){
-		        			
 		        			
 		        			swal({
 		        				type: "success",
@@ -1398,8 +1379,6 @@ $(document).on('ready', function() {
 		
 	function cargarmensajespopusnuevo(valor,id){
 			
-			
-			
 			var title = "Tareas Pendientes!!!";
 			
 			var position = "Bottom right";
@@ -1407,7 +1386,6 @@ $(document).on('ready', function() {
 			var theme = "warning";
 			var closeOnClick = true;
 			var displayClose =true;
-			
 			
 			if(valor !== 0)
 			{
@@ -1419,15 +1397,13 @@ $(document).on('ready', function() {
 								{
 									
 									type: 'GET',
-									url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+									url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 									dataType: 'json',
 									success: function(response) {
 										
 										var mensaje = response.descripcionmensaje;
 										var message = mensaje;
 								
-										
-										
 										window.createNotification({
 											closeOnClick: closeOnClick,
 											displayCloseButton: displayClose,
@@ -1443,13 +1419,10 @@ $(document).on('ready', function() {
 						});
 					}
 				}
-				
 			}
 		}
 
 		function cargarmensajespopus(id){
-			
-			
 			
 			var title = "Tareas Pendientes!!!";
 			
@@ -1471,14 +1444,13 @@ $(document).on('ready', function() {
 								{
 							
 									type: 'GET',
-									url: '/api/v1/atencion/searchMensaje/' + i,
+									url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 									dataType: 'json',
 									success: function(response) {
 										
 										var mensaje = response.descripcionmensaje;
 										var message = mensaje;
 								
-										
 										window.createNotification({
 											closeOnClick: closeOnClick,
 											displayCloseButton: displayClose,
@@ -1489,7 +1461,6 @@ $(document).on('ready', function() {
 									title: title,
 									message: message
 								});
-								
 							}
 						});
 					}
@@ -1499,10 +1470,8 @@ $(document).on('ready', function() {
 		}
 		
 		function estado(id){
-			
-			
+		
 			if(id !== 0){
-				
 				
 				for(var i=1;i<=id;i++){
 				if(i <= id){
@@ -1510,10 +1479,9 @@ $(document).on('ready', function() {
 					$.ajax({
 						
 						type: 'GET',
-						url: '/api/v1/atencion/searchMensaje/' + i,
+						url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 						dataType: 'json',
 						success: function(response) {
-							
 							
 							var tag = document.createElement("li");
 							tag.innerHTML = '<span class="toggle">Jan</span>';
@@ -1545,10 +1513,9 @@ $(document).on('ready', function() {
 					$.ajax({
 						
 						type: 'GET',
-						url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+						url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 						dataType: 'json',
 						success: function(response) {
-							
 							
 							var tag = document.createElement("li");
 							tag.innerHTML = '<span class="toggle">Jan</span>';
@@ -1578,7 +1545,6 @@ $(document).on('ready', function() {
 			dinamico = document.getElementsByName("canjes")[0].value;
 			valuee = document.getElementsByName("canjess")[0].value;
 			
-			
 			var verificando = valuee - dinamico;
 			
 			if(estatico === valuee && valuee === dinamico){
@@ -1606,7 +1572,6 @@ $(document).on('ready', function() {
 		
 		function cargarTotalRegistrosPersona() {
 			
-			
 			var formData = {
 					
 			};
@@ -1614,7 +1579,7 @@ $(document).on('ready', function() {
 			$.ajax({
 				
 				type: 'POST',
-				url: '/api/v1/atencion/obtenercantidad',
+				url: '/crm-app/api/v1/atencion/obtenercantidad',
 				headers: {
 					"Content-Type": "application/json",
 					"Accept": "application/json"
@@ -1627,14 +1592,10 @@ $(document).on('ready', function() {
 					$('#totalidad').html(response.message);
 					$('#canjess').val(response.message);
 				}
-				
 			});	
-			
 		}
 		
-		
 		function cargarTotalRegistrosPersonita() {
-			
 			
 			var formData = {
 					
@@ -1643,7 +1604,7 @@ $(document).on('ready', function() {
 			$.ajax({
 				
 				type: 'POST',
-				url: '/api/v1/atencion/obtenercantidad',
+				url: '/crm-app/api/v1/atencion/obtenercantidad',
 				headers: {
 					"Content-Type": "application/json",
 					"Accept": "application/json"
@@ -1651,15 +1612,12 @@ $(document).on('ready', function() {
 				data: JSON.stringify(formData),
 				dataType: 'json',
 				success: function(response) {
-					
 					$('#total').html(response.message);
 					$('#totalidad').html(response.message);
 					$('#canje').val(response.message);
 					$('#canjes').val(response.message);
 					$('#canjess').val(response.message);
 				}
-				
 			});	
-			
 		}
 });

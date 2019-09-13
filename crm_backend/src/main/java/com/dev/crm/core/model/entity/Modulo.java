@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_ci_modulo", schema = "public")
+@Table(name = "tb_ci_modulo")
 public class Modulo implements Serializable {
 
 	/**

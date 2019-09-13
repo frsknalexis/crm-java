@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.dev.crm.core.dto.SexoDTO;
+import com.dev.crm.core.dto.SexoResultViewModel;
 import com.dev.crm.core.facade.SexoFacade;
 import com.dev.crm.core.model.entity.Sexo;
 import com.dev.crm.core.service.SexoService;
+import com.dev.crm.core.util.GenericUtil;
 
 @Component("sexoFacade")
 public class SexoFacadeImpl implements SexoFacade {
@@ -42,4 +44,24 @@ public class SexoFacadeImpl implements SexoFacade {
 		return null;
 	}
 
+	@Override
+	public List<SexoResultViewModel> listarSexo() {
+		
+		List<SexoResultViewModel> listaSexo = new ArrayList<SexoResultViewModel>();
+		
+		try {
+			
+			listaSexo = sexoService.listarSexo();
+			if(GenericUtil.isCollectionEmpty(listaSexo)) {
+				return null;
+			}
+			else {
+				return listaSexo;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

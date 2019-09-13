@@ -12,7 +12,7 @@ public class JsonBigDecimalSimpleSerializer extends JsonSerializer<BigDecimal> {
 	@Override
 	public void serialize(BigDecimal value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
 		
-		gen.writeNumber(value.setScale(2, BigDecimal.ROUND_HALF_UP));
+		gen.writeString(value.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
 	}
 
 }

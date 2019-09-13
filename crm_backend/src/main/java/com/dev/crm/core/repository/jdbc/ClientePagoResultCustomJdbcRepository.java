@@ -45,7 +45,9 @@ public class ClientePagoResultCustomJdbcRepository implements ClientePagoResultJ
 					new SqlOutParameter("VREFERENCIA", Types.VARCHAR),
 					new SqlOutParameter("FECHAI", Types.DATE),
 					new SqlOutParameter("GESTOR", Types.VARCHAR),
-					new SqlOutParameter("GESTORT", Types.VARCHAR));
+					new SqlOutParameter("GESTORT", Types.VARCHAR),
+					new SqlOutParameter("VFECHAC", Types.DATE),
+					new SqlOutParameter("VCODCLI", Types.VARCHAR));
 			
 			Map<String, Object> inParam = new HashMap<String, Object>();
 			inParam.put("COD_DOC", documentoPersona);
@@ -64,6 +66,8 @@ public class ClientePagoResultCustomJdbcRepository implements ClientePagoResultJ
 				cPago.setFechaInstalacion((Date) out.get("FECHAI"));
 				cPago.setGestorResponsable((String) out.get("GESTOR"));
 				cPago.setTelefonoGestor((String) out.get("GESTORT"));
+				cPago.setFechaInstalacionCable((Date) out.get("VFECHAC"));
+				cPago.setCodigoClienteCable((String) out.get("VCODCLI"));
 				return cPago;
 			}
 			else if(GenericUtil.isNull(out.get("VCLIENTE")) && GenericUtil.isNull(out.get("VDOCUMENTO"))) {

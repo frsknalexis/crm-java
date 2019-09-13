@@ -35,15 +35,13 @@ $(document).on('ready', function() {
 	function ocultar_mostrar(id){
 		
 		if(id !== 0){
-			
-			
 			for( var i = 1;i < id ; i++ ){
 			if(i < id){
 				
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/usuario/listamodulos/' + i,
+					url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 					dataType: 'json',
 					success: function(response) {
 							console.log(response);
@@ -56,7 +54,6 @@ $(document).on('ready', function() {
 				}
 			}
 		}
-	
 	}
 	
 	/**
@@ -105,7 +102,7 @@ $(document).on('ready', function() {
 			},
 			'bProcessing': true,
 			"ajax": {
-				"url": "/api/v1/pago/pagosDelDia",
+				"url": "/crm-app/api/v1/pago/pagosDelDia",
 				"dataSrc": ""
 			},
 			"columns": [
@@ -138,12 +135,11 @@ $(document).on('ready', function() {
 		$('#tablaPagosRealizadosGeneral tbody').on('click', 'button.btnGenerarReciboPago', function() {
 			
 			var codigoPago = $(this).attr('codigoPago');
-			$(this).attr('href','/api/v1/pago/generarRecibo/' + codigoPago);
+			$(this).attr('href','/crm-app/api/v1/pago/generarRecibo/' + codigoPago);
 			var url = $(this).attr('href');
 			window.open(url, '_blank');
 		     return false;
 			console.log(url);
-			
 			console.log('codigoPago: ' + codigoPago);
 		});
 	}
@@ -159,7 +155,6 @@ $(document).on('ready', function() {
 			
 			var codigoPago = $(this).attr('codigoPago');
 			console.log("codigoPago: " + codigoPago);
-			
 			$('#modalFormRevalidarPago').modal('show');
 			$('#codigoPagoRevalidar').val(codigoPago);
 		});
@@ -177,7 +172,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/comprobante/comprobantes',
+			url: '/crm-app/api/v1/comprobante/comprobantes',
 			dataType: 'json',
 			success: function(response) {
 				$codigoComprobante.html('');
@@ -238,15 +233,13 @@ $(document).on('ready', function() {
 			
 			var valor = $(this).val();
 			
-			
 			if(parseInt(valor) <= -1) {
 				
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'Ingrese un valor valido para el Monto a Pagar'
-	            });
-				
+	            });			
 				$(this).val('');
 				$(this).focus();
 			}
@@ -276,7 +269,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/pago/consecutivoPago',
+					url: '/crm-app/api/v1/pago/consecutivoPago',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -323,9 +316,7 @@ $(document).on('ready', function() {
 		});
 	}
 	
-function cargarmensajespopusnuevo(valor,id){
-		
-		
+	function cargarmensajespopusnuevo(valor,id){
 		
 		var title = "Tareas Pendientes!!!";
 		
@@ -335,11 +326,8 @@ function cargarmensajespopusnuevo(valor,id){
 		var closeOnClick = true;
 		var displayClose =true;
 		
-		
-		
 		if(valor !== 0)
 		{
-			
 			for(var i = 0;id > i;i++)
 			{			
 				if(id > i){
@@ -347,15 +335,13 @@ function cargarmensajespopusnuevo(valor,id){
 							{
 								
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
 								success: function(response) {
 									
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
-							
-									
-									
+								
 									window.createNotification({
 										closeOnClick: closeOnClick,
 										displayCloseButton: displayClose,
@@ -365,19 +351,15 @@ function cargarmensajespopusnuevo(valor,id){
 									})({
 								title: title,
 								message: message
-							});
-							
+							});				
 						}
 					});
 				}
-			}
-			
+			}	
 		}
 	}
 
 	function cargarmensajespopus(id){
-		
-		
 		
 		var title = "Tareas Pendientes!!!";
 		
@@ -399,14 +381,13 @@ function cargarmensajespopusnuevo(valor,id){
 							{
 						
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + i,
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
 								success: function(response) {
 									
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
-							
-									
+								
 									window.createNotification({
 										closeOnClick: closeOnClick,
 										displayCloseButton: displayClose,
@@ -416,21 +397,17 @@ function cargarmensajespopusnuevo(valor,id){
 									})({
 								title: title,
 								message: message
-							});
-							
+							});				
 						}
 					});
 				}
-			}
-			
+			}	
 		}
 	}
 	
 	function estado(id){
 		
-		
 		if(id !== 0){
-			
 			
 			for(var i=1;i<=id;i++){
 			if(i <= id){
@@ -438,11 +415,10 @@ function cargarmensajespopusnuevo(valor,id){
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + i,
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
 					success: function(response) {
-						
-						
+										
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
 						
@@ -463,7 +439,6 @@ function cargarmensajespopusnuevo(valor,id){
 	
 	function estadonuevo(valor){
 		
-		
 		if(valor !== 0){
 			
 			document.getElementById("agregarmensajesnoti").innerHTML="";
@@ -473,11 +448,10 @@ function cargarmensajespopusnuevo(valor,id){
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
 					success: function(response) {
-						
-						
+										
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
 						
@@ -506,27 +480,21 @@ function cargarmensajespopusnuevo(valor,id){
 		dinamico = document.getElementsByName("canjes")[0].value;
 		valuee = document.getElementsByName("canjess")[0].value;
 		
-		
 		var verificando = valuee - dinamico;
 		
 		if(estatico === valuee && valuee === dinamico){
-			
 			estado(valuee);
 			cargarmensajespopus(valuee);
 			$('#canje').val("0");
 		}
 		if(verificando === 0){
-			
 			estado(verificando);
 			cargarmensajespopus(verificando);
 			$('#canje').val("0");
 		}
 		if(verificando !== 0){
-			
 			estadonuevo(parseInt(valuee));
-			
 			cargarmensajespopusnuevo(parseInt(dinamico) + 1,parseInt(verificando));
-		
 			$('#canje').val("0");
 			$('#canjes').val(valuee);
 		}
@@ -534,15 +502,13 @@ function cargarmensajespopusnuevo(valor,id){
 	
 	function cargarTotalRegistrosPersona() {
 		
-		
 		var formData = {
 				
 		};
 		
 		$.ajax({
-			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -550,28 +516,22 @@ function cargarmensajespopusnuevo(valor,id){
 			data: JSON.stringify(formData),
 			dataType: 'json',
 			success: function(response) {
-				
 				$('#total').html(response.message);
 				$('#totalidad').html(response.message);
 				$('#canjess').val(response.message);
 			}
-			
 		});	
-		
 	}
 	
 	
 	function cargarTotalRegistrosPersonita() {
 		
-		
 		var formData = {
 				
 		};
-		
 		$.ajax({
-			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -586,9 +546,6 @@ function cargarmensajespopusnuevo(valor,id){
 				$('#canjes').val(response.message);
 				$('#canjess').val(response.message);
 			}
-			
-		});	
-		
+		});		
 	}
-	
 });

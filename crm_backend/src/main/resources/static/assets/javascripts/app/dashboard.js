@@ -1,18 +1,12 @@
-/**
- * 
- */
 $(document).on('ready', function() {
-	
-	
-	
+
 	setTimeout(function() {
 		cargarTotalRegistrosUsuarios();
 		cargarTotalRegistrosPersonas();
 		cargarTotalRegistrosPersonita();
 		cargarTotalRegistroEmpleados();
-		cargarTotalRegistrosClientes();
-		
-	}, 2000);
+		cargarTotalRegistrosClientes();		
+	}, 1000);
 	
 	window.setInterval(
 		    function(){
@@ -21,7 +15,6 @@ $(document).on('ready', function() {
 		    	$('#total').load(cargarTotalRegistrosPersona());
 		    	evaluando();
 		    // Ejemplo: Cada dos segundos se imprime la hora
-		   
 		  }
 		  // Intervalo de tiempo
 		,5000);
@@ -36,15 +29,12 @@ $(document).on('ready', function() {
 	function ocultar_mostrar(id){
 		
 			if(id !== 0){
-				
-				
 				for( var i = 1;i < id ; i++ ){
 				if(i < id){
-					
 					$.ajax({
 						
 						type: 'GET',
-						url: '/api/v1/usuario/listamodulos/' + i,
+						url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 						dataType: 'json',
 						success: function(response) {
 								console.log(response);
@@ -65,7 +55,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/usuario/totalRegistros',
+			url: '/crm-app/api/v1/usuario/totalRegistros',
 			dataType: 'json',
 			success: function(response) {
 				
@@ -79,7 +69,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/persona/totalRegistros',
+			url: '/crm-app/api/v1/persona/totalRegistros',
 			dataType: 'json',
 			success: function(response) {
 				
@@ -93,7 +83,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/empleado/totalRegistros',
+			url: '/crm-app/api/v1/empleado/totalRegistros',
 			dataType: 'json',
 			success: function(response) {
 				
@@ -107,7 +97,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/cliente/totalRegistros',
+			url: '/crm-app/api/v1/cliente/totalRegistros',
 			dataType: 'json',
 			success: function(response) {
 				
@@ -139,15 +129,13 @@ $(document).on('ready', function() {
 							{
 								
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
 								success: function(response) {
 									
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
 							
-									
-									
 									window.createNotification({
 										closeOnClick: closeOnClick,
 										displayCloseButton: displayClose,
@@ -158,19 +146,15 @@ $(document).on('ready', function() {
 								title: title,
 								message: message
 							});
-							
 						}
 					});
 				}
 			}
-			
 		}
 	}
 
 	function cargarmensajespopus(id){
-		
-		
-		
+	
 		var title = "Tareas Pendientes!!!";
 		
 		var position = "Bottom right";
@@ -191,14 +175,13 @@ $(document).on('ready', function() {
 							{
 						
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + i,
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
 								success: function(response) {
 									
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
 							
-									
 									window.createNotification({
 										closeOnClick: closeOnClick,
 										displayCloseButton: displayClose,
@@ -209,12 +192,10 @@ $(document).on('ready', function() {
 								title: title,
 								message: message
 							});
-							
 						}
 					});
 				}
 			}
-			
 		}
 	}
 	
@@ -223,17 +204,15 @@ $(document).on('ready', function() {
 		
 		if(id !== 0){
 			
-			
 			for(var i=1;i<=id;i++){
 			if(i <= id){
 				
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + i,
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
 					success: function(response) {
-						
 						
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
@@ -265,7 +244,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
 					success: function(response) {
 						
@@ -334,7 +313,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -363,7 +342,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -378,8 +357,6 @@ $(document).on('ready', function() {
 				$('#canjes').val(response.message);
 				$('#canjess').val(response.message);
 			}
-			
 		});	
-		
 	}
 });

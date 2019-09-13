@@ -77,11 +77,6 @@ public class DateUtil {
 		return String.valueOf(mm);
 	}
 	
-	public static void main(String[] args) {
-		Date date = new Date();
-		System.out.println(getYearOfDateWithString(date));
-	}
-	
 	public static String getDayOfDateWithZeroLeft(Date date) {
 		
 		String formato = "dd";
@@ -170,6 +165,30 @@ public class DateUtil {
 			return day;
 		}
 		return String.valueOf(dd);
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(getHoraActual());
+	}
+	
+	public static String getHoraActual() {
+		
+		Calendar calendar = Calendar.getInstance();
+		SimpleDateFormat formater = new SimpleDateFormat("hh:mm:ss");
+		return formater.format(calendar.getTime());
+	}
+	
+	public static String getCurrentFullHour() {
+		
+		TimeZone timeZone = TimeZone.getTimeZone("America/Lima");
+		Locale locale = new Locale("es", "PE");
+		Calendar calendar = Calendar.getInstance(timeZone, locale);
+		int hour = calendar.get(Calendar.HOUR_OF_DAY);
+		int minute = calendar.get(Calendar.MINUTE);
+		int second = calendar.get(Calendar.SECOND);
+		
+		String fullHour = String.valueOf(hour) + ":" + String.valueOf(minute) + ":" + String.valueOf(second);
+		return fullHour;
 	}
 	
 	/**

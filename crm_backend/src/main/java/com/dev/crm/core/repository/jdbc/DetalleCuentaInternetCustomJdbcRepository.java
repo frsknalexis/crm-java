@@ -37,6 +37,7 @@ public class DetalleCuentaInternetCustomJdbcRepository implements DetalleCuentaI
 					new SqlParameter("OBS", Types.VARCHAR),
 					new SqlParameter("CODUSU", Types.VARCHAR),
 					new SqlParameter("FECHACLI", Types.DATE),
+					new SqlParameter("NOMBREVENDEDOR", Types.VARCHAR),
 					new SqlOutParameter("MENSAJE", Types.VARCHAR));
 			
 			Map<String, Object> inParams = new HashMap<String, Object>();
@@ -44,6 +45,7 @@ public class DetalleCuentaInternetCustomJdbcRepository implements DetalleCuentaI
 			inParams.put("OBS", request.getObservacionDetalleCuenta());
 			inParams.put("CODUSU", request.getCodigoUsuario());
 			inParams.put("FECHACLI", request.getFechaSolicitudClienteDetalleCuenta());
+			inParams.put("NOMBREVENDEDOR", request.getNombreVendedor());
 			
 			Map<String, Object> out = simpleJdbcCall.execute(inParams);
 			System.out.println(out);

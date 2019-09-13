@@ -14,10 +14,11 @@ public class DetallePagoResultViewModelMapper implements RowMapper<DetallePagoRe
 		
 		DetallePagoResultViewModel Dpago = new DetallePagoResultViewModel();
 		Dpago.setTotalpago(rs.getDouble("totapago"));
-		Dpago.setDescuentototal(rs.getFloat("descuento"));
-		Dpago.setCantidadpago(rs.getFloat("cant_pago"));
+		Dpago.setDescuentototal(rs.getBigDecimal("descuento"));
+		Dpago.setCantidadpago(rs.getBigDecimal("cant_pago"));
 		Dpago.setFechadepago(rs.getString("fecha_pago_dia"));
 		Dpago.setInformacionpago(rs.getString("mes_valido"));
+		Dpago.setCodigocajapago(rs.getString("numero_caja"));
 		return Dpago;
 	}
 

@@ -17,6 +17,8 @@ public class DetalleCuentaRequest implements Serializable {
 	private String codigoUsuario;
 	
 	private Date fechaSolicitudClienteDetalleCuenta;
+	
+	private String nombreVendedor;
 
 	public DetalleCuentaRequest() {
 		
@@ -52,5 +54,13 @@ public class DetalleCuentaRequest implements Serializable {
 
 	public void setFechaSolicitudClienteDetalleCuenta(Date fechaSolicitudClienteDetalleCuenta) {
 		this.fechaSolicitudClienteDetalleCuenta = fechaSolicitudClienteDetalleCuenta;
+	}
+
+	public String getNombreVendedor() {
+		return nombreVendedor;
+	}
+
+	public void setNombreVendedor(String nombreVendedor) {
+		this.nombreVendedor = nombreVendedor;
 	}
 }

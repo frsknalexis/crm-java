@@ -21,11 +21,23 @@ public class ReciboResultViewModel implements Serializable {
 	
 	private String mesValido;
 	
-	private BigDecimal monto;
+	private Double monto;
 	
 	private BigDecimal descuento;
 	
 	private Date fechaPago;
+	
+	private String tipoComprobante;
+	
+	private String codigoCliente;
+	
+	private String documento;
+	
+	private String sucursal;
+	
+	private String valorMonto;
+	
+	private String codigoBarra;
 
 	public ReciboResultViewModel() {
 		
@@ -71,11 +83,11 @@ public class ReciboResultViewModel implements Serializable {
 		this.mesValido = mesValido;
 	}
 
-	public BigDecimal getMonto() {
+	public Double getMonto() {
 		return monto;
 	}
 
-	public void setMonto(BigDecimal monto) {
+	public void setMonto(Double monto) {
 		this.monto = monto;
 	}
 
@@ -93,5 +105,53 @@ public class ReciboResultViewModel implements Serializable {
 
 	public void setFechaPago(Date fechaPago) {
 		this.fechaPago = fechaPago;
+	}
+
+	public String getTipoComprobante() {
+		return tipoComprobante;
+	}
+
+	public void setTipoComprobante(String tipoComprobante) {
+		this.tipoComprobante = tipoComprobante;
+	}
+
+	public String getCodigoCliente() {
+		return codigoCliente;
+	}
+
+	public void setCodigoCliente(String codigoCliente) {
+		this.codigoCliente = codigoCliente;
+	}
+
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
+
+	public String getSucursal() {
+		return sucursal;
+	}
+
+	public void setSucursal(String sucursal) {
+		this.sucursal = sucursal;
+	}
+
+	public String getValorMonto() {
+		return valorMonto;
+	}
+
+	public void setValorMonto(String valorMonto) {
+		this.valorMonto = valorMonto;
+	}
+
+	public String getCodigoBarra() {
+		return codigoBarra;
+	}
+
+	public void setCodigoBarra(String codigoBarra) {
+		this.codigoBarra = codigoBarra;
 	}
 }

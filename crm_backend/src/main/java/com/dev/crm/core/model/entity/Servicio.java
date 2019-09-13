@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_ci_pre_ser", schema = "public")
+@Table(name = "tb_ci_pre_ser")
 public class Servicio implements Serializable {
 
 	/**

@@ -19,7 +19,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "tb_ci_pago", schema = "public")
+@Table(name = "tb_ci_pago")
 @IdClass(value=PagoPK.class)
 public class Pago implements Serializable {
 

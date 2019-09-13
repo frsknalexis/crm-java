@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.crm.core.dto.SexoDTO;
+import com.dev.crm.core.dto.SexoResultViewModel;
 import com.dev.crm.core.facade.SexoFacade;
 import com.dev.crm.core.util.GenericUtil;
 
@@ -37,6 +38,22 @@ public class SexoRestController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<List<SexoDTO>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/listaSexo")
+	public ResponseEntity<List<SexoResultViewModel>> listarSexo() {
+		
+		try {
+			
+			List<SexoResultViewModel> listaSexo = sexoFacade.listarSexo();
+			if(GenericUtil.isCollectionEmpty(listaSexo)) {
+				return new ResponseEntity<List<SexoResultViewModel>>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<List<SexoResultViewModel>>(listaSexo, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<SexoResultViewModel>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 }

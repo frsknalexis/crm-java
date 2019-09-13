@@ -34,7 +34,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/usuario/listamodulos/' + i,
+					url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 					dataType: 'json',
 					success: function(response) {
 							console.log(response);
@@ -51,9 +51,7 @@ $(document).on('ready', function() {
 	}
 
 	function cargarmensajespopusnuevo(valor,id){
-		
-		
-		
+	
 		var title = "Tareas Pendientes!!!";
 		
 		var position = "Bottom right";
@@ -61,9 +59,7 @@ $(document).on('ready', function() {
 		var theme = "warning";
 		var closeOnClick = true;
 		var displayClose =true;
-		
-		
-		
+	
 		if(valor !== 0)
 		{
 			
@@ -74,15 +70,13 @@ $(document).on('ready', function() {
 							{
 								
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
 								success: function(response) {
 									
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
 							
-									
-									
 									window.createNotification({
 										closeOnClick: closeOnClick,
 										displayCloseButton: displayClose,
@@ -98,7 +92,6 @@ $(document).on('ready', function() {
 					});
 				}
 			}
-			
 		}
 	}
 
@@ -126,7 +119,7 @@ $(document).on('ready', function() {
 							{
 						
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + i,
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
 								success: function(response) {
 									
@@ -165,7 +158,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + i,
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
 					success: function(response) {
 						
@@ -200,7 +193,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
 					success: function(response) {
 						
@@ -269,7 +262,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -298,7 +291,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -348,7 +341,7 @@ $(document).on('ready', function() {
 			'bProcessing': true,
 			"bDestroy": true,
 			"ajax": {
-				"url": "/api/v1/instalacion/informeInstalacionDia",
+				"url": "/crm-app/api/v1/instalacion/informeInstalacionDia",
 				"dataSrc": ""
 			},
 			"columns": [

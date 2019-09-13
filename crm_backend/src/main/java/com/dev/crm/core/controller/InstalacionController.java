@@ -20,8 +20,18 @@ public class InstalacionController {
 		return Constantes.INSTALACIONES_VIEW;
 	}
 	
+	@GetMapping("/activaciones/view")
+	String activacionesViewController() {
+		return Constantes.ACTIVACIONES_VIEW;
+	}
+	
 	@GetMapping("/informeInstalaciones/view")
 	String informeInstalacionesViewController() {
 		return Constantes.INFORME_INSTALACION_VIEW;
+	}
+	
+	@GetMapping("/instalacionesTecnico/view")
+	String instalacionesTecnicoViewController() {
+		return Constantes.INSTALACIONES_TECNICO_VIEW;
 	}
 }

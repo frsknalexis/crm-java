@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tb_ci_sexo", schema="public")
+@Table(name="tb_ci_sexo")
 public class Sexo implements Serializable {
 
 	/**

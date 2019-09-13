@@ -20,7 +20,7 @@ import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tb_ci_empleado", schema="public")
+@Table(name="tb_ci_empleado")
 @IdClass(value=EmpleadoPK.class)
 @NamedStoredProcedureQueries({
 	

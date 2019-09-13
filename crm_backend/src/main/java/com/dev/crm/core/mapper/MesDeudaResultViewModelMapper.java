@@ -18,7 +18,7 @@ public class MesDeudaResultViewModelMapper implements RowMapper<MesDeudaResultVi
 		mesDeuda.setSumaPago(BigDecimal.valueOf(rs.getFloat("suma_pago")).setScale(2, RoundingMode.HALF_UP));
 		mesDeuda.setAnioValido(rs.getInt("anio_valido"));
 		mesDeuda.setTipoServicio(rs.getString("servicio_cod"));
-		mesDeuda.setDescuento(rs.getDouble("descuento_mes"));
+		mesDeuda.setDescuento(rs.getBigDecimal("descuento_mes"));
 		mesDeuda.setDocumentoPersonaCliente(rs.getString("COD_DOC"));
 		mesDeuda.setNumeroCaja(rs.getString("CODIGOCAJA"));
 		return mesDeuda;

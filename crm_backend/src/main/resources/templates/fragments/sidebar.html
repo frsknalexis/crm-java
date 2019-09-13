@@ -18,6 +18,23 @@
 								<span>Inicio</span>
 							</a>
 						</li>
+						<li class="nav-parent" id="modulo administracion" style="display:block">
+							<a>
+								<i class="fa fa-bar-chart-o" aria-hidden="true"></i>
+								<span>Administracion</span>
+							</a>
+							<ul class="nav nav-children">
+								<li>
+									<a th:href="@{/administracion/pagos}"><i class="fa fa-credit-card"></i> Cobranzas</a>
+								</li>
+								<li>
+									<a th:href="@{/administracion/reportes}"><i class="fa fa-bar-chart-o"></i> Reportes Cobranzas</a>
+								</li>
+								<li>
+									<a th:href="@{/administracion/reportesVentas}"><i class="fa fa-bar-chart-o"></i> Reporte Ventas</a>
+								</li>
+							</ul>
+						</li>
 						<li class="nav-parent" id="modulo persona" style="display:none">
 							<a>
 								<i class="fa fa-suitcase" aria-hidden="true"></i>
@@ -41,7 +58,7 @@
 								<span>Modulo Servicios</span>
 							</a>
 							<ul class="nav nav-children">
-								<li>
+								<li id="submodulo listadocuentas" style="display:none">
 									<a th:href="@{/detalleCuenta/cuentas/view}"><i class="fa fa-book"></i> Cuentas</a>
 								</li>
 								<li id="submodulo cuenta" style="display:none">
@@ -59,19 +76,31 @@
 								<li id="submodulo informe" style="display:none">
 									<a th:href="@{/instalacion/informeInstalaciones/view}"><i class="fa fa-book"></i> Informe Instalaciones</a>
 								</li>
+								<li id="submodulo liquidacion" style="display:none">
+									<a th:href="@{/instalacion/instalacionesTecnico/view}"><i class="fa fa-archive"></i> Instalaciones Realizadas</a>
+								</li>
+								<li id="submodulo activacion" style="display:none">
+									<a th:href="@{/instalacion/activaciones/view}"><i class="fa fa-archive"></i> Activaciones Por Realizar</a>
+								</li>
 							</ul>
 						</li>
 						<li class="nav-parent" id="modulo pago" style="display:none">
 							<a> 
 								<i class="fa fa-cubes" aria-hidden="true"></i> 
-								<span>Modulo Pagos</span>
+								<span>Modulo Cobranzas</span>
 							</a>
 							<ul class="nav nav-children">
 								<li id="submodulo pago" style="display:none">
 									<a th:href="@{/pago/pagos}"><i class="fa fa-credit-card"></i> Pagos </a>
 								</li>
+								<li>
+									<a th:href="@{/pago/pagosGestores}"><i class="fa fa-credit-card"></i> Pagos Gestor</a>
+								</li>
 								<li id="submodulo gestorpago" style="display:none">
-									<a th:href="@{/gestor/clienteGestores/view}"><i class="fa fa-paper-plane"></i> Cliente Gestor</a>
+									<a th:href="@{/gestor/clienteGestores/view}"><i class="fa fa-paper-plane"></i> Cliente Gestor </a>
+								</li>
+								<li>
+									<a th:href="@{/pago/clientePagos}"><i class="fa fa-user"></i> Clientes</a>
 								</li>
 							</ul>
 						</li>

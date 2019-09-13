@@ -65,13 +65,16 @@
 					</figure>
 					<div class="profile-info" data-lock-name="Usuario Logeado">
 						<span class="name" id="nombreUsuarioLogueado"></span> 
-						<span class="role">administrator</span>
+						<span class="role" id="cargoUsuarioLogueado"></span>
 					</div> 
 					<i class="fa custom-caret"></i>
 				</a>
 				<div class="dropdown-menu">
 					<ul class="list-unstyled">
 						<li class="divider"></li>
+						<li>
+							<a role="menuitem" tabindex="-1" th:href="@{/usuario/profileUser}"><i class="fa fa-user"></i> Mi Perfil</a>
+						</li>
 						<li>
 							<a role="menuitem" tabindex="-1" th:href="@{/logout}" 
 							onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> Cerrar Sesion</a>

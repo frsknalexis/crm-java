@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.dev.crm.core.dto.ModuloResultViewModel;
+import com.dev.crm.core.dto.PerfilUsuarioResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
 import com.dev.crm.core.dto.UsuarioDTO;
+import com.dev.crm.core.dto.UsuarioPerfilRequest;
 import com.dev.crm.core.dto.UsuarioRequest;
 import com.dev.crm.core.dto.UsuarioResponse;
 import com.dev.crm.core.facade.UsuarioFacade;
@@ -184,6 +186,22 @@ public class UsuarioFacadeImpl implements UsuarioFacade {
 		}
 		return null;
 	}
+	
+	@Override
+	public ResponseBaseOperation actualizarPerfilPassword(UsuarioPerfilRequest request) {
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				usuarioService.actualizarPerfilPassword(request);
+				return new ResponseBaseOperation(Constantes.UPDATED_STATUS, Constantes.MESSAGE_UPDATED, request);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@Override
 	public ResponseBaseOperation disabled(BigDecimal usuarioId) {
@@ -264,6 +282,29 @@ public class UsuarioFacadeImpl implements UsuarioFacade {
 				cDaOnu = usuarioService.spListarModulo(usuario, numero);
 				if(GenericUtil.isNotNull(cDaOnu)) {
 					return cDaOnu;
+				}
+				else {
+					return null;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public PerfilUsuarioResultViewModel perfilUsuario(String usuario) {
+		
+		PerfilUsuarioResultViewModel perfilUsuario;
+		
+		try {
+			
+			if(GenericUtil.isNotNull(usuario)) {
+				perfilUsuario = usuarioService.perfilUsuario(usuario);
+				if(GenericUtil.isNotNull(perfilUsuario)) {
+					return perfilUsuario;
 				}
 				else {
 					return null;

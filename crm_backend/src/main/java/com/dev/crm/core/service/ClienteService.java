@@ -5,8 +5,11 @@ import java.util.List;
 import com.dev.crm.core.dto.CambioDireccionRequest;
 import com.dev.crm.core.dto.ClienteFiltroRequest;
 import com.dev.crm.core.dto.ClientePagoResultViewModel;
+import com.dev.crm.core.dto.ClienteRequest;
 import com.dev.crm.core.dto.ClienteResultViewModel;
 import com.dev.crm.core.dto.ClienteVendedorResultViewModel;
+import com.dev.crm.core.dto.CodigoConsecutivoClienteRequest;
+import com.dev.crm.core.dto.CodigoConsecutivoClienteResultViewModel;
 import com.dev.crm.core.dto.DatosClienteResultViewModel;
 import com.dev.crm.core.dto.PdfClienteResultViewModel;
 import com.dev.crm.core.dto.PersonaClienteRequest;
@@ -32,7 +35,11 @@ public interface ClienteService {
 	
 	void spInsertarCliente(Cliente cliente);
 	
+	void insertarCliente(ClienteRequest request);
+	
 	void updateCliente(Cliente cliente);
+	
+	CodigoConsecutivoClienteResultViewModel generarCodigoConsecutivoCliente(CodigoConsecutivoClienteRequest request);
 	
 	boolean isClientePresent(String documentoPersonaCliente);
 	

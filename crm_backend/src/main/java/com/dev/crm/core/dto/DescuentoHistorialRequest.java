@@ -19,6 +19,8 @@ public class DescuentoHistorialRequest implements Serializable {
 	
 	private String motivodeldescuento;
 	
+	private String codigoUsuario;
+	
 	public DescuentoHistorialRequest() {
 	
 	}
@@ -39,12 +41,12 @@ public class DescuentoHistorialRequest implements Serializable {
 		this.numerodemes = numerodemes;
 	}
 
-	public Integer getAnioalido() {
+	public Integer getAniovalido() {
 		return aniovalido;
 	}
 
-	public void setAnioalido(Integer anioalido) {
-		this.aniovalido = anioalido;
+	public void setAniovalido(Integer aniovalido) {
+		this.aniovalido = aniovalido;
 	}
 
 	public Double getDescuentodelmes() {
@@ -61,5 +63,13 @@ public class DescuentoHistorialRequest implements Serializable {
 
 	public void setMotivodeldescuento(String motivodeldescuento) {
 		this.motivodeldescuento = motivodeldescuento;
+	}
+
+	public String getCodigoUsuario() {
+		return codigoUsuario;
+	}
+
+	public void setCodigoUsuario(String codigoUsuario) {
+		this.codigoUsuario = codigoUsuario;
 	}
 }

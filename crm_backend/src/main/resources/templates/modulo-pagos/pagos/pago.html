@@ -26,54 +26,43 @@
 					</div>
 					<!-- start: page -->
 					<div class="row" id="mostrarListadoClientesPago">
+						<div class="col-md-3 col-lg-3">
+							<button type="button" id="buttonListaPagos" class="mb-xs btn btn-sm btn-block btn-success"><i class="fa fa-pencil-square-o"></i> Listar Pagos Realizados</button>
+						</div>
+						<div class="col-md-3 col-lg-3">
+							<button type="button" id="buttonReportePagosDia" class="mb-xs btn btn-block btn-sm btn-info"><i class="fa fa-file-pdf-o"></i> Reporte de Pagos Por Dia</button>
+						</div>
+						<div class="col-md-3 col-lg-3">
+							<button type="button" id="buttonReportePagosPorRangoFecha" class="mb-xs btn btn-block btn-sm btn-info"><i class="fa fa-file-pdf-o"></i> Reporte de Pagos Por Rango Fecha</button>
+						</div>
+						<div class="col-md-3 col-lg-3">
+							<button type="button" id="buttonReporteDeudas" class="mb-xs btn btn-block btn-sm btn-info"><i class="fa fa-file-pdf-o"></i> Reporte de Dias Deudas</button>
+						</div>
 						<div class="col-md-12 col-lg-12">
-							<button type="button" id="buttonListaPagos" class="mb-xs btn btn-sm btn-success"><i class="fa fa-pencil-square-o"></i> Listar Pagos Realizados</button>
-							<div class="btn-group">
-							<button type="button" class="mb-xs mr-xs btn btn-sm btn-primary btn-block dropdown-toggle" data-toggle="dropdown"><i class="fa fa-download"></i> Exportar Planilla <span class="caret"></span></button>
-							<ul class="dropdown-menu" role="menu">
-								<li><a th:href="@{/api/v1/pago/pdfReportDia}" target="_blank"><i class="fa fa-file-pdf-o"></i> Exportar PDF</a></li>
-							</ul>
-						</div>
-						<div class="btn-group">
-							<button type="button" class="mb-xs mr-xs btn btn-sm btn-primary btn-block dropdown-toggle" data-toggle="dropdown"><i class="fa fa-download"></i> Exportar Pagos Generales <span class="caret"></span></button>
-							<ul class="dropdown-menu" role="menu">
-								<li><a th:href="@{/api/v1/pago/pdfReport}" target="_blank"><i class="fa fa-file-pdf-o"></i> Exportar PDF</a></li>
-							</ul>
-						</div>
-						</div>
-						
-						<div class="col-md-12 col-lg-12">
-							<section class="panel panel-featured-left panel-featured-primary">
+							<section class="panel panel-featured panel-featured-primary panel-primary">
 								<header class="panel-heading">
-									<h2 class="panel-title">Pagos</h2>
+									<h2 class="panel-title">Listado de Clientes</h2>
 								</header>
 								<div class="panel-body">
-									<section class="panel panel-featured panel-featured-primary panel-primary">
-										<header class="panel-heading">
-											<h2 class="panel-title">Listado de Clientes</h2>
-										</header>
-										<div class="panel-body">
-											<table class="table table-hover table-striped table-condensed mb-none" id="tablaClientesPago" width="100%">
-												<thead class="text-center">
-													<tr>
-														<th style="width:110px">DNI-RUC</th>
-														<th style="width:200px">Cliente</th>
-														<th style="width:200px">Nombre Comercial</th>
-														<th style="width:200px">Direccion Actual</th>
-														<th style="width:180px">Referencia</th>
-														<th style="width:140px">Pago</th>
-													</tr>
-												</thead>
-											</table>
-										</div>
-									</section>
+									<table class="table table-hover table-striped table-condensed mb-none" id="tablaClientesPago" width="100%">
+										<thead class="text-center">
+											<tr>
+												<th style="width:110px">DNI-RUC</th>
+												<th style="width:200px">Cliente</th>
+												<th style="width:200px">Nombre Comercial</th>
+												<th style="width:200px">Direccion Actual</th>
+												<th style="width:180px">Referencia</th>
+												<th style="width:140px">Pago</th>
+											</tr>
+										</thead>
+									</table>
 								</div>
 							</section>
 						</div>
 					</div>
 					<div class="row" id="mostrarFormGenerarPago">
 						<div class="col-md-12 col-lg-12">
-							<section class="panel panel-featured-left panel-featured-primary">
+							<section class="panel panel-featured panel-featured-primary">
 								<header class="panel-heading">
 									<h2 class="panel-title">Realizar Pago</h2>
 								</header>
@@ -159,6 +148,24 @@
 																	<input type="text" class="form-control input-sm" id="clienteTelefonoGestorPago">
 																</div>
 															</div>
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="clienteFechaInstalacionCablePago">Fecha Instalacion Cable</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-calendar"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="clienteFechaInstalacionCablePago">
+																</div>
+															</div>
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="clienteCodigoClienteCablePago">Codigo Cable</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-tag"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="clienteCodigoClienteCablePago">
+																</div>
+															</div>
 														</div>
 													</div>
 												</section>
@@ -167,6 +174,15 @@
 												<section class="panel panel-featured panel-featured-primary">
 													<div class="panel-body">
 														<div class="row">
+															<div class="col-md-12 col-sm-12 form-group">
+																<label for="datoactualdeuda">Mes Actual Deuda</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-credit-card"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="datoactualdeuda" disabled="" placeholder="Valor del mes actual de deuda">
+																</div>
+															</div>
 															<div class="col-md-12 col-sm-12 form-group">
 																<label for="codigoComprobante">Comprobante</label>
 																<div class="input-group mb-md">
@@ -383,11 +399,12 @@
 										<table class="table table-hover table-striped table-condensed mb-none" id="tablaPagoClienteDetalle" width="100%">
 											<thead class="text-center">
 												<tr>
-													<th>Pago Total</th>
+													<th>Pago</th>
 													<th>Descuento</th>
 													<th>Cancelo</th>
-													<th>Fecha de Pago</th>
+													<th>Fecha</th>
 													<th>Mes</th>
+													<th>Caja</th>
 												</tr>
 											</thead>
 										</table>
@@ -402,94 +419,79 @@
 					<div class="modal fade" id="modalGenerarDescuentoMes" tabindex="-1" role="dialog" aria-labelledby="myModalLabelPagoCliente" aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-									<h4 class="modal-title" id="myModalLabelDstosClienteDescuento"></h4>
-								</div>
-								<div class="modal-body">
-									<div class="table-responsive" style="display:none">
-										<table class="table table-hover table-striped table-condensed mb-none" id="tablaxxx" width="100%">
-											<thead class="text-center">
-												<tr>
-													<th>Pago Total</th>
-													<th>Descuento</th>
-													<th>Cancelo</th>
-													<th>Fecha de Pago</th>
-													<th>Mes</th>
-												</tr>
-											</thead>
-										</table>
+								<form role="form" method="post">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabelDstosClienteDescuento"></h4>
 									</div>
-									<form role="form" method="post">
+									<div class="modal-body">
 										<div class="row">
 											<div class="col-md-12 col-lg-12">
 												<section class="panel panel-featured panel-featured-primary">
 													<header class="panel-heading">
 														<h2 class="panel-title">Mes Actual de Deuda</h2>
 													</header>
-															<div class="col-md-6 col-sm-6 form-group">
-																<label for="documentoPersonaClienteDescuento">DNI/RUC</label>
-																<div class="input-group mb-md">
-																	<span class="input-group-addon">
-																		<i class="fa fa-credit-card"></i>
-																	</span>
-																	<input type="text" class="form-control input-sm" id="documentoPersonaClienteDescuento" disabled="disabled" placeholder="Numero Documento">
-																</div>
-															</div>
-															<div class="col-md-6 col-sm-6 form-group">
-																<label for="ClienteDescuentoMT">Monto Total</label>
-																<div class="input-group mb-md">
-																	<span class="input-group-addon">
-																		<i class="fa fa-money"></i>
-																	</span>
-																	<input type="number" step="any" disabled="disabled" class="form-control input-sm" id="ClienteDescuentoMT" placeholder="0.00">
-																</div>
-															</div>
-															<div class="col-md-6 col-sm-6 form-group">
-																<label for="ClienteDescuentoMesPago">Mes de Deuda</label>
-																<div class="input-group mb-md">
-																	<span class="input-group-addon">
-																		<i class="fa fa-money"></i>
-																	</span>
-																	<input type="text" disabled="disabled" class="form-control input-sm" id="ClienteDescuentoMesPago" placeholder="0">
-																</div>
-															</div>
-															<div class="col-md-6 col-sm-6 form-group">
-																<label for="ClienteDescuento">Monto a Descontar</label>
-																<div class="input-group mb-md">
-																	<span class="input-group-addon">
-																		<i class="fa fa-money"></i>
-																	</span>
-																	<input type="number" step="any" class="form-control input-sm" id="ClienteDescuento" placeholder="0.00">
-																</div>
-															</div>
-															<div class="col-md-12 col-sm-12 form-group">
-																<label for="ClienteDescuentoMotivo">Motivo a Descontar</label>
-																<div class="input-group mb-md">
-																	<span class="input-group-addon">
-																		<i class="fa fa-minus-square-o"></i>
-																	</span>
-																	<textarea class="form-control" rows="3" id="ClienteDescuentoMotivo" placeholder="motivo a descontar"></textarea>
-																</div>
-															</div>
+													<div class="col-md-6 col-sm-6 form-group">
+														<label for="documentoPersonaClienteDescuento">DNI/RUC</label>
+														<div class="input-group mb-md">
+															<span class="input-group-addon">
+																<i class="fa fa-credit-card"></i>
+															</span>
+															<input type="text" class="form-control input-sm" id="documentoPersonaClienteDescuento" disabled="disabled" placeholder="Numero Documento">
+														</div>
+													</div>
+													<div class="col-md-6 col-sm-6 form-group">
+														<label for="ClienteDescuentoMT">Monto Total</label>
+														<div class="input-group mb-md">
+															<span class="input-group-addon">
+																<i class="fa fa-money"></i>
+															</span>
+															<input type="number" step="any" disabled="disabled" class="form-control input-sm" id="ClienteDescuentoMT" placeholder="0.00">
+														</div>
+													</div>
+													<div class="col-md-6 col-sm-6 form-group">
+														<label for="ClienteDescuentoMesPago">Mes de Deuda</label>
+														<div class="input-group mb-md">
+															<span class="input-group-addon">
+																<i class="fa fa-money"></i>
+															</span>
+															<input type="text" disabled="disabled" class="form-control input-sm" id="ClienteDescuentoMesPago" placeholder="0">
+														</div>
+													</div>
+													<div class="col-md-6 col-sm-6 form-group">
+														<label for="ClienteDescuento">Monto a Descontar</label>
+														<div class="input-group mb-md">
+															<span class="input-group-addon">
+																<i class="fa fa-money"></i>
+															</span>
+															<input type="number" step="any" class="form-control input-sm" id="ClienteDescuento" placeholder="0.00">
+														</div>
+													</div>
+													<div class="col-md-12 col-sm-12 form-group">
+														<label for="ClienteDescuentoMotivo">Motivo a Descontar</label>
+														<div class="input-group mb-md">
+															<span class="input-group-addon">
+																<i class="fa fa-minus-square-o"></i>
+															</span>
+															<textarea class="form-control" rows="3" id="ClienteDescuentoMotivo" placeholder="motivo a descontar"></textarea>
+														</div>
+													</div>
 												</section>
 											</div>
-											<div class="col-md-12 form-group">
-												<button type="submit" id="generarDescuentoClienteSave" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Realizar Descuento</button>
-											</div>
-										</div>
-									</form>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-								</div>
+										</div>	
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+										<button type="submit" id="generarDescuentoClienteSave" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Realizar Descuento</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
 					<div class="modal fade" tabindex="-1" id="modalPagosPorDia" role="dialog" aria-labelledby="myModalLabelPagosPorDia" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
-								<form role="form" method="post" id="formPagosPorDia" enctype="multipart/form-data">
+								<form role="form" method="post" id="formPagosPorDia">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 										<h4 class="modal-title" id="myModalLabelPagosPorDia">Busqueda de Pagos Por Fecha de Pago</h4>
@@ -508,7 +510,7 @@
 										</div>
 									</div>
 									<div class="modal-footer">
-										<button type="button" id="cancelarAccion" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+										<button type="button" id="cancelarAccionBuscarPagosPorDia" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 										<button type="submit" id="buscarPagosPorFecha" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
 									</div>
 								</form>
@@ -548,6 +550,41 @@
 									<div class="modal-footer">
 										<button type="button" id="cancelarAccionBuscarRangoPorFecha" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 										<button type="submit" id="buscarPagosPorRangoFecha" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="modal fade" tabindex="-1" id="modalReporteDiasDeudas" role="dialog" aria-labelledby="myModalLabelReporteDiasDeudas" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<form role="form" method="post" id="formPagosPorDia">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabelReporteDiasDeudas">Reporte de Dias de Deudas</h4>
+									</div>
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-md-12 form-group">
+												<label for="fechaPagoPorDia">Dias de Deudas</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-book"></i>
+													</span>
+													<select  class="form-control populate" id="diasDeudas">
+														<option value="">Seleccione una Opcion</option>
+														<option value="HASTA 1 MES">HASTA 1 MES</option>
+														<option value="HASTA 2 MESES">HASTA 2 MESES</option>
+														<option value="3 A MAS MESES">3 A MAS MESES</option>
+														<option value="DEUDA TOTAL">DEUDA TOTAL</option>
+													</select>
+												</div>
+											</div>											
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" id="cancelarAccionBuscarDiasDeudas" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+										<button type="submit" id="buscarDiasDeudas" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
 									</div>
 								</form>
 							</div>

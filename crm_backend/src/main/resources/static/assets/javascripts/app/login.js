@@ -19,7 +19,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/usuario/searchUsuario',
+					url: '/crm-app/api/v1/usuario/searchUsuario',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -27,8 +27,6 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formData),
 					dataType: 'json',
 					success: function(response) {
-						console.log(response);
-						
 						if(response != null) {
 							if(response.habilitado == true) {
 								$(location).attr('href', '/dashboard');

@@ -37,6 +37,7 @@ public class CambioDomicilioCustomJdbcRepository implements CambioDomicilioJdbcR
 					new SqlParameter("DIRHIS", Types.VARCHAR),
 					new SqlParameter("OBSDET", Types.VARCHAR),
 					new SqlParameter("FECHCLI", Types.DATE),
+					new SqlParameter("VENDEDO", Types.VARCHAR),
 					new SqlOutParameter("MENSAJE", Types.VARCHAR));
 			
 			Map<String, Object> inParams = new HashMap<String, Object>();
@@ -44,6 +45,7 @@ public class CambioDomicilioCustomJdbcRepository implements CambioDomicilioJdbcR
 			inParams.put("DIRHIS", request.getNuevaDireccion());
 			inParams.put("OBSDET", request.getObservacionCuenta());
 			inParams.put("FECHCLI", request.getFechaElegida());
+			inParams.put("VENDEDO", request.getVendedorResponsable());
 			
 			Map<String, Object> out = simpleJdbcCall.execute(inParams);
 			String result = (String) out.get("MENSAJE");

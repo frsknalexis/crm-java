@@ -9,18 +9,32 @@ import org.springframework.stereotype.Component;
 
 import com.dev.crm.core.dto.ClientePagoResultViewModel;
 import com.dev.crm.core.dto.ConsecutivoPagoRequest;
+import com.dev.crm.core.dto.ConsolidadoInternetResultViewModel;
 import com.dev.crm.core.dto.DescuentoHistorialRequest;
 import com.dev.crm.core.dto.DescuentoPagoResultViewModel;
 import com.dev.crm.core.dto.DetallePagoResultViewModel;
+import com.dev.crm.core.dto.DiasDeudasRequest;
+import com.dev.crm.core.dto.DiasDeudasResultViewModel;
+import com.dev.crm.core.dto.GananciaPorDiaCajaResultViewModel;
+import com.dev.crm.core.dto.GananciaPorMesCajaResultViewModel;
 import com.dev.crm.core.dto.ListaPagosPorCajaResultViewModel;
+import com.dev.crm.core.dto.MesActualDeuda;
 import com.dev.crm.core.dto.MesDeudaResultViewModel;
 import com.dev.crm.core.dto.PagoAdelantadoRequest;
+import com.dev.crm.core.dto.PagoMoraCableRequest;
 import com.dev.crm.core.dto.PagoMoraRequest;
+import com.dev.crm.core.dto.PagoPorDiaResultViewModel;
 import com.dev.crm.core.dto.PagoRequest;
+import com.dev.crm.core.dto.PagoServicioGestorRequest;
 import com.dev.crm.core.dto.PagosDelDiaResultViewModel;
 import com.dev.crm.core.dto.PagosPorDiaRequest;
 import com.dev.crm.core.dto.PagosPorDiaResultViewModel;
+import com.dev.crm.core.dto.PagosPorMesCaja1ResultViewModel;
+import com.dev.crm.core.dto.PagosPorMesCaja2ResultViewModel;
+import com.dev.crm.core.dto.PagosPorMesCaja3ResultViewModel;
+import com.dev.crm.core.dto.PagosPorMesResultViewModel;
 import com.dev.crm.core.dto.PagosPorRangoFechaBusquedaRequest;
+import com.dev.crm.core.dto.PagosPorRangoFechaBusquedaResultViewModel;
 import com.dev.crm.core.dto.PdfPagoDiaResultViewModel;
 import com.dev.crm.core.dto.ReciboResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
@@ -98,6 +112,38 @@ public class PagoFacadeImpl implements PagoFacade {
 	}
 	
 	@Override
+	public ResponseBaseOperation pagoMoraCable(PagoMoraCableRequest request) {
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				String result = pagoService.pagoMoraCable(request);
+				if(StringUtil.hasText(result)) {
+					if(StringUtil.eq(result, Constantes.HECHO)) {
+						return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, result, request);
+					}
+					else if(StringUtil.eq(result, Constantes.EXCEDIO)) {
+						return new ResponseBaseOperation(Constantes.ERROR_STATUS, result, request);
+					}
+					else if(StringUtil.eq(result, Constantes.AUTORIZADO)) {
+						return new ResponseBaseOperation(Constantes.ERROR_STATUS, result, request);
+					}
+					else if(StringUtil.eq(result, Constantes.ERROR)) {
+						return new ResponseBaseOperation(Constantes.ERROR_STATUS, result, request);
+					}
+				}
+				else {
+					return null;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
 	public ResponseBaseOperation spPagoAdelantado(PagoAdelantadoRequest request) {
 		
 		try {
@@ -126,7 +172,38 @@ public class PagoFacadeImpl implements PagoFacade {
 		return null;
 	}
 	
-	
+	@Override
+	public ResponseBaseOperation realizarPagoServicioGestor(PagoServicioGestorRequest request) {
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				String result = pagoService.realizarPagoServicioGestor(request);
+				if(StringUtil.hasText(result)) {
+					if(StringUtil.eq(result, Constantes.PAGO_ADELANTADO_CON_PROMO)) {
+						return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.PAGO_ADELANTADO_CON_PROMO, request);
+					}
+					else if(StringUtil.eq(result, Constantes.PAGO_ADELANTADO_SIN_PROMO)) {
+						return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.PAGO_ADELANTADO_SIN_PROMO, request);
+					}
+					else if(StringUtil.eq(result, Constantes.PAGO_RAPIDO)) {
+						return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.PAGO_RAPIDO, request);
+					}
+					else if(StringUtil.eq(result, Constantes.ESTO_ES_MALO)) {
+						return new ResponseBaseOperation(Constantes.ERROR_STATUS, Constantes.ESTO_ES_MALO, request);
+					}
+				}
+				else {
+					return null;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	@Override
 	public ResponseBaseOperation spInsertarConsecutivoPago(ConsecutivoPagoRequest request) {
 		
@@ -272,19 +349,19 @@ public class PagoFacadeImpl implements PagoFacade {
 	}
 	
 	@Override
-	public List<PagosPorDiaResultViewModel> spReporteListaPagosPorRangoFecha(
+	public List<PagosPorRangoFechaBusquedaResultViewModel> spReporteListaPagosPorRangoFecha(
 			PagosPorRangoFechaBusquedaRequest request) {
 		
-		List<PagosPorDiaResultViewModel> pagosPorDia = new ArrayList<PagosPorDiaResultViewModel>();
+		List<PagosPorRangoFechaBusquedaResultViewModel> pagosPorRango = new ArrayList<PagosPorRangoFechaBusquedaResultViewModel>();
 		
 		try {
 			
-			pagosPorDia = pagoService.spReporteListaPagosPorRangoFecha(request);
-			if(GenericUtil.isCollectionEmpty(pagosPorDia)) {
+			pagosPorRango = pagoService.spReporteListaPagosPorRangoFecha(request);
+			if(GenericUtil.isCollectionEmpty(pagosPorRango)) {
 				return null;
 			}
 			else {
-				return pagosPorDia;
+				return pagosPorRango;
 			}
 		}
 		catch(Exception e) {
@@ -293,6 +370,220 @@ public class PagoFacadeImpl implements PagoFacade {
 		return null;
 	}
 	
+	@Override
+	public List<PagoPorDiaResultViewModel> listarPagosPorDiaSolicitado(PagosPorDiaRequest request) {
+		
+		List<PagoPorDiaResultViewModel> pagosPorDia = new ArrayList<PagoPorDiaResultViewModel>();
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				pagosPorDia = pagoService.listarPagosPorDiaSolicitado(request);
+				if(GenericUtil.isCollectionEmpty(pagosPorDia) && pagosPorDia.isEmpty()) {
+					return null;
+				}
+				else {
+					return pagosPorDia;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<DiasDeudasResultViewModel> recuperarDiasDeudas() {
+		
+		List<DiasDeudasResultViewModel> diasDeudas = new ArrayList<DiasDeudasResultViewModel>();
+		
+		try {
+			
+			diasDeudas = pagoService.recuperarDiasDeudas();
+			if(GenericUtil.isCollectionEmpty(diasDeudas) && diasDeudas.isEmpty()) {
+				return null;
+			}
+			else {
+				return diasDeudas;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<PagosPorMesResultViewModel> pagosPorMes() {
+		
+		List<PagosPorMesResultViewModel> pagosPorMes = new ArrayList<PagosPorMesResultViewModel>();
+		
+		try {
+			
+			pagosPorMes = pagoService.pagosPorMes();
+			if(GenericUtil.isCollectionEmpty(pagosPorMes) && pagosPorMes.isEmpty()) {
+				return null;
+			}
+			else {
+				return pagosPorMes;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<PagosPorMesCaja1ResultViewModel> pagosPorMesCaja1() {
+		
+		List<PagosPorMesCaja1ResultViewModel> pagosPorMesCaja = new ArrayList<PagosPorMesCaja1ResultViewModel>();
+		
+		try {
+			
+			pagosPorMesCaja = pagoService.pagosPorMesCaja1();
+			if(GenericUtil.isCollectionEmpty(pagosPorMesCaja) && pagosPorMesCaja.isEmpty()) {
+				return null;
+			}
+			else {
+				return pagosPorMesCaja;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<PagosPorMesCaja2ResultViewModel> pagosPorMesCaja2() {
+		
+		List<PagosPorMesCaja2ResultViewModel> pagosPorMesCaja = new ArrayList<PagosPorMesCaja2ResultViewModel>();
+		
+		try {
+			
+			pagosPorMesCaja = pagoService.pagosPorMesCaja2();
+			if(GenericUtil.isCollectionEmpty(pagosPorMesCaja)) {
+				return null;
+			}
+			else {
+				return pagosPorMesCaja;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<PagosPorMesCaja3ResultViewModel> pagosPorMesCaja3() {
+		
+		List<PagosPorMesCaja3ResultViewModel> pagosPorMesCaja = new ArrayList<PagosPorMesCaja3ResultViewModel>();
+		
+		try {
+			
+			pagosPorMesCaja = pagoService.pagosPorMesCaja3();
+			if(GenericUtil.isCollectionEmpty(pagosPorMesCaja) && pagosPorMesCaja.isEmpty()) {
+				return null;
+			}
+			else {
+				return pagosPorMesCaja;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<GananciaPorMesCajaResultViewModel> ganaciaPorMesCaja() {
+		
+		List<GananciaPorMesCajaResultViewModel> gananciaPorMesCaja = new ArrayList<GananciaPorMesCajaResultViewModel>();
+		
+		try {
+			
+			gananciaPorMesCaja = pagoService.ganaciaPorMesCaja();
+			if(GenericUtil.isCollectionEmpty(gananciaPorMesCaja) && gananciaPorMesCaja.isEmpty()) {
+				return null;
+			}
+			else {
+				return gananciaPorMesCaja;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<ConsolidadoInternetResultViewModel> listarConsolidadoInternet() {
+		
+		List<ConsolidadoInternetResultViewModel> listaConsolidadoInternet = new ArrayList<ConsolidadoInternetResultViewModel>();
+		
+		try {
+			
+			listaConsolidadoInternet = pagoService.listarConsolidadoInternet();
+			if(GenericUtil.isCollectionEmpty(listaConsolidadoInternet)) {
+				return null;
+			}
+			else {
+				return listaConsolidadoInternet;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<GananciaPorDiaCajaResultViewModel> gananciaPorDiaCaja() {
+		
+		List<GananciaPorDiaCajaResultViewModel> gananciaPorDiaCaja = new ArrayList<GananciaPorDiaCajaResultViewModel>();
+		
+		try {
+			
+			gananciaPorDiaCaja = pagoService.gananciaPorDiaCaja();
+			if(GenericUtil.isCollectionEmpty(gananciaPorDiaCaja)) {
+				return null;
+			}
+			else {
+				return gananciaPorDiaCaja;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<DiasDeudasResultViewModel> recuperarDiasDeudasParametrizado(DiasDeudasRequest request) {
+		
+		List<DiasDeudasResultViewModel> diasDeudas = new ArrayList<DiasDeudasResultViewModel>();
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				diasDeudas = pagoService.recuperarDiasDeudasParametrizado(request);
+				if(GenericUtil.isCollectionEmpty(diasDeudas) && diasDeudas.isEmpty()) {
+					return null;
+				}
+				else {
+					return diasDeudas;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	@Override
 	public List<DetallePagoResultViewModel> spListarDetallePago(String persona) {
 		
@@ -401,6 +692,29 @@ public class PagoFacadeImpl implements PagoFacade {
 				cDaOnu = pagoService.spRecuperarMesPago(persona);
 				if(GenericUtil.isNotNull(cDaOnu)) {
 					return cDaOnu;
+				}
+				else {
+					return null;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public MesActualDeuda spRecuperarMesMonto(String documentoPersona) {
+		
+		MesActualDeuda mesActualDeuda;
+		
+		try {
+			
+			if(GenericUtil.isNotEmpty(documentoPersona)) {
+				mesActualDeuda = pagoService.spRecuperarMesMonto(documentoPersona);
+				if(GenericUtil.isNotNull(mesActualDeuda)) {
+					return mesActualDeuda;
 				}
 				else {
 					return null;

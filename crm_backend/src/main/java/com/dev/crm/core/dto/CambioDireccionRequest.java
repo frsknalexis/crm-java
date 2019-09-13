@@ -17,6 +17,8 @@ public class CambioDireccionRequest implements Serializable {
 	private String observacionCuenta;
 	
 	private Date fechaElegida;
+	
+	private String vendedorResponsable;
 
 	public CambioDireccionRequest() {
 		
@@ -52,5 +54,13 @@ public class CambioDireccionRequest implements Serializable {
 
 	public void setFechaElegida(Date fechaElegida) {
 		this.fechaElegida = fechaElegida;
+	}
+
+	public String getVendedorResponsable() {
+		return vendedorResponsable;
+	}
+
+	public void setVendedorResponsable(String vendedorResponsable) {
+		this.vendedorResponsable = vendedorResponsable;
 	}
 }

@@ -35,7 +35,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/usuario/listamodulos/' + i,
+					url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 					dataType: 'json',
 					success: function(response) {
 							console.log(response);
@@ -82,7 +82,7 @@ $(document).on('ready', function() {
 			},
 			'bProcessing': true,
 			"ajax": {
-				"url": "/api/v1/atencion/reclamo/",
+				"url": "/crm-app/api/v1/atencion/reclamo/",
 				"dataSrc": ""
 			},
 			"columns": [
@@ -139,7 +139,7 @@ $(document).on('ready', function() {
 					$.ajax({
 						
 						type: 'POST',
-						url: '/api/v1/atencion/updatetecnico',
+						url: '/crm-app/api/v1/atencion/updatetecnico',
 						headers: {
 							"Content-Type": "application/json",
 							"Accept": "application/json"
@@ -189,7 +189,7 @@ $(document).on('ready', function() {
 		$.ajax({
 
 			type: 'GET',
-			url: '/api/v1/atencion/comboempleado/0',
+			url: '/crm-app/api/v1/atencion/comboempleado/0',
 			dataType: 'json',
 			success: function(response) {
 				
@@ -225,7 +225,7 @@ $(document).on('ready', function() {
 							{
 								
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
 								success: function(response) {
 									
@@ -277,7 +277,7 @@ $(document).on('ready', function() {
 							{
 						
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + i,
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
 								success: function(response) {
 									
@@ -316,7 +316,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + i,
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
 					success: function(response) {
 						
@@ -351,7 +351,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
 					success: function(response) {
 						
@@ -420,7 +420,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -449,7 +449,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"

@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.dev.crm.core.json.JsonBigDecimalSimpleSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 public class PagosDelDiaResultViewModel implements Serializable {
 
 	/**
@@ -13,8 +16,10 @@ public class PagosDelDiaResultViewModel implements Serializable {
 	
 	private Integer codigoPago;
 	
+	@JsonSerialize(using = JsonBigDecimalSimpleSerializer.class)
 	private BigDecimal descuento;
 	
+	@JsonSerialize(using = JsonBigDecimalSimpleSerializer.class)
 	private BigDecimal cantidadPago;
 	
 	private String mesValido;

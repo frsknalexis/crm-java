@@ -51,6 +51,8 @@ public class ClienteCustomRepository implements ClienteJdbcRepository {
 					
 			Map<String, Object> result = simpleJdbcCall.execute(inParams);
 			
+			System.out.println(result);
+			
 			if(GenericUtil.isNotNull(result.get("VDOCUMENTO")) && GenericUtil.isNotNull(result.get("VCLIENTE"))
 				&& GenericUtil.isNotNull(result.get("VDIRECCION")) && GenericUtil.isNotNull(result.get("VANIO"))) {
 				ClienteResultViewModel cliente = new ClienteResultViewModel();

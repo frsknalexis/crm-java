@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import com.dev.crm.core.dto.LiquidacionMaterialResultViewModel;
 import com.dev.crm.core.dto.MaterialResultViewModel;
 import com.dev.crm.core.facade.MaterialFacade;
 import com.dev.crm.core.service.MaterialService;
@@ -32,6 +33,27 @@ public class MaterialFacadeImpl implements MaterialFacade {
 			}
 			else {
 				return materiales;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public LiquidacionMaterialResultViewModel generarLiquidacionMaterial(Integer codigoServicioInternet) {
+		
+		LiquidacionMaterialResultViewModel liquidacion;
+		
+		try {
+			
+			if(GenericUtil.isNotNull(codigoServicioInternet) && codigoServicioInternet.intValue() > 0) {
+				liquidacion = materialService.generarLiquidacionMaterial(codigoServicioInternet);
+				return liquidacion;
+			}
+			else {
+				return null;
 			}
 		}
 		catch(Exception e) {

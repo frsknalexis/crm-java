@@ -58,6 +58,7 @@ public class PagoMoraCustomJdbcRepository implements PagoMoraJdbcRepository {
 			inParams.put("ANIO", Integer.toString(pagoMora.getAnioValido()));
 			
 			Map<String, Object> out = simpleJdbcCall.execute(inParams);
+			System.out.println(out);
 			String result = (String) out.get("MENSAJE");
 			return result;
 		}

@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tb_ci_ubigeo", schema="public")
+@Table(name="tb_ci_ubigeo")
 public class Ubigeo implements Serializable {
 
 	/**

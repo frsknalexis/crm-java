@@ -16,6 +16,8 @@ public class ClienteGestorResultViewModel implements Serializable {
 	private String cliente;
 	
 	private String gestor;
+	
+	private String direccionActualCliente;
 
 	public ClienteGestorResultViewModel() {
 		
@@ -51,5 +53,13 @@ public class ClienteGestorResultViewModel implements Serializable {
 
 	public void setGestor(String gestor) {
 		this.gestor = gestor;
+	}
+
+	public String getDireccionActualCliente() {
+		return direccionActualCliente;
+	}
+
+	public void setDireccionActualCliente(String direccionActualCliente) {
+		this.direccionActualCliente = direccionActualCliente;
 	}
 }

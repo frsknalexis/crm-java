@@ -14,9 +14,9 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
-import com.dev.crm.core.dto.PagosPorDiaResultViewModel;
 import com.dev.crm.core.dto.PagosPorRangoFechaBusquedaRequest;
-import com.dev.crm.core.mapper.PagosPorDiaResultViewModelMapper;
+import com.dev.crm.core.dto.PagosPorRangoFechaBusquedaResultViewModel;
+import com.dev.crm.core.mapper.PagosPorRangoFechaBusquedaResultViewModelMapper;
 import com.dev.crm.core.util.Constantes;
 
 @Repository("pagoPorRangoFechaBusquedaJdbcRepository")
@@ -32,10 +32,10 @@ public class PagoPorRangoFechaBusquedaCustomJdbcRepository implements PagoPorRan
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<PagosPorDiaResultViewModel> spReporteListaPagosPorRangoFecha(
+	public List<PagosPorRangoFechaBusquedaResultViewModel> spReporteListaPagosPorRangoFecha(
 			PagosPorRangoFechaBusquedaRequest request) {
 		
-		List<PagosPorDiaResultViewModel> pagosPorDia = new ArrayList<PagosPorDiaResultViewModel>();
+		List<PagosPorRangoFechaBusquedaResultViewModel> pagosPorRango = new ArrayList<PagosPorRangoFechaBusquedaResultViewModel>();
 		
 		try {
 			
@@ -43,7 +43,7 @@ public class PagoPorRangoFechaBusquedaCustomJdbcRepository implements PagoPorRan
 			simpleJdbcCall.declareParameters(new SqlParameter("FECHAI", Types.DATE),
 					new SqlParameter("FECHAF", Types.DATE),
 					new SqlParameter("CODUSU", Types.VARCHAR));
-			simpleJdbcCall.returningResultSet("pagosPorDia", new PagosPorDiaResultViewModelMapper());
+			simpleJdbcCall.returningResultSet("pagosPorRango", new PagosPorRangoFechaBusquedaResultViewModelMapper());
 			
 			MapSqlParameterSource inParams = new MapSqlParameterSource();
 			inParams.addValue("FECHAI", request.getFechaInicial());
@@ -51,8 +51,8 @@ public class PagoPorRangoFechaBusquedaCustomJdbcRepository implements PagoPorRan
 			inParams.addValue("CODUSU", request.getCodigoUsuario());
 			
 			Map<String, Object> result = simpleJdbcCall.execute(inParams);
-			pagosPorDia = (List<PagosPorDiaResultViewModel>) result.get("pagosPorDia");
-			return pagosPorDia;
+			pagosPorRango = (List<PagosPorRangoFechaBusquedaResultViewModel>) result.get("pagosPorRango");
+			return pagosPorRango;
 		}
 		catch(Exception e) {
 			e.printStackTrace();

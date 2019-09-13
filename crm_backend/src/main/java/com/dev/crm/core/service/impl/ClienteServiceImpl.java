@@ -12,8 +12,11 @@ import com.dev.crm.core.dao.ClienteDAO;
 import com.dev.crm.core.dto.CambioDireccionRequest;
 import com.dev.crm.core.dto.ClienteFiltroRequest;
 import com.dev.crm.core.dto.ClientePagoResultViewModel;
+import com.dev.crm.core.dto.ClienteRequest;
 import com.dev.crm.core.dto.ClienteResultViewModel;
 import com.dev.crm.core.dto.ClienteVendedorResultViewModel;
+import com.dev.crm.core.dto.CodigoConsecutivoClienteRequest;
+import com.dev.crm.core.dto.CodigoConsecutivoClienteResultViewModel;
 import com.dev.crm.core.dto.DatosClienteResultViewModel;
 import com.dev.crm.core.dto.PdfClienteResultViewModel;
 import com.dev.crm.core.dto.PersonaClienteRequest;
@@ -22,7 +25,9 @@ import com.dev.crm.core.repository.jdbc.CambioDomicilioJdbcRepository;
 import com.dev.crm.core.repository.jdbc.ClienteJdbcRepository;
 import com.dev.crm.core.repository.jdbc.ClientePagoResultJdbcRepository;
 import com.dev.crm.core.repository.jdbc.ClienteVendedorJdbcRepository;
+import com.dev.crm.core.repository.jdbc.ConsecutivoClienteJdbcRepository;
 import com.dev.crm.core.repository.jdbc.EditarPersonaClienteJdbcRepository;
+import com.dev.crm.core.repository.jdbc.InserccionClienteJdbcRepository;
 import com.dev.crm.core.repository.jdbc.PdfListaClienteJdbcRepository;
 import com.dev.crm.core.repository.jdbc.RecuperarDatosClienteJdbcRepository;
 import com.dev.crm.core.service.ClienteService;
@@ -65,6 +70,14 @@ public class ClienteServiceImpl implements ClienteService {
 	@Autowired
 	@Qualifier("pdfListaClienteJdbcRepository")
 	private PdfListaClienteJdbcRepository pdfListaClienteJdbcRepository;
+	
+	@Autowired
+	@Qualifier("consecutivoClienteJdbcRepository")
+	private ConsecutivoClienteJdbcRepository consecutivoClienteJdbcRepository;
+	
+	@Autowired
+	@Qualifier("inserccionClienteJdbcRepository")
+	private InserccionClienteJdbcRepository inserccionClienteJdbcRepository;
 	
 	@Override
 	public List<Cliente> findAll() {
@@ -215,6 +228,22 @@ public class ClienteServiceImpl implements ClienteService {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public void insertarCliente(ClienteRequest request) {
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				
+				request.setEstado(Constantes.HABILITADO);
+				inserccionClienteJdbcRepository.insertarCliente(request);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public boolean isClientePresent(String documentoPersonaCliente) {
@@ -246,6 +275,27 @@ public class ClienteServiceImpl implements ClienteService {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public CodigoConsecutivoClienteResultViewModel generarCodigoConsecutivoCliente(CodigoConsecutivoClienteRequest request) {
+		
+		CodigoConsecutivoClienteResultViewModel codigoConsecutivoCliente = null;
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				codigoConsecutivoCliente = consecutivoClienteJdbcRepository.generarCodigoConsecutivoCliente(request);
+			}
+			if(GenericUtil.isNull(codigoConsecutivoCliente)) {
+				return null;
+			}
+			return codigoConsecutivoCliente;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override

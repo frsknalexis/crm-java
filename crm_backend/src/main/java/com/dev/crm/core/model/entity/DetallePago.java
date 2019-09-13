@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_ci_detalle_pago", schema = "public")
+@Table(name = "tb_ci_detalle_pago")
 public class DetallePago implements Serializable {
 
 	/**

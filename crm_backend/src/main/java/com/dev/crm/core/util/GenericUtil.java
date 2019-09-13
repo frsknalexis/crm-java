@@ -1,5 +1,7 @@
 package com.dev.crm.core.util;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collection;
 import java.util.Map;
 
@@ -141,4 +143,47 @@ public class GenericUtil {
 		}
 		return false;
 	}
+	
+	public static BigDecimal getSubtotal(BigDecimal total, Integer valorImpuesto) {
+		
+		if(valorImpuesto == null) {
+			return null;
+		}
+		
+		BigDecimal subTotal = new BigDecimal("0.00");
+		
+		try {
+			
+			BigDecimal valorImpuestoDecimal = (new BigDecimal(valorImpuesto).divide(new BigDecimal(100))).add(new BigDecimal(1));
+			subTotal = total.divide(valorImpuestoDecimal, 2, RoundingMode.HALF_UP);
+			return subTotal;
+		}
+		catch(NumberFormatException e) {
+			return null;
+		}
+	}
+	
+	public static BigDecimal getIgv(BigDecimal total, Integer valorImpuesto) {
+		
+		if(total == null) {
+			return null;
+		}
+		
+		BigDecimal igv = new BigDecimal("0.00");
+		
+		try {
+			
+			igv = total.subtract(getSubtotal(total, valorImpuesto));
+			return igv;
+		}
+		catch(NumberFormatException e) {
+			return null;
+		}
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(getIgv(new BigDecimal("50.00"), 18));
+	}
+	
+	
 }

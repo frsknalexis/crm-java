@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_inse_det", schema = "public")
+@Table(name = "tb_inse_det")
 public class InternetServicioDetalle implements Serializable {
 
 	/**

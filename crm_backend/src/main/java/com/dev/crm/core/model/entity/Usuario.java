@@ -14,7 +14,7 @@ import com.dev.crm.core.model.base.AuditingEntity;
 import com.dev.crm.core.model.base.BaseEntity;
 
 @Entity
-@Table(name="tb_ci_usuario", schema="public")
+@Table(name="tb_ci_usuario")
 public class Usuario extends AuditingEntity implements Serializable, BaseEntity {
 
 	/**

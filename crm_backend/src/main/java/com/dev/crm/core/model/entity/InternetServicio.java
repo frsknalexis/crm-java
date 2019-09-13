@@ -19,7 +19,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "tb_in_servicio", schema = "public")
+@Table(name = "tb_in_servicio")
 public class InternetServicio implements Serializable {
 
 	/**

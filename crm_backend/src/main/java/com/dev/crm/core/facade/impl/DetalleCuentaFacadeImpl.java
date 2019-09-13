@@ -8,13 +8,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import com.dev.crm.core.dto.CuentaPorEstadoRequest;
+import com.dev.crm.core.dto.CuentaPorEstadoResultViewModel;
+import com.dev.crm.core.dto.CuentaPorVendedorRequest;
+import com.dev.crm.core.dto.CuentaPorVendedorResultViewModel;
+import com.dev.crm.core.dto.CuentaRequest;
+import com.dev.crm.core.dto.CuentasInstaladasRequest;
+import com.dev.crm.core.dto.CuentasInstaladasResultViewModel;
 import com.dev.crm.core.dto.CuentasPorInstalarResultViewModel;
+import com.dev.crm.core.dto.CuentasRangoRequest;
+import com.dev.crm.core.dto.CuentasRangoResultViewModel;
+import com.dev.crm.core.dto.CuentasResultViewModel;
 import com.dev.crm.core.dto.DatosInternetServicioRequest;
 import com.dev.crm.core.dto.DatosMaterialesRequest;
+import com.dev.crm.core.dto.DetalleCuentaCableRequest;
 import com.dev.crm.core.dto.DetalleCuentaDTO;
+import com.dev.crm.core.dto.DetalleCuentaDuoRequest;
 import com.dev.crm.core.dto.DetalleCuentaRequest;
+import com.dev.crm.core.dto.EstadoCuentasResultViewModel;
+import com.dev.crm.core.dto.EstadosCuentaResultViewModel;
 import com.dev.crm.core.dto.ObservacionResultViewModel;
 import com.dev.crm.core.dto.ResponseBaseOperation;
+import com.dev.crm.core.dto.VentasPorDiaResultViewModel;
+import com.dev.crm.core.dto.VentasPorVendedorResultViewModel;
 import com.dev.crm.core.facade.DetalleCuentaFacade;
 import com.dev.crm.core.model.entity.DetalleCuenta;
 import com.dev.crm.core.service.DetalleCuentaService;
@@ -47,6 +63,53 @@ public class DetalleCuentaFacadeImpl implements DetalleCuentaFacade {
 				}
 				else if(StringUtil.eq(result, Constantes.LLENO)) {
 					return new ResponseBaseOperation(Constantes.ERROR_STATUS, result, request);
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public ResponseBaseOperation insercionCuentaCable(DetalleCuentaCableRequest request) {
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				String result = detalleCuentaService.insercionCuentaCable(request);
+				if(StringUtil.eq(result, Constantes.HECHO)) {
+					return new ResponseBaseOperation(Constantes.CREATED_STATUS, result, request);
+				}
+				else if(StringUtil.eq(result, Constantes.ESTADO)) {
+					return new ResponseBaseOperation(Constantes.ERROR_STATUS, result, request);
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public ResponseBaseOperation insercionCuentaDuo(DetalleCuentaDuoRequest request) {
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				String result = detalleCuentaService.insercionCuentaDuo(request);
+				if(StringUtil.hasText(result)) {
+					if(StringUtil.eq(result, Constantes.HECHO)) {
+						return new ResponseBaseOperation(Constantes.CREATED_STATUS, Constantes.HECHO, request);
+					}
+					else if(StringUtil.eq(result, Constantes.ESTADO)) {
+						return new ResponseBaseOperation(Constantes.ERROR_STATUS, Constantes.ESTADO, request);
+					}
+				}
+				else {
+					return null;
 				}
 			}
 		}
@@ -239,6 +302,205 @@ public class DetalleCuentaFacadeImpl implements DetalleCuentaFacade {
 			}
 			else {
 				return cuentasPorInstalar;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<EstadoCuentasResultViewModel> listarEstadoCuentas() {
+		
+		List<EstadoCuentasResultViewModel> estadoCuentas = new ArrayList<EstadoCuentasResultViewModel>();
+		
+		try {
+			
+			estadoCuentas = detalleCuentaService.listarEstadoCuentas();
+			if(GenericUtil.isCollectionEmpty(estadoCuentas)) {
+				return null;
+			}
+			else {
+				return estadoCuentas;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<EstadosCuentaResultViewModel> listarEstadosCuentas() {
+	
+		List<EstadosCuentaResultViewModel> estadosCuentas = new ArrayList<EstadosCuentaResultViewModel>();
+		
+		try {
+			
+			estadosCuentas = detalleCuentaService.listarEstadosCuentas();
+			if(GenericUtil.isCollectionEmpty(estadosCuentas) && estadosCuentas.isEmpty()) {
+				return null;
+			}
+			else {
+				return estadosCuentas;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<VentasPorDiaResultViewModel> cantidadVentasPorDia() {
+		
+		List<VentasPorDiaResultViewModel> ventasPorDia = new ArrayList<VentasPorDiaResultViewModel>();
+		
+		try {
+			
+			ventasPorDia = detalleCuentaService.cantidadVentasPorDia();
+			if(GenericUtil.isCollectionEmpty(ventasPorDia)) {
+				return null;
+			}
+			else {
+				return ventasPorDia;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<VentasPorVendedorResultViewModel> cantidadVentasPorVendedor() {
+		
+		List<VentasPorVendedorResultViewModel> ventasPorVendedor = new ArrayList<VentasPorVendedorResultViewModel>();
+		
+		try {
+			
+			ventasPorVendedor = detalleCuentaService.cantidadVentasPorVendedor();
+			if(GenericUtil.isCollectionEmpty(ventasPorVendedor)) {
+				return null;
+			}
+			else {
+				return ventasPorVendedor;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<CuentasResultViewModel> listarCuentasPorDia(CuentaRequest request) {
+		
+		List<CuentasResultViewModel> cuentasPorDia = new ArrayList<CuentasResultViewModel>();
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				cuentasPorDia = detalleCuentaService.listarCuentasPorDia(request);
+				if(GenericUtil.isCollectionEmpty(cuentasPorDia)) {
+					return null;
+				}
+				else {
+					return cuentasPorDia;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<CuentaPorEstadoResultViewModel> listarCuentasPorEstado(CuentaPorEstadoRequest request) {
+		
+		List<CuentaPorEstadoResultViewModel> cuentasPorEstado = new ArrayList<CuentaPorEstadoResultViewModel>();
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				cuentasPorEstado = detalleCuentaService.listarCuentasPorEstado(request);
+				if(GenericUtil.isCollectionEmpty(cuentasPorEstado) && cuentasPorEstado.isEmpty()) {
+					return null;
+				}
+				else {
+					return cuentasPorEstado;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<CuentaPorVendedorResultViewModel> cuentasPorVendedor(CuentaPorVendedorRequest request) {
+		
+		List<CuentaPorVendedorResultViewModel> cuentasPorVendedor = new ArrayList<CuentaPorVendedorResultViewModel>();
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				cuentasPorVendedor = detalleCuentaService.cuentasPorVendedor(request);
+				if(GenericUtil.isCollectionEmpty(cuentasPorVendedor)) {
+					return null;
+				}
+				else {
+					return cuentasPorVendedor;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<CuentasRangoResultViewModel> listarCuentasPorRango(CuentasRangoRequest request) {
+		
+		List<CuentasRangoResultViewModel> cuentasPorRango = new ArrayList<CuentasRangoResultViewModel>();
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				cuentasPorRango = detalleCuentaService.listarCuentasPorRango(request);
+				if(GenericUtil.isCollectionEmpty(cuentasPorRango)) {
+					return null;
+				}
+				else {
+					return cuentasPorRango;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<CuentasInstaladasResultViewModel> listarCuentasInstaladasPorFecha(CuentasInstaladasRequest request) {
+		
+		List<CuentasInstaladasResultViewModel> cuentasInstaladas = new ArrayList<CuentasInstaladasResultViewModel>();
+		
+		try {
+			
+			if(GenericUtil.isNotNull(request)) {
+				cuentasInstaladas = detalleCuentaService.listarCuentasInstaladasPorFecha(request);
+				if(GenericUtil.isCollectionEmpty(cuentasInstaladas)) {
+					return null;
+				}
+				else {
+					return cuentasInstaladas;
+				}
 			}
 		}
 		catch(Exception e) {

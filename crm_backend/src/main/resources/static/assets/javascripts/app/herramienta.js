@@ -44,7 +44,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/usuario/listamodulos/' + i,
+					url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 					dataType: 'json',
 					success: function(response) {
 							console.log(response);
@@ -94,7 +94,7 @@ $(document).on('ready', function() {
 			"bDestroy": true,
 			"ajax": {
 				
-				"url": "/api/v1/herramienta/searchlista/" + id,
+				"url": "/crm-app/api/v1/herramienta/searchlista/" + id,
 				"dataSrc": ""
 			},
 			"columns": [
@@ -160,7 +160,7 @@ $(document).on('ready', function() {
 			'bProcessing': true,
 			"bDestroy": true,
 			"ajax": {
-				"url": "/api/v1/herramienta/herramientas",
+				"url": "/crm-app/api/v1/herramienta/herramientas",
 				"dataSrc": ""
 			},
 			"columns": [
@@ -196,7 +196,7 @@ $(document).on('ready', function() {
 			$.ajax({
 				
 				type: 'GET',
-				url: '/api/v1/herramienta/searchherramienta/' + codigoherramienta,
+				url: '/crm-app/api/v1/herramienta/searchherramienta/' + codigoherramienta,
 				dataType: 'json',
 				success: function(response) {
 					
@@ -223,7 +223,7 @@ $(document).on('ready', function() {
 			$.ajax({
 				
 				type: 'GET',
-				url: '/api/v1/herramienta/searchherramienta/' + codigoherramienta,
+				url: '/crm-app/api/v1/herramienta/searchherramienta/' + codigoherramienta,
 				dataType: 'json',
 				success: function(response) {
 					
@@ -252,7 +252,7 @@ $(document).on('ready', function() {
 			$.ajax({
 				
 				type: 'GET',
-				url: '/api/v1/herramienta/searchdatos/' + (codigoherramienta),
+				url: '/crm-app/api/v1/herramienta/searchdatos/' + (codigoherramienta),
 				dataType: 'json',
 				success: function(response) {
 					
@@ -307,7 +307,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/herramienta/insertarherramienta',
+					url: '/crm-app/api/v1/herramienta/insertarherramienta',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -377,7 +377,7 @@ $(document).on('ready', function() {
 			$.ajax({
 				
 				type: 'POST',
-				url: '/api/v1/herramienta/editarpregunta/',
+				url: '/crm-app/api/v1/herramienta/editarpregunta/',
 				headers: {
 					"Content-Type": "application/json",
 					"Accept": "application/json"
@@ -433,7 +433,7 @@ $(document).on('ready', function() {
 			$.ajax({
 				
 				type: 'POST',
-				url: '/api/v1/herramienta/editarherramienta',
+				url: '/crm-app/api/v1/herramienta/editarherramienta',
 				headers: {
 					"Content-Type": "application/json",
 					"Accept": "application/json"
@@ -485,7 +485,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/herramienta/insertardetalleherramienta',
+					url: '/crm-app/api/v1/herramienta/insertardetalleherramienta',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -549,7 +549,7 @@ function cargarmensajespopusnuevo(valor,id){
 							{
 								
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
 								success: function(response) {
 									
@@ -601,7 +601,7 @@ function cargarmensajespopusnuevo(valor,id){
 							{
 						
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + i,
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
 								success: function(response) {
 									
@@ -640,7 +640,7 @@ function cargarmensajespopusnuevo(valor,id){
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + i,
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
 					success: function(response) {
 						
@@ -675,7 +675,7 @@ function cargarmensajespopusnuevo(valor,id){
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
 					success: function(response) {
 						
@@ -744,7 +744,7 @@ function cargarmensajespopusnuevo(valor,id){
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -773,7 +773,7 @@ function cargarmensajespopusnuevo(valor,id){
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"

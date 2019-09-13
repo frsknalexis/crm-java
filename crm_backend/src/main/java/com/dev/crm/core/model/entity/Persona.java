@@ -17,7 +17,7 @@ import com.dev.crm.core.model.base.AuditingEntity;
 import com.dev.crm.core.model.base.BaseEntity;
 
 @Entity
-@Table(name="tb_ci_persona", schema="public")
+@Table(name="tb_ci_persona")
 @NamedStoredProcedureQuery(name="listaPersonasNoClientes", procedureName="sp_lista_persona_no_cliente", resultClasses=Persona.class,
         parameters= {
         		@StoredProcedureParameter(mode=ParameterMode.IN, name="COD_USU", type=String.class)

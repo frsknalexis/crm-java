@@ -3,6 +3,9 @@ package com.dev.crm.core.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import com.dev.crm.core.json.JsonBigDecimalSimpleSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 public class MesDeudaResultViewModel implements Serializable {
 
 	/**
@@ -12,13 +15,15 @@ public class MesDeudaResultViewModel implements Serializable {
 	
 	private Integer mesDeuda;
 	
+	@JsonSerialize(using = JsonBigDecimalSimpleSerializer.class)
 	private BigDecimal sumaPago;
 	
 	private Integer anioValido;
 	
 	private String tipoServicio;
 	
-	private Double descuento;
+	@JsonSerialize(using = JsonBigDecimalSimpleSerializer.class)
+	private BigDecimal descuento;
 	
 	private String documentoPersonaCliente;
 	
@@ -60,11 +65,11 @@ public class MesDeudaResultViewModel implements Serializable {
 		this.tipoServicio = tipoServicio;
 	}
 
-	public Double getDescuento() {
+	public BigDecimal getDescuento() {
 		return descuento;
 	}
 
-	public void setDescuento(Double descuento) {
+	public void setDescuento(BigDecimal descuento) {
 		this.descuento = descuento;
 	}
 

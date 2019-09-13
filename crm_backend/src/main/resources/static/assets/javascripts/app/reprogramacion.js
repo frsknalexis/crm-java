@@ -32,7 +32,7 @@ $(document).on('ready', function() {
 					$.ajax({
 						
 						type: 'GET',
-						url: '/api/v1/usuario/listamodulos/' + i,
+						url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 						dataType: 'json',
 						success: function(response) {
 								console.log(response);
@@ -135,7 +135,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/detalleCuenta/contadorPendientesCable',
+			url: '/crm-app/api/v1/detalleCuenta/contadorPendientesCable',
 			dataType: 'json',
 			success: function(response) {
 			
@@ -157,7 +157,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/detalleCuenta/contadorPendientesInternet',
+			url: '/crm-app/api/v1/detalleCuenta/contadorPendientesInternet',
 			dataType: 'json',
 			success: function(response) {
 				
@@ -182,7 +182,7 @@ $(document).on('ready', function() {
 			$.ajax({
 				
 				type: 'GET',
-				url: '/api/v1/detalleCuenta/reprogramacionInstalacionInternet',
+				url: '/crm-app/api/v1/detalleCuenta/reprogramacionInstalacionInternet',
 				dataType: 'json',
 				success: function(response) {
 					
@@ -219,7 +219,7 @@ $(document).on('ready', function() {
 			$.ajax({
 				
 				type: 'GET',
-				url: '/api/v1/detalleCuenta/reprogramacionInstalacionCable',
+				url: '/crm-app/api/v1/detalleCuenta/reprogramacionInstalacionCable',
 				dataType: 'json',
 				success: function(response) {
 					
@@ -256,7 +256,7 @@ $(document).on('ready', function() {
 			$.ajax({
 				
 				type: 'GET',
-				url : '/api/v1/detalleCuenta/revalidandoInstalacionCable',
+				url : '/crm-app/api/v1/detalleCuenta/revalidandoInstalacionCable',
 				dataType: 'json',
 				success: function(response) {
 					
@@ -294,7 +294,7 @@ $(document).on('ready', function() {
 			$.ajax({
 				
 				type: 'GET',
-				url: '/api/v1/detalleCuenta/revalidandoInstalacionInternet',
+				url: '/crm-app/api/v1/detalleCuenta/revalidandoInstalacionInternet',
 				dataType: 'json',
 				success: function(response) {
 					
@@ -375,7 +375,7 @@ function cargarmensajespopusnuevo(valor,id){
 							{
 								
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
 								success: function(response) {
 									
@@ -427,7 +427,7 @@ function cargarmensajespopusnuevo(valor,id){
 							{
 						
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + i,
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
 								success: function(response) {
 									
@@ -466,7 +466,7 @@ function cargarmensajespopusnuevo(valor,id){
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + i,
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
 					success: function(response) {
 						
@@ -501,7 +501,7 @@ function cargarmensajespopusnuevo(valor,id){
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
 					success: function(response) {
 						
@@ -570,7 +570,7 @@ function cargarmensajespopusnuevo(valor,id){
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -599,7 +599,7 @@ function cargarmensajespopusnuevo(valor,id){
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"

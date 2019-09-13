@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.crm.core.dao.UbigeoDAO;
+import com.dev.crm.core.dto.UbigeoResultViewModel;
 import com.dev.crm.core.model.entity.Ubigeo;
+import com.dev.crm.core.repository.jdbc.UbigeoJdbcRepository;
 import com.dev.crm.core.repository.jpa.UbigeoJpaRepository;
 import com.dev.crm.core.service.UbigeoService;
 import com.dev.crm.core.util.GenericUtil;
@@ -25,6 +27,10 @@ public class UbigeoServiceImpl implements UbigeoService {
 	@Autowired
 	@Qualifier("ubigeoJpaRepository")
 	private UbigeoJpaRepository ubigeoJpaRepository;
+	
+	@Autowired
+	@Qualifier("ubigeoJdbcRepository")
+	private UbigeoJdbcRepository ubigeoJdbcRepository;
 	
 	@Override
 	public List<Ubigeo> findAll() {
@@ -59,6 +65,27 @@ public class UbigeoServiceImpl implements UbigeoService {
 			}
 			else {
 				return null;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<UbigeoResultViewModel> listarUbigeo() {
+		
+		List<UbigeoResultViewModel> listaUbigeo = new ArrayList<UbigeoResultViewModel>();
+		
+		try {
+			
+			listaUbigeo = ubigeoJdbcRepository.listarUbigeo();
+			if(GenericUtil.isCollectionEmpty(listaUbigeo)) {
+				return null;
+			}
+			else {
+				return listaUbigeo;
 			}
 		}
 		catch(Exception e) {

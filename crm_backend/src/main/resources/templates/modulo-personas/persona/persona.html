@@ -45,176 +45,198 @@
 								</div>
 							</div>
 							<div class="col-md-12 col-lg-12">
-								<div class="tabs tabs-primary">
-									<ul class="nav nav-tabs">
-										<li class="active">
-											<a href="#personas" data-toggle="tab"><i class="fa fa-users"></i> Personas</a>
-										</li>
-										<li>
-											<a href="#clientes" data-toggle="tab"><i class="fa fa-users"></i>Clientes</a>
-										</li>
-									</ul>
-									<div class="tab-content">
-										<div id="personas" class="tab-pane active">
-											<section class="panel panel-featured panel-featured-primary panel-primary">
-												<header class="panel-heading">
-													<h2 class="panel-title">Listado de Personas</h2>
-												</header>
-												<div class="panel-body">
-													<table class="table table-hover table-striped table-condensed mb-none" id="tablaPersonas" width="100%">
-														<thead class="text-center">
-															<tr>
-																<th style="width:100px">DNI-RUC</th>
-																<th style="width:100px">Nombre</th>
-																<th>Apellido Paterno</th>
-																<th>Apellido Materno</th>
-																<th style="width:160px">Direccion Actual</th>
-																<th>Referencia</th>
-																<th style="width:50px;">Telefono</th>
-																<th style="width:140px">Clientes</th>
-																<th style="width:5px">Acciones</th>
-															</tr>
-														</thead>
-													</table>
-												</div>
-											</section>
-										</div>
-										<div id="clientes" class="tab-pane">
-											<section class="panel panel-featured panel-featured-primary panel-primary">
-												<header class="panel-heading">
-													<h2 class="panel-title">Listado de Clientes</h2>
-												</header>
-												<div class="panel-body">
-													<table class="table table-hover table-striped table-condensed mb-none" id="tablaClientes" width="100%">
-														<thead class="text-center">
-															<tr>
-																<th>DNI-RUC</th>
-																<th style="width:210px;">Cliente</th>
-																<th style="width:210px;">Direccion Actual</th>
-																<th style="width:165px;">Facebook Cliente</th>
-																<th>Correo</th>
-																<th>Activo</th>
-																<th>Acciones</th>
-																<th></th>
-																<th></th>
-															</tr>
-														</thead>
-													</table>
-												</div>
-											</section>
-										</div>
+								<section class="panel panel-featured panel-featured-primary panel-primary">
+									<header class="panel-heading">
+										<h2 class="panel-title">Listado de Clientes</h2>
+									</header>
+									<div class="panel-body">
+										<table class="table table-hover table-striped table-condensed mb-none" id="tablaClientes" width="100%">
+											<thead class="text-center">
+												<tr>
+													<th>DNI-RUC</th>
+													<th style="width:210px;">Cliente</th>
+													<th style="width:210px;">Direccion Actual</th>
+													<th style="width:165px;">Facebook Cliente</th>
+													<th>Correo</th>
+													<th>Activo</th>
+													<th>Acciones</th>
+													<th></th>
+													<th></th>
+												</tr>
+											</thead>
+										</table>
 									</div>
-								</div>
+								</section>
 							</div>
 						</div>
 						<div class="row" id="formularioPersonaRegistro">
-							<div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
-								<section class="panel panel-featured-left panel-featured-primary">
+							<div class="col-md-12 col-lg-12">
+								<section class="panel panel-featured panel-featured-primary">
 									<header class="panel-heading">
-									<h2 class="panel-title">Formulario Personas</h2>
+										<h2 class="panel-title">Formulario Persona - Cliente</h2>
 									</header>
 									<div class="panel-body">
 										<form role="form" method="post">
 											<div class="row">
-												<div class="col-md-6 form-group">
-													<label for="documentoPersona">DNI-RUC</label>
-													<div class="input-group mb-md">
-														<span class="input-group-addon">
-															<i class="fa fa-credit-card"></i>
-														</span>
-														<input type="text" class="form-control input-sm" id="documentoPersona" placeholder="Numero Documento">
-													</div>
+												<div class="col-md-8 col-lg-8">
+													<section class="panel panel-featured panel-featured-primary">
+														<header class="panel-heading">
+															<h2 class="panel-title">Datos Persona</h2>
+														</header>
+														<div class="panel-body">
+															<div class="row">
+																<div class="col-md-6 form-group">
+																	<label for="documentoPersona">DNI-RUC</label>
+																	<form method="post" role="form">
+																		<div class="input-group mb-sm">
+																			<input type="text" class="form-control input-sm" id="documentoPersona" placeholder="Numero Documento">
+																			<span class="input-group-btn">
+																				<button class="btn btn-default btn-sm" id="validarDocumentoPersonaCLiente" type="submit"><i class="fa fa-search"></i></button>
+																			</span>
+																		</div>
+																	</form>
+																</div>
+																<div class="col-md-6 form-group">
+																	<label for="codigoUbigeo">Ubigeo</label>
+																	<div class="input-group mb-md">
+																		<span class="input-group-addon">
+																			<i class="fa fa-bookmark"></i>
+																		</span>
+																		<select class="form-control populate" id="codigoUbigeo"></select>
+																	</div>
+																</div>
+																<div class="col-md-6 form-group">
+																	<label for="nombrePersona">Nombres Persona</label>
+																	<div class="input-group mb-md">
+																		<span class="input-group-addon">
+																			<i class="fa fa-user"></i>
+																		</span>
+																		<input type="text" class="form-control input-sm" id="nombrePersona" placeholder="Nombre">
+																	</div>
+																</div>
+																<div class="col-md-6 form-group">
+																	<label for="apellidoPaternoPersona">Apellido Paterno</label>
+																	<div class="input-group mb-md">
+																		<span class="input-group-addon">
+																			<i class="fa fa-user"></i>
+																		</span>
+																		<input type="text" class="form-control input-sm" id="apellidoPaternoPersona" placeholder="Apellido Paterno">
+																	</div>
+																</div>
+																<div class="col-md-6 form-group">
+																	<label for="apellidoMaternoPersona">Apellido Materno</label>
+																	<div class="input-group mb-md">
+																		<span class="input-group-addon">
+																			<i class="fa fa-user"></i>
+																		</span>
+																		<input type="text" class="form-control input-sm" id="apellidoMaternoPersona" placeholder="Apellido Materno">
+																	</div>
+																</div>
+																<div class="col-md-6 form-group" id="inputDireccionReniec">
+																	<label for="direccionReniecPersona">Direccion RENIEC</label>
+																	<div class="input-group mb-md">
+																		<span class="input-group-addon">
+																			<i class="fa fa-home"></i>
+																		</span>
+																		<input type="text" class="form-control input-sm" id="direccionReniecPersona" placeholder="Direccion RENIEC">
+																	</div>
+																</div>
+																<div class="col-md-6 form-group">
+																	<label for="direccionActualPersona">Direccion Actual</label>
+																	<div class="input-group mb-md">
+																		<span class="input-group-addon">
+																			<i class="fa fa-home"></i>
+																		</span>
+																		<input type="text" class="form-control input-sm" id="direccionActualPersona" placeholder="Direccion Actual">
+																	</div>
+																</div>
+																<div class="col-md-6 form-group">
+																	<label for="referenciaPersona">Referencia Direccion</label>
+																	<div class="input-group mb-md">
+																		<span class="input-group-addon">
+																			<i class="fa fa-home"></i>
+																		</span>
+																		<input type="text" class="form-control input-sm" id="referenciaPersona" placeholder="Referencia Direccion">
+																	</div>
+																</div>
+																<div class="col-md-6 form-group">
+																	<label for="telefonoUnoPersona">Telefono Uno</label>
+											 						<div class="input-group mb-md">
+																		<span class="input-group-addon">
+																			<i class="fa fa-phone"></i>
+																		</span>
+																		<input type="text" class="form-control input-sm" id="telefonoUnoPersona" placeholder="Telefono 1">
+																	</div>
+																</div>
+																<div class="col-md-6 form-group">
+																	<label for="telefonoDosPersona">Telefono Dos</label>
+											 						<div class="input-group mb-md">
+																		<span class="input-group-addon">
+																			<i class="fa fa-phone"></i>
+																		</span>
+																		<input type="text" class="form-control input-sm" id="telefonoDosPersona" placeholder="Telefono 2">
+																	</div>
+																</div>
+																<div class="col-md-6 form-group">
+																	<label for="telefonoTresPersona">Telefono Tres</label>
+											 						<div class="input-group mb-md">
+																		<span class="input-group-addon">
+																			<i class="fa fa-phone"></i>
+																		</span>
+																		<input type="text" class="form-control input-sm" id="telefonoTresPersona" placeholder="Telefono 3">
+																	</div>
+																</div>
+															</div>
+														</div>
+													</section>
 												</div>
-												<div class="col-md-6 form-group">
-													<label for="nombreUbigeo">Ubigeo</label>
-													<div class="input-group mb-md">
-														<span class="input-group-addon">
-															<i class="fa fa-bookmark"></i>
-														</span>
-														<input type="hidden" class="form-control input-sm" id="codigoUbigeo">
-														<input type="text" class="form-control input-sm" id="nombreUbigeo" placeholder="Ubigeo">
-													</div>
-												</div>
-												<div class="col-md-4 form-group">
-													<label for="nombrePersona">Nombres Persona</label>
-													<div class="input-group mb-md">
-														<span class="input-group-addon">
-															<i class="fa fa-user"></i>
-														</span>
-														<input type="text" class="form-control input-sm" id="nombrePersona" placeholder="Nombre">
-													</div>
-												</div>
-												<div class="col-md-4 form-group">
-													<label for="apellidoPaternoPersona">Apellido Paterno</label>
-													<div class="input-group mb-md">
-														<span class="input-group-addon">
-															<i class="fa fa-user"></i>
-														</span>
-														<input type="text" class="form-control input-sm" id="apellidoPaternoPersona" placeholder="Apellido Paterno">
-													</div>
-												</div>
-												<div class="col-md-4 form-group">
-													<label for="apellidoMaternoPersona">Apellido Materno</label>
-													<div class="input-group mb-md">
-														<span class="input-group-addon">
-															<i class="fa fa-user"></i>
-														</span>
-														<input type="text" class="form-control input-sm" id="apellidoMaternoPersona" placeholder="Apellido Materno">
-													</div>
-												</div>
-												<div class="col-md-4 form-group">
-													<label for="direccionReniecPersona">Direccion RENIEC</label>
-													<div class="input-group mb-md">
-														<span class="input-group-addon">
-															<i class="fa fa-home"></i>
-														</span>
-														<input type="text" class="form-control input-sm" id="direccionReniecPersona" placeholder="Direccion RENIEC">
-													</div>
-												</div>
-												<div class="col-md-4 form-group">
-													<label for="direccionActualPersona">Direccion Actual</label>
-													<div class="input-group mb-md">
-														<span class="input-group-addon">
-															<i class="fa fa-home"></i>
-														</span>
-														<input type="text" class="form-control input-sm" id="direccionActualPersona" placeholder="Direccion Actual">
-													</div>
-												</div>
-												<div class="col-md-4 form-group">
-													<label for="referenciaPersona">Referencia Direccion</label>
-													<div class="input-group mb-md">
-														<span class="input-group-addon">
-															<i class="fa fa-home"></i>
-														</span>
-														<input type="text" class="form-control input-sm" id="referenciaPersona" placeholder="Referencia Direccion">
-													</div>
-												</div>
-												<div class="col-md-4 form-group">
-													<label for="telefonoUnoPersona">Telefono Uno</label>
-											 		<div class="input-group mb-md">
-														<span class="input-group-addon">
-															<i class="fa fa-phone"></i>
-														</span>
-														<input type="text" class="form-control input-sm" id="telefonoUnoPersona" placeholder="Telefono 1">
-													</div>
-												</div>
-												<div class="col-md-4 form-group">
-													<label for="telefonoDosPersona">Telefono Dos</label>
-											 		<div class="input-group mb-md">
-														<span class="input-group-addon">
-															<i class="fa fa-phone"></i>
-														</span>
-														<input type="text" class="form-control input-sm" id="telefonoDosPersona" placeholder="Telefono 2">
-													</div>
-												</div>
-												<div class="col-md-4 form-group">
-													<label for="telefonoTresPersona">Telefono Tres</label>
-											 		<div class="input-group mb-md">
-														<span class="input-group-addon">
-															<i class="fa fa-phone"></i>
-														</span>
-														<input type="text" class="form-control input-sm" id="telefonoTresPersona" placeholder="Telefono 3">
-													</div>
+												<div class="col-md-4 col-lg-4">
+													<section class="panel panel-featured panel-featured-primary">
+														<header class="panel-heading">
+															<h2 class="panel-title">Datos Cliente</h2>
+														</header>
+														<div class="panel-body">
+															<div class="row">			
+																<div class="col-md-12 form-group">
+																	<label for="nombreComercialCliente">Nombre Comercial</label>
+																	<div class="input-group mb-md">
+																		<span class="input-group-addon">
+																			<i class="fa fa-bookmark"></i>
+																		</span>
+																		<input type="text" class="form-control input-sm" id="nombreComercialCliente" placeholder="Nombre Comercial">
+																	</div>
+																</div>
+																<div class="col-md-12 form-group">
+																	<label for="correoCliente">Correo Electronico</label>
+																	<div class="input-group mb-md">
+																		<span class="input-group-addon">
+																			@
+																		</span>
+													    				<input type="text" class="form-control input-sm" id="correoCliente" placeholder="Correo Electronico">
+																	</div>
+																</div>
+																<div class="col-md-12 form-group">
+																	<label for="facebookCliente">Facebook</label>
+																	<div class="input-group mb-md">
+																		<span class="input-group-addon">
+																			<i class="fa fa-facebook-square"></i>
+																		</span>
+																		<input type="text" class="form-control input-sm" id="facebookCliente" placeholder="Facebook Cliente">
+																	</div>
+																</div>
+																<div class="col-md-12 form-group">
+																	<label for="codigoSexo">Sexo</label>
+																	<div class="input-group mb-md">
+																		<span class="input-group-addon">
+																			<i class="fa fa-male"></i>
+																		</span>
+																		<select  class="form-control populate" id="codigoSexo">
+																		</select>
+																	</div>
+																</div>
+															</div>	
+														</div>
+													</section>	
 												</div>
 												<div class="col-md-12 form-group">
 													<button type="submit" id="guardarPersona" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Guardar</button>
@@ -531,91 +553,78 @@
 									</div>
 									<div class="modal-body">
 										<div class="row">
-											<div class="col-md-12 col-lg-12">
-												<section class="panel panel-featured panel-featured-primary">
-													<header class="panel-heading">
-														<h2 class="panel-title">Datos Cliente</h2>
-													</header>
-													<div class="panel-body">
-														<div class="row">
-															<div class="col-md-6 form-group">
-																<label for="documentoPersonaClienteCambiarDireccion">DNI-RUC</label>
-																<div class="input-group mb-md">
-																	<span class="input-group-addon">
-																		<i class="fa fa-credit-card"></i>
-																	</span>
-																	<input type="text" class="form-control input-sm" id="documentoPersonaClienteCambiarDireccion" placeholder="Numero Documento">
-																</div>
-															</div>
-															<div class="col-md-6 form-group">
-																<label for="nombreClienteCambiarDireccion">Nombre Cliente</label>
-											 					<div class="input-group mb-md">
-																	<span class="input-group-addon">
-																		<i class="fa fa-user"></i>
-																	</span>
-																	<input type="text" class="form-control input-sm" id="nombreClienteCambiarDireccion" placeholder="Nombre Persona">
-																</div>
-															</div>
-															<div class="col-md-6 form-group">
-																<label for="apellidoPaternoClienteCambiarDireccion">Apellido Cliente</label>
-																<div class="input-group mb-md">
-																	<span class="input-group-addon">
-																		<i class="fa fa-user"></i>
-																	</span>
-																	<input type="text" class="form-control input-sm" id="apellidoPaternoClienteCambiarDireccion" placeholder="Apellido Paterno">
-																</div>
-															</div>
-															<div class="col-md-6 form-group">
-																<label for="direccionClienteCambiarDireccion">Direccion Cliente</label>
-																<div class="input-group mb-md">
-																	<span class="input-group-addon">
-																		<i class="fa fa-home"></i>
-																	</span>
-																	<input type="text" class="form-control input-sm" id="direccionClienteCambiarDireccion" placeholder="Direccion Cliente">
-																</div>
-															</div>
-															<div class="col-md-12 form-group">
-																<label for="nuevaDireccionCliente">Nueva Direccion</label>
-																<div class="input-group mb-md">
-																	<span class="input-group-addon">
-																		<i class="fa fa-home"></i>
-																	</span>
-																	<input type="text" class="form-control input-sm" id="nuevaDireccionCliente" placeholder="Nueva Direccion Cliente">
-																</div>
-															</div>
-														</div>
-													</div>
-												</section>
+											<div class="col-md-6 form-group">
+												<label for="documentoPersonaClienteCambiarDireccion">DNI-RUC</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-credit-card"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="documentoPersonaClienteCambiarDireccion" placeholder="Numero Documento">
+												</div>
 											</div>
-											<div class="col-md-12 col-lg-12">
-												<section class="panel panel-featured panel-featured-primary">
-													<header class="panel-heading">
-														<h2 class="panel-title">Datos Cuenta</h2>
-													</header>
-													<div class="panel-body">
-														<div class="row">
-															<div class="col-md-6 form-group">
-																<label for="observacionCambiarDireccion">Observacion</label>
-																<div class="input-group mb-md">
-																	<span class="input-group-addon">
-																		<i class="fa fa-pencil-square-o"></i>
-																	</span>
-																	<textarea class="form-control input-sm" id="observacionCambiarDireccion"></textarea>
-																</div>
-															</div>
-															<div class="col-md-6 form-group">
-																<label for="fechaSugerenciaCambiarDireccion">Fecha Sugerencia</label>
-																<div class="input-group mb-md">
-																	<span class="input-group-addon">
-																		<i class="fa fa-calendar"></i>
-																	</span>
-																	<input type="date" class="form-control input-sm" id="fechaSugerenciaCambiarDireccion">
-																</div>
-															</div>
-														</div>
-													</div>
-												</section>
-											</div>						
+											<div class="col-md-6 form-group">
+												<label for="nombreClienteCambiarDireccion">Nombre Cliente</label>
+											 	<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-user"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="nombreClienteCambiarDireccion" placeholder="Nombre Persona">
+												</div>
+											</div>
+											<div class="col-md-6 form-group">
+												<label for="apellidoPaternoClienteCambiarDireccion">Apellido Cliente</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-user"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="apellidoPaternoClienteCambiarDireccion" placeholder="Apellido Paterno">
+												</div>
+											</div>
+											<div class="col-md-6 form-group">
+												<label for="direccionClienteCambiarDireccion">Direccion Cliente</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-home"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="direccionClienteCambiarDireccion" placeholder="Direccion Cliente">
+												</div>
+											</div>
+											<div class="col-md-12 form-group">
+												<label for="nuevaDireccionCliente">Nueva Direccion</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-home"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="nuevaDireccionCliente" placeholder="Nueva Direccion Cliente">
+												</div>
+											</div>
+											<div class="col-md-5 form-group">
+												<label for="fechaSugerenciaCambiarDireccion">Fecha Sugerencia</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+													</span>
+													<input type="date" class="form-control input-sm" id="fechaSugerenciaCambiarDireccion">
+												</div>
+											</div>
+											<div class="col-md-7 form-group">
+												<label for="vendedorResponsableCambio">Vendedor Responsable</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-users"></i>
+													</span>
+													<select class="form-control populate" id="vendedorResponsableCambio"></select>
+												</div>
+											</div>
+											<div class="col-md-12 form-group">
+												<label for="observacionCambiarDireccion">Observacion</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-pencil-square-o"></i>
+													</span>
+													<textarea cols="3" rows="3" class="form-control input-sm" id="observacionCambiarDireccion"></textarea>
+												</div>
+											</div>				
 										</div>
 									</div>
 									<div class="modal-footer">

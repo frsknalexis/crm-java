@@ -20,15 +20,14 @@ $(document).on('ready', function() {
 	function ocultar_mostrar(id){
 		
 		if(id !== 0){
-			
-			
+		
 			for( var i = 1;i < id ; i++ ){
 			if(i < id){
 				
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/usuario/listamodulos/' + i,
+					url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 					dataType: 'json',
 					success: function(response) {
 							console.log(response);
@@ -67,7 +66,7 @@ $(document).on('ready', function() {
 							{
 								
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
 								success: function(response) {
 									
@@ -119,7 +118,7 @@ $(document).on('ready', function() {
 							{
 						
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + i,
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
 								success: function(response) {
 									
@@ -158,7 +157,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + i,
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
 					success: function(response) {
 						
@@ -193,7 +192,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
 					success: function(response) {
 						
@@ -262,7 +261,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -291,7 +290,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -338,7 +337,7 @@ $(document).on('ready', function() {
 		    		},
 		    		"bProcessing": true,
 		    		"ajax": {
-		    			"url": "/api/v1/usuario/usuarios",
+		    			"url": "/crm-app/api/v1/usuario/usuarios",
 		    			"dataSrc": ""
 		    		},
 		    		"columns": [
@@ -450,7 +449,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/usuario/saveOrUpdate',
+					url: '/crm-app/api/v1/usuario/saveOrUpdate',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -497,7 +496,7 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/usuario/saveOrUpdate',
+					url: '/crm-app/api/v1/usuario/saveOrUpdate',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -645,7 +644,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/usuario/usuario/' + usuarioId,
+			url: '/crm-app/api/v1/usuario/usuario/' + usuarioId,
 			dataType: 'json',
 			success: function(response){
 				$('#usuarioId').val(response.usuarioId);
@@ -687,7 +686,7 @@ $(document).on('ready', function() {
 	        if(result.value){
 	           
 	        	 $.ajax({
-	                 url: '/api/v1/usuario/usuario/disabled/' + usuarioId,
+	                 url: '/crm-app/api/v1/usuario/usuario/disabled/' + usuarioId,
 	                 type: 'GET',
 	                 success: function(response){
 	                	 
@@ -737,7 +736,7 @@ $(document).on('ready', function() {
 	           
 	        	$.ajax({
 	        		
-	        		url: '/api/v1/usuario/usuario/enabled/' + usuarioId,
+	        		url: '/crm-app/api/v1/usuario/usuario/enabled/' + usuarioId,
 	        		type: 'GET',
 	        		success: function(response){
 	        			

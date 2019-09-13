@@ -15,7 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "tb_ca_servicio", schema = "public")
+@Table(name = "tb_ca_servicio")
 public class CableServicio implements Serializable {
 
 	/**

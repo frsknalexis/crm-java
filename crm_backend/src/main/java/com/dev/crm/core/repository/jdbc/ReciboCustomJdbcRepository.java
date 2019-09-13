@@ -47,7 +47,13 @@ public class ReciboCustomJdbcRepository implements ReciboJdbcRepository {
 					new SqlOutParameter("VMES", Types.VARCHAR),
 					new SqlOutParameter("VCANTIDAD", Types.FLOAT),
 					new SqlOutParameter("VDESCUENTO", Types.FLOAT),
-					new SqlOutParameter("VFECHA", Types.DATE));
+					new SqlOutParameter("VFECHA", Types.DATE),
+					new SqlOutParameter("VTIPC", Types.VARCHAR),
+					new SqlOutParameter("VCODCLI", Types.VARCHAR),
+					new SqlOutParameter("VDNIRUC", Types.VARCHAR),
+					new SqlOutParameter("VSUCU", Types.VARCHAR),
+					new SqlOutParameter("VB", Types.VARCHAR),
+					new SqlOutParameter("VV", Types.VARCHAR));
 			
 			Map<String, Object> inParams = new HashMap<String, Object>();
 			inParams.put("CODPAG", codigoPago);
@@ -66,9 +72,15 @@ public class ReciboCustomJdbcRepository implements ReciboJdbcRepository {
 				recibo.setDireccion((String) out.get("VDIRECCION"));
 				recibo.setFechaInicio((Date) out.get("VFECHAI"));
 				recibo.setMesValido((String) out.get("VMES"));
-				recibo.setMonto(new BigDecimal((Double) out.get("VCANTIDAD")));
+				recibo.setMonto((Double) out.get("VCANTIDAD"));
 				recibo.setDescuento(new BigDecimal((Double) out.get("VDESCUENTO")));
 				recibo.setFechaPago((Date) out.get("VFECHA"));
+				recibo.setTipoComprobante((String) out.get("VTIPC"));
+				recibo.setCodigoCliente((String) out.get("VCODCLI"));
+				recibo.setSucursal((String) out.get("VSUCU"));
+				recibo.setDocumento((String) out.get("VDNIRUC"));
+				recibo.setCodigoBarra((String) out.get("VB"));
+				recibo.setValorMonto((String) out.get("VV"));
 				return recibo;
 			}
 			else if(GenericUtil.isNull(out.get("VPAGO")) && GenericUtil.isNull(out.get("VCLIENTE")) && GenericUtil.isNull(out.get("VDIRECCION"))

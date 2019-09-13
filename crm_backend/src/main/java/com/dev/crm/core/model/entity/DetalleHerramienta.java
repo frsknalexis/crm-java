@@ -14,7 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "tb_ci_detalleher", schema = "public")
+@Table(name = "tb_ci_detalleher")
 @IdClass(value = DetalleHerramientaPK.class)
 public class DetalleHerramienta implements Serializable {
 

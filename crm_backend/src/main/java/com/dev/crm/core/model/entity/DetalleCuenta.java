@@ -12,7 +12,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "tb_ci_detcun", schema = "public")
+@Table(name = "tb_ci_detcun")
 @IdClass(value=DetalleCuentaPK.class)
 public class DetalleCuenta implements Serializable {
 

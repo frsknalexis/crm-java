@@ -6,6 +6,8 @@ $(document).on('ready', function() {
 	
 	var tablaPagoClienteDetalle;
 	
+	var tipoServicioValue;
+	
 	cargarTotalRegistrosPersonita();
 	
 	listarClientesPago();
@@ -52,6 +54,8 @@ $(document).on('ready', function() {
 	
 	mostrarFormReporteRangoDeFechas();
 	
+	mostrarReporteDeudas();
+	
 	/**
 	 * function para listar los clientesPago
 	 * 
@@ -60,27 +64,23 @@ $(document).on('ready', function() {
 		
 		if(id !== 0){
 			
-			
 			for( var i = 1;i < id ; i++ ){
 			if(i < id){
 				
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/usuario/listamodulos/' + i,
+					url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 					dataType: 'json',
 					success: function(response) {
-							console.log(response);
-							
+							console.log(response);					
 							var descrip = response.descripcionmodulo;
-							
 							document.getElementById(descrip).style.display = 'block';
 						}
 					});
 				}
 			}
 		}
-	
 	}
 	
 	function listarClientesPago() {
@@ -113,7 +113,7 @@ $(document).on('ready', function() {
 			},
 			'bProcessing': true,
 			"ajax": {
-				"url": "/api/v1/pago/clientes/clientesPago",
+				"url": "/crm-app/api/v1/pago/clientes/clientesPago",
 				"dataSrc": ""
 			},
 			"columns": [
@@ -166,6 +166,8 @@ $(document).on('ready', function() {
 			$('#clienteFechaInstalacionPago').attr('disabled', true);
 			$('#clienteGestorResponsablePago').attr('disabled', true);
 			$('#clienteTelefonoGestorPago').attr('disabled', true);
+			$('#clienteFechaInstalacionCablePago').attr('disabled', true);
+			$('#clienteCodigoClienteCablePago').attr('disabled', true);
 		}
 		else {
 			$('#documentoPersonaClientePago').attr('disabled', false);
@@ -176,6 +178,8 @@ $(document).on('ready', function() {
 			$('#clienteFechaInstalacionPago').attr('disabled', false);
 			$('#clienteGestorResponsablePago').attr('disabled', false);
 			$('#clienteTelefonoGestorPago').attr('disabled', false);
+			$('#clienteFechaInstalacionCablePago').attr('disabled', false);
+			$('#clienteCodigoClienteCablePago').attr('disabled', false);
 		}
 	}
 	
@@ -193,9 +197,12 @@ $(document).on('ready', function() {
 		$('#clienteFechaInstalacionPago').val('');
 		$('#clienteGestorResponsablePago').val('');
 		$('#clienteTelefonoGestorPago').val('');
+		$('#clienteFechaInstalacionCablePago').val('');
+		$('#clienteCodigoClienteCablePago').val('');
 		$('#codigoComprobante').val('');
 		$('#cantidadPago').val('');
 		$('#documentoPersonaPago').val('');
+		$('#datoactualdeuda').val('');
 	}
 	
 	/**
@@ -220,14 +227,21 @@ $(document).on('ready', function() {
 		$('#tablaClientesPago tbody').on('click', 'button.btnRegistrarPagoCliente', function() {
 			
 			var documentoPersonaCliente = $(this).attr('idDocumentoPersonaClientePago');
+			
+			listarDeudasCliente(documentoPersonaCliente);
+			listarPagosCliente(documentoPersonaCliente);
+			
 			mostrarFormRealizarPago(true);
 			disabledInputDatosCliente(true);
+					
 			$.ajax({
 				
 				type: 'GET',
-				url: '/api/v1/cliente/searchClientePago/' + documentoPersonaCliente,
+				url: '/crm-app/api/v1/cliente/searchClientePago/' + documentoPersonaCliente,
 				dataType: 'json',
 				success: function(response) {
+					
+					console.log(response);
 					
 					$('#documentoPersonaClientePago').val(response.documentoPersonaCliente);
 					$('#clientePago').val(response.cliente);
@@ -237,6 +251,8 @@ $(document).on('ready', function() {
 					$('#clienteFechaInstalacionPago').val(response.fechaInstalacion);
 					$('#clienteGestorResponsablePago').val(response.gestorResponsable);
 					$('#clienteTelefonoGestorPago').val(response.telefonoGestor);
+					$('#clienteFechaInstalacionCablePago').val(response.fechaInstalacionCable);
+					$('#clienteCodigoClienteCablePago').val(response.codigoClienteCable);
 					
 					$('#verDeudaCliente').attr('documentoPersonaCliente', response.documentoPersonaCliente);
 					$('#verPagoCliente').attr('documentoPersonaCliente', response.documentoPersonaCliente);
@@ -245,6 +261,16 @@ $(document).on('ready', function() {
 					$('#myModalLabelPagoCliente').html('Pagos Cliente: ' + response.cliente);
 					$('#myModalLabelDstosClienteDescuento').html('Cliente: ' + response.cliente);
 					$('#documentoPersonaClienteDescuento').val(response.documentoPersonaCliente);
+				}
+			});
+			
+			$.ajax({
+				
+				type: 'GET',
+				url: '/crm-app/api/v1/pago/recuperarDatoPagoMesMonto/' + documentoPersonaCliente,
+				dataType: 'json',
+				success: function(response) {
+					$('#datoactualdeuda').val("Mes de deuda: "+ response.mesactualdeudanombre + " con un monto S/" + response.valordedeudaactual + " soles");
 				}
 			});
 		});
@@ -262,7 +288,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/comprobante/comprobantes',
+			url: '/crm-app/api/v1/comprobante/comprobantes',
 			dataType: 'json',
 			success: function(response) {
 				$codigoComprobante.html('');
@@ -301,7 +327,7 @@ $(document).on('ready', function() {
 		                title: 'Ooops',
 		                text: 'Debe seleccionar un Tipo de Comprobante !'
 		            });
-					return false
+					return false;
 				}
 				if($('#cantidadPago').val() <= 0) {
 					
@@ -313,7 +339,7 @@ $(document).on('ready', function() {
 					
 					$('#cantidadPago').val('');
 					$('#cantidadPago').focus();
-					return false
+					return false;
 				}
 			}
 		});
@@ -336,7 +362,6 @@ $(document).on('ready', function() {
 		$('#cantidadPago').on('keyup', function() {
 			
 			var valor = $(this).val();
-			
 			
 			if(parseInt(valor) <= 0) {
 				
@@ -371,12 +396,10 @@ $(document).on('ready', function() {
 					documentoPersonaPago: $('#documentoPersonaPago').val()
 				};
 				
-				console.log(formData);
-				
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/pago/pagosAdelantados',
+					url: '/crm-app/api/v1/pago/pagosAdelantados',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -384,8 +407,6 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formData),
 					dataType: 'json',
 					success: function(response) {
-						
-						console.log(response);
 						
 						if(response.status == "SUCCESS" && response.message == "PAGO ADELANTADO CON PROMO") {
 							
@@ -493,7 +514,7 @@ $(document).on('ready', function() {
 			'bProcessing': true,
 			"bDestroy": true,
 			"ajax": {
-				"url": "/api/v1/pago/listaDetallePago/" + flag,
+				"url": "/crm-app/api/v1/pago/listaDetallePago/" + flag,
 				"dataSrc": ""
 			},
 			"columns": [
@@ -501,7 +522,8 @@ $(document).on('ready', function() {
 				{"data": "descuentototal"},
 				{"data": "cantidadpago"},
 				{"data": "fechadepago"},
-				{"data": "informacionpago"}
+				{"data": "informacionpago"},
+				{"data": "codigocajapago"}
 			]
 		}).DataTable();
 	}
@@ -544,7 +566,7 @@ $(document).on('ready', function() {
 			'bProcessing': true,
 			"bDestroy": true,
 			"ajax": {
-				"url": "/api/v1/pago/clientes/listaMesesDeudas/" + flag,
+				"url": "/crm-app/api/v1/pago/clientes/listaMesesDeudas/" + flag,
 				"dataSrc": ""
 			},
 			"columns": [
@@ -560,7 +582,6 @@ $(document).on('ready', function() {
 		$('#tablaDeudaCliente tbody').on('click', 'button', function() {
 			
 			var data = tablaDeudasCliente.row( $(this).parents('tr')).data();
-			
 			$(this).attr('documentoPersonaClientePagoDeuda', data.documentoPersonaCliente);
 			$(this).attr('mesDeuda', data.mesDeuda);
 			$(this).attr('anioValido', data.anioValido);
@@ -572,6 +593,37 @@ $(document).on('ready', function() {
 	
 	/**
 	 * 
+	 * function para mostrar form realizar pago deuda
+	 * 
+	 */
+	function mostrarFormRealizarPagoDeuda() {
+		
+		$('#tablaDeudaCliente tbody').on('click', 'button.btnRealizarPagoDeudaCliente', function() {
+			
+			var documentoPersonaClienteDeuda = $(this).attr('documentoPersonaClientePagoDeuda');
+			var mesDeuda = $(this).attr('mesDeuda');
+			var anioValido = $(this).attr('anioValido');
+			var tipoServicio = $(this).attr('tipoServicio');
+			var sumaPago = $(this).attr('sumaPago');
+			var descuento = $(this).attr('descuento');
+		
+			$('#modalFormPagoDeuda').on('show.bs.modal', function (e) {
+				$('#documentoPersonaClientePagoDeuda').val(documentoPersonaClienteDeuda);
+				$('#tipoServicioDeudaCliente').val(tipoServicio);
+				$('#montoPagoDeuda').val(sumaPago);
+				$('#descuentoDeuda').val(descuento);
+				$('#mesDeuda').val(mesDeuda);
+				$('#anioValidoDeuda').val(anioValido);
+			});
+				
+			tipoServicioValue = tipoServicio;
+			
+			realizarAccionPorTipoServicio(tipoServicioValue);
+		});
+	}
+
+	/**
+	 * 
 	 *funcion para ver deuda cliente 
 	 */
 	function verDeudaCliente() {
@@ -579,39 +631,23 @@ $(document).on('ready', function() {
 		$('#verDeudaCliente').on('click', function() {
 			
 			var documentoPersonaCliente = $(this).attr('documentoPersonaCliente');
-
-
+			
 			setTimeout(function() {
 				$('#modalVerDeudaCliente').modal('show');
-				listarDeudasCliente(documentoPersonaCliente);
-				mostrarFormRealizarPagoDeuda();
-			}, 2300);
-			
-			enabledFormPagoDeuda(false);
+				//listarDeudasCliente(documentoPersonaCliente);
+			}, 2500);
+			mostrarFormRealizarPagoDeuda();
 			
 			cargarComboComprobantePagoDeuda();
+			
+			/*cargarComboComprobantePagoDeuda();
 			
 			cancelarAccionPagoDeuda();
 			
 			validarFormPagoDeuda();
 			
 			realizarPagoMora();
-			
-			$.ajax({
-				
-				type: 'GET',
-				url: '/api/v1/pago/clientes/listaMesesDeudas/' + documentoPersonaCliente,
-				dataType: 'json',
-				success: function(response) {
-					
-					if(response != null) {
-						
-					}
-					else {
-						
-					}
-				}
-			});
+			*/
 		});
 	}
 	
@@ -623,27 +659,7 @@ $(document).on('ready', function() {
 			
 			setTimeout(function() {
 				$('#modalVerPagoCliente').modal('show');
-				listarPagosCliente(documentoPersonaCliente);
 			}, 2300);
-			
-			
-			
-			$.ajax({
-				
-				type: 'GET',
-				url: '/api/v1/pago/listaDetallePago/' + documentoPersonaCliente,
-				dataType: 'json',
-				success: function(response) {
-					
-					if(response != null) {
-						
-					}
-					else {
-						
-					}
-				}
-			});
-			
 		});
 	}
 	
@@ -663,11 +679,10 @@ $(document).on('ready', function() {
 			$('#modalGenerarDescuentoMes').modal('show');
 		}, 2300);
 		
-		
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/pago/recuperarDatoPagoMes/' + documentoPersonaCliente,
+			url: '/crm-app/api/v1/pago/recuperarDatoPagoMes/' + documentoPersonaCliente,
 			dataType: 'json',
 			success: function(response) {
 				
@@ -684,7 +699,6 @@ $(document).on('ready', function() {
 		});
 		
 		GuardarDescuentDelMESACTUAL();
-		
 	});
 	}
 
@@ -700,7 +714,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/comprobante/comprobantes',
+			url: '/crm-app/api/v1/comprobante/comprobantes',
 			dataType: 'json',
 			success: function(response) {
 				$codigoComprobantePagoDeuda.html('');
@@ -711,52 +725,7 @@ $(document).on('ready', function() {
 			}
 		});
 	}
-	
-	/**
-	 * 
-	 *function para mostrar form pago deuda 
-	 */
-	function enabledFormPagoDeuda(flag) {
-		
-		limpiarFormPagoDeuda();
-		if(flag) {
-			$('#formPagoDeuda').show();
-		}
-		else {
-			$('#formPagoDeuda').hide();
-		}
-	}
-	
-	/**
-	 * 
-	 * function para mostrar form realizar pago deuda
-	 * 
-	 */
-	function mostrarFormRealizarPagoDeuda() {
-		
-		$('#tablaDeudaCliente tbody').on('click', 'button.btnRealizarPagoDeudaCliente', function() {
-			
-			var documentoPersonaClienteDeuda = $(this).attr('documentoPersonaClientePagoDeuda');
-			var mesDeuda = $(this).attr('mesDeuda');
-			var anioValido = $(this).attr('anioValido');
-			var tipoServicio = $(this).attr('tipoServicio');
-			var sumaPago = $(this).attr('sumaPago');
-			var descuento = $(this).attr('descuento');
-			
 
-			
-			enabledFormPagoDeuda(true);
-			$('#modalFormPagoDeuda').modal('show');
-			
-			$('#documentoPersonaClientePagoDeuda').val(documentoPersonaClienteDeuda);
-			$('#tipoServicioDeudaCliente').val(tipoServicio);
-			$('#montoPagoDeuda').val(sumaPago);
-			$('#descuentoDeuda').val(descuento);
-			$('#mesDeuda').val(mesDeuda);
-			$('#anioValidoDeuda').val(anioValido);
-		});
-	}
-	
 	/**
 	 * 
 	 *function para limpiarFormPagoDeuda 
@@ -783,7 +752,6 @@ $(document).on('ready', function() {
 	function cancelarAccionPagoDeuda() {
 		
 		$('#cancelarAccionPagoDeuda').on('click', function() {
-			enabledFormPagoDeuda(false);
 			limpiarFormPagoDeuda();
 		})
 	}
@@ -796,17 +764,15 @@ $(document).on('ready', function() {
 			var formData = {
 					documentopersoma: $('#documentoPersonaClienteDescuento').val(),
 					numerodemes: $('#ClienteDescuentoMesPago').val(),
-					anioalido: $('#ClienteDescuentoMesPago').val(),
+					aniovalido: $('#ClienteDescuentoMesPago').val(),
 					descuentodelmes: $('#ClienteDescuento').val(),
 					motivodeldescuento: $('#ClienteDescuentoMotivo').val()
 			};
-			
-			console.log(formData);
-			
+				
 			$.ajax({
 				
 				type: 'POST',
-				url: '/api/v1/pago/generarDescuentoMensualidad',
+				url: '/crm-app/api/v1/pago/generarDescuentoMensualidad',
 				headers: {
 					"Content-Type": "application/json",
 					"Accept": "application/json"
@@ -815,7 +781,6 @@ $(document).on('ready', function() {
 				dataType: 'json',
 				success: function(response) {
 					
-					console.log(response);
 					if(response.message == "HECHO") {
 						
 						swal({
@@ -836,7 +801,7 @@ $(document).on('ready', function() {
 						swal({
 			                type: 'error',
 			                title: 'Ooops',
-			                text: 'Ups algo salio mal, contatce con el responsable del sistema !'
+			                text: 'Ups algo salio mal, contacte con el responsable del sistema !'
 			            });
 					}
 				}
@@ -910,7 +875,6 @@ $(document).on('ready', function() {
 			
 			var valor = $(this).val();
 			
-			
 			if(parseInt(valor) <= 0) {
 				
 				swal({
@@ -921,6 +885,86 @@ $(document).on('ready', function() {
 				
 				$(this).val('');
 				$(this).focus();
+			}
+		});
+	}
+	
+	/**
+	 * 
+	 * function para realizarPagoMoraCable
+	 * 
+	 */
+	function realizarPagoMoraCable() {
+		
+		$('#realizarPagoDeudaCliente').on('click', function(e) {
+			e.preventDefault();
+			
+			if($('#codigoComprobantePagoDeuda').val().trim() != "" && $('#cantidadPagoDeuda').val() > 0) {
+				
+				var formDataPagoDeudaCable = {
+						documentoPersonaClienteDeuda: $('#documentoPersonaClientePagoDeuda').val(), 
+						tipoServicio: $('#tipoServicioDeudaCliente').val(),
+						codigoComprobanteDeuda: $('#codigoComprobantePagoDeuda').val(),
+						descuento: $('#descuentoDeuda').val(),
+						documentoPersonaPagoDeuda: $('#documentoPersonaPagoDeuda').val(),
+						montoDeuda: $('#montoPagoDeuda').val(),
+						montoPago: $('#cantidadPagoDeuda').val(),
+						mesPago: $('#mesDeuda').val(),
+						aniValidoPago: $('#anioValidoDeuda').val() 
+				};
+				console.log(formDataPagoDeudaCable);
+				
+				$.ajax({
+					
+					type: 'POST',
+					url: '/crm-app/api/v1/pago/pagoMoraCable',
+					headers: {
+						"Content-Type": "application/json",
+						"Accept": "application/json"
+					},
+					data: JSON.stringify(formDataPagoDeudaCable),
+					dataType: 'json',
+					success: function(response) {
+						console.log(response);
+						
+						if(response.message == "HECHO") {
+							swal({
+								type: "success",
+								title: "Se Realizo el Pago con exito",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar",
+								closeOnConfirm: false
+							}).then((result) => {
+
+								if(result.value) {
+									$(location).attr('href', '/pago/listaPagos');
+								}
+							});
+						}
+						else if(response.message == "EXCEDIO") {
+							swal({
+				                type: 'error',
+				                title: 'Ooops',
+				                text: 'Excedio el monto a Pagar !'
+				            });
+						}
+						else if(response.message == "ERROR") {
+							swal({
+				                type: 'error',
+				                title: 'Ooops',
+				                text: 'Hubo un error al Realizar el Pago !'
+				            });
+						}
+					},
+					error: function() {
+						
+						swal({
+			                type: 'error',
+			                title: 'Ooops',
+			                text: 'Hubo un error al Realizar el Pago !'
+			            });
+					}
+				});
 			}
 		});
 	}
@@ -948,12 +992,12 @@ $(document).on('ready', function() {
 						anioValido:$('#anioValidoDeuda').val()
 				};
 				
-				
-				
+				console.log(formDataPagoDeuda);
+						
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/pago/realizarPagoMora',
+					url: '/crm-app/api/v1/pago/realizarPagoMora',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -1007,13 +1051,11 @@ $(document).on('ready', function() {
 	function redireccionarListaPagosView() {
 		
 		$('#buttonListaPagos').on('click', function() {
-			$(location).attr('href', '/pago/listaPagos');
+			$(location).attr('href', '/crm-app/pago/listaPagos');
 		});
 	}
 	
 	function cargarmensajespopusnuevo(valor,id){
-		
-		
 		
 		var title = "Tareas Pendientes!!!";
 		
@@ -1022,7 +1064,6 @@ $(document).on('ready', function() {
 		var theme = "warning";
 		var closeOnClick = true;
 		var displayClose =true;
-		
 		
 		if(valor !== 0)
 		{
@@ -1034,15 +1075,13 @@ $(document).on('ready', function() {
 							{
 								
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
 								success: function(response) {
 									
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
 							
-									
-									
 									window.createNotification({
 										closeOnClick: closeOnClick,
 										displayCloseButton: displayClose,
@@ -1052,19 +1091,15 @@ $(document).on('ready', function() {
 									})({
 								title: title,
 								message: message
-							});
-							
+							});				
 						}
 					});
 				}
-			}
-			
+			}	
 		}
 	}
 
 	function cargarmensajespopus(id){
-		
-		
 		
 		var title = "Tareas Pendientes!!!";
 		
@@ -1086,14 +1121,13 @@ $(document).on('ready', function() {
 							{
 						
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + i,
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
 								success: function(response) {
 									
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
-							
-									
+								
 									window.createNotification({
 										closeOnClick: closeOnClick,
 										displayCloseButton: displayClose,
@@ -1103,21 +1137,17 @@ $(document).on('ready', function() {
 									})({
 								title: title,
 								message: message
-							});
-							
+							});				
 						}
 					});
 				}
-			}
-			
+			}	
 		}
 	}
 	
 	function estado(id){
 		
-		
 		if(id !== 0){
-			
 			
 			for(var i=1;i<=id;i++){
 			if(i <= id){
@@ -1125,11 +1155,10 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + i,
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
 					success: function(response) {
-						
-						
+										
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
 						
@@ -1150,7 +1179,6 @@ $(document).on('ready', function() {
 	
 	function estadonuevo(valor){
 		
-		
 		if(valor !== 0){
 			
 			document.getElementById("agregarmensajesnoti").innerHTML="";
@@ -1160,11 +1188,10 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
 					success: function(response) {
-						
-						
+										
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
 						
@@ -1193,34 +1220,27 @@ $(document).on('ready', function() {
 		dinamico = document.getElementsByName("canjes")[0].value;
 		valuee = document.getElementsByName("canjess")[0].value;
 		
-		
 		var verificando = valuee - dinamico;
 		
 		if(estatico === valuee && valuee === dinamico){
-		
 			estado(valuee);
 			cargarmensajespopus(valuee);
 			$('#canje').val("0");
 		}
 		if(verificando === 0){
-		
 			estado(verificando);
 			cargarmensajespopus(verificando);
 			$('#canje').val("0");
 		}
 		if(verificando !== 0){
-		
-			estadonuevo(parseInt(valuee));
-			
+			estadonuevo(parseInt(valuee));	
 			cargarmensajespopusnuevo(parseInt(dinamico) + 1,parseInt(verificando));
-		
 			$('#canje').val("0");
 			$('#canjes').val(valuee);
 		}
 	}
 	
 	function cargarTotalRegistrosPersona() {
-		
 		
 		var formData = {
 				
@@ -1229,7 +1249,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -1242,14 +1262,10 @@ $(document).on('ready', function() {
 				$('#totalidad').html(response.message);
 				$('#canjess').val(response.message);
 			}
-			
-		});	
-		
+		});		
 	}
 	
-	
 	function cargarTotalRegistrosPersonita() {
-		
 		
 		var formData = {
 				
@@ -1258,7 +1274,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -1273,12 +1289,9 @@ $(document).on('ready', function() {
 				$('#canjes').val(response.message);
 				$('#canjess').val(response.message);
 			}
-			
-		});	
-		
+		});			
 	}
-	
-	
+
 	/**
 	 * 
 	 *function para mostrar el modal de reporte de pagosPorDia 
@@ -1287,11 +1300,18 @@ $(document).on('ready', function() {
 	function mostrarFormReportePagosPorDia() {
 		
 		$('#buttonReportePagosDia').on('click', function() {
-			
 			$('#modalPagosPorDia').modal('show');
 		});
 		
 		validarFormReportePagosPorDia();
+		cancelarAccionBuscarPagosPorDia();
+	}
+	
+	function cancelarAccionBuscarPagosPorDia() {
+		
+		$('#cancelarAccionBuscarPagosPorDia').on('click', function() {
+			$('#fechaPagoPorDia').val('');
+		});
 	}
 	
 	function validarFormReportePagosPorDia() {
@@ -1315,12 +1335,11 @@ $(document).on('ready', function() {
 				var formDataPagoPorDia = {
 						fechaBusqueda: $('#fechaPagoPorDia').val()	
 				};
-				console.log(formDataPagoPorDia);
-						
+				
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/pago/pagosPorDia',
+					url: '/crm-app/api/v1/pago/pagosPorDia',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
@@ -1328,10 +1347,32 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formDataPagoPorDia),
 					dataType: 'json',
 					success: function(response) {
-						console.log(response);
+						
+						if(response == null) {
+							swal({
+				                type: 'warning',
+				                title: 'Ooops',
+				                text: 'No se Encontraron Resultados de Busqueda !'
+				            });
+						}
+						else if(response != null) {
+							printJS({
+								printable: response,
+								showModal: true,
+								documentTitle: 'Reporte de Pagos Por Fecha Pago',
+								properties: [
+									{ field: 'numeroInterno', displayName: 'Nº'},
+									{ field: 'codigoPago', displayName: 'Codigo Pago'},
+									{ field: 'fechaPago', displayName: 'Fecha Pago'},
+									{ field: 'mesPago', displayName: 'Mes'},
+									{field: 'cliente', displayName: 'Cliente'},
+									{ field: 'cantidadPago', displayName: 'Monto'}
+								], 
+								type: 'json'})
+						}
 					},
 					error: function() {
-						
+					
 						swal({
 			                type: 'error',
 			                title: 'Ooops',
@@ -1424,8 +1465,165 @@ $(document).on('ready', function() {
 						fechaInicial: $('#fechaInicialBusqueda').val(),
 						fechaFinal: $('#fechaFinBusqueda').val()
 				};
-				console.log(formDataBusquedaPorRangoFecha);
+				
+				$.ajax({
+					
+					type: 'POST',
+					url: '/crm-app/api/v1/pago/pagosPorRangoFechaBusqueda',
+					headers: {
+						"Content-Type": "application/json",
+						"Accept": "application/json"
+					},
+					data: JSON.stringify(formDataBusquedaPorRangoFecha),
+					dataType: 'json',
+					success: function(response) {
+						
+						if(response == null) {
+							swal({
+				                type: 'warning',
+				                title: 'Ooops',
+				                text: 'No se Encontraron Resultados de Busqueda !'
+				            });
+						}
+						else if(response != null) {
+							printJS({
+								printable: response,
+								showModal: true,
+								documentTitle: 'Reporte de Pagos Por Rango Fecha',
+								properties: [
+									{ field: 'numeracion', displayName: '#'},
+									{ field: 'codigoPago', displayName: 'Codigo Pago'},
+									{ field: 'mesPago', displayName: 'Mes'},
+									{ field: 'fechaPagoDia', displayName: 'Fecha Pago'},
+									{ field: 'cliente', displayName: 'Cliente'},
+									{ field: 'cantidadPago', displayName: 'Monto'}
+									
+								], 
+								type: 'json'})
+						}
+					},
+					error: function() {
+						swal({
+			                type: 'error',
+			                title: 'Ooops',
+			                text: 'Ocurrio un Error !'
+			            });
+					}
+				});
 			}
 		});
+	}
+	
+	/***
+	 * 
+	 *function para mostrar reporte de deudas 
+	 * 
+	 */
+	function mostrarReporteDeudas() {
+		$('#buttonReporteDeudas').on('click', function() {
+			
+			$('#modalReporteDiasDeudas').modal('show');
+		});
+		
+		validarFormReporteDeudas();
+		cancelarAccionBuscarDiasDeudas();
+	}
+	
+	function validarFormReporteDeudas() {
+		
+		$('#buscarDiasDeudas').on('click', function(e) {
+			e.preventDefault();
+			
+			if($('#diasDeudas').val().trim() != "") {
+				
+				var formDataDiasDeudas = {
+						 diasDeudas: $('#diasDeudas').val()
+				};
+				
+				$.ajax({
+					
+					type: 'POST',
+					url: '/crm-app/api/v1/pago/reporteDiasDeudas',
+					headers: {
+						"Content-Type": "application/json",
+						"Accept": "application/json"
+					},
+					data: JSON.stringify(formDataDiasDeudas),
+					dataType: 'json',
+					success: function(response) {
+						
+						if(response == null) {
+							swal({
+				                type: 'warning',
+				                title: 'Ooops',
+				                text: 'No se Encontraron Resultados de Busqueda !'
+				            });
+						}
+						else if(response != null) {
+							printJS({
+								printable: response,
+								showModal: true,
+								documentTitle: 'Reporte de Dias Deudas',
+								properties: [
+									{ field: 'numeracion', displayName: '#'},
+									{ field: 'codigoCuenta', displayName: 'Nº Cuenta'},
+									{ field: 'documentoPersonaCliente', displayName: 'Nº Documento'},
+									{ field: 'mesPago', displayName: 'Mes Deuda'},
+									{ field: 'direccionCliente', displayName: 'Direccion Actual'},
+									{ field: 'cliente', displayName: 'Cliente'}
+								], 
+								type: 'json'});
+						}
+					},
+					error: function() {
+						swal({
+			                type: 'error',
+			                title: 'Ooops',
+			                text: 'Ocurrio un Error !'
+			            });
+					}
+				});
+			}		
+			if($('#diasDeudas').val().trim() == "") {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'Debe ingresar un valor valido para este campo !'
+	            });
+			}
+		});
+	}
+	function cancelarAccionBuscarDiasDeudas() {
+		$('#cancelarAccionBuscarDiasDeudas').on('click', function() {
+			$('#diasDeudas').val('');
+		});
+	}
+	
+	function realizarAccionPorTipoServicio(tipoServicioValue) {
+		
+		switch(tipoServicioValue) {
+			case 'IC': 
+				$('#modalFormPagoDeuda').modal('show');
+				cancelarAccionPagoDeuda();
+				validarFormPagoDeuda();
+				realizarPagoMora();
+			break;
+			case 'CC':
+				$('#modalFormPagoDeuda').modal('show');
+				cancelarAccionPagoDeuda();
+				validarFormPagoDeuda();
+				realizarPagoMoraCable();
+			break;
+			case 'DUO':
+				swal({
+	                type: 'warning',
+	                title: 'Ooops',
+	                text: 'Aun no se implemento el Pago del Servicio de DUO !'
+	            });
+			break;
+			default:
+				alert('TIPO SERVICIO NO ESPECIFICADO');
+		}
 	}
 });

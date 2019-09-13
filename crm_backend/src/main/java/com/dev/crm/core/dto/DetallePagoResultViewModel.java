@@ -1,6 +1,10 @@
 package com.dev.crm.core.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+
+import com.dev.crm.core.json.JsonBigDecimalSimpleSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class DetallePagoResultViewModel implements Serializable {
 
@@ -11,13 +15,17 @@ public class DetallePagoResultViewModel implements Serializable {
 	
 	private Double totalpago;
 	
-	private Float descuentototal;
+	@JsonSerialize(using = JsonBigDecimalSimpleSerializer.class)
+	private BigDecimal descuentototal;
 	
-	private Float cantidadpago;
+	@JsonSerialize(using = JsonBigDecimalSimpleSerializer.class)
+	private BigDecimal cantidadpago;
 	
 	private String fechadepago;
 	
 	private String informacionpago;
+	
+	private String codigocajapago;
 
 	public DetallePagoResultViewModel() {
 		
@@ -31,19 +39,19 @@ public class DetallePagoResultViewModel implements Serializable {
 		this.totalpago = totalpago;
 	}
 
-	public Float getDescuentototal() {
+	public BigDecimal getDescuentototal() {
 		return descuentototal;
 	}
 
-	public void setDescuentototal(Float descuentototal) {
+	public void setDescuentototal(BigDecimal descuentototal) {
 		this.descuentototal = descuentototal;
 	}
 
-	public Float getCantidadpago() {
+	public BigDecimal getCantidadpago() {
 		return cantidadpago;
 	}
 
-	public void setCantidadpago(Float cantidadpago) {
+	public void setCantidadpago(BigDecimal cantidadpago) {
 		this.cantidadpago = cantidadpago;
 	}
 
@@ -62,5 +70,12 @@ public class DetallePagoResultViewModel implements Serializable {
 	public void setInformacionpago(String informacionpago) {
 		this.informacionpago = informacionpago;
 	}
-	
+
+	public String getCodigocajapago() {
+		return codigocajapago;
+	}
+
+	public void setCodigocajapago(String codigocajapago) {
+		this.codigocajapago = codigocajapago;
+	}
 }

@@ -1,7 +1,3 @@
-/**
- * 
- */
-
 $(document).on('ready', function() {
 	
 	var tablaClientesGestores;
@@ -9,6 +5,10 @@ $(document).on('ready', function() {
 	listarTablaClientesGestores();
 	
 	listarComboGestores(); 
+	
+	listarComboGestoresResponsablesReporte();
+	
+	mostrarFormBuscarGestorReporte();
 	
 	cargarTotalRegistrosPersonita();
 	
@@ -30,14 +30,13 @@ $(document).on('ready', function() {
 		
 		if(id !== 0){
 			
-			
 			for( var i = 1;i < id ; i++ ){
 			if(i < id){
 				
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/usuario/listamodulos/' + i,
+					url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 					dataType: 'json',
 					success: function(response) {
 							console.log(response);
@@ -62,11 +61,8 @@ $(document).on('ready', function() {
 		var closeOnClick = true;
 		var displayClose =true;
 		
-		
-		
 		if(valor !== 0)
-		{
-			
+		{	
 			for(var i = 0;id > i;i++)
 			{			
 				if(id > i){
@@ -74,15 +70,13 @@ $(document).on('ready', function() {
 							{
 								
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
 								success: function(response) {
 									
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
-							
-									
-									
+														
 									window.createNotification({
 										closeOnClick: closeOnClick,
 										displayCloseButton: displayClose,
@@ -98,13 +92,10 @@ $(document).on('ready', function() {
 					});
 				}
 			}
-			
 		}
 	}
 
 	function cargarmensajespopus(id){
-		
-		
 		
 		var title = "Tareas Pendientes!!!";
 		
@@ -123,16 +114,14 @@ $(document).on('ready', function() {
 			{			
 				if(i <= id){
 					$.ajax(
-							{
-						
+							{				
 								type: 'GET',
-								url: '/api/v1/atencion/searchMensaje/' + i,
+								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
 								success: function(response) {
 									
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
-							
 									
 									window.createNotification({
 										closeOnClick: closeOnClick,
@@ -144,32 +133,27 @@ $(document).on('ready', function() {
 								title: title,
 								message: message
 							});
-							
 						}
 					});
 				}
 			}
-			
 		}
 	}
 	
 	function estado(id){
 		
-		
 		if(id !== 0){
-			
-			
+				
 			for(var i=1;i<=id;i++){
 			if(i <= id){
 				
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + i,
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
 					success: function(response) {
-						
-						
+									
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
 						
@@ -190,7 +174,6 @@ $(document).on('ready', function() {
 	
 	function estadonuevo(valor){
 		
-		
 		if(valor !== 0){
 			
 			document.getElementById("agregarmensajesnoti").innerHTML="";
@@ -200,11 +183,10 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'GET',
-					url: '/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
+					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
 					success: function(response) {
-						
-						
+										
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
 						
@@ -233,7 +215,6 @@ $(document).on('ready', function() {
 		dinamico = document.getElementsByName("canjes")[0].value;
 		valuee = document.getElementsByName("canjess")[0].value;
 		
-		
 		var verificando = valuee - dinamico;
 		
 		if(estatico === valuee && valuee === dinamico){
@@ -261,7 +242,6 @@ $(document).on('ready', function() {
 	
 	function cargarTotalRegistrosPersona() {
 		
-		
 		var formData = {
 				
 		};
@@ -269,7 +249,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -281,14 +261,11 @@ $(document).on('ready', function() {
 				$('#total').html(response.message);
 				$('#totalidad').html(response.message);
 				$('#canjess').val(response.message);
-			}
-			
+			}	
 		});	
-		
 	}
 	
 	function cargarTotalRegistrosPersonita() {
-		
 		
 		var formData = {
 				
@@ -297,7 +274,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'POST',
-			url: '/api/v1/atencion/obtenercantidad',
+			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json"
@@ -312,9 +289,7 @@ $(document).on('ready', function() {
 				$('#canjes').val(response.message);
 				$('#canjess').val(response.message);
 			}
-			
 		});	
-		
 	}
 	
 	function listarTablaClientesGestores() {
@@ -347,13 +322,14 @@ $(document).on('ready', function() {
 			'bProcessing': true,
 			"bDestroy": true,
 			"ajax": {
-				"url": "/api/v1/gestor/gestorClientes",
+				"url": "/crm-app/api/v1/gestor/gestorClientes",
 				"dataSrc": ""
 			},
 			"columns": [
 				{"data": "consecutivoCliente"},
 				{"data": "documentoPersonaCliente"},
 				{"data": "cliente"},
+				{"data": "direccionActualCliente"},
 				{"data": "gestor"},
 				{"defaultContent": '<button type="button" class="btn btn-success btn-xs btnAsignarGestor" documentoPersonaCliente><i class="fa fa-user"></i> Asignar Gestor</button>'}
 			]
@@ -365,7 +341,6 @@ $(document).on('ready', function() {
 		});
 		mostrarFormAsignarGestor();
 	}
-	
 	
 	function mostrarFormAsignarGestor() {
 		
@@ -390,7 +365,7 @@ $(document).on('ready', function() {
 		$.ajax({
 			
 			type: 'GET',
-			url: '/api/v1/gestor/gestores',
+			url: '/crm-app/api/v1/gestor/gestores',
 			dataType: 'json',
 			success: function(response) {
 				
@@ -399,6 +374,27 @@ $(document).on('ready', function() {
 				$gestorResponsable.append('<option value="">Seleccione un Gestor</option>');
 				for(var i = 0; i < response.length; i++) {
 					$gestorResponsable.append('<option value="' + response[i].gestor + '">' + response[i].gestor + '</option>');
+				}
+			}
+		});
+	}
+	
+	function listarComboGestoresResponsablesReporte() {
+		
+		$gestoresResponsables = $('#gestoresResponsables');
+		
+		$.ajax({
+			
+			type: 'GET',
+			url: '/crm-app/api/v1/gestor/gestores',
+			dataType: 'json',
+			success: function(response) {
+				
+				console.log(response);
+				$gestoresResponsables.html('');
+				$gestoresResponsables.append('<option value="">Seleccione un Gestor</option>');
+				for(var i = 0; i < response.length; i++) {
+					$gestoresResponsables.append('<option value="' + response[i].gestor + '">' + response[i].gestor + '</option>');
 				}
 			}
 		});
@@ -431,11 +427,11 @@ $(document).on('ready', function() {
 				$.ajax({
 					
 					type: 'POST',
-					url: '/api/v1/gestor/updateClienteGestor',
+					url: '/crm-app/api/v1/gestor/updateClienteGestor',
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json"
-					}
+					},
 					data: JSON.stringify(formDataAsignarGestores),
 					dataType: 'json',
 					success: function(response) {
@@ -496,6 +492,92 @@ $(document).on('ready', function() {
 	            });
 			}
 			else if($('#gestorResponsable').val().trim() == "") {
+				
+				swal({
+	                type: 'error',
+	                title: 'Ooops',
+	                text: 'Debe Seleccionar un Gestor Responsable !'
+	            });
+				return false;
+			}
+		});
+	}
+	
+	function mostrarFormBuscarGestorReporte() {
+		
+		$('#buttonReporteGestores').on('click', function() {
+			
+			$('#modalFormBuscarGestor').modal('show');
+			limpiarModalBuscarGestorReporte();
+			buscarGestorReporte();
+		});
+	}
+	
+	function limpiarModalBuscarGestorReporte() {
+		
+		$('#cancelarModalBuscarGestor').on('click', function() {
+			$('#gestoresResponsables').val('');
+		});
+	}
+	
+	function buscarGestorReporte() {
+		
+		$('#buscarGestorReporte').on('click', function(e) {
+			
+			e.preventDefault();
+			
+			if($('#gestoresResponsables').val().trim() != "") {
+				
+				var formDataBuscarReporteGestor = {
+						gestorResponsable: $('#gestoresResponsables').val()	
+				};
+				
+				console.log(formDataBuscarReporteGestor);
+				
+				$.ajax({
+					
+					type: 'POST',
+					url: '/crm-app/api/v1/gestor/deudasPorGestor',
+					headers: {
+						"Content-Type" : "application/json",
+						"Accept": "application/json"
+					},
+					data: JSON.stringify(formDataBuscarReporteGestor),
+					dataType: 'json',
+					success: function(response) {
+						
+						if(response == null) {
+							swal({
+				                type: 'warning',
+				                title: 'Ooops',
+				                text: 'No se Encontraron Resultados de Busqueda !'
+				            });
+						}
+						else if(response != null) {
+							printJS({
+								printable: response,
+								showModal: true,
+								documentTitle: 'Reporte de Deudas de Clientes por Gestor',
+								properties: [
+									{ field: 'cliente', displayName: 'Cliente'},
+									{ field: 'direccionCliente', displayName: 'Direccion Actual'},
+									{ field: 'mesDeuda', displayName: 'Mes Deuda'},
+									{ field: 'deuda', displayName: 'Cantidad'}
+								], 
+								type: 'json'});
+						}
+					},
+					error: function() {
+						swal({
+			                type: 'error',
+			                title: 'Ooops',
+			                text: 'Ocurrio un Error !'
+			            });
+					}
+				});
+			}
+			
+			if($('#gestoresResponsables').val().trim() == "") {
 				
 				swal({
 	                type: 'error',

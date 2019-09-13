@@ -36,14 +36,16 @@ public class HistorialDescuentoRquestCustomJdbcRepository implements HistorialDe
 				new SqlParameter("ANIO_VALIDO", Types.INTEGER),
 				new SqlParameter("DESCU", Types.DOUBLE),
 				new SqlParameter("MOTI",Types.VARCHAR),
+				new SqlParameter("CODUSU", Types.VARCHAR),
 				new SqlOutParameter("MENSAJE", Types.VARCHAR));
 		
 		Map<String, Object> inParams = new HashMap<String, Object>();
 		inParams.put("CODDOC", codigo.getDocumentopersoma());
 		inParams.put("NUMERO_MES", codigo.getNumerodemes());
-		inParams.put("ANIO_VALIDO", codigo.getAnioalido());
+		inParams.put("ANIO_VALIDO", codigo.getAniovalido());
 		inParams.put("DESCU", codigo.getDescuentodelmes());
 		inParams.put("MOTI", codigo.getMotivodeldescuento());
+		inParams.put("CODUSU", codigo.getCodigoUsuario());
 		
 		Map<String, Object> out = simpleJdbcCall.execute(inParams);
 		String result = (String) out.get("MENSAJE");
