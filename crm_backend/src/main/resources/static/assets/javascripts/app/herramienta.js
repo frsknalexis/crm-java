@@ -1,9 +1,7 @@
 $(document).on('ready', function() {
 	
 	var estatico = 0;
-	
 	var dinamico = 0;
-	
 	var tablaHerramientas;
 	cancelarAccion();
 	listarHerramientas();
@@ -22,11 +20,9 @@ $(document).on('ready', function() {
 		    	$('#total').load(cargarTotalRegistrosPersona());
 		    	evaluando();
 		    // Ejemplo: Cada dos segundos se imprime la hora
-		   
 		  }
 		  // Intervalo de tiempo
 		,5000);
-	
 	
 	mostardatosherramientagenerales(true);
 	/**
@@ -36,13 +32,11 @@ $(document).on('ready', function() {
 	function ocultar_mostrar(id){
 		
 		if(id !== 0){
-			
-			
+					
 			for( var i = 1;i < id ; i++ ){
 			if(i < id){
 				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 					dataType: 'json',
@@ -326,7 +320,7 @@ $(document).on('ready', function() {
 						}).then((result) => {
 
 							if(result.value) {
-								$(location).attr('href', '/atencion/herramientas/view');
+								$(location).attr('href', '/crm-app/atencion/herramientas/view');
 							}
 						});
 					},
@@ -396,7 +390,7 @@ $(document).on('ready', function() {
 					}).then((result) => {
 
 						if(result.value) {
-							$(location).attr('href', '/atencion/herramientas/view');
+							$(location).attr('href', '/crm-app/atencion/herramientas/view');
 						}
 					});
 				},
@@ -452,7 +446,7 @@ $(document).on('ready', function() {
 					}).then((result) => {
 
 						if(result.value) {
-							$(location).attr('href', '/atencion/herramientas/view');
+							$(location).attr('href', '/crm-app/atencion/herramientas/view');
 						}
 					});
 				},
@@ -503,7 +497,7 @@ $(document).on('ready', function() {
 						}).then((result) => {
 
 							if(result.value) {
-								$(location).attr('href', '/atencion/herramientas/view');
+								$(location).attr('href', '/crm-app/atencion/herramientas/view');
 							}
 						});
 					},
@@ -522,7 +516,7 @@ $(document).on('ready', function() {
 	function redireccionViewHerramientas() {
 		
 		$('#buttonHerramientas').on('click', function() {
-			$(location).attr('href', '/atencion/atencion/view');
+			$(location).attr('href', '/crm-app/atencion/atencion/view');
 		});
 	}
 	

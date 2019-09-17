@@ -2,64 +2,41 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 	<header class="header" th:fragment="header">
-		
-			<div class="logo-container">
-			
-				<a href="/dashboard" class="logo"> 
-					
-				 
-						<img th:src="@{https://scontent.flim19-1.fna.fbcdn.net/v/t1.0-9/61296693_2742619672420355_3895064617646292992_n.jpg?_nc_cat=107&_nc_ht=scontent.flim19-1.fna&oh=275d98534984bba9612bb14e98a96f10&oe=5D900E4A}" height="35" alt="JSOFT Admin" /> 
-			 
-					
-				</a>
-				<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html"
-					data-fire-event="sidebar-left-opened">
-					<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
-				</div>
+		<div class="logo-container">
+			<a th:href="@{/dashboard}" class="logo"> 
+				<img th:src="@{https://scontent.flim19-1.fna.fbcdn.net/v/t1.0-9/61296693_2742619672420355_3895064617646292992_n.jpg?_nc_cat=107&_nc_ht=scontent.flim19-1.fna&oh=275d98534984bba9612bb14e98a96f10&oe=5D900E4A}" height="35" alt="JSOFT Admin" /> 	
+			</a>
+			<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html"
+				data-fire-event="sidebar-left-opened">
+				<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
 			</div>
-		
-		
+		</div>
 		<!-- start: search & user box -->
 		<div class="header-right">
-		
 			<span class="separator"></span>
-			
 			<ul class="notifications">
-			
 				<li class="dropdown notifications-menu">
-					<a href="/tarea/tarea/view" class="dropdown-toggle notification-icon" data-toggle="dropdown">
+					<a th:href="@{/tarea/tarea/view}" class="dropdown-toggle notification-icon" data-toggle="dropdown">
 						<i class="fa fa-envelope"></i>
 						<span class="badge" id="total"></span>
 					</a>
-			
 					<div class="dropdown-menu notification-menu">
-								<div class="notification-title">
-									<span class="pull-right label label-default" id="totalidad"></span>
-									Mensajes
-								</div>
-
-			
-								<div class="content">
-								
-									<ul id="agregarmensajesnoti">
-										
-									</ul>
-			
-									<hr />
-			
-									<div class="text-right">
-										<a href="/tarea/tarea/view" class="view-more">Ver todo</a>
-									</div>
-								</div>
+						<div class="notification-title">
+							<span class="pull-right label label-default" id="totalidad"></span>Mensajes
+						</div>
+						<div class="content">
+							<ul id="agregarmensajesnoti"></ul>
+							<hr />
+							<div class="text-right">
+								<a th:href="@{/tarea/tarea/view}" class="view-more">Ver todo</a>
 							</div>
-						</li>
-					
-				</ul>
-			
+						</div>
+					</div>
+				</li>
+			</ul>
 			<span class="separator"></span>
-			
 			<div id="userbox" class="userbox">
-				<a href="/dashboard" data-toggle="dropdown">
+				<a th:href="@{/dashboard}" data-toggle="dropdown">
 					<figure class="profile-picture">
 						<img th:src="@{/assets/images/default_user.png}" alt="Joseph Doe" class="img-circle" th:data-lock-picture="@{/assets/images/!logged-user.jpg}" />
 					</figure>
@@ -88,7 +65,5 @@
 		</div>
 		<!-- end: search & user box -->
 	</header>
-	
 </body>
-
 </html>

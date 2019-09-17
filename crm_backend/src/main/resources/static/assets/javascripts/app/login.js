@@ -29,7 +29,7 @@ $(document).on('ready', function() {
 					success: function(response) {
 						if(response != null) {
 							if(response.habilitado == true) {
-								$(location).attr('href', '/dashboard');
+								$(location).attr('href', '/crm-app/dashboard');
 							}
 						}
 						else {

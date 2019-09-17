@@ -1,17 +1,14 @@
 $(document).on('ready', function() {
 	
 	recuperarUsuarioActual();
-	
 	/**
 	 * 
 	 * function recuperar usuario actual del sistema
 	 * 
 	 */
-
 	function recuperarUsuarioActual() {
 		
-		$.ajax({
-			
+		$.ajax({	
 			type: 'GET',
 			url: '/crm-app/api/v1/usuario/usuarioLogueado',
 			dataType: 'json',
@@ -30,7 +27,6 @@ $(document).on('ready', function() {
 						$('#cargoUsuarioLogueado').html(response.cargoUsuario);
 					}
 				});
-				
 			}
 		});
 	}

@@ -158,7 +158,7 @@ $(document).on('ready', function() {
 							}).then((result) => {
 
 								if(result.value) {
-									$(location).attr('href', '/atencion/reclamo/view');
+									$(location).attr('href', '/crm-app/atencion/reclamo/view');
 								}
 							});
 						},
@@ -177,7 +177,7 @@ $(document).on('ready', function() {
 	function redireccionViewHerramientas() {
 		
 		$('#buttonregresaratencion').on('click', function() {
-			$(location).attr('href', '/atencion/atencion/view');
+			$(location).attr('href', '/crm-app/atencion/atencion/view');
 		});
 	}
 	

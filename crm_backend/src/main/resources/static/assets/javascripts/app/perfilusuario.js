@@ -171,7 +171,7 @@ function actualizarUsuarioPerfil() {
 							}).then((result) => {
 
 								if(result.value) {
-									$(location).attr('href', '/login');
+									$(location).attr('href', '/crm-app/login');
 								}
 							});
 						},

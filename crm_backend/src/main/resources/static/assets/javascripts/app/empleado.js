@@ -1,22 +1,20 @@
 $(document).on('ready', function() {
 	
 	var flag;
-	
 	setTimeout(function() {
 		 mostrarForm(false);
 		 mostrarFormPersona(false);
 	}, 1000);
-	
 	ocultar_mostrar(50);
 	
 	setTimeout(function() {
 		cargarEstadEmpleado();
 		ocultarBotones();
-	}, 9000);
+	}, 8000);
 	
 	setTimeout(function(){
 		cargarEstado();
-	}, 9000);
+	}, 8000);
 	
 	cargarTotalRegistrosPersonita();
 	
@@ -30,9 +28,7 @@ $(document).on('ready', function() {
 		  }
 		  // Intervalo de tiempo
 		,5000);
-	
 	cargarComboUbigeo();
-	
 	cargarComboCargo();
 	
 	function ocultar_mostrar(id){
@@ -40,17 +36,13 @@ $(document).on('ready', function() {
 		if(id !== 0){
 			for( var i = 1;i < id ; i++ ){
 			if(i < id){
-				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 					dataType: 'json',
 					success: function(response) {
 							console.log(response);
-							
 							var descrip = response.descripcionmodulo;
-							
 							document.getElementById(descrip).style.display = 'block';
 						}
 					});
@@ -82,7 +74,6 @@ $(document).on('ready', function() {
 	}
 	
 	function mostrarForm(flag) {
-		
 		limpiar();
 		if(flag) {
 			$('#listadoPersonasEmpleadosRegistro').hide();
@@ -95,7 +86,6 @@ $(document).on('ready', function() {
 	}
 	
 	function mostrarFormPersona(flag) {
-		
 		limpiarPersona();
 		if(flag) {
 			$('#listadoPersonasEmpleadosRegistro').hide();
@@ -118,7 +108,6 @@ $(document).on('ready', function() {
 	}
 	
 	$.ajax({
-		
 		type: 'GET',
 		url: '/crm-app/api/v1/persona/personas/listaPersonasNoEmpleados',
 		dataType: 'json',
@@ -136,24 +125,20 @@ $(document).on('ready', function() {
 	$('#cancelarAccion').on('click', function(){
 		cancelarFormPersona();
 	});
-	
 	/**
 	 * 
 	 * Funcion para cargar el combo ubigeo
 	 * 
 	 * */
-	
 	function cargarComboUbigeo() {
 		
 		var $codigoUbigeo = $('#codigoUbigeo');
 		
-		$.ajax({
-			
+		$.ajax({	
 			type: 'GET',
 			url: '/crm-app/api/v1/ubigeo/ubigeos',
 			dataType: 'json',
 			success: function(response) {
-			
 				$codigoUbigeo.html('');
 				$codigoUbigeo.append('<option value="">Seleccione un Ubigeo</option>');
 				for(var i = 0; i < response.length; i++) {
@@ -165,7 +150,6 @@ $(document).on('ready', function() {
 	
 	$('#guardarPersona').on('click', function(e) {
 		e.preventDefault();
-		
 		if($('#documentoPersona').val().match(/^[0-9]{7,11}$/) && $('#codigoUbigeo').val().trim() != ""
 			&& $('#nombrePersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/) && $('#apellidoPaternoPersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/)
 			&& $('#apellidoMaternoPersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/) && $('#direccionActualPersona').val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\#.-\s]+$/)
@@ -188,9 +172,7 @@ $(document).on('ready', function() {
 			};
 			
 			if(flag == true) {
-				
 				$.ajax({
-					
 					type: 'PUT',
 					url: '/crm-app/api/v1/persona/update',
 					headers: {
@@ -200,10 +182,7 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formData),
 					dataType: 'json',
 					success: function(response){
-						
-						
 						if(response.status == "UPDATED") {
-							
 							swal({
 								type: "success",
 								title: "Persona Actualizado con exito",
@@ -211,15 +190,13 @@ $(document).on('ready', function() {
 								confirmButtonText: "Cerrar",
 								closeOnConfirm: false
 							}).then((result) => {
-
 								if(result.value) {
-									$(location).attr('href', '/empleado/view');
+									$(location).attr('href', '/crm-app/empleado/view');
 								}
 							});
 						}
 					},
 					error: function() {
-						
 						swal({
 			                type: 'error',
 			                title: 'Ooops',
@@ -230,9 +207,7 @@ $(document).on('ready', function() {
 			}
 			
 			if(flag == false) {
-				
 				$.ajax({
-					
 					type:'POST',
 					url: '/crm-app/api/v1/persona/save',
 					headers: {
@@ -242,10 +217,7 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formData),
 					dataType: 'json',
 					success: function(response){
-						
-						
 						if(response.status == 'CREATED') {
-							
 							swal({
 								type: "success",
 								title: "Persona: " + response.data.nombrePersona + " Registrado con exito",
@@ -253,20 +225,17 @@ $(document).on('ready', function() {
 								confirmButtonText: "Cerrar",
 								closeOnConfirm: false
 							}).then((result) => {
-
 								if(result.value) {
-									$(location).attr('href', '/empleado/view');
+									$(location).attr('href', '/crm-app/empleado/view');
 								}
 							});
 						}
 						else if(response.status == 'ERROR') { 
-							
 							swal({
 				                type: 'error',
 				                title: 'Ooops',
 				                text: 'Ocurrio un Error al Registrar a la Persona: '+ response.data.nombrePersona +', verifique si ya existe !'
 				            });
-							
 							limpiarPersona();
 						}
 					},
@@ -296,229 +265,182 @@ $(document).on('ready', function() {
 		else {
 			
 			if($('#documentoPersona').val() == "" || $('#documentoPersona').val() == 0) {
-				
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'El campo Numero Documento no puede estar vacio, ingrese un valor valido'
 	            });
-		    	
 		    	$('#documentoPersona').focus();
 		    	return false;
 			}
-			
-			if($('#codigoUbigeo').val().trim() == "") {
-				
+			if($('#codigoUbigeo').val().trim() == "") {	
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'Debe seleccionar un Ubigeo'
 	            });
-				
 		    	return false;
 			}
-			
-			if($('#nombrePersona').val() == "" || $('#nombrePersona').val() == 0) {
-				
+			if($('#nombrePersona').val() == "" || $('#nombrePersona').val() == 0) {	
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'El campo Nombre no puede estar vacio, ingrese un valor valido'
 	            });
-		    	
 		    	$('#nombrePersona').focus();
 		    	return false;
 			}
-			
-			if($('#apellidoPaternoPersona').val() == "" || $('#apellidoPaternoPersona').val() == 0) {
-				
+			if($('#apellidoPaternoPersona').val() == "" || $('#apellidoPaternoPersona').val() == 0) {	
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'El campo Apellido Paterno no puede estar vacio, ingrese un valor valido'
 	            });
-		    	
 		    	$('#apellidoPaternoPersona').focus();
 		    	return false;
 			}
-			
-			if($('#apellidoMaternoPersona').val() == "" || $('#apellidoMaternoPersona').val() == 0) {
-				
+			if($('#apellidoMaternoPersona').val() == "" || $('#apellidoMaternoPersona').val() == 0) {	
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'El campo Apellido Materno no puede estar vacio, ingrese un valor valido'
 	            });
-		    	
 		    	$('#apellidoMaternoPersona').focus();
 		    	return false;
 			}
-			
-			if($('#direccionActualPersona').val() == "" || $('#direccionActualPersona').val() == 0) {
-				
+			if($('#direccionActualPersona').val() == "" || $('#direccionActualPersona').val() == 0) {	
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'El campo Direccion Actual no puede estar vacio, ingrese un valor valido'
 	            });
-		    	
 		    	$('#direccionActualPersona').focus();
 		    	return false;
 			}
-			
-			if($('#referenciaPersona').val() == "" || $('#referenciaPersona').val() == 0) {
-				
+			if($('#referenciaPersona').val() == "" || $('#referenciaPersona').val() == 0) {	
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'El campo Referencia Direccion no puede estar vacio, ingrese un valor valido'
 	            });
-		    	
 		    	$('#referenciaPersona').focus();
 		    	return false;
 			}
-			
-			if($('#telefonoUnoPersona').val() == "" || $('#telefonoUnoPersona').val() == 0) {
-				
+			if($('#telefonoUnoPersona').val() == "" || $('#telefonoUnoPersona').val() == 0) {	
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'El campo Telefono o Celular no puede estar vacio, ingrese un valor valido'
 	            });
-		    	
 		    	$('#telefonoUnoPersona').focus();
 		    	return false;
 			}
-			
-			if(!($('#documentoPersona').val().match(/^[0-9]{7,11}$/))) {
-				
+			if(!($('#documentoPersona').val().match(/^[0-9]{7,11}$/))) {	
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'El campo Numero Documento no permite caracteres especiales ni letras'
 	            });
-				
 				$('#documentoPersona').val('');
 				$('#documentoPersona').focus();
 		    	return false;
 			}
 			else if(!($('#nombrePersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/))) {
-				
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'El campo Nombre no permite caracteres especiales ni numeros'
 	            });
-				
 				$('#nombrePersona').val('');
 				$('#nombrePersona').focus();
 		    	return false;
 			}
 			else if(!($('#apellidoPaternoPersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/))) {
-				
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'El campo Apellido Paterno no permite caracteres especiales ni numeros'
 	            });
-				
 				$('#apellidoPaternoPersona').val('');
 				$('#apellidoPaternoPersona').focus();
 		    	return false;
 			}
 			else if(!($('#apellidoMaternoPersona').val().match(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/))) {
-				
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'El campo Apellido Materno no permite caracteres especiales ni numeros'
 	            });
-				
 				$('#apellidoMaternoPersona').val('');
 				$('#apellidoMaternoPersona').focus();
 		    	return false;
 			}
 			else if(!($('#direccionActualPersona').val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\#.-\s]+$/))) {
-				
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'El campo Direccion Actual no permite caracteres especiales'
 	            });
-				
 				$('#direccionActualPersona').val('');
 				$('#direccionActualPersona').focus();
 		    	return false;
 			}
 			else if(!($('#referenciaPersona').val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\#.-\s]+$/))) {
-				
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'El campo Referencia Direccion no permite caracteres especiales'
 	            });
-		    	
 				$('#referenciaPersona').val('');
 		    	$('#referenciaPersona').focus();
 		    	return false;
 			}
 			else if(!($('#telefonoUnoPersona').val().match(/^[0-9]{7,9}$/))) {
-				
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'El campo Telefono o Celular Uno no permite caracteres especiales, ni letras'
 	            });
-		    	
 				$('#telefonoUnoPersona').val('');
 		    	$('#telefonoUnoPersona').focus();
 		    	return false;
 			}
 		}
 	});
-	
 	/**
 	 * 
 	 * Evento change para el input Telefono 2
 	 * 
 	 * */
 	$('#telefonoDosPersona').on('change', function() {
-		
 		if(!($('#telefonoDosPersona').val().match(/^[0-9]{7,9}$/))) {
-			
 			swal({
                 type: 'error',
                 title: 'Ooops',
                 text: 'El campo Telefono o Celular Dos no permite caracteres especiales, ni letras'
-            });
-	    	
+            }); 	
 			$('#telefonoDosPersona').val('');
 	    	$('#telefonoDosPersona').focus();
 	    	return false;
 		}
 	});
-	
 	/**
 	 * 
 	 * Evento change para el input Telefono 3
 	 * 
 	 * */
 	$('#telefonoTresPersona').on('change', function() {
-		
 		if(!($('#telefonoTresPersona').val().match(/^[0-9]{7,9}$/))) {
-			
 			swal({
                 type: 'error',
                 title: 'Ooops',
                 text: 'El campo Telefono o Celular Tres no permite caracteres especiales, ni letras'
             });
-	    	
 			$('#telefonoTresPersona').val('');
 	    	$('#telefonoTresPersona').focus();
 	    	return false;
 		}
 	});
-	
 	var tablaPersonas = $('#tablaPersonasEmpleados').dataTable({
 		"language": {
 			"sProcessing":     "Procesando...",
@@ -566,7 +488,6 @@ $(document).on('ready', function() {
 		var data = tablaPersonas.row( $(this).parents('tr')).data();
 		$(this).attr('idDocumentoPersona', data.documentoPersona);
 	});
-	
 	/**
 	 * 
 	 *Evento para editar Persona
@@ -574,19 +495,15 @@ $(document).on('ready', function() {
 	 */
 	$('#tablaPersonasEmpleados tbody').on('click', 'button.btnEditarPersonaEmpleado', function(){
 		var documentoPersonaEmpleado = $(this).attr('idDocumentoPersona');
-		
 		mostrarFormPersona(true);
 		$('#documentoPersona').attr('disabled', true);
 		$('#documentoPersona').val(documentoPersonaEmpleado);
 		flag = true;
-		
 		$.ajax({
-			
 			type: 'GET',
 			url: '/crm-app/api/v1/persona/persona/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
-				
 				$("#codigoUbigeo option[value="+ response.ubigeo.codigoUbigeo +"]").attr("selected",true);
 				$('#nombrePersona').val(response.nombrePersona);
 				$('#apellidoPaternoPersona').val(response.apellidoPaternoPersona);
@@ -599,18 +516,14 @@ $(document).on('ready', function() {
 				$('#telefonoTresPersona').val(response.telefonoTresPersona);
 			}
 		});
-		
 	});
-	
 	/**
 	 * 
 	 * Evento para agregar empleado
 	 * 
 	 * */
-	
 	$('#tablaPersonasEmpleados tbody').on('click', 'button.btnAgregarPersonaEmpleado', function() {
 		var documentoPersonaEmpleado = $(this).attr('idDocumentoPersona');
-		
 		mostrarForm(true);
 		$('#documentoPersonaEmpleado').attr('disabled', true);
 		$('#documentoPersonaEmpleado').val(documentoPersonaEmpleado);
@@ -618,12 +531,10 @@ $(document).on('ready', function() {
 		$('#empleadoApellidosPersona').attr('disabled', true);
 		
 		$.ajax({
-			
 			type: 'GET',
 			url: '/crm-app/api/v1/persona/persona/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
-			
 				$('#empleadoNombrePersona').val(response.nombrePersona);
 				$('#empleadoApellidosPersona').val(response.apellidoPaternoPersona + ' ' + response.apellidoMaternoPersona);
 			}
@@ -633,7 +544,6 @@ $(document).on('ready', function() {
 	$('#cancelarAccionEmpleado').on('click', function() {
 		cancelarForm();
 	});
-	
 	/**
 	 * 
 	 * Funcion para cargar en el combo el cargo
@@ -642,13 +552,11 @@ $(document).on('ready', function() {
 		
 		var $codigoCargo = $('#codigoCargo');
 		
-		$.ajax({
-			
+		$.ajax({	
 			type: 'GET',
 			url: '/crm-app/api/v1/cargo/cargos',
 			dataType: 'json',
 			success: function(response){
-			
 				$codigoCargo.html('');
 				$codigoCargo.append('<option value="">Seleccione un Cargo</option>');
 				for(var i = 0; i < response.length; i++) {
@@ -660,24 +568,18 @@ $(document).on('ready', function() {
 	
 	$('#guardarEmpleado').on('click', function(e) {
 		e.preventDefault();
-		
 		if($('#codigoCargo').val().trim() != "") {
 			
 			var formData = {
-				
 					codigoEmpleado: $('#codigoEmpleado').val(),
 					documentoPersonaEmpleado: $('#documentoPersonaEmpleado').val(),
 					cargo: {
 						codigoCargo: $('#codigoCargo').val()
 					}
 			};
-			
 			if(formData.codigoEmpleado) {
 				codigoEmpleado = formData.codigoEmpleado;
-				
-				
-				$.ajax({
-					
+				$.ajax({	
 					type: 'PUT',
 					url: '/crm-app/api/v1/empleado/update',
 					headers: {
@@ -687,10 +589,7 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formData),
 					dataType: 'json',
 					success: function(response){
-						
-						
 						if(response.status == 'UPDATED') {
-							
 							swal({
 								type: "success",
 								title: "Empleado Actualizado con exito",
@@ -698,9 +597,8 @@ $(document).on('ready', function() {
 								confirmButtonText: "Cerrar",
 								closeOnConfirm: false
 							}).then((result) => {
-
 								if(result.value) {
-									$(location).attr('href', '/empleado/view');
+									$(location).attr('href', '/crm-app/empleado/view');
 								}
 							});
 						}
@@ -715,9 +613,7 @@ $(document).on('ready', function() {
 				});
 			}
 			else {
-				
 				$.ajax({
-					
 					type: 'POST',
 					url: '/crm-app/api/v1/empleado/save',
 					headers: {
@@ -727,11 +623,7 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formData),
 					dataType: 'json',
 					success: function(response) {
-						
-					
-						
 						if(response.status == 'CREATED') {
-							
 							swal({
 								type: "success",
 								title: "Empleado Registrado con exito",
@@ -739,14 +631,12 @@ $(document).on('ready', function() {
 								confirmButtonText: "Cerrar",
 								closeOnConfirm: false
 							}).then((result) => {
-
 								if(result.value) {
-									$(location).attr('href', '/empleado/view');
+									$(location).attr('href', '/crm-app/empleado/view');
 								}
 							});
 						}
 						else if(response.status == 'ERROR') {
-							
 							swal({
 				                type: 'error',
 				                title: 'Ooops',
@@ -756,7 +646,6 @@ $(document).on('ready', function() {
 						}
 					},
 					error: function() {
-						
 						swal({
 			                type: 'error',
 			                title: 'Ooops',
@@ -766,15 +655,12 @@ $(document).on('ready', function() {
 				});
 			}
 		}
-		
-		if($('#codigoCargo').val().trim() == "") {
-			
+		if($('#codigoCargo').val().trim() == "") {	
 			swal({
                 type: 'error',
                 title: 'Ooops',
                 text: 'Debe seleccionar un Cargo'
             });
-			
 	    	return false;
 		}
 	});
@@ -818,22 +704,17 @@ $(document).on('ready', function() {
 			{"data": "cargoempleado"},
 			{ "defaultContent": '<span class="label label-success valueestado">Planta</span>'},
 			{ "defaultContent": '<div class="btn-group"><button type="button" class="btn btn-success btnplantainterna btn-sm" codigoempleado ><i class="fa fa-times" title="Planta Interna"></i></button><button type="button" class="btn btn-warning btn-sm btnplantaexterna" codigoempleado documentopersonaempleado style="display:none;"><i class="fa fa-times" title="Planta Externa"></i></button><button type="button" class="btn btn-success btn-sm btnsinplanta" codigoempleado documentopersonaempleado style="display:none;"><i class="fa fa-check" title="Sin Planta - Interna"></i></button><button type="button" class="btn btn-warning btn-sm btnsinplantas" codigoempleado documentopersonaempleado style="display:none;"><i class="fa fa-check" title="Sin Planta - Externa"></i></button></div>' }
-			
 		]
 	}).DataTable();
 	
-	$('#tablaEmpleadosPlanta tbody').on('click', 'button', function(){
-		
+	$('#tablaEmpleadosPlanta tbody').on('click', 'button', function(){		
 		var data = tablaEmpleadosPlanta.row( $(this).parents('tr')).data();
 		$(this).attr('codigoempleado', data.codigoempleado);
 		$(this).attr('documentopersonaempleado', data.documentopersonaempleado);
-		
 	});
 	
 	$('#tablaEmpleadosPlanta tbody').on('click', 'button.btnplantainterna', function(){
 		var codigoplantainterna = $(this).attr('documentopersonaempleado');
-		
-		
 		swal({
 	        title: '¿Esta Seguro de quitar al Empleado de la Planta Interna?',
 	        text: '¡Si no lo esta puede Cancelar la accion!',
@@ -845,13 +726,10 @@ $(document).on('ready', function() {
 	        confirmButtonText: '¡Si, quitar de Planta Interna !'
 	    }).then((result) => {
 	    	if(result.value){
-
 	        	 $.ajax({
 	                 url: '/crm-app/api/v1/empleado/plantaempleado/' + codigoplantainterna,
 	                 type: 'GET',
 	                 success: function(response){
-	                	 
-	                	
 	                     swal({
 	                         type: "success",
 	                         title: "El Empleado: " + codigoplantainterna+ " ha sido quitado de la Planta Interna correctamente",
@@ -860,7 +738,7 @@ $(document).on('ready', function() {
 	                         closeOnConfirm: false
 	                     }).then((result) => {
 	                         if(result.value) {
-	                             $(location).attr("href", "/empleado/view");
+	                             $(location).attr("href", "/crm-app/empleado/view");
 	                         }
 	                     })
 	                 }
@@ -878,8 +756,6 @@ $(document).on('ready', function() {
 	
 	$('#tablaEmpleadosPlanta tbody').on('click', 'button.btnplantaexterna', function(){
 		var codigoplantaexterna = $(this).attr('documentopersonaempleado');
-	
-		
 		swal({
 	        title: '¿Esta Seguro de quitar al Empleado de la Planta Externa?',
 	        text: '¡Si no lo esta puede Cancelar la accion!',
@@ -891,13 +767,10 @@ $(document).on('ready', function() {
 	        confirmButtonText: '¡Si, quitar de Planta Externa !'
 	    }).then((result) => {
 	    	if(result.value){
-
 	        	 $.ajax({
 	                 url: '/crm-app/api/v1/empleado/plantaempleado/' + codigoplantaexterna,
 	                 type: 'GET',
 	                 success: function(response){
-	                	 
-	                
 	                     swal({
 	                         type: "success",
 	                         title: "El Empleado: " + codigoplantaexterna+ " ha sido quitado de la Planta Externa correctamente",
@@ -906,7 +779,7 @@ $(document).on('ready', function() {
 	                         closeOnConfirm: false
 	                     }).then((result) => {
 	                         if(result.value) {
-	                             $(location).attr("href", "/empleado/view");
+	                             $(location).attr("href", "/crm-app/empleado/view");
 	                         }
 	                     })
 	                 }
@@ -926,7 +799,6 @@ $(document).on('ready', function() {
 		var codigodocumento = $(this).attr('documentopersonaempleado');
 		var tipoplantainterno = codigodocumento + 'NI';
 		var valueestado = $('.valueestado');
-		
 				swal({
 			        title: '¿Esta Seguro de agregar al Empleado a la Planta Interna?',
 			        text: '¡Si no lo esta puede Cancelar la accion!',
@@ -938,12 +810,10 @@ $(document).on('ready', function() {
 			        confirmButtonText: '¡Si, agregar a la Planta Interna !'
 			    }).then((result) => {
 			    	if(result.value){
-
 			        	 $.ajax({
 			                 url: '/crm-app/api/v1/empleado/plantaempleado/' + tipoplantainterno,
 			                 type: 'GET',
 			                 success: function(response){
-			                	 
 			                     swal({
 			                         type: "success",
 			                         title: "El Empleado: " + tipoplantainterno + " ha sido guardado a la Planta Interna correctamente",
@@ -952,7 +822,7 @@ $(document).on('ready', function() {
 			                         closeOnConfirm: false
 			                     }).then((result) => {
 			                         if(result.value) {
-			                             $(location).attr("href", "/empleado/view");
+			                             $(location).attr("href", "/crm-app/empleado/view");
 			                         }
 			                     })
 			                 }
@@ -972,7 +842,6 @@ $(document).on('ready', function() {
 		var codigodocumento = $(this).attr('documentopersonaempleado');
 		var tipoplantaexterno = codigodocumento + 'NE';
 		var valueestado = $('.valueestado');
-						
 				swal({
 			        title: '¿Esta Seguro de agregar al Empleado a la Planta Externa?',
 			        text: '¡Si no lo esta puede Cancelar la accion!',
@@ -984,12 +853,10 @@ $(document).on('ready', function() {
 			        confirmButtonText: '¡Si, agregar a la Planta Externa !'
 			    }).then((result) => {
 			    	if(result.value){
-
 			        	 $.ajax({
 			                 url: '/crm-app/api/v1/empleado/plantaempleado/' + tipoplantaexterno,
 			                 type: 'GET',
 			                 success: function(response){
-			                	 
 			                     swal({
 			                         type: "success",
 			                         title: "El Empleado: " + tipoplantaexterno + " ha sido guardado a la Planta Externa correctamente",
@@ -998,7 +865,7 @@ $(document).on('ready', function() {
 			                         closeOnConfirm: false
 			                     }).then((result) => {
 			                         if(result.value) {
-			                             $(location).attr("href", "/empleado/view");
+			                             $(location).attr("href", "/crm-app/empleado/view");
 			                         }
 			                     })
 			                 }
@@ -1049,7 +916,6 @@ $(document).on('ready', function() {
 			}
 		}
 	}
-	
 	/**
 	 * 
 	 * 
@@ -1093,23 +959,17 @@ $(document).on('ready', function() {
 			{"defaultContent": '<span class="label label-success estadoEmpleado">Activo</span>'},
 			{"defaultContent": '<div class="btn-group"><button type="button" data-toggle="modal" class="btn btn-info btn-sm btnVerEmpleado" idDocumentoEmpleado><i class="fa fa-eye" title="Ver"></i></button><button type="button" class="btn btn-primary btn-sm btnEditarEmpleado" idDocumentoEmpleado><i class="fa fa-pencil" title="Editar"></i></button><button type="button" class="btn btn-danger btnDeshabilitarEmpleado btn-sm" idDocumentoEmpleado><i class="fa fa-times" title="Deshabilitar"></i></button><button type="button" class="btn btn-success btn-sm btnHabilitarEmpleado" idDocumentoEmpleado style="display:none;"><i class="fa fa-check" title="Habilitar"></i></button></div>'}
 		]
-		
 	}).DataTable();
-	
 	/**
 	 * 
 	 * Asignar valor a los botones
 	 * 
 	 * */
-	
 	$('#tablaEmpleados tbody').on('click', 'button', function(){
-		
 		var data = tablaEmpleados.row( $(this).parents('tr')).data();
 		$(this).attr('idDocumentoEmpleado', data.documentoPersonaEmpleado);
 		
 	});
-	
-	
 	/**
 	 * 
 	 *funcion para cargar el estado del empleado
@@ -1129,14 +989,12 @@ $(document).on('ready', function() {
 			}
 		}
 	}
-	
 	/**
 	 * 
 	 *Funcion para ocultar botones segun el estado del empleado
 	 * 
 	 */
 	function ocultarBotones() {
-		
 		var btnVerEmpleado = $('.btnVerEmpleado');
 		for(var i = 0; i < btnVerEmpleado.length; i++) {
 			var data = tablaEmpleados.row( $(btnVerEmpleado[i]).parents('tr')).data();
@@ -1147,7 +1005,6 @@ $(document).on('ready', function() {
 				$(btnVerEmpleado[i]).attr('style', 'display:none');
 			}
 		}
-		
 		var btnEditarEmpleado = $('.btnEditarEmpleado');
 		for(var i = 0; i < btnEditarEmpleado.length; i++) {
 			var data = tablaEmpleados.row( $(btnEditarEmpleado[i]).parents('tr')).data();
@@ -1158,7 +1015,6 @@ $(document).on('ready', function() {
 				$(btnEditarEmpleado[i]).attr('style', 'display:none');
 			}
 		}
-		
 		var btnDeshabilitarEmpleado = $('.btnDeshabilitarEmpleado');
 		for(var i = 0; i < btnDeshabilitarEmpleado.length; i++) {
 			var data = tablaEmpleados.row( $(btnDeshabilitarEmpleado[i]).parents('tr')).data();
@@ -1169,7 +1025,6 @@ $(document).on('ready', function() {
 				$(btnDeshabilitarEmpleado[i]).attr('style', 'display:none');
 			}
 		}
-		
 		var btnHabilitarEmpleado = $('.btnHabilitarEmpleado');
 		for(var i = 0; i < btnHabilitarEmpleado.length; i++) {
 			var data = tablaEmpleados.row( $(btnHabilitarEmpleado[i]).parents('tr')).data();
@@ -1181,7 +1036,6 @@ $(document).on('ready', function() {
 			}
 		}
 	}
-	
 	/**
 	 * 
 	 * Funcion limpiarModal
@@ -1197,7 +1051,6 @@ $(document).on('ready', function() {
 		$('#detalleCodigoEmpleado').val('');
 		$('#detalleCargoEmpleado').val('');
 	}
-	
 	/**
 	 * 
 	 * Verr detalle Empleado
@@ -1207,14 +1060,11 @@ $(document).on('ready', function() {
 		var documentoPersonaEmpleado = $(this).attr('idDocumentoEmpleado');
 		$('#modalDetalleEmpleado').modal('show');
 		limpiarModalEmpleado();
-		
 		$.ajax({
-			
 			type: 'GET',
 			url: '/crm-app/api/v1/persona/persona/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
-				
 				$('#myModalLabelEmpleado').html('Empleado: ' + response.nombrePersona + ' ' + response.apellidoPaternoPersona + ' ' + response.apellidoMaternoPersona);
 				$('#detalleEmpleadoDocumento').val(response.documentoPersona);
 				$('#detalleEmpleadoNombre').val(response.nombrePersona + ' ' + response.apellidoPaternoPersona + ' ' + response.apellidoMaternoPersona);
@@ -1222,20 +1072,16 @@ $(document).on('ready', function() {
 				$('#detalleEmpleadoTelefonoUno').val(response.telefonoUnoPersona);
 			}
 		});
-		
 		$.ajax({
-			
 			type: 'GET',
 			url: '/crm-app/api/v1/empleado/empleado/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
-				
 				$('#detalleCodigoEmpleado').val(response.codigoEmpleado);
 				$('#detalleCargoEmpleado').val(response.cargo.descripcionCargo);
 			}
 		});
 	});
-	
 	/**
 	 * 
 	 *Editar Empleado
@@ -1244,7 +1090,6 @@ $(document).on('ready', function() {
 	$('#tablaEmpleados tbody').on('click', 'button.btnEditarEmpleado', function() {
 		
 		var documentoPersonaEmpleado = $(this).attr('idDocumentoEmpleado');
-		
 		mostrarForm(true);
 		$('#documentoPersonaEmpleado').attr('disabled', true);
 		$('#documentoPersonaEmpleado').val(documentoPersonaEmpleado);
@@ -1252,39 +1097,32 @@ $(document).on('ready', function() {
 		$('#empleadoApellidosPersona').attr('disabled', true);
 		
 		$.ajax({
-			
 			type: 'GET',
 			url: '/crm-app/api/v1/persona/persona/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
-				
 				$('#empleadoNombrePersona').val(response.nombrePersona);
 				$('#empleadoApellidosPersona').val(response.apellidoPaternoPersona + ' ' + response.apellidoMaternoPersona);
 			}
 		});
 		
 		$.ajax({
-			
 			type: 'GET',
 			url: '/crm-app/api/v1/empleado/empleado/' + documentoPersonaEmpleado,
 			dataType: 'json',
 			success: function(response){
-				
 				$('#codigoEmpleado').val(response.codigoEmpleado);
 				$("#codigoCargo option[value="+ response.cargo.codigoCargo +"]").attr("selected",true);
 			}
 		});
 	});
-	
 	/**
 	 * 
 	 *Evento para deshabilitar Empleado
 	 * 
 	 */
 	 $('#tablaEmpleados tbody').on('click', 'button.btnDeshabilitarEmpleado', function(){
-		
 		var documentoPersonaEmpleado = $(this).attr('idDocumentoEmpleado');
-
 		swal({
 	        title: '¿Esta Seguro de deshabilitar a este Empleado ?',
 	        text: '¡Si no lo esta puede Cancelar la accion!',
@@ -1296,12 +1134,10 @@ $(document).on('ready', function() {
 	        confirmButtonText: '¡Si!'
 	    }).then((result) => {
 	        if(result.value){
-	           
 	        	 $.ajax({
 	                 url: '/crm-app/api/v1/empleado/empleado/disabled/' + documentoPersonaEmpleado,
 	                 type: 'GET',
 	                 success: function(response){
-	                	 
 	                     swal({
 	                         type: "success",
 	                         title: "El Empleado ha sido deshabilitado correctamente",
@@ -1310,7 +1146,7 @@ $(document).on('ready', function() {
 	                         closeOnConfirm: false
 	                     }).then((result) => {
 	                         if(result.value) {
-	                             $(location).attr("href", "/empleado/view");
+	                             $(location).attr("href", "/crm-app/empleado/view");
 	                         }
 	                     })
 	                 }
@@ -1325,7 +1161,6 @@ $(document).on('ready', function() {
 	        }
 	    });
 	 });
-	 
 	 /**
 	  * 
 	  * Evento para habilitar el empleado 
@@ -1333,8 +1168,6 @@ $(document).on('ready', function() {
 	  */
 	 $('#tablaEmpleados tbody').on('click', 'button.btnHabilitarEmpleado', function() {
 		 var documentoPersonaEmpleado = $(this).attr('idDocumentoEmpleado');
-
-
 		 swal({
 		        title: '¿Esta Seguro de habilitar a este Empleado ?',
 		        text: '¡Si no lo esta puede Cancelar la accion!',
@@ -1346,13 +1179,10 @@ $(document).on('ready', function() {
 		        confirmButtonText: '¡Si!'
 		    }).then((result) => {
 		        if(result.value){
-		           
 		        	$.ajax({
-		        		
 		        		url: '/crm-app/api/v1/empleado/empleado/enabled/' + documentoPersonaEmpleado,
 		        		type: 'GET',
 		        		success: function(response){
-		        			
 		        			swal({
 		        				type: "success",
 		                        title: "El Empleado ha sido habilitado correctamente",
@@ -1361,7 +1191,7 @@ $(document).on('ready', function() {
 		                        closeOnConfirm: false
 		                       }).then((result) => {
 		                         if(result.value) {
-		                            $(location).attr("href", "/empleado/view");
+		                            $(location).attr("href", "/crm-app/empleado/view");
 		                        }
 		                     })
 		                 }
@@ -1380,7 +1210,6 @@ $(document).on('ready', function() {
 	function cargarmensajespopusnuevo(valor,id){
 			
 			var title = "Tareas Pendientes!!!";
-			
 			var position = "Bottom right";
 			var duration = "1000";
 			var theme = "warning";
@@ -1389,13 +1218,11 @@ $(document).on('ready', function() {
 			
 			if(valor !== 0)
 			{
-				
 				for(var i = 0;id > i;i++)
 				{			
 					if(id > i){
 						$.ajax(
 								{
-									
 									type: 'GET',
 									url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 									dataType: 'json',
@@ -1414,7 +1241,6 @@ $(document).on('ready', function() {
 									title: title,
 									message: message
 								});
-								
 							}
 						});
 					}
@@ -1425,7 +1251,6 @@ $(document).on('ready', function() {
 		function cargarmensajespopus(id){
 			
 			var title = "Tareas Pendientes!!!";
-			
 			var position = "Bottom right";
 			var duration = "1000";
 			var theme = "warning";
@@ -1436,13 +1261,11 @@ $(document).on('ready', function() {
 			{
 				
 			}else{
-				
 				for(var i=1;i <= id;i++)
 				{			
 					if(i <= id){
 						$.ajax(
 								{
-							
 									type: 'GET',
 									url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 									dataType: 'json',
@@ -1465,19 +1288,16 @@ $(document).on('ready', function() {
 						});
 					}
 				}
-				
 			}
 		}
 		
 		function estado(id){
 		
 			if(id !== 0){
-				
 				for(var i=1;i<=id;i++){
 				if(i <= id){
 					
 					$.ajax({
-						
 						type: 'GET',
 						url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 						dataType: 'json',
@@ -1503,15 +1323,12 @@ $(document).on('ready', function() {
 		
 		function estadonuevo(valor){
 			
-			
 			if(valor !== 0){
-				
 				document.getElementById("agregarmensajesnoti").innerHTML="";
 				for(var i=0;i<valor;i++){
 				if(i < valor && (parseInt(valor) - parseInt(i)) >-1){
 					
 					$.ajax({
-						
 						type: 'GET',
 						url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 						dataType: 'json',
@@ -1548,21 +1365,17 @@ $(document).on('ready', function() {
 			var verificando = valuee - dinamico;
 			
 			if(estatico === valuee && valuee === dinamico){
-			
 				estado(valuee);
 				cargarmensajespopus(valuee);
 				$('#canje').val("0");
 			}
 			if(verificando === 0){
-			
 				estado(verificando);
 				cargarmensajespopus(verificando);
 				$('#canje').val("0");
 			}
 			if(verificando !== 0){
-			
 				estadonuevo(parseInt(valuee));
-				
 				cargarmensajespopusnuevo(parseInt(dinamico) + 1,parseInt(verificando));
 			
 				$('#canje').val("0");
@@ -1577,7 +1390,6 @@ $(document).on('ready', function() {
 			};
 			
 			$.ajax({
-				
 				type: 'POST',
 				url: '/crm-app/api/v1/atencion/obtenercantidad',
 				headers: {
@@ -1587,7 +1399,6 @@ $(document).on('ready', function() {
 				data: JSON.stringify(formData),
 				dataType: 'json',
 				success: function(response) {
-					
 					$('#total').html(response.message);
 					$('#totalidad').html(response.message);
 					$('#canjess').val(response.message);
@@ -1602,7 +1413,6 @@ $(document).on('ready', function() {
 			};
 			
 			$.ajax({
-				
 				type: 'POST',
 				url: '/crm-app/api/v1/atencion/obtenercantidad',
 				headers: {

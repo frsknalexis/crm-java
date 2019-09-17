@@ -1,17 +1,11 @@
 $(document).on('ready', function() {
 		
 	var tablaActivacionesDiaInternet;
-	
 	listarInstalacionDiaInternet();
-	
 	ocultar_mostrar(50);
-	
 	registraractivacion();
-	
 	generarReporteActivacionesInstalacion();
-	
 	mostrarFormReporteActivacionesPorRangoFecha();
-	
 	mostrarFormReporteActivacionesPorDia();
 	
 	window.setInterval(
@@ -24,16 +18,14 @@ $(document).on('ready', function() {
 		  }
 		  // Intervalo de tiempo
 		,5000);
-	
 	/**
 	 * 
 	 *function para redireccionar a la vista de cortes
 	 * 
 	 */
 	function ocultar_mostrar(id){
-		
 		if(id !== 0){
-			for( var i = 1;i < id ; i++ ){
+			for(var i = 1;i < id ; i++){
 			if(i < id){
 				$.ajax({
 					type: 'GET',
@@ -48,26 +40,20 @@ $(document).on('ready', function() {
 		}
 	}
 }
-	
 	/**
 	 * 
 	 * 
 	 * function para agregar activacion
 	 * 
 	 */
-	
 	function registraractivacion() {
-		
 		$('#agregarActivacion').on('click', function(e) {
-			
 			e.preventDefault();
-			
 				var formDataIC = {
 						codigo: $('#valorcodigocuenta').val()
 				};
 				console.log(formDataIC);
 				$.ajax({
-					
 					type: 'POST',
 					url: '/crm-app/api/v1/instalacion/insrtact',
 					headers: {
@@ -77,9 +63,7 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formDataIC),
 					dataType: 'json',
 					success: function(response) {
-						
-							if(response.message == "HECHO") {
-							
+						if(response.message == "HECHO") {
 							swal({
 								type: "success",
 								title: "Se Activo con exito la cuenta",
@@ -87,22 +71,20 @@ $(document).on('ready', function() {
 								confirmButtonText: "Cerrar",
 								closeOnConfirm: false
 							}).then((result) => {
-
 								if(result.value) {
-									$(location).attr('href', '/instalacion/activaciones/view');
+									$(location).attr('href', '/crm-app/instalacion/activaciones/view');
 								}
 							});
-						}else if(response.message == "ERROR") {
-								
-								swal({
-					                type: 'error',
-					                title: 'Ooops',
-					                text: 'Upss Hubo un error !'
-					            });
-							}
+						}
+						else if(response.message == "ERROR") {
+							swal({
+								type: 'error',
+					            title: 'Ooops',
+					            text: 'Upss Hubo un error !'
+					           });
+						}
 					},
 					error: function() {
-						console.log(formDataIC);
 						swal({
 			                type: 'error',
 			                title: 'Ooops',
@@ -118,10 +100,8 @@ $(document).on('ready', function() {
 	 * fnctin para datos onu por servicio
 	 * 
 	 */
-	
 	function recuperardatosonusxserv(id){
 		$.ajax({
-			
 			type: 'GET',
 			url: '/crm-app/api/v1/onu/recuperdardatos/' + id,
 			dataType: 'json',
@@ -155,7 +135,6 @@ $(document).on('ready', function() {
 	 * 
 	 */
 	function listarInstalacionDiaInternet() {
-		
 		tablaActivacionesDiaInternet = $('#tablaActivacionesDiaInternet').dataTable({
 			"language": {
 				"sProcessing":     "Procesando...",
@@ -206,37 +185,30 @@ $(document).on('ready', function() {
 		});
 		
 		$('#tablaActivacionesDiaInternet tbody').on('click', 'button.btnProAct', function() {
-			
 			var codigogenerado = $(this).attr('codigo');
 			recuperardatosonusxserv(codigogenerado);
 			$('#modalFormActivacion').modal('show');
-			console.log('codigogenerado: ' + codigogenerado);
 		});
 	}
 	
 	function generarReporteActivacionesInstalacion() {
-		
 		$('#btnReporteActivaciones').on('click', function() {
 			$(this).attr('href', '/crm-app/api/v1/instalacion/reporteActivaciones');
 			var url = $(this).attr('href');
 			window.open(url, '_blank');
 		    return false;
-			console.log(url);
 		});
 	}
 	
 	function mostrarFormReporteActivacionesPorRangoFecha() {
-		
 		$('#btnReporteActivacionesPorRango').on('click', function() {
 			$('#modalActivacionesPorRangoFecha').modal('show');
 		});
-		
 		buscarActivacionesPorRango();
 		cancelarAccionBuscarActivacionesPorRangoFecha();
 	}
 	
 	function cancelarAccionBuscarActivacionesPorRangoFecha() {
-		
 		$('#cancelarAccionBuscarActivacionesPorRango').on('click', function() {
 			$('#fechaInicialBusqueda').val(''); 
 			$('#fechaFinBusqueda').val('');
@@ -244,10 +216,8 @@ $(document).on('ready', function() {
 	}
 	
 	function buscarActivacionesPorRango() {
-		
 		$('#buscarActivacionesPorRango').on('click', function(e) {
 			e.preventDefault();
-			
 			if($('#fechaInicialBusqueda').val() != "" && $('#fechaFinBusqueda').val() != "") {
 				
 				var formDataBusquedaActivacionesPorRango =  {
@@ -257,7 +227,6 @@ $(document).on('ready', function() {
 				console.log(formDataBusquedaActivacionesPorRango);
 				
 				$.ajax({
-					
 					type: 'POST',
 					url: '/crm-app/api/v1/instalacion/activacionesPorRango',
 					headers: {
@@ -347,7 +316,6 @@ $(document).on('ready', function() {
 		
 		$('#buscarActivacionesPorDia').on('click', function(e) {
 			e.preventDefault();
-			
 			if($('#fechaBusqueda').val() == "") {
 				swal({
 	                type: 'error',
@@ -372,7 +340,6 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formDataBusquedaActivacionesPorDia),
 					dataType: 'json',
 					success: function(response) {
-						
 						if(response == null) {
 							swal({
 				                type: 'warning',
@@ -411,9 +378,7 @@ $(document).on('ready', function() {
 	}
 	
 	function cargarmensajespopusnuevo(valor,id){
-		
 		var title = "Tareas Pendientes!!!";
-		
 		var position = "Bottom right";
 		var duration = "1000";
 		var theme = "warning";
@@ -457,7 +422,6 @@ $(document).on('ready', function() {
 	function cargarmensajespopus(id){
 				
 		var title = "Tareas Pendientes!!!";
-		
 		var position = "Bottom right";
 		var duration = "1000";
 		var theme = "warning";
@@ -508,12 +472,10 @@ $(document).on('ready', function() {
 			if(i <= id){
 				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
 					success: function(response) {
-						
 						
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
@@ -542,13 +504,11 @@ $(document).on('ready', function() {
 			if(i < valor && (parseInt(valor) - parseInt(i)) >-1){
 				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
 					success: function(response) {
-						
-						
+					
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
 						
@@ -580,23 +540,18 @@ $(document).on('ready', function() {
 		var verificando = valuee - dinamico;
 		
 		if(estatico === valuee && valuee === dinamico){
-		
 			estado(valuee);
 			cargarmensajespopus(valuee);
 			$('#canje').val("0");
 		}
 		if(verificando === 0){
-		
 			estado(verificando);
 			cargarmensajespopus(verificando);
 			$('#canje').val("0");
 		}
 		if(verificando !== 0){
-		
 			estadonuevo(parseInt(valuee));
-			
 			cargarmensajespopusnuevo(parseInt(dinamico) + 1,parseInt(verificando));
-		
 			$('#canje').val("0");
 			$('#canjes').val(valuee);
 		}
@@ -609,7 +564,6 @@ $(document).on('ready', function() {
 		};
 		
 		$.ajax({
-			
 			type: 'POST',
 			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
@@ -619,7 +573,6 @@ $(document).on('ready', function() {
 			data: JSON.stringify(formData),
 			dataType: 'json',
 			success: function(response) {
-				
 				$('#total').html(response.message);
 				$('#totalidad').html(response.message);
 				$('#canjess').val(response.message);
@@ -643,7 +596,6 @@ $(document).on('ready', function() {
 			data: JSON.stringify(formData),
 			dataType: 'json',
 			success: function(response) {
-				
 				$('#total').html(response.message);
 				$('#totalidad').html(response.message);
 				$('#canje').val(response.message);

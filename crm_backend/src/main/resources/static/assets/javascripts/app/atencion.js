@@ -1,17 +1,11 @@
 $(document).on('ready', function() {
 	
 	var tablaClientesAtencion;
-	
 	var tablaHerramientasCliente;
-	
-	var valorvalue ;
-	
+	var valorvalue;
 	redireccionViewHerramientas();
-	
 	listarTablaClientesAtencion();
-	
 	cargarTotalRegistrosPersonita();
-	
 	ocultar_mostrar(50);
 	
 	window.setInterval(
@@ -26,7 +20,6 @@ $(document).on('ready', function() {
 		,5000);
 	
 	validarFormReclamo();
-	
 	guardarreclamo();
 	
 	setTimeout(function() {
@@ -34,9 +27,7 @@ $(document).on('ready', function() {
 	}, 100);
 	
 	mostrarDetalleCliente();
-	
 	cancelarAccion();
-	
 	redireccionViewHerramientas();
 	/**
 	 * 
@@ -45,18 +36,13 @@ $(document).on('ready', function() {
 	function ocultar_mostrar(id){
 		
 		if(id !== 0){
-			
-			
 			for( var i = 1;i < id ; i++ ){
 			if(i < id){
-				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 					dataType: 'json',
 					success: function(response) {
-							
 							var descrip = response.descripcionmodulo;
 							document.getElementById(descrip).style.display = 'block';
 						}
@@ -64,13 +50,11 @@ $(document).on('ready', function() {
 				}
 			}
 		}
-	
 	}
 	
 	function listarTablaClientesAtencion(){
 		
-		tablaClientesAtencion = $('#tablaClientesAtencion').dataTable({
-			
+		tablaClientesAtencion = $('#tablaClientesAtencion').dataTable({	
 			"language": {
 				"sProcessing":     "Procesando...",
 				"sLengthMenu":     "Mostrar _MENU_ registros",
@@ -132,7 +116,6 @@ $(document).on('ready', function() {
 			$('#cliente').val(nombreclientegeneral);
 			
 		});
-
 	}
 	
 	/**
@@ -143,7 +126,6 @@ $(document).on('ready', function() {
 	function cargarmensajespopusnuevo(valor,id){
 		
 		var title = "Tareas Pendientes!!!";
-		
 		var position = "Bottom right";
 		var duration = "1000";
 		var theme = "warning";
@@ -152,13 +134,11 @@ $(document).on('ready', function() {
 			
 		if(valor !== 0)
 		{
-			
 			for(var i = 0;id > i;i++)
 			{			
 				if(id > i){
 					$.ajax(
-							{
-								
+							{						
 								type: 'GET',
 								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
@@ -187,7 +167,6 @@ $(document).on('ready', function() {
 	function cargarmensajespopus(id){
 		
 		var title = "Tareas Pendientes!!!";
-		
 		var position = "Bottom right";
 		var duration = "1000";
 		var theme = "warning";
@@ -198,13 +177,11 @@ $(document).on('ready', function() {
 		{
 			
 		}else{
-			
 			for(var i=1;i <= id;i++)
 			{			
 				if(i <= id){
 					$.ajax(
-							{
-						
+							{		
 								type: 'GET',
 								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
@@ -233,17 +210,13 @@ $(document).on('ready', function() {
 	function estado(id){
 		
 		if(id !== 0){
-				
 			for(var i=1;i<=id;i++){
 			if(i <= id){
-				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
 					success: function(response) {
-						
 						
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
@@ -265,20 +238,16 @@ $(document).on('ready', function() {
 	
 	function estadonuevo(valor){
 		
-		
 		if(valor !== 0){
-			
 			document.getElementById("agregarmensajesnoti").innerHTML="";
 			for(var i=0;i<valor;i++){
 			if(i < valor && (parseInt(valor) - parseInt(i)) >-1){
-				
-				$.ajax({
-					
+		
+				$.ajax({	
 					type: 'GET',
 					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
 					success: function(response) {
-						
 						
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
@@ -311,21 +280,17 @@ $(document).on('ready', function() {
 		var verificando = valuee - dinamico;
 		
 		if(estatico === valuee && valuee === dinamico){
-			
 			estado(valuee);
 			cargarmensajespopus(valuee);
 			$('#canje').val("0");
 		}
 		if(verificando === 0){
-			
 			estado(verificando);
 			cargarmensajespopus(verificando);
 			$('#canje').val("0");
 		}
 		if(verificando !== 0){
-			
 			estadonuevo(parseInt(valuee));
-			
 			cargarmensajespopusnuevo(parseInt(dinamico) + 1,parseInt(verificando));
 		
 			$('#canje').val("0");
@@ -340,7 +305,6 @@ $(document).on('ready', function() {
 		};
 		
 		$.ajax({
-			
 			type: 'POST',
 			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
@@ -360,13 +324,11 @@ $(document).on('ready', function() {
 	
 	function cargarTotalRegistrosPersonita() {
 		
-		
 		var formData = {
 				
 		};
 		
-		$.ajax({
-			
+		$.ajax({	
 			type: 'POST',
 			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
@@ -400,15 +362,13 @@ $(document).on('ready', function() {
 			}
 		}
 	}
-	
 	/**
 	 * 
 	 *function para mostrarFormDatosGeneralesCliente 
 	 */
 	function mostrarFormDatosGeneralesCliente(flag){
 		
-		limpiarInputsDetalleCliente();
-		
+		limpiarInputsDetalleCliente();	
 		if(flag) {
 			$('#mostrarDatosGeneralesCliente').show();
 			$('#mostrarListadoClientesAtencion').hide();
@@ -418,7 +378,6 @@ $(document).on('ready', function() {
 			$('#mostrarListadoClientesAtencion').show();
 		}
 	}
-	
 	/**
 	 * 
 	 *funcion para cancelarAcciones 
@@ -433,15 +392,12 @@ $(document).on('ready', function() {
 	 * 
 	 *funcion para mostrar el Detalle del Cliente 
 	 */
-	function mostrarDetalleCliente() {
-		
+	function mostrarDetalleCliente() {	
 		$('#tablaClientesAtencion tbody').on('click', 'button.btnDetalleClienteAtencion', function() {
 			var documentoPersonaCliente = $(this).attr('documentoClienteAtencion');
 		
 			mostrarFormDatosGeneralesCliente(true);
-			
 			$.ajax({
-				
 				type: 'GET',
 				url: '/crm-app/api/v1/atencion/clienteDatosAtencion/' + documentoPersonaCliente,
 				dataType: 'json',
@@ -459,7 +415,6 @@ $(document).on('ready', function() {
 			listarHerramientasCliente(documentoPersonaCliente);
 		});
 	}
-	
 	/**
 	 * 
 	 *function para limpiar inputs 
@@ -483,8 +438,7 @@ $(document).on('ready', function() {
 	 */
 	function listarHerramientasCliente(documentoPersonaCliente) {
 		
-		var flag = documentoPersonaCliente;
-		
+		var flag = documentoPersonaCliente;	
 		tablaHerramientasCliente = $('#tablaHerramientasCliente').dataTable({
 			"language": {
 				"sProcessing":     "Procesando...",
@@ -522,32 +476,26 @@ $(document).on('ready', function() {
 			]
 		}).DataTable();
 	}
-	
 	/**
 	 * 
 	 * 
 	 *function para redireccionar a la vista Herramientas
 	 * 
 	 */
-	function redireccionViewHerramientas() {
-		
+	function redireccionViewHerramientas() {	
 		$('#buttonHerramientas').on('click', function() {
-			$(location).attr('href', '/atencion/herramientas/view');
+			$(location).attr('href', '/crm-app/atencion/herramientas/view');
 		});
-		
 		$('#buttonReclamos').on('click', function() {
-			$(location).attr('href', '/atencion/reclamo/view');
+			$(location).attr('href', '/crm-app/atencion/reclamo/view');
 		});
 	}
 	
 	function validarFormReclamo() {
 		
 		$('#guardarreclamo').on('click', function(e) {
-			
 			e.preventDefault();
-			
 			if($('#desrecl').val() == "" || $('#desrecl').val() == 0) {
-				
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
@@ -568,7 +516,6 @@ $(document).on('ready', function() {
 			if($('#desrecl').val() != "" || $('#desrecl').val() != 0) {
 				
 				$.ajax({
-					
 					type: 'POST',
 					url: '/crm-app/api/v1/atencion/insrreclamo',
 					headers: {
@@ -578,9 +525,7 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formData),
 					dataType: 'json',
 					success: function(response) {
-						
 						console.log(response);
-						
 						swal({
 							type: "success",
 							title: "Se Registro el Reclamo con exito",
@@ -588,9 +533,8 @@ $(document).on('ready', function() {
 							confirmButtonText: "Cerrar",
 							closeOnConfirm: false
 						}).then((result) => {
-
 							if(result.value) {
-								$(location).attr('href', '/atencion/atencion/view');
+								$(location).attr('href', '/crm-app/atencion/atencion/view');
 							}
 						});
 					},

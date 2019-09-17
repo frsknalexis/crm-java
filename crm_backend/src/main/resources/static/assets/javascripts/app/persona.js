@@ -368,7 +368,7 @@ $(document).on('ready', function() {
 										}).then((result) => {
 
 											if(result.value) {
-												$(location).attr('href', '/persona/view');
+												$(location).attr('href', '/crm-app/persona/view');
 											}
 										});
 									}
@@ -438,7 +438,7 @@ $(document).on('ready', function() {
 							}).then((result) => {
 
 								if(result.value) {
-									$(location).attr('href', '/persona/view');
+									$(location).attr('href', '/crm-app/persona/view');
 								}
 							});
 						}
@@ -928,7 +928,7 @@ $(document).on('ready', function() {
 						}).then((result) => {
 
 							if(result.value) {
-								$(location).attr('href', '/persona/view');
+								$(location).attr('href', '/crm-app/persona/view');
 							}
 						});
 					},
@@ -969,7 +969,7 @@ $(document).on('ready', function() {
 							}).then((result) => {
 
 								if(result.value) {
-									$(location).attr('href', '/persona/view');
+									$(location).attr('href', '/crm-app/persona/view');
 								}
 							});
 						}
@@ -1316,7 +1316,7 @@ $(document).on('ready', function() {
 						}).then((result) => {
 
 							if(result.value) {
-								$(location).attr('href', '/persona/view');
+								$(location).attr('href', '/crm-app/persona/view');
 							}
 						});
 					},
@@ -1590,7 +1590,7 @@ $(document).on('ready', function() {
 							}).then((result) => {
 
 								if(result.value) {
-									$(location).attr('href', '/persona/view');
+									$(location).attr('href', '/crm-app/persona/view');
 								}
 							});
 						}
@@ -1815,7 +1815,7 @@ $(document).on('ready', function() {
 	                         closeOnConfirm: false
 	                     }).then((result) => {
 	                         if(result.value) {
-	                             $(location).attr("href", "/persona/view");
+	                             $(location).attr("href", "/crm-app/persona/view");
 	                         }
 	                     })
 	                 }
@@ -1867,7 +1867,7 @@ $(document).on('ready', function() {
 	                        closeOnConfirm: false
 	                       }).then((result) => {
 	                         if(result.value) {
-	                            $(location).attr("href", "/persona/view");
+	                            $(location).attr("href", "/crm-app/persona/view");
 	                        }
 	                     })
 	                 }

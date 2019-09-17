@@ -64,7 +64,7 @@ $(document).on('ready', function() {
 	function redireccionarViewPagos() {
 		
 		$('#buttonVolverRegistroPago').on('click', function() {
-			$(location).attr('href', '/pago/pagos');
+			$(location).attr('href', '/crm-app/pago/pagos');
 		});
 	}
 	
@@ -290,7 +290,7 @@ $(document).on('ready', function() {
 							}).then((result) => {
 
 								if(result.value) {
-									$(location).attr('href', '/pago/listaPagos');
+									$(location).attr('href', '/crm-app/pago/listaPagos');
 								}
 							});
 						}

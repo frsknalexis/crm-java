@@ -1,23 +1,14 @@
 $(document).on('ready', function() {
 	
 	var tablaCuentasInternet;
-
 	tablaListarCuentasInternet();
-	
 	anularCuenta();
-	
 	 mostrarFormBusquedaCuentasPorDia();
-	 
 	 mostrarFormBusquedaCuentasPorRango();
-	
 	cargarTotalRegistrosPersonita();
-	
 	redireccionarListadoEstadoCuentas();
-	
 	mostrarModalCuentasPorVendedor();
-	
 	cargarComboListarVendedores();
-	
 	ocultar_mostrar(50);
 	
 	window.setInterval(
@@ -34,33 +25,26 @@ $(document).on('ready', function() {
 	function ocultar_mostrar(id){
 		
 		if(id !== 0){
-			
 			for( var i = 1;i < id ; i++ ){
 			if(i < id){
-				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 					dataType: 'json',
 					success: function(response) {
 							console.log(response);
-							
 							var descrip = response.descripcionmodulo;
-							
 							document.getElementById(descrip).style.display = 'block';
 						}
 					});
 				}
 			}
 		}
-	
 }
 	
 	function tablaListarCuentasInternet() {
 		
-		tablaCuentasInternet = $('#tablaCuentasInternet').dataTable({
-			
+		tablaCuentasInternet = $('#tablaCuentasInternet').dataTable({	
 			"language": {
 				"sProcessing":     "Procesando...",
 				"sLengthMenu":     "Mostrar _MENU_ registros",
@@ -110,7 +94,6 @@ $(document).on('ready', function() {
 	function cargarmensajespopusnuevo(valor,id){
 		
 		var title = "Tareas Pendientes!!!";
-		
 		var position = "Bottom right";
 		var duration = "1000";
 		var theme = "warning";
@@ -119,18 +102,15 @@ $(document).on('ready', function() {
 		
 		if(valor !== 0)
 		{
-			
 			for(var i = 0;id > i;i++)
 			{			
 				if(id > i){
 					$.ajax(
-							{
-								
+							{				
 								type: 'GET',
 								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
 								success: function(response) {
-									
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
 							
@@ -154,7 +134,6 @@ $(document).on('ready', function() {
 	function cargarmensajespopus(id){
 		
 		var title = "Tareas Pendientes!!!";
-		
 		var position = "Bottom right";
 		var duration = "1000";
 		var theme = "warning";
@@ -165,13 +144,11 @@ $(document).on('ready', function() {
 		{
 			
 		}else{
-			
 			for(var i=1;i <= id;i++)
 			{			
 				if(i <= id){
 					$.ajax(
-							{
-						
+							{		
 								type: 'GET',
 								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
@@ -200,12 +177,9 @@ $(document).on('ready', function() {
 	function estado(id){
 		
 		if(id !== 0){
-				
 			for(var i=1;i<=id;i++){
 			if(i <= id){
-				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
@@ -232,13 +206,10 @@ $(document).on('ready', function() {
 	function estadonuevo(valor){
 		
 		if(valor !== 0){
-			
 			document.getElementById("agregarmensajesnoti").innerHTML="";
 			for(var i=0;i<valor;i++){
 			if(i < valor && (parseInt(valor) - parseInt(i)) >-1){
-				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
@@ -272,25 +243,20 @@ $(document).on('ready', function() {
 		dinamico = document.getElementsByName("canjes")[0].value;
 		valuee = document.getElementsByName("canjess")[0].value;
 		
-		
 		var verificando = valuee - dinamico;
 		
-		if(estatico === valuee && valuee === dinamico){
-			
+		if(estatico === valuee && valuee === dinamico){	
 			estado(valuee);
 			cargarmensajespopus(valuee);
 			$('#canje').val("0");
 		}
 		if(verificando === 0){
-			
 			estado(verificando);
 			cargarmensajespopus(verificando);
 			$('#canje').val("0");
 		}
 		if(verificando !== 0){
-			
 			estadonuevo(parseInt(valuee));
-			
 			cargarmensajespopusnuevo(parseInt(dinamico) + 1,parseInt(verificando));
 		
 			$('#canje').val("0");
@@ -300,13 +266,11 @@ $(document).on('ready', function() {
 	
 	function cargarTotalRegistrosPersona() {
 		
-		
 		var formData = {
 				
 		};
 		
-		$.ajax({
-			
+		$.ajax({	
 			type: 'POST',
 			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
@@ -331,7 +295,6 @@ $(document).on('ready', function() {
 		};
 		
 		$.ajax({
-			
 			type: 'POST',
 			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
@@ -350,47 +313,37 @@ $(document).on('ready', function() {
 			}
 		});	
 	}
-		
 	/**
 	 * 
 	 *function para mostrar el form busqueda de cuentas por dia 
 	 * 
 	 **/
 	function mostrarFormBusquedaCuentasPorDia() {
-		
-		$('#btnReporteCuentasPorFecha').on('click', function() {
-			
+		$('#btnReporteCuentasPorFecha').on('click', function() {		
 			limpiarInputBusquedaCuentaPorDia();
 			$('#modalCuentasPorDia').modal('show');
 			busquedaDeCuentasPorDia();
 		});
 	}
-	
 	/**
 	 * 
 	 * function para mostrar el form busqueda de cuentas por rango
 	 * */
 	function mostrarFormBusquedaCuentasPorRango() {
-		
 		$('#btnReporteCuentasPorRango').on('click', function() {
 			lmpiarInputsBusquedCuentasPorRango();
 			$('#modalCuentasPorRangoFecha').modal('show');
-		});
-		
+		});	
 		busquedaDeCuentasPorRango();
 	}
-	
 	/**
 	 * 
 	 * function busqueda de cuentasPorRango
 	 * 
 	 * */
-	function busquedaDeCuentasPorRango() {
-		
+	function busquedaDeCuentasPorRango() {	
 		$('#buscarCuentasPorRango').on('click', function(e) {
-			
 			e.preventDefault();
-			
 			if($('#fechaInicio').val() != "" && $('#fechaFin').val() != "") {
 				
 				var formDataCuentasPorRango = {
@@ -398,9 +351,7 @@ $(document).on('ready', function() {
 						fechaFin: $('#fechaFin').val()
 				};
 				console.log(formDataCuentasPorRango);
-				
 				$.ajax({
-					
 					type: 'POST',
 					url: '/crm-app/api/v1/detalleCuenta/reporteCuentasPorRango',
 					headers: {
@@ -410,7 +361,6 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formDataCuentasPorRango),
 					dataType: 'json',
 					success: function(response) {
-						
 						if(response == null) {
 							swal({
 				                type: 'warning',
@@ -443,9 +393,7 @@ $(document).on('ready', function() {
 					}
 				});
 			}
-			
 			if($('#fechaInicio').val() == "" && $('#fechaFin').val() == "") {
-				
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
@@ -453,7 +401,6 @@ $(document).on('ready', function() {
 	            });
 			}
 			else if($('#fechaInicio').val() == "") {
-				
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
@@ -461,7 +408,6 @@ $(document).on('ready', function() {
 	            });
 			}
 			else if($('#fechaFin').val() == "") {
-				
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
@@ -470,35 +416,28 @@ $(document).on('ready', function() {
 			}
 		});
 	}
-	
 	/**
 	 *
 	 *function para cancelar accion busqueda cuentas por rango
 	 * 
 	 */
-	function lmpiarInputsBusquedCuentasPorRango() {
-		
+	function lmpiarInputsBusquedCuentasPorRango() {	
 		$('input[type=date]').val('');
 	}
-	
 	/**
 	 * function para cancelar accion busqueda cuenta por dia
 	 * 
 	 * */
-	function limpiarInputBusquedaCuentaPorDia() {
-		
+	function limpiarInputBusquedaCuentaPorDia() {	
 		$('input[type=date]').val('');
 	}
-	
 	/**
 	 * 
 	 * function busqueda de cuentasPorDia
 	 * 
 	 * */
-	function busquedaDeCuentasPorDia() {
-		
+	function busquedaDeCuentasPorDia() {	
 		$('#buscarCuentasPorFecha').on('click', function(e) {
-			
 			e.preventDefault();
 			
 			if($('#fechaBusqueda').val() == "") {
@@ -514,7 +453,6 @@ $(document).on('ready', function() {
 						fechaBusqueda: $('#fechaBusqueda').val()	
 				};
 				console.log(formDataCuentasPorDia);
-				
 				$.ajax({
 					type: 'POST',
 					url: '/crm-app/api/v1/detalleCuenta/reporteCuentasPorDia',
@@ -525,15 +463,12 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formDataCuentasPorDia),
 					dataType: 'json',
 					success: function(response) {
-						
 						if(response == null) {
-							
 							swal({
 				                type: 'warning',
 				                title: 'Ooops',
 				                text: 'No se Encontraron Resultados de Busqueda !'
 				            });
-							
 						}
 						else if(response != null) {
 							printJS({
@@ -564,12 +499,10 @@ $(document).on('ready', function() {
 	}
 	
 	function anularCuenta() {
-		
 		$('#tablaCuentasInternet tbody').on('click', 'button.btnAnularCuenta', function() {
-			
+		
 			var codigoDetalleCuenta = $(this).attr('codigoDetalleCuenta');
-			console.log("codigoDetalleCuenta: " + codigoDetalleCuenta);
-			
+			console.log("codigoDetalleCuenta: " + codigoDetalleCuenta);		
 			swal({
 		        title: '¿Esta Seguro de Anular esta Cuenta ?',
 		        text: '¡Si no lo esta puede Cancelar la accion!',
@@ -581,14 +514,11 @@ $(document).on('ready', function() {
 		        confirmButtonText: '¡Si, Anular!'
 		    }).then((result) => {
 		        if(result.value){
-		           
 		        	$.ajax({
-		        		
 		        		url: '/crm-app/api/v1/detalleCuenta/anular/' + codigoDetalleCuenta,
 		        		type: 'GET',
 		        		dataType: 'json',
 		        		success: function(response){
-		        			
 		        			swal({
 		        				type: "success",
 		                        title: "Se Anulo la Cuenta con exito",
@@ -597,7 +527,7 @@ $(document).on('ready', function() {
 		                        closeOnConfirm: false
 		                       }).then((result) => {
 		                         if(result.value) {
-		                            $(location).attr("href", "/detalleCuenta/cuentas/view");
+		                            $(location).attr("href", "/crm-app/detalleCuenta/cuentas/view");
 		                        }
 		                     })
 		                 }
@@ -613,45 +543,36 @@ $(document).on('ready', function() {
 		    });
 		});
 	}
-	
 	/**
 	 * 
 	 * function para redireccionar listado estado cuentas
 	 * 
 	 * */
-	function redireccionarListadoEstadoCuentas() {
-		
+	function redireccionarListadoEstadoCuentas() {	
 		$('#btnListarEstadoCuentas').on('click', function() {
-			$(location).attr('href', '/detalleCuenta/estadoCuentas/view');
+			$(location).attr('href', '/crm-app/detalleCuenta/estadoCuentas/view');
 		});
 	}
-	
 	/**
 	 * 
 	 * function para mostrar el modal cuentas por vendedor
 	 * 
 	 * */
-	function mostrarModalCuentasPorVendedor() {
-		
+	function mostrarModalCuentasPorVendedor() {	
 		$('#btnReporteCuentasPorVendedor').on('click', function() {
 			$('#modalCuentasPorVendedor').modal('show');
 		});
-		
 		cancelarAccionBuscarCuentasPorVendedor();
 		buscarCuentasPorVendedor();
 	}
-	
 	/**
 	 * 
 	 * function para cargar el combo lista de vendedores
 	 * 
 	 * */
-	function cargarComboListarVendedores() {
-		
+	function cargarComboListarVendedores() {	
 		var $vendedorResponsable = $('#vendedorResponsable');
-		
 		$.ajax({
-			
 			type: 'GET',
 			url: '/crm-app/api/v1/vendedor/vendedores',
 			dataType: 'json',
@@ -665,28 +586,21 @@ $(document).on('ready', function() {
 			}
 		});
 	}
-	
-	
 	/**
 	 * 
 	 * function para buscar cuentasPorVendedor
 	 * 
 	 * */
-	function buscarCuentasPorVendedor() {
-		
+	function buscarCuentasPorVendedor() {	
 		$('#buscarCuentasPorVendedor').on('click', function(e) {
 			e.preventDefault();
-			
 			if($('#vendedorResponsable').val().trim() != "") {
 				
 				var formDataBuscarCuentasPorVendedor = {
 						vendedorResponsable: $('#vendedorResponsable').val()
 				};
-				
 				console.log(formDataBuscarCuentasPorVendedor);
-				
 				$.ajax({
-					
 					type: 'POST',
 					url: '/crm-app/api/v1/detalleCuenta/cuentasPorVendedor',
 					headers: {
@@ -696,7 +610,6 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formDataBuscarCuentasPorVendedor),
 					dataType: 'json',
 					success: function(response) {
-						
 						if(response == null) {
 							swal({
 				                type: 'warning',
@@ -715,7 +628,6 @@ $(document).on('ready', function() {
 									{ field: 'direccionCliente', displayName: 'Direccion'},
 									{ field: 'fechaInicio', displayName: 'Fecha Inicio'},
 									{ field: 'estado', displayName: 'Estado'}
-									
 								], 
 								type: 'json'})
 						}
@@ -729,7 +641,6 @@ $(document).on('ready', function() {
 					}
 				});
 			}
-			
 			if($('#vendedorResponsable').val().trim() == "") {
 				swal({
 	                type: 'error',
@@ -740,7 +651,6 @@ $(document).on('ready', function() {
 			}
 		});
 	}
-	
 	/**
 	 * function para cancelar buscar cuentas por vendedor
 	 * 

@@ -1,13 +1,9 @@
 $(document).on('ready', function() {
 		
 	var tablaClientesPago;
-	
 	var tablaDeudasCliente;
-	
 	var tablaPagoClienteDetalle;
-	
 	cargarTotalRegistrosPersonita();
-	
 	listarClientesPago();
 	
 	setTimeout(function() {
@@ -28,19 +24,12 @@ $(document).on('ready', function() {
 		,5000);
 	
 	mostrarDatosRealizarPago();
-	
-	 disabledInputDatosCliente(true);
-	
+	disabledInputDatosCliente(true);
 	cancelarAccionPago();
-	
 	cargarComboComprobante();
-	
 	validarInputsFormRealizarPago(); 
-	
 	realizarPago();
-	
 	verDeudaCliente();
-	
 	evaluadopagos();
 		
 	/**
@@ -55,15 +44,12 @@ $(document).on('ready', function() {
 			if(i < id){
 				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 					dataType: 'json',
 					success: function(response) {
 							console.log(response);
-							
 							var descrip = response.descripcionmodulo;
-							
 							document.getElementById(descrip).style.display = 'block';
 						}
 					});
@@ -73,7 +59,6 @@ $(document).on('ready', function() {
 	}
 	
 	function listarClientesPago() {
-		
 		tablaClientesPago = $('#tablaClientesPago').dataTable({
 			"bDestroy": true,
 			'bProcessing': true, 
@@ -120,14 +105,12 @@ $(document).on('ready', function() {
 			$(this).attr('idDocumentoPersonaClientePago', data.documentoPersonaCliente);
 		});
 	}
-	
 	/**
 	 *
 	 * function para mostrarFormGenerarPago
 	 * 
 	 */
 	function mostrarFormRealizarPago(flag) {
-		
 		limpiarInputs();
 		disabledInputDatosCliente(true);
 		if(flag) {
@@ -204,7 +187,6 @@ $(document).on('ready', function() {
 	 *
 	 */
 	function cancelarAccionPago() {
-		
 		$('#cancelarAccion').on('click', function() {
 			mostrarFormRealizarPago(false);
 			limpiarInputs();
@@ -218,17 +200,14 @@ $(document).on('ready', function() {
 	function mostrarDatosRealizarPago() {
 		
 		$('#tablaClientesPago tbody').on('click', 'button.btnRegistrarPagoCliente', function() {
-			
 			var documentoPersonaCliente = $(this).attr('idDocumentoPersonaClientePago');
 			mostrarFormRealizarPago(true);
 			disabledInputDatosCliente(true);
 			$.ajax({
-				
 				type: 'GET',
 				url: '/crm-app/api/v1/cliente/searchClientePago/' + documentoPersonaCliente,
 				dataType: 'json',
 				success: function(response) {
-					
 					$('#documentoPersonaClientePago').val(response.documentoPersonaCliente);
 					$('#clientePago').val(response.cliente);
 					$('#nombreComercialPago').val(response.nombreComercialCliente);
@@ -249,18 +228,15 @@ $(document).on('ready', function() {
 			});
 			
 			$.ajax({
-				
 				type: 'GET',
 				url: '/crm-app/api/v1/pago/recuperarDatoPagoMesMonto/' + documentoPersonaCliente,
 				dataType: 'json',
 				success: function(response) {
-					
 					$('#datoactualdeuda').val("Mes de deuda: "+ response.mesactualdeudanombre + " con un monto S/" + response.valordedeudaactual + " soles");
 				}
 			});
 		});
 	}
-	
 	/**
 	 *
 	 * function para cargar comboComprobante
@@ -269,9 +245,7 @@ $(document).on('ready', function() {
 	function cargarComboComprobante() {
 		
 		var $codigoComprobante = $('#codigoComprobante');
-		
 		$.ajax({
-			
 			type: 'GET',
 			url: '/crm-app/api/v1/comprobante/comprobantes',
 			dataType: 'json',
@@ -284,7 +258,6 @@ $(document).on('ready', function() {
 			}
 		});
 	}
-	
 	/**
 	 * 
 	 *function para validar inputs form pago 
@@ -293,9 +266,7 @@ $(document).on('ready', function() {
 		
 		$('#realizarPagoCliente').on('click', function(e) {
 			e.preventDefault();
-			
 			if($('#codigoComprobante').val().trim() == "" && $('#cantidadPago').val() == "") {
-				
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
@@ -306,7 +277,6 @@ $(document).on('ready', function() {
 			else {
 				
 				if($('#codigoComprobante').val().trim() == "") {
-					
 					swal({
 		                type: 'error',
 		                title: 'Ooops',
@@ -315,53 +285,42 @@ $(document).on('ready', function() {
 					return false
 				}
 				if($('#cantidadPago').val() <= 0) {
-					
 					swal({
 		                type: 'error',
 		                title: 'Ooops',
 		                text: 'Ingrese un valor valido para el Monto a Pagar !'
 		            });
-					
 					$('#cantidadPago').val('');
 					$('#cantidadPago').focus();
 					return false
 				}
 			}
 		});
-		
 		$('#documentoPersonaPago').on('change', function() {
-			if(!($('#documentoPersonaPago').val().match(/^[0-9]{7,11}$/))) {
-				
+			if(!($('#documentoPersonaPago').val().match(/^[0-9]{7,11}$/))) {	
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'El campo DNI Pagador no permite caracteres especiales ni letras, ingrese un valor valido'
 	            });
-				
 				$('#documentoPersonaPago').val('');
 				$('#documentoPersonaPago').focus();
 		    	return false;
 			}
 		});
-		
 		$('#cantidadPago').on('keyup', function() {
-			
 			var valor = $(this).val();
-			
 			if(parseInt(valor) <= 0) {
-				
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
 	                text: 'Ingrese un valor valido para el Monto a Pagar'
 	            });
-				
 				$(this).val('');
 				$(this).focus();
 			}
 		});
 	}
-	
 	/**
 	 *
 	 * function para realizar Pago
@@ -371,9 +330,7 @@ $(document).on('ready', function() {
 		
 		$('#realizarPagoCliente').on('click', function(e) {
 			e.preventDefault();
-			
 			if($('#codigoComprobante').val().trim() != "" && $('#cantidadPago').val() > 0) {
-				
 				var formData = {
 					documentoPersonaCliente: $('#documentoPersonaClientePago').val(),
 					codigoComprobante: $('#codigoComprobante').val(),
@@ -382,9 +339,7 @@ $(document).on('ready', function() {
 				};
 				
 				console.log(formData);
-				
 				$.ajax({
-					
 					type: 'POST',
 					url: '/crm-app/api/v1/pago/pagosAdelantados',
 					headers: {
@@ -394,11 +349,8 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formData),
 					dataType: 'json',
 					success: function(response) {
-						
 						console.log(response);
-						
 						if(response.status == "SUCCESS" && response.message == "PAGO ADELANTADO CON PROMO") {
-							
 							swal({
 								type: "success",
 								title: "Se Realizo el Pago Correctamente",
@@ -406,14 +358,12 @@ $(document).on('ready', function() {
 								confirmButtonText: "Cerrar",
 								closeOnConfirm: false
 							}).then((result) => {
-
 								if(result.value) {
-									$(location).attr('href', '/pago/listaPagos');
+									$(location).attr('href', '/crm-app/pago/listaPagos');
 								}
 							});
 						}
 						else if(response.status == "SUCCESS" && response.message == "PAGO ADELANTADO SIN PROMO") {
-							
 							swal({
 								type: "success",
 								title: "Se Realizo el Pago Correctamente",
@@ -423,12 +373,11 @@ $(document).on('ready', function() {
 							}).then((result) => {
 
 								if(result.value) {
-									$(location).attr('href', '/pago/listaPagos');
+									$(location).attr('href', '/crm-app/pago/listaPagos');
 								}
 							});
 						}
 						else if(response.status == "SUCCESS" && response.message == "PAGO RAPIDO") {
-							
 							swal({
 								type: "success",
 								title: "Se Realizo el Pago Correctamente",
@@ -436,9 +385,8 @@ $(document).on('ready', function() {
 								confirmButtonText: "Cerrar",
 								closeOnConfirm: false
 							}).then((result) => {
-
 								if(result.value) {
-									$(location).attr('href', '/pago/listaPagos');
+									$(location).attr('href', '/crm-app/pago/listaPagos');
 								}
 							});
 						}
@@ -463,17 +411,13 @@ $(document).on('ready', function() {
 	function limpiarDatosModal() {
 		$('#myModalLabelDeudaCliente').html('');
 	}
-	
 	/**
 	 *
 	 *function para listar pagos cliente  
 	 * 
 	 */
-	
 	function listarPagosCliente(documentoPersonaCliente) {
-		
 		var flag = documentoPersonaCliente;
-		
 		tablaPagoClienteDetalle = $('#tablaPagoClienteDetalle').dataTable({
 			"language": {
 				"sProcessing":     "Procesando...",
@@ -524,9 +468,7 @@ $(document).on('ready', function() {
 	function listarDeudasCliente(documentoPersonaCliente) {
 		
 		var flag = documentoPersonaCliente;
-		
 		tablaDeudasCliente = $('#tablaDeudaCliente').dataTable({
-			
 			"language": {
 				"sProcessing":     "Procesando...",
 				"sLengthMenu":     "Mostrar _MENU_ registros",
@@ -574,23 +516,18 @@ $(document).on('ready', function() {
 	function verDeudaCliente() {
 		
 		$('#verDeudaCliente').on('click', function() {
-			
 			var documentoPersonaCliente = $(this).attr('documentoPersonaCliente');
-
 			setTimeout(function() {
 				$('#modalVerDeudaCliente').modal('show');
 				listarDeudasCliente(documentoPersonaCliente);
 			}, 3500);
-			
 		});
 	}
 	
 	function evaluadopagos(){
 		
 		$('#verPagoCliente').on('click', function() {
-			
 			var documentoPersonaCliente = $(this).attr('documentoPersonaCliente');
-			
 			setTimeout(function() {
 				$('#modalVerPagoCliente').modal('show');
 				listarPagosCliente(documentoPersonaCliente);
@@ -599,9 +536,7 @@ $(document).on('ready', function() {
 	}
 	
 	function cargarmensajespopusnuevo(valor,id){
-			
 		var title = "Tareas Pendientes!!!";
-		
 		var position = "Bottom right";
 		var duration = "1000";
 		var theme = "warning";
@@ -619,7 +554,6 @@ $(document).on('ready', function() {
 								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
 								success: function(response) {
-									
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
 									
@@ -633,7 +567,6 @@ $(document).on('ready', function() {
 								title: title,
 								message: message
 							});
-							
 						}
 					});
 				}
@@ -644,7 +577,6 @@ $(document).on('ready', function() {
 	function cargarmensajespopus(id){
 				
 		var title = "Tareas Pendientes!!!";
-		
 		var position = "Bottom right";
 		var duration = "1000";
 		var theme = "warning";
@@ -661,7 +593,6 @@ $(document).on('ready', function() {
 				if(i <= id){
 					$.ajax(
 							{
-						
 								type: 'GET',
 								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
@@ -680,7 +611,6 @@ $(document).on('ready', function() {
 								title: title,
 								message: message
 							});
-							
 						}
 					});
 				}
@@ -696,12 +626,10 @@ $(document).on('ready', function() {
 			if(i <= id){
 				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
-					success: function(response) {
-									
+					success: function(response) {			
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
 						
@@ -727,14 +655,11 @@ $(document).on('ready', function() {
 			document.getElementById("agregarmensajesnoti").innerHTML="";
 			for(var i=0;i<valor;i++){
 			if(i < valor && (parseInt(valor) - parseInt(i)) >-1){
-				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
-					success: function(response) {
-										
+					success: function(response) {				
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
 						
@@ -758,7 +683,6 @@ $(document).on('ready', function() {
 		var estatico = null;
 		var dinamico = null;
 		var valuee = null;
-		
 		estatico = document.getElementsByName("canje")[0].value;
 		dinamico = document.getElementsByName("canjes")[0].value;
 		valuee = document.getElementsByName("canjess")[0].value;
@@ -766,23 +690,18 @@ $(document).on('ready', function() {
 		var verificando = valuee - dinamico;
 		
 		if(estatico === valuee && valuee === dinamico){
-		
 			estado(valuee);
 			cargarmensajespopus(valuee);
 			$('#canje').val("0");
 		}
 		if(verificando === 0){
-		
 			estado(verificando);
 			cargarmensajespopus(verificando);
 			$('#canje').val("0");
 		}
 		if(verificando !== 0){
-		
 			estadonuevo(parseInt(valuee));
-			
 			cargarmensajespopusnuevo(parseInt(dinamico) + 1,parseInt(verificando));
-		
 			$('#canje').val("0");
 			$('#canjes').val(valuee);
 		}
@@ -795,7 +714,6 @@ $(document).on('ready', function() {
 		};
 		
 		$.ajax({
-			
 			type: 'POST',
 			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
@@ -805,7 +723,6 @@ $(document).on('ready', function() {
 			data: JSON.stringify(formData),
 			dataType: 'json',
 			success: function(response) {
-				
 				$('#total').html(response.message);
 				$('#totalidad').html(response.message);
 				$('#canjess').val(response.message);
@@ -818,9 +735,7 @@ $(document).on('ready', function() {
 		var formData = {
 				
 		};
-		
 		$.ajax({
-			
 			type: 'POST',
 			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
@@ -830,7 +745,6 @@ $(document).on('ready', function() {
 			data: JSON.stringify(formData),
 			dataType: 'json',
 			success: function(response) {
-				
 				$('#total').html(response.message);
 				$('#totalidad').html(response.message);
 				$('#canje').val(response.message);

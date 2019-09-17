@@ -105,7 +105,7 @@ $(document).on('ready', function() {
 	function redireccionarCortesView() {
 		
 		$('#buttonCortes').on('click', function() {
-			$(location).attr('href', '/instalacion/cortes/view');
+			$(location).attr('href', '/crm-app/instalacion/cortes/view');
 		});
 	}
 	
@@ -556,7 +556,7 @@ $(document).on('ready', function() {
 							}).then((result) => {
 
 								if(result.value) {
-									$(location).attr('href', '/instalacion/instalaciones/view');
+									$(location).attr('href', '/crm-app/instalacion/instalaciones/view');
 								}
 							});
 						},
@@ -874,7 +874,7 @@ $(document).on('ready', function() {
 												}).then((result) => {
 
 													if(result.value) {
-														$(location).attr('href', '/instalacion/instalaciones/view');
+														$(location).attr('href', '/crm-app/instalacion/instalaciones/view');
 													}
 												});
 											}

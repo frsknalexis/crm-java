@@ -1,19 +1,13 @@
 $(document).on('ready', function() {
 	
-	var tablaCortesCable;
-	
+	var tablaCortesCable;	
 	var tablaCortesInternet;
-	
 	redireccionarViewInstalacionesDelDia();
-	
 	listarCortesCable();
-	
 	listarCortesInternet();
-	
 	 realizarCorte();
-	 
 	 ocultar_mostrar(50);
-	 
+	
 	 window.setInterval(
 			    function(){
 			    // Sección de código para modificar el DIV
@@ -37,9 +31,7 @@ $(document).on('ready', function() {
 						dataType: 'json',
 						success: function(response) {
 								console.log(response);
-								
 								var descrip = response.descripcionmodulo;
-								
 								document.getElementById(descrip).style.display = 'block';
 							}
 						});
@@ -53,13 +45,10 @@ $(document).on('ready', function() {
 	 * 
 	 */
 	function redireccionarViewInstalacionesDelDia() {
-		
 		$('#buttonInstalacionesDelDia').on('click', function() {
-			
-			$(location).attr('href', '/instalacion/instalaciones/view');
+			$(location).attr('href', '/crm-app/instalacion/instalaciones/view');
 		});
 	}
-	
 	/**
 	 * 
 	 *function para listar cortes cable 
@@ -103,8 +92,7 @@ $(document).on('ready', function() {
 	 * 
 	 */
 	function listarCortesInternet() {
-		tablaCortesInternet = $('#tablaCortesInternet').dataTable({
-			
+		tablaCortesInternet = $('#tablaCortesInternet').dataTable({		
 			"language": {
 				"sProcessing":     "Procesando...",
 				"sLengthMenu":     "Mostrar _MENU_ registros",
@@ -145,25 +133,18 @@ $(document).on('ready', function() {
 		}).DataTable();
 		
 		$('#tablaCortesInternet tbody').on('click', 'button', function() {
-			
 			var data = tablaCortesInternet.row( $(this).parents('tr')).data();
-			
 			$(this).attr('codigoServicioInternet', data.codigoServicioInternet);
 		});
 	}
-	
 	/**
 	 * 
 	 *function para lanzar el evento realizar corte 
 	 * 
 	 */
 	function realizarCorte() {
-		
 		$('#tablaCortesInternet tbody').on('click', 'button.buttonRealizarCorte', function() {
-			
 			var codigoServicioInternet = $(this).attr('codigoServicioInternet');
-			
-			
 			swal({
 		        title: '¿Esta Seguro de realizar el Corte a este Cliente ?',
 		        text: '¡Si no lo esta puede Cancelar la accion!',
@@ -175,13 +156,10 @@ $(document).on('ready', function() {
 		        confirmButtonText: '¡Si, realizar Corte !'
 		    }).then((result) => {
 		        if(result.value){
-		           
 		        	$.ajax({
-		        		
 		        		url: '/crm-app/api/v1/corte/actualizarServicio/' + codigoServicioInternet,
 		        		type: 'GET',
 		        		success: function(response){
-		        			
 		        			swal({
 		        				type: "success",
 		                        title: "El Corte se ha realizado correctamente",
@@ -190,7 +168,7 @@ $(document).on('ready', function() {
 		                        closeOnConfirm: false
 		                       }).then((result) => {
 		                         if(result.value) {
-		                            $(location).attr("href", "/instalacion/cortes/view");
+		                            $(location).attr("href", "/crm-app/instalacion/cortes/view");
 		                        }
 		                     })
 		                 }
@@ -210,7 +188,6 @@ $(document).on('ready', function() {
 function cargarmensajespopusnuevo(valor,id){
 		
 		var title = "Tareas Pendientes!!!";
-		
 		var position = "Bottom right";
 		var duration = "1000";
 		var theme = "warning";
@@ -224,12 +201,10 @@ function cargarmensajespopusnuevo(valor,id){
 				if(id > i){
 					$.ajax(
 							{
-								
 								type: 'GET',
 								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
-								success: function(response) {
-									
+								success: function(response) {									
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
 							
@@ -253,7 +228,6 @@ function cargarmensajespopusnuevo(valor,id){
 	function cargarmensajespopus(id){
 	
 		var title = "Tareas Pendientes!!!";
-		
 		var position = "Bottom right";
 		var duration = "1000";
 		var theme = "warning";
@@ -264,18 +238,15 @@ function cargarmensajespopusnuevo(valor,id){
 		{
 			
 		}else{
-			
 			for(var i=1;i <= id;i++)
 			{			
 				if(i <= id){
 					$.ajax(
 							{
-						
 								type: 'GET',
 								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
 								success: function(response) {
-									
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
 							
@@ -289,31 +260,23 @@ function cargarmensajespopusnuevo(valor,id){
 								title: title,
 								message: message
 							});
-							
 						}
 					});
 				}
 			}
-			
 		}
 	}
 	
 	function estado(id){
 		
-		
-		if(id !== 0){
-			
-			
+		if(id !== 0){	
 			for(var i=1;i<=id;i++){
 			if(i <= id){
-				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
 					success: function(response) {
-						
 						
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
@@ -335,20 +298,15 @@ function cargarmensajespopusnuevo(valor,id){
 	
 	function estadonuevo(valor){
 		
-		
-		if(valor !== 0){
-			
+		if(valor !== 0){	
 			document.getElementById("agregarmensajesnoti").innerHTML="";
 			for(var i=0;i<valor;i++){
 			if(i < valor && (parseInt(valor) - parseInt(i)) >-1){
-				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
 					success: function(response) {
-						
 						
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
@@ -378,25 +336,20 @@ function cargarmensajespopusnuevo(valor,id){
 		dinamico = document.getElementsByName("canjes")[0].value;
 		valuee = document.getElementsByName("canjess")[0].value;
 		
-		
 		var verificando = valuee - dinamico;
 		
 		if(estatico === valuee && valuee === dinamico){
-		
 			estado(valuee);
 			cargarmensajespopus(valuee);
 			$('#canje').val("0");
 		}
 		if(verificando === 0){
-		
 			estado(verificando);
 			cargarmensajespopus(verificando);
 			$('#canje').val("0");
 		}
 		if(verificando !== 0){
-		
 			estadonuevo(parseInt(valuee));
-			
 			cargarmensajespopusnuevo(parseInt(dinamico) + 1,parseInt(verificando));
 		
 			$('#canje').val("0");
@@ -406,13 +359,11 @@ function cargarmensajespopusnuevo(valor,id){
 	
 	function cargarTotalRegistrosPersona() {
 		
-		
 		var formData = {
 				
 		};
 		
-		$.ajax({
-			
+		$.ajax({	
 			type: 'POST',
 			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
@@ -435,9 +386,7 @@ function cargarmensajespopusnuevo(valor,id){
 		var formData = {
 				
 		};
-		
 		$.ajax({
-			
 			type: 'POST',
 			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {

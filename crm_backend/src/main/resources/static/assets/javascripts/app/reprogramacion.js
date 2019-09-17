@@ -198,7 +198,7 @@ $(document).on('ready', function() {
 						}).then((result) => {
 
 							if(result.value) {
-								$(location).attr('href', '/detalleCuenta/reprogramacion/view');
+								$(location).attr('href', '/crm-app/detalleCuenta/reprogramacion/view');
 							}
 						});
 					}
@@ -235,7 +235,7 @@ $(document).on('ready', function() {
 						}).then((result) => {
 
 							if(result.value) {
-								$(location).attr('href', '/detalleCuenta/reprogramacion/view');
+								$(location).attr('href', '/crm-app/detalleCuenta/reprogramacion/view');
 							}
 						});
 					}
@@ -273,7 +273,7 @@ $(document).on('ready', function() {
 						}).then((result) => {
 
 							if(result.value) {
-								$(location).attr('href', '/detalleCuenta/reprogramacion/view');
+								$(location).attr('href', '/crm-app/detalleCuenta/reprogramacion/view');
 							}
 						});
 					}
@@ -311,7 +311,7 @@ $(document).on('ready', function() {
 						}).then((result) => {
 
 							if(result.value) {
-								$(location).attr('href', '/detalleCuenta/reprogramacion/view');
+								$(location).attr('href', '/crm-app/detalleCuenta/reprogramacion/view');
 							}
 						});
 					}

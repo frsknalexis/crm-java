@@ -1,18 +1,10 @@
-/**
- * 
- */
 $(document).on('ready', function() {
 	
 	var tablaEstadoCuentasInternet;
-	
 	listarTablaEstadoCuentasInternet();
-	
 	listarComboEstadoCuentas();
-	
 	mostrarFormReporteCuentasPorEstado();
-	
 	mostrarFormReporteCuentasInstaladasPorFecha();
-	
 	regresarListadoCuentas();
 });
 
@@ -63,10 +55,8 @@ function listarTablaEstadoCuentasInternet() {
 function mostrarFormReporteCuentasInstaladasPorFecha() {
 	
 	$('#btnReporteCuentasInstaladasPorFecha').on('click', function() {
-		
 		$('#modalCuentasInstaladasPorFecha').modal('show');
 	});
-	
 	validarFormReporteCuentasInstaladasPorFecha();
 	cancelarAccionBuscarCuentasInstaladasPorFecha();
 }
@@ -81,10 +71,8 @@ function cancelarAccionBuscarCuentasInstaladasPorFecha() {
 
 function validarFormReporteCuentasInstaladasPorFecha() {
 	
-	$('#buscarCuentasInstaladasPorFecha').on('click', function(e) {
-		
+	$('#buscarCuentasInstaladasPorFecha').on('click', function(e) {	
 		e.preventDefault();
-		
 		if($('#fechaInicio').val() != "" && $('#fechaFin').val() != "") {
 			
 			var formDataCuentasInstaladasPorFecha = {
@@ -93,8 +81,7 @@ function validarFormReporteCuentasInstaladasPorFecha() {
 			}
 			console.log(formDataCuentasInstaladasPorFecha);
 			
-			$.ajax({
-				
+			$.ajax({	
 				type: 'POST',
 				url: '/crm-app/api/v1/detalleCuenta/cuentasInstaladas',
 				headers: {
@@ -104,7 +91,6 @@ function validarFormReporteCuentasInstaladasPorFecha() {
 				data: JSON.stringify(formDataCuentasInstaladasPorFecha),
 				dataType: 'json',
 				success: function(response) {
-					
 					if(response == null) {
 						swal({
 			                type: 'warning',
@@ -136,18 +122,14 @@ function validarFormReporteCuentasInstaladasPorFecha() {
 				}
 			});
 		}
-		
 		if($('#fechaInicio').val() == "" && $('#fechaFin').val() == "") {
-			
 			swal({
                 type: 'error',
                 title: 'Ooops',
                 text: 'Debe ingresar un valor valido para estos campos !'
             });
 		}
-		
 		else if($('#fechaInicio').val() == "") {
-			
 			swal({
                 type: 'error',
                 title: 'Ooops',
@@ -155,7 +137,6 @@ function validarFormReporteCuentasInstaladasPorFecha() {
             });
 		}
 		else if($('#fechaFin').val() == "") {
-			
 			swal({
                 type: 'error',
                 title: 'Ooops',
@@ -168,10 +149,8 @@ function validarFormReporteCuentasInstaladasPorFecha() {
 function mostrarFormReporteCuentasPorEstado() {
 	
 	$('#btnReporteCuentasPorEstado').on('click', function() {
-		
 		$('#modalCuentasPorEstado').modal('show');
 	});
-	
 	validarFormReporteCuentasPorEstado();
 }
 
@@ -179,16 +158,13 @@ function validarFormReporteCuentasPorEstado() {
 	
 	$('#buscarCuentasPorEstado').on('click', function(e) {
 		e.preventDefault();
-		
 		if($('#estadoCuenta').val().trim() != "") {
 			
 			var formDataBuscarReporteCuentasPorEstado = {
 					codigoEstado: $('#estadoCuenta').val()
 			};
 			console.log(formDataBuscarReporteCuentasPorEstado);
-			
 			$.ajax({
-				
 				type: 'POST',
 				url: '/crm-app/api/v1/detalleCuenta/cuentasPorEstado',
 				headers: {
@@ -198,7 +174,6 @@ function validarFormReporteCuentasPorEstado() {
 				data: JSON.stringify(formDataBuscarReporteCuentasPorEstado),
 				dataType: 'json',
 				success: function(response) {
-					
 					if(response == null) {
 						swal({
 			                type: 'warning',
@@ -235,9 +210,7 @@ function validarFormReporteCuentasPorEstado() {
 				}
 			});
 		}
-		
 		if($('#estadoCuenta').val().trim() == "") {
-			
 			swal({
                 type: 'error',
                 title: 'Ooops',
@@ -251,9 +224,7 @@ function validarFormReporteCuentasPorEstado() {
 function listarComboEstadoCuentas() {
 	
 	$estadoCuenta = $('#estadoCuenta');
-	
 	$.ajax({
-		
 		type: 'GET',
 		url: '/crm-app/api/v1/detalleCuenta/estados',
 		dataType: 'json',
@@ -269,8 +240,7 @@ function listarComboEstadoCuentas() {
 }
 
 function regresarListadoCuentas() {
-	
 	$('#btnRegresarListaCuentas').on('click', function() {
-		$(location).attr('href', '/detalleCuenta/cuentas/view');
+		$(location).attr('href', '/crm-app/detalleCuenta/cuentas/view');
 	});
 }

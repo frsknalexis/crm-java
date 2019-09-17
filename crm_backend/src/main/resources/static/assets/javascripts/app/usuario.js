@@ -469,7 +469,7 @@ $(document).on('ready', function() {
 							}).then((result) => {
 
 								if(result.value) {
-									$(location).attr('href', '/usuario/view');
+									$(location).attr('href', '/crm-app/usuario/view');
 								}
 							});
 						}
@@ -516,7 +516,7 @@ $(document).on('ready', function() {
 							}).then((result) => {
 
 								if(result.value) {
-									$(location).attr('href', '/usuario/view');
+									$(location).attr('href', '/crm-app/usuario/view');
 								}
 							});
 						}
@@ -698,7 +698,7 @@ $(document).on('ready', function() {
 	                         closeOnConfirm: false
 	                     }).then((result) => {
 	                         if(result.value) {
-	                             $(location).attr("href", "/usuario/view");
+	                             $(location).attr("href", "/crm-app/usuario/view");
 	                         }
 	                     })
 	                 }
@@ -749,7 +749,7 @@ $(document).on('ready', function() {
 	                        closeOnConfirm: false
 	                       }).then((result) => {
 	                         if(result.value) {
-	                            $(location).attr("href", "/usuario/view");
+	                            $(location).attr("href", "/crm-app/usuario/view");
 	                        }
 	                     })
 	                 }

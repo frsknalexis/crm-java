@@ -439,7 +439,7 @@ $(document).on('ready', function() {
 							}).then((result) => {
 
 								if(result.value) {
-									$(location).attr('href', '/pago/listaPagos');
+									$(location).attr('href', '/crm-app/pago/listaPagos');
 								}
 							});
 						}
@@ -453,7 +453,7 @@ $(document).on('ready', function() {
 							}).then((result) => {
 
 								if(result.value) {
-									$(location).attr('href', '/pago/listaPagos');
+									$(location).attr('href', '/crm-app/pago/listaPagos');
 								}
 							});
 						}
@@ -467,7 +467,7 @@ $(document).on('ready', function() {
 							}).then((result) => {
 
 								if(result.value) {
-									$(location).attr('href', '/pago/listaPagos');
+									$(location).attr('href', '/crm-app/pago/listaPagos');
 								}
 							});
 						}

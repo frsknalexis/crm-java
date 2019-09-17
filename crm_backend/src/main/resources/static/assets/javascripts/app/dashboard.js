@@ -25,40 +25,33 @@ $(document).on('ready', function() {
 	 * funcion para cargar total registros 
 	 *
 	 */
-	
 	function ocultar_mostrar(id){
 		
 			if(id !== 0){
 				for( var i = 1;i < id ; i++ ){
 				if(i < id){
-					$.ajax({
-						
+					$.ajax({				
 						type: 'GET',
 						url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 						dataType: 'json',
 						success: function(response) {
-								console.log(response);
-								
+								console.log(response);	
 								var descrip = response.descripcionmodulo;
-								
 								document.getElementById(descrip).style.display = 'block';
 							}
 						});
 					}
 				}
 			}
-		
 	}
 	
 	function cargarTotalRegistrosUsuarios() {
 		
 		$.ajax({
-			
 			type: 'GET',
 			url: '/crm-app/api/v1/usuario/totalRegistros',
 			dataType: 'json',
 			success: function(response) {
-				
 				$('#totalRegistrosUsuarios').html(response.data);
 			}
 		});
@@ -67,12 +60,10 @@ $(document).on('ready', function() {
 	function cargarTotalRegistrosPersonas() {
 		
 		$.ajax({
-			
 			type: 'GET',
 			url: '/crm-app/api/v1/persona/totalRegistros',
 			dataType: 'json',
 			success: function(response) {
-				
 				$('#totalRegistrosPersonas').html(response.data);
 			}
 		});
@@ -81,12 +72,10 @@ $(document).on('ready', function() {
 	function cargarTotalRegistroEmpleados() {
 		
 		$.ajax({
-			
 			type: 'GET',
 			url: '/crm-app/api/v1/empleado/totalRegistros',
 			dataType: 'json',
 			success: function(response) {
-				
 				$('#totalRegistroEmpleados').html(response.data);
 			}
 		});
@@ -95,12 +84,10 @@ $(document).on('ready', function() {
 	function cargarTotalRegistrosClientes() {
 		
 		$.ajax({
-			
 			type: 'GET',
 			url: '/crm-app/api/v1/cliente/totalRegistros',
 			dataType: 'json',
 			success: function(response) {
-				
 				$('#totalRegistrosCliente').html(response.data);
 			}
 		});
@@ -108,31 +95,24 @@ $(document).on('ready', function() {
 
 	function cargarmensajespopusnuevo(valor,id){
 		
-		
-		
 		var title = "Tareas Pendientes!!!";
-		
 		var position = "Bottom right";
 		var duration = "1000";
 		var theme = "warning";
 		var closeOnClick = true;
 		var displayClose =true;
 		
-		
 		if(valor !== 0)
-		{
-			
+		{	
 			for(var i = 0;id > i;i++)
 			{			
 				if(id > i){
 					$.ajax(
-							{
-								
+							{						
 								type: 'GET',
 								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
-								success: function(response) {
-									
+								success: function(response) {		
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
 							
@@ -156,7 +136,6 @@ $(document).on('ready', function() {
 	function cargarmensajespopus(id){
 	
 		var title = "Tareas Pendientes!!!";
-		
 		var position = "Bottom right";
 		var duration = "1000";
 		var theme = "warning";
@@ -167,18 +146,15 @@ $(document).on('ready', function() {
 		{
 			
 		}else{
-			
 			for(var i=1;i <= id;i++)
 			{			
 				if(i <= id){
 					$.ajax(
-							{
-						
+							{		
 								type: 'GET',
 								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
-								success: function(response) {
-									
+								success: function(response) {		
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
 							
@@ -200,20 +176,15 @@ $(document).on('ready', function() {
 	}
 	
 	function estado(id){
-		
-		
-		if(id !== 0){
-			
+	
+		if(id !== 0){		
 			for(var i=1;i<=id;i++){
 			if(i <= id){
-				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
 					success: function(response) {
-						
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
 						
@@ -234,21 +205,15 @@ $(document).on('ready', function() {
 	
 	function estadonuevo(valor){
 		
-		
-		if(valor !== 0){
-			
+		if(valor !== 0){	
 			document.getElementById("agregarmensajesnoti").innerHTML="";
 			for(var i=0;i<valor;i++){
 			if(i < valor && (parseInt(valor) - parseInt(i)) >-1){
-				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
 					success: function(response) {
-						
-						
 						var tag = document.createElement("li");
 						tag.innerHTML = '<span class="toggle">Jan</span>';
 						
@@ -277,25 +242,20 @@ $(document).on('ready', function() {
 		dinamico = document.getElementsByName("canjes")[0].value;
 		valuee = document.getElementsByName("canjess")[0].value;
 		
-		
 		var verificando = valuee - dinamico;
 		
 		if(estatico === valuee && valuee === dinamico){
-		
 			estado(valuee);
 			cargarmensajespopus(valuee);
 			$('#canje').val("0");
 		}
 		if(verificando === 0){
-		
 			estado(verificando);
 			cargarmensajespopus(verificando);
 			$('#canje').val("0");
 		}
 		if(verificando !== 0){
-		
 			estadonuevo(parseInt(valuee));
-			
 			cargarmensajespopusnuevo(parseInt(dinamico) + 1,parseInt(verificando));
 		
 			$('#canje').val("0");
@@ -305,13 +265,11 @@ $(document).on('ready', function() {
 	
 	function cargarTotalRegistrosPersona() {
 		
-		
 		var formData = {
 				
 		};
 		
-		$.ajax({
-			
+		$.ajax({	
 			type: 'POST',
 			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {
@@ -326,21 +284,16 @@ $(document).on('ready', function() {
 				$('#totalidad').html(response.message);
 				$('#canjess').val(response.message);
 			}
-			
 		});	
-		
 	}
-	
-	
+
 	function cargarTotalRegistrosPersonita() {
-		
-		
+			
 		var formData = {
 				
 		};
 		
-		$.ajax({
-			
+		$.ajax({		
 			type: 'POST',
 			url: '/crm-app/api/v1/atencion/obtenercantidad',
 			headers: {

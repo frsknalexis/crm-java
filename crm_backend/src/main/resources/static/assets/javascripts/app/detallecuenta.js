@@ -1,19 +1,12 @@
 $(document).on('ready', function() {
 	
 	disabledButtonGenerarCuenta(true);
-	
 	disabledInputs(false);
-	
 	buscarCliente();
-	
 	cargarTotalRegistrosPersonita();
-	
 	ocultar_mostrar(50);
-	
 	validarFormGenerarCuenta();
-	
 	cargarComboVendedores();
-	
 	listarCuentasGeneradas();
 	
 	window.setInterval(
@@ -28,7 +21,6 @@ $(document).on('ready', function() {
 		,5000);
 	
 	comboServicio(); 
-	
 	/**
 	 * 
 	 *function para listar las cuentas generadas 
@@ -37,10 +29,9 @@ $(document).on('ready', function() {
 	function listarCuentasGeneradas() {
 		
 		$('#listaCuentasGeneradas').on('click', function() {
-			$(location).attr('href', '/detalleCuenta/cuentas/view');
+			$(location).attr('href', '/crm-app/detalleCuenta/cuentas/view');
 		});
 	}
-	
 	/**
 	 * 
 	 *Funcion para deshabilitar inicialmente el boton guardar cuenta 
@@ -48,20 +39,15 @@ $(document).on('ready', function() {
 	function ocultar_mostrar(id){
 		
 		if(id !== 0){
-						
 			for( var i = 1;i < id ; i++ ){
 			if(i < id){
-				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/usuario/listamodulos/' + i,
 					dataType: 'json',
 					success: function(response) {
 							console.log(response);
-							
 							var descrip = response.descripcionmodulo;
-							
 							document.getElementById(descrip).style.display = 'block';
 						}
 					});
@@ -81,7 +67,6 @@ $(document).on('ready', function() {
 			$('#cancelarAccion').attr('disabled', false);
 		}
 	}
-	
 	/**
 	 * 
 	 *Limpiar formulario 
@@ -95,7 +80,6 @@ $(document).on('ready', function() {
 		$('#detalleCuentaAnio').val('');
 		$('#detalleCuentaObservacion').val('');
 	}
-	
 	/**
 	 * 
 	 *funcion para deshabilitar los inputs 
@@ -118,7 +102,6 @@ $(document).on('ready', function() {
 			$('#detalleCuentaAnio').attr('disabled', false);
 		}
 	}
-	
 	/**
 	 * 
 	 *funcion para cancelar acciones 
@@ -131,7 +114,6 @@ $(document).on('ready', function() {
 			disabledButtonGenerarCuenta(true);
 		});
 	}
-	
 	/**
 	 *
 	 * Funcion para buscar cliente por
@@ -140,16 +122,13 @@ $(document).on('ready', function() {
 	function buscarCliente() {
 		
 		$('#buscarCliente').on('click', function(e) {
-			e.preventDefault();
-			
+			e.preventDefault();		
 			if($('#busqueda').val().match(/^[0-9\.-\s]{7,12}$/)) {
 				
 				var formData = {
 						documentoPersona: $('#busqueda').val()
 				};
-						
 				$.ajax({
-					
 					type: 'POST',
 					url: '/crm-app/api/v1/cliente/searchCliente',
 					headers: {
@@ -159,7 +138,6 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formData),
 					dataType: 'json',
 					success: function(response) {
-		
 						console.log(response);
 						if(response != null) {				
 							$('#documentoPersonaCliente').val(response.documentoPersona);
@@ -175,14 +153,12 @@ $(document).on('ready', function() {
 				                title: 'Ooops',
 				                text: 'No se encontro al Cliente, verifique si existe!'
 				            });
-							
 							disabledInputs(false);
 							limpiarForm();
 						}
 						$('#busqueda').val('');
 					},
 					error: function() {
-						
 						swal({
 			                type: 'error',
 			                title: 'Ooops',
@@ -203,20 +179,16 @@ $(document).on('ready', function() {
 			}
 		});
 	}
-	
 	/***
 	 * 
 	 *function para verificar que el cliente se registro  
 	 * 
 	 */
-	function verificarCliente() {
-		
+	function verificarCliente() {	
 		$('#generarCuenta').on('click', function(e) {
-			
 			e.preventDefault();
 			if($('#documentoPersonaCliente').val() == "" && $('#detalleCuentaCliente').val() == ""
 				&& $('#detalleCuentaDireccion').val() == "" && $('#detalleCuentaReferenciaDireccion').val() == "") {
-				
 				swal({
 	                type: 'error',
 	                title: 'Ooops',
@@ -225,7 +197,6 @@ $(document).on('ready', function() {
 			}
 		});
 	}
-	
 	/**
 	 * 
 	 *function para validarFormGenerarCuenta 
@@ -233,10 +204,8 @@ $(document).on('ready', function() {
 	 */
 	function validarFormGenerarCuenta() {
 		
-		$('#generarCuenta').on('click', function(e) {
-			
+		$('#generarCuenta').on('click', function(e) {		
 			e.preventDefault();
-			
 			if($('#fechaSolicitudClienteDetalleCuenta').val() == "" && $('#detalleCuentaVendedor').val().trim() == "") {
 				swal({
 	                type: 'error',
@@ -245,7 +214,6 @@ $(document).on('ready', function() {
 	            });
 				return false;
 			}
-			
 			else if($('#fechaSolicitudClienteDetalleCuenta').val() == "") {
 				swal({
 	                type: 'error',
@@ -264,7 +232,6 @@ $(document).on('ready', function() {
 			}
 		});
 	}
-	
 	/**
 	 *
 	 * cargar combo vendedores
@@ -272,10 +239,8 @@ $(document).on('ready', function() {
 	 */
 	function cargarComboVendedores() {
 		
-		var $detalleCuentaVendedor = $('#detalleCuentaVendedor');
-		
+		var $detalleCuentaVendedor = $('#detalleCuentaVendedor');	
 		$.ajax({
-			
 			type: 'GET',
 			url: '/crm-app/api/v1/vendedor/vendedores',
 			dataType: 'json',
@@ -288,16 +253,13 @@ $(document).on('ready', function() {
 			}
 		});
 	}
-	
 	/**
 	 * 
 	 *funcion para generarCuentaInternetColor 
 	 * 
 	 */
-	function generarCuentaInternetColor() {
-		
+	function generarCuentaInternetColor() {	
 		$('#generarCuenta').on('click', function(e) {
-			
 			e.preventDefault();
 			if($('#documentoPersonaCliente').val().match(/^[0-9\.-\s]{7,12}$/) && $('#fechaSolicitudClienteDetalleCuenta').val() != "" 
 				&& $('#detalleCuentaVendedor').val().trim() != "") {
@@ -310,7 +272,6 @@ $(document).on('ready', function() {
 				};
 				console.log(formDataIC);
 				$.ajax({
-					
 					type: 'POST',
 					url: '/crm-app/api/v1/detalleCuenta/saveCuentaInternet',
 					headers: {
@@ -320,9 +281,7 @@ $(document).on('ready', function() {
 					data: JSON.stringify(formDataIC),
 					dataType: 'json',
 					success: function(response) {
-						
 						if(response.status == "CREATED" && response.message == "HECHO") {
-							
 							swal({
 								type: "success",
 								title: "Se Genero la Cuenta de Internet con exito",
@@ -330,14 +289,12 @@ $(document).on('ready', function() {
 								confirmButtonText: "Cerrar",
 								closeOnConfirm: false
 							}).then((result) => {
-
 								if(result.value) {
-									$(location).attr('href', '/detalleCuenta/cuentas/view');
+									$(location).attr('href', '/crm-app/detalleCuenta/cuentas/view');
 								}
 							});
 						}
 						else if(response.status == "ERROR" && response.message == "SERVICIO OPERANDO") {
-							
 							swal({
 				                type: 'error',
 				                title: 'Ooops',
@@ -345,7 +302,6 @@ $(document).on('ready', function() {
 				            });
 						}
 						else if(response.status == "ERROR" && response.message == "LLENO") {
-							
 							swal({
 				                type: 'error',
 				                title: 'Ooops',
@@ -354,7 +310,6 @@ $(document).on('ready', function() {
 						}
 					},
 					error: function() {
-						
 						swal({
 			                type: 'error',
 			                title: 'Ooops',
@@ -365,16 +320,13 @@ $(document).on('ready', function() {
 			}
 		});
 	}
-	
 	/**
 	 * 
 	 * function para generarCuentaDuo
 	 * 
 	 */
-	function generarCuentaDuo() {
-		
+	function generarCuentaDuo() {	
 		$('#generarCuenta').on('click', function(e) {
-			
 			e.preventDefault();
 			if($('#documentoPersonaCliente').val().match(/^[0-9\.-\s]{7,12}$/) && $('#fechaSolicitudClienteDetalleCuenta').val() != "" 
 				&& $('#detalleCuentaVendedor').val().trim() != "") {
@@ -405,14 +357,12 @@ $(document).on('ready', function() {
 								confirmButtonText: "Cerrar",
 								closeOnConfirm: false
 							}).then((result) => {
-
 								if(result.value) {
-									$(location).attr('href', '/detalleCuenta/generarCuenta/view');
+									$(location).attr('href', '/crm-app/detalleCuenta/generarCuenta/view');
 								}
 							});
 						}
 						else if(response.status == "ERROR" && response.message == "SERVICIO OPERANDO") {
-							
 							swal({
 				                type: 'error',
 				                title: 'Ooops',
@@ -431,16 +381,13 @@ $(document).on('ready', function() {
 			}
 		});
 	}
-	
 	/**
 	 * 
 	 *funcion para generarCuentaCableColor 
 	 * 
 	 */
-	function generarCuentaCableColor() {
-		
+	function generarCuentaCableColor() {	
 		$('#generarCuenta').on('click', function(e) {
-			
 			e.preventDefault();
 			if($('#documentoPersonaCliente').val().match(/^[0-9\.-\s]{7,12}$/) && $('#fechaSolicitudClienteDetalleCuenta').val() != "" 
 				&& $('#detalleCuentaVendedor').val().trim() != "") {
@@ -453,7 +400,6 @@ $(document).on('ready', function() {
 				};
 				console.log(formDataCC);
 				$.ajax({
-					
 					type: 'POST',
 					url: '/crm-app/api/v1/detalleCuenta/saveCuentaCable',
 					headers: {
@@ -464,8 +410,7 @@ $(document).on('ready', function() {
 					dataType: 'json',
 					success: function(response) {
 						console.log(response);
-						if(response.status =="CREATED" && response.message == "HECHO") {
-							
+						if(response.status =="CREATED" && response.message == "HECHO") {	
 							swal({
 								type: "success",
 								title: "Se Genero la Cuenta de Cable con exito",
@@ -473,14 +418,12 @@ $(document).on('ready', function() {
 								confirmButtonText: "Cerrar",
 								closeOnConfirm: false
 							}).then((result) => {
-
 								if(result.value) {
-									$(location).attr('href', '/detalleCuenta/generarCuenta/view');
+									$(location).attr('href', '/crm-app/detalleCuenta/generarCuenta/view');
 								}
 							});
 						}
 						else if(response.status == "ERROR" && response.message == "SERVICIO OPERANDO") {
-							
 							swal({
 				                type: 'error',
 				                title: 'Ooops',
@@ -489,7 +432,6 @@ $(document).on('ready', function() {
 						}
 					},
 					error: function() {
-						
 						swal({
 			                type: 'error',
 			                title: 'Ooops',
@@ -500,7 +442,6 @@ $(document).on('ready', function() {
 			}
 		});
 	}
-	
 	/**
 	 * 
 	 *funcion para el combo de servicios 
@@ -508,10 +449,8 @@ $(document).on('ready', function() {
 	 */
 	function comboServicio() {
 		
-		var $tipoServicio = $('#tipoServicio');
-		
+		var $tipoServicio = $('#tipoServicio');	
 		$tipoServicio.on('change', function() {
-			
 			if($tipoServicio.val() == "") {
 				limpiarForm();
 				disabledInputs(false);
@@ -547,7 +486,6 @@ $(document).on('ready', function() {
 	function cargarmensajespopusnuevo(valor,id){
 		
 		var title = "Tareas Pendientes!!!";
-		
 		var position = "Bottom right";
 		var duration = "1000";
 		var theme = "warning";
@@ -556,18 +494,16 @@ $(document).on('ready', function() {
 		
 		if(valor !== 0)
 		{
-			
 			for(var i = 0;id > i;i++)
 			{			
 				if(id > i){
 					$.ajax(
-							{
-								
+							{						
 								type: 'GET',
 								url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) + parseInt(i)),
 								dataType: 'json',
 								success: function(response) {
-									
+				
 									var mensaje = response.descripcionmensaje;
 									var message = mensaje;
 																
@@ -591,7 +527,6 @@ $(document).on('ready', function() {
 	function cargarmensajespopus(id){
 		
 		var title = "Tareas Pendientes!!!";
-		
 		var position = "Bottom right";
 		var duration = "1000";
 		var theme = "warning";
@@ -602,13 +537,11 @@ $(document).on('ready', function() {
 		{
 			
 		}else{
-			
 			for(var i=1;i <= id;i++)
 			{			
 				if(i <= id){
 					$.ajax(
-							{
-						
+							{		
 								type: 'GET',
 								url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 								dataType: 'json',
@@ -627,7 +560,6 @@ $(document).on('ready', function() {
 								title: title,
 								message: message
 							});
-							
 						}
 					});
 				}
@@ -638,12 +570,9 @@ $(document).on('ready', function() {
 	function estado(id){
 		
 		if(id !== 0){
-				
 			for(var i=1;i<=id;i++){
 			if(i <= id){
-				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/atencion/searchMensaje/' + i,
 					dataType: 'json',
@@ -670,13 +599,10 @@ $(document).on('ready', function() {
 	function estadonuevo(valor){
 		
 		if(valor !== 0){
-			
 			document.getElementById("agregarmensajesnoti").innerHTML="";
 			for(var i=0;i<valor;i++){
 			if(i < valor && (parseInt(valor) - parseInt(i)) >-1){
-				
 				$.ajax({
-					
 					type: 'GET',
 					url: '/crm-app/api/v1/atencion/searchMensaje/' + (parseInt(valor) - parseInt(i)),
 					dataType: 'json',
