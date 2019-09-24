@@ -10,6 +10,7 @@ import com.dev.crm.core.dto.DescuentoPagoResultViewModel;
 import com.dev.crm.core.dto.DetallePagoResultViewModel;
 import com.dev.crm.core.dto.DiasDeudasRequest;
 import com.dev.crm.core.dto.DiasDeudasResultViewModel;
+import com.dev.crm.core.dto.GananciaMesTotalResultViewModel;
 import com.dev.crm.core.dto.GananciaPorDiaCajaResultViewModel;
 import com.dev.crm.core.dto.GananciaPorMesCajaResultViewModel;
 import com.dev.crm.core.dto.ListaPagosPorCajaResultViewModel;
@@ -90,4 +91,6 @@ public interface PagoService {
 	DescuentoPagoResultViewModel spRecuperarMesPago(String gpersona);
 	
 	MesActualDeuda spRecuperarMesMonto(String documentoPersona);
+	
+	GananciaMesTotalResultViewModel contadorGananciaMesTotal();
 }

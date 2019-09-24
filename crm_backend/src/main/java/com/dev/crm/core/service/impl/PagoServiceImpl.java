@@ -16,6 +16,7 @@ import com.dev.crm.core.dto.DescuentoPagoResultViewModel;
 import com.dev.crm.core.dto.DetallePagoResultViewModel;
 import com.dev.crm.core.dto.DiasDeudasRequest;
 import com.dev.crm.core.dto.DiasDeudasResultViewModel;
+import com.dev.crm.core.dto.GananciaMesTotalResultViewModel;
 import com.dev.crm.core.dto.GananciaPorDiaCajaResultViewModel;
 import com.dev.crm.core.dto.GananciaPorMesCajaResultViewModel;
 import com.dev.crm.core.dto.ListaPagosPorCajaResultViewModel;
@@ -44,6 +45,7 @@ import com.dev.crm.core.repository.jdbc.ConsolidadoInternetJdbcRepository;
 import com.dev.crm.core.repository.jdbc.DetallePagoResultJdbcRepository;
 import com.dev.crm.core.repository.jdbc.DeudasJdbcRepository;
 import com.dev.crm.core.repository.jdbc.DiasDeudasJdbcRepository;
+import com.dev.crm.core.repository.jdbc.GananciaMesTotalJdbcRepository;
 import com.dev.crm.core.repository.jdbc.GananciaPorDiaCajaJdbcRepository;
 import com.dev.crm.core.repository.jdbc.GananciaPorMesCajaJdbcRepository;
 import com.dev.crm.core.repository.jdbc.HistorialDescuentoResquestdbcRepository;
@@ -185,6 +187,10 @@ public class PagoServiceImpl implements PagoService {
 	@Autowired
 	@Qualifier("pagoMoraCableJdbcRepository")
 	private PagoMoraCableJdbcRepository pagoMoraCableJdbcRepository;
+	
+	@Autowired
+	@Qualifier("gananciaMesTotalJdbcRepository")
+	private GananciaMesTotalJdbcRepository gananciaMesTotalJdbcRepository;
 	
 	@Override
 	public String spPagoServicio(PagoRequest pagoRequest) {
@@ -800,5 +806,21 @@ public class PagoServiceImpl implements PagoService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public GananciaMesTotalResultViewModel contadorGananciaMesTotal() {
+		
+		try {
+			
+			GananciaMesTotalResultViewModel result = gananciaMesTotalJdbcRepository.contadorGananciaMesTotal();
+			if(GenericUtil.isNotNull(result)) {
+				return result;
+			}	
+			return null;
+		}
+		catch(Exception e) {
+			return null;
+		}
 	}
 }

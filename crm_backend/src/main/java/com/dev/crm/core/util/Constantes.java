@@ -150,6 +150,7 @@ public class Constantes {
 	public static final String SP_PAGO_SERVICIO_GESTOR = "sp_pago_servicio_gestor";
 	public static final String SP_LISTAR_CONSOLIDADO_INTERNET = "sp_listar_consolidado_internet";
 	public static final String SP_RECUPERAR_DIAS_DEUDAS_GESTOR_MONTO_ACUMULADO = "recuperar_dias_deudas_gestor_monto_acumulado";
+	public static final String SP_CONTADOR_GANANCIA_MES_TOTAL = "sp_contador_ganancia_mes_total";
 	
 	public static final boolean HABILITADO = true;
 	public static final boolean INHABILITADO = false;
@@ -163,6 +164,7 @@ public class Constantes {
 	public static final String MESSAGE_CREATED = "Se Registro Correctamente";
 	public static final String MESSAGE_UPDATED = "Se Actualizo Correctamente";
 	public static final String MESSAGE_ERROR = "Ocurrio un Error";
+	public static final String MESSAGE_SUCCESS = "SUCCESS";
 	public static final String MESSAGE_SUCCESS_DISABLED = "Se Deshabilito Correctamente este Registro";
 	public static final String MESSAGE_SUCCESS_ENABLED = "Se Habilito Correctamente este Registro";
 	public static final String MESSAGE_GENERATED = "GENERADO";

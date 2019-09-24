@@ -611,6 +611,19 @@ public class PagoRestController {
 		}
 	}
 	
+	@GetMapping(value = "/contadorGananciaTotal", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseBaseOperation> contadorGananciaMesTotal() {
+		
+		try {
+			
+			ResponseBaseOperation response = pagoFacade.contadorGananciaMesTotal();
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	@PostMapping(value = "/pagosPorDiaReport", produces = MediaType.APPLICATION_PDF_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<InputStreamResource> spReporteListaPagosPorDia(@Valid @RequestBody PagosPorDiaRequest request) {
 		

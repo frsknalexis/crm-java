@@ -15,6 +15,7 @@ import com.dev.crm.core.dto.DescuentoPagoResultViewModel;
 import com.dev.crm.core.dto.DetallePagoResultViewModel;
 import com.dev.crm.core.dto.DiasDeudasRequest;
 import com.dev.crm.core.dto.DiasDeudasResultViewModel;
+import com.dev.crm.core.dto.GananciaMesTotalResultViewModel;
 import com.dev.crm.core.dto.GananciaPorDiaCajaResultViewModel;
 import com.dev.crm.core.dto.GananciaPorMesCajaResultViewModel;
 import com.dev.crm.core.dto.ListaPagosPorCajaResultViewModel;
@@ -719,6 +720,25 @@ public class PagoFacadeImpl implements PagoFacade {
 				else {
 					return null;
 				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public ResponseBaseOperation contadorGananciaMesTotal() {
+		
+		try {
+			
+			GananciaMesTotalResultViewModel result = pagoService.contadorGananciaMesTotal();
+			if(GenericUtil.isNotNull(result)) {
+				return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.MESSAGE_SUCCESS, result);
+			}
+			else {
+				return new ResponseBaseOperation(Constantes.ERROR_STATUS, Constantes.MESSAGE_ERROR, null);
 			}
 		}
 		catch(Exception e) {

@@ -91,4 +91,6 @@ public interface PagoFacade {
 	DescuentoPagoResultViewModel spRecuperarDatosMesPago(String persona);
 	
 	MesActualDeuda spRecuperarMesMonto(String documentoPersona);
+	
+	ResponseBaseOperation contadorGananciaMesTotal();
 }

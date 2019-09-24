@@ -18,6 +18,8 @@
 	generarReporteConsolidado();
 	
 	generarReporteMontoAcumuladoGestor();
+	
+	cargarContadorGananciaTotal();
 
 }).apply( this, [ jQuery ]);
 
@@ -227,3 +229,14 @@ function generarReporteMontoAcumuladoGestor() {
 	});
 }
 
+function cargarContadorGananciaTotal() {
+	
+	$.ajax({
+		type: 'GET',
+		url: '/crm-app/api/v1/pago/contadorGananciaTotal',
+		dataType: 'json',
+		success: function(response) {
+			$('#totalGanancia').html('S/. ' + response.data.total);
+		}
+	});
+}
