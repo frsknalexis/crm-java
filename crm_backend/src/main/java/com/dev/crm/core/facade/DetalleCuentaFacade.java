@@ -44,6 +44,12 @@ public interface DetalleCuentaFacade {
 	
 	ResponseBaseOperation spContadorPendientesInternet();
 	
+	ResponseBaseOperation contadorActivadoMesInternet();
+	
+	ResponseBaseOperation contadorActivadoMesCable();
+	
+	ResponseBaseOperation contadorActivadoMesDuo();
+	
 	ResponseBaseOperation spReprogramarInstalacionCable();
 	
 	ResponseBaseOperation spReprogramarInstalacionInternet();

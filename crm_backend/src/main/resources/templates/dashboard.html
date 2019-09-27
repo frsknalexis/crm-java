@@ -28,6 +28,79 @@
 					<!-- start: page -->
 					<div class="row">
 						<div class="col-md-6 col-lg-12 col-xl-6">
+							<div class="row">
+								<div class="col-md-12 col-lg-6 col-xl-6">
+									<section class="panel panel-featured-left panel-featured-primary">
+										<div class="panel-body">
+											<div class="widget-summary">
+												<div class="widget-summary-col widget-summary-col-icon">
+													<div class="summary-icon bg-primary">
+														<i class="fa fa-book"></i>
+													</div>
+												</div>
+												<div class="widget-summary-col">
+													<div class="summary">
+														<h4 class="title">Cuentas Activas Internet Mensual</h4>
+														<div class="info">
+															<strong class="amount" id="totalCuentasActivasInternet"></strong>
+														</div>
+													</div>
+													<div class="summary-footer">
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+								</div>
+								<div class="col-md-12 col-lg-6 col-xl-6">
+									<section class="panel panel-featured-left panel-featured-secondary">
+										<div class="panel-body">
+											<div class="widget-summary">
+												<div class="widget-summary-col widget-summary-col-icon">
+													<div class="summary-icon bg-secondary">
+														<i class="fa fa-book"></i>
+													</div>
+												</div>
+												<div class="widget-summary-col">
+													<div class="summary">
+														<h4 class="title">Cuentas Activas Cable Mensual</h4>
+														<div class="info">
+															<strong class="amount" id="totalCuentasActivasCable"></strong>
+														</div>
+													</div>
+													<div class="summary-footer">
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+								</div>
+								<div class="col-md-12 col-lg-6 col-xl-6">
+									<section class="panel panel-featured-left panel-featured-tertiary">
+										<div class="panel-body">
+											<div class="widget-summary">
+												<div class="widget-summary-col widget-summary-col-icon">
+													<div class="summary-icon bg-tertiary">
+														<i class="fa fa-book"></i>
+													</div>
+												</div>
+												<div class="widget-summary-col">
+													<div class="summary">
+														<h4 class="title">Cuentas Activas Duo Mensual</h4>
+														<div class="info">
+															<strong class="amount" id="totalCuentasActivasDuo"></strong>
+														</div>
+													</div>
+													<div class="summary-footer">
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+								</div>		
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-12 col-xl-6">
 							<div class="row" id="submodulo datos inicio" style="display:none">
 								<div class="col-md-12 col-lg-6 col-xl-6">
 									<section class="panel panel-featured-left panel-featured-primary">
@@ -38,9 +111,6 @@
 														<i class="fa fa-users"></i>
 													</div>
 												</div>
-												<input style="display:none" id="canje" name="canje" value="0"></input>
-												<input style="display:none" id="canjes" name="canjes" value="0"></input>
-												<input style="display:none" id="canjess" name="canjess" value="0"></input>
 												<div class="widget-summary-col">
 													<div class="summary">
 														<h4 class="title">Total Usuarios</h4>
@@ -133,6 +203,9 @@
 					</div>
 					<!-- end: page -->
 				</section>
+				<input style="display:none" id="canje" name="canje" value="0"></input>
+				<input style="display:none" id="canjes" name="canjes" value="0"></input>
+				<input style="display:none" id="canjess" name="canjess" value="0"></input>
 			</div>
 		</section>
 		<th:block th:replace="fragments/script :: script"></th:block>

@@ -31,6 +31,9 @@ import com.dev.crm.core.dto.ObservacionResultViewModel;
 import com.dev.crm.core.dto.VentasPorDiaResultViewModel;
 import com.dev.crm.core.dto.VentasPorVendedorResultViewModel;
 import com.dev.crm.core.model.entity.DetalleCuenta;
+import com.dev.crm.core.repository.jdbc.ActivacionesMesCableJdbcRepository;
+import com.dev.crm.core.repository.jdbc.ActivacionesMesDuoJdbcRepository;
+import com.dev.crm.core.repository.jdbc.ActivacionesMesInternetJdbcRepository;
 import com.dev.crm.core.repository.jdbc.AnularDetalleCuentaJdbcRepository;
 import com.dev.crm.core.repository.jdbc.CuentaPorDiaJdbcRepository;
 import com.dev.crm.core.repository.jdbc.CuentaPorEstadoJdbcRepository;
@@ -127,6 +130,18 @@ public class DetalleCuentaServiceImpl implements DetalleCuentaService {
 	@Autowired
 	@Qualifier("detalleCuentaDuoJdbcRepository")
 	private DetalleCuentaDuoJdbcRepository detalleCuentaDuoJdbcRepository;
+	
+	@Autowired
+	@Qualifier("activacionesMesInternetJdbcRepository")
+	private ActivacionesMesInternetJdbcRepository activacionesMesInternetJdbcRepository;
+	
+	@Autowired
+	@Qualifier("activacionesMesCableJdbcRepository")
+	private ActivacionesMesCableJdbcRepository activacionesMesCableJdbcRepository;
+	
+	@Autowired
+	@Qualifier("activacionesMesDuoJdbcRepository")
+	private ActivacionesMesDuoJdbcRepository activacionesMesDuoJdbcRepository;
 	
 	@Override
 	public String spInsercionCuentaInternet(DetalleCuentaRequest request) {
@@ -266,6 +281,45 @@ public class DetalleCuentaServiceImpl implements DetalleCuentaService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@Override
+	public Integer contadorActivadoMesInternet() {
+		
+		try {
+			
+			Integer result = activacionesMesInternetJdbcRepository.contadorActivadoMesInternet();
+			return result;
+		}
+		catch(Exception e) {
+			return null;
+		}
+	}
+	
+	@Override
+	public Integer contadorActivadoMesCable() {
+		
+		try {
+			
+			Integer result = activacionesMesCableJdbcRepository.contadorActivadoMesCable();
+			return result;
+		}
+		catch(Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public Integer contadorActivadoMesDuo() {
+		
+		try {
+			
+			Integer result = activacionesMesDuoJdbcRepository.contadorActivadoMesDuo();
+			return result;
+		}
+		catch(Exception e) {
+			return null;
+		}
 	}
 
 	@Override

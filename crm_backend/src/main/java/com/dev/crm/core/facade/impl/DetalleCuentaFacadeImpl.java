@@ -213,6 +213,47 @@ public class DetalleCuentaFacadeImpl implements DetalleCuentaFacade {
 	}
 
 	@Override
+	public ResponseBaseOperation contadorActivadoMesInternet() {
+		
+		try {
+			
+			Integer result = detalleCuentaService.contadorActivadoMesInternet();
+			return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.MESSAGE_SUCCESS, result);
+		}
+		catch(Exception e) {
+			return new ResponseBaseOperation(Constantes.ERROR_STATUS, Constantes.ERROR, null);
+		}
+	}
+	
+	
+
+	@Override
+	public ResponseBaseOperation contadorActivadoMesCable() {
+		
+		try {
+			
+			Integer result = detalleCuentaService.contadorActivadoMesCable();
+			return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.MESSAGE_SUCCESS, result);
+		}
+		catch(Exception e) {
+			return new ResponseBaseOperation(Constantes.ERROR_STATUS, Constantes.ERROR, null);
+		}
+	}
+	
+	@Override
+	public ResponseBaseOperation contadorActivadoMesDuo() {
+		
+		try {
+			
+			Integer result = detalleCuentaService.contadorActivadoMesDuo();
+			return new ResponseBaseOperation(Constantes.SUCCESS_STATUS, Constantes.MESSAGE_SUCCESS, result);
+		}
+		catch(Exception e) {
+			return new ResponseBaseOperation(Constantes.ERROR_STATUS, Constantes.ERROR, null);
+		}
+	}
+
+	@Override
 	public ResponseBaseOperation spReprogramarInstalacionCable() {
 		
 		try {

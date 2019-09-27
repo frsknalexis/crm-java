@@ -41,6 +41,12 @@ public interface DetalleCuentaService {
 	
 	Integer spContadorPendientesCable();
 	
+	Integer contadorActivadoMesInternet();
+	
+	Integer contadorActivadoMesCable();
+	
+	Integer contadorActivadoMesDuo();
+	
 	Integer spContadorPendientesInternet();
 	
 	String spReprogramarInstalacionCable();

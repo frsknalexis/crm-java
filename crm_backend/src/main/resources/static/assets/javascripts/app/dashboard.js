@@ -1,5 +1,11 @@
 $(document).on('ready', function() {
 
+	getTotalCuentasActivasInternetMes();
+	
+	getTotalCuentasActivasCableMes();
+	
+	getTotalCuentasActivasDuoMes();
+	
 	setTimeout(function() {
 		cargarTotalRegistrosUsuarios();
 		cargarTotalRegistrosPersonas();
@@ -43,6 +49,42 @@ $(document).on('ready', function() {
 					}
 				}
 			}
+	}
+	
+	function getTotalCuentasActivasInternetMes() {
+		
+		$.ajax({
+			type: 'GET',
+			url: '/crm-app/api/v1/detalleCuenta/contadorActivosMesInternet',
+			dataType: 'json',
+			success: function(response) {
+				$('#totalCuentasActivasInternet').html(response.data);
+			}
+		});
+	}
+	
+	function getTotalCuentasActivasCableMes() {
+		
+		$.ajax({
+			type: 'GET',
+			url: '/crm-app/api/v1/detalleCuenta/contadorActivosMesCable',
+			dataType: 'json',
+			success: function(response) {
+				$('#totalCuentasActivasCable').html(response.data);
+			}
+		});
+	}
+	
+	function getTotalCuentasActivasDuoMes() {
+		
+		$.ajax({
+			type: 'GET',
+			url: '/crm-app/api/v1/detalleCuenta/contadorActivosMesDuo',
+			dataType: 'json',
+			success: function(response) {
+				$('#totalCuentasActivasDuo').html(response.data);
+			}
+		});
 	}
 	
 	function cargarTotalRegistrosUsuarios() {

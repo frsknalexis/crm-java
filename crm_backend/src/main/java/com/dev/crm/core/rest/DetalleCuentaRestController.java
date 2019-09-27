@@ -246,6 +246,45 @@ public class DetalleCuentaRestController {
 		}
 	}
 	
+	@GetMapping("/contadorActivosMesInternet")
+	public ResponseEntity<ResponseBaseOperation> contadorActivadoMesInternet() {
+		
+		try {
+			
+			ResponseBaseOperation response = detalleCuentaFacade.contadorActivadoMesInternet();
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/contadorActivosMesCable")
+	public ResponseEntity<ResponseBaseOperation> contadorActivadoMesCable() {
+		
+		try {
+			
+			ResponseBaseOperation response = detalleCuentaFacade.contadorActivadoMesCable();
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/contadorActivosMesDuo")
+	public ResponseEntity<ResponseBaseOperation> contadorActivadoMesDuo() {
+		
+		try {
+			
+			ResponseBaseOperation response = detalleCuentaFacade.contadorActivadoMesDuo();
+			return new ResponseEntity<ResponseBaseOperation>(response, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<ResponseBaseOperation>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	@GetMapping("/reprogramacionInstalacionCable")
 	public ResponseEntity<ResponseBaseOperation> spReprogramarInstalacionCable() {
 		

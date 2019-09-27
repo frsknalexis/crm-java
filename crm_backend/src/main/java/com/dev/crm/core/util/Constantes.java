@@ -152,6 +152,10 @@ public class Constantes {
 	public static final String SP_RECUPERAR_DIAS_DEUDAS_GESTOR_MONTO_ACUMULADO = "recuperar_dias_deudas_gestor_monto_acumulado";
 	public static final String SP_CONTADOR_GANANCIA_MES_TOTAL = "sp_contador_ganancia_mes_total";
 	
+	public static final String SP_CONTADOR_ACTIVADO_MES_INTERNET = "sp_contador_activado_mes_internet";
+	public static final String SP_CONTADOR_ACTIVADO_MES_DUO = "sp_contador_activado_mes_duo";
+	public static final String SP_CONTADOR_ACTIVADO_MES_CABLE = "sp_contador_activado_mes_cable";
+	
 	public static final boolean HABILITADO = true;
 	public static final boolean INHABILITADO = false;
 	public static final String EMPTY = "";
